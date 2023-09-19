@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.nhutin.electric_project.model.Brand;
 
-public interface brandsRepository extends JpaRepository<Brand, Integer>{
+public interface brandsRepository extends JpaRepository<Brand, Integer> {
 
 }
