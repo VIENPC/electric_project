@@ -1,5 +1,9 @@
 package com.nhutin.electric_project.repository;
 
-public interface productsRepository extends JpaRepository<Products, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.nhutin.electric_project.model.Product;
+
+public interface productsRepository extends JpaRepository<Product, Integer>{
 
 }
