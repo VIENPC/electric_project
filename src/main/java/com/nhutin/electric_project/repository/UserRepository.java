@@ -1,5 +1,5 @@
 package com.nhutin.electric_project.repository;
 
-public class UserRepository {
+public interface UserRepository extends JpaRepository<Users, Integer> {
     
 }
