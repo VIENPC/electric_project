@@ -35,9 +35,6 @@ public class ProductReview implements Serializable {
 	@Column(name="review_data")
 	private String reviewData;
 
-	@Column(name="review_text")
-	private String reviewText;
-
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private Product product;

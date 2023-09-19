@@ -1,5 +1,9 @@
 package com.nhutin.electric_project.repository;
 
-public interface RolesRepository extends JpaRepository<Roles, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.nhutin.electric_project.model.Role;
+
+public interface RolesRepository extends JpaRepository<Role, Integer>{
 
 }
