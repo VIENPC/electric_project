@@ -1,5 +1,9 @@
 package com.nhutin.electric_project.repository;
 
-public interface cartDetailsRepository extends JpaRepository<CartDetails, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.nhutin.electric_project.model.CartDetail;
+
+public interface cartDetailsRepository extends JpaRepository<CartDetail, Integer>{
 
 }

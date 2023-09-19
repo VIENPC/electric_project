@@ -1,5 +1,9 @@
 package com.nhutin.electric_project.repository;
 
-public interface commentsRepository extends JpaRepository<Comments, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.nhutin.electric_project.model.Comment;
+
+public interface commentsRepository extends JpaRepository<Comment, Integer>{
 
 }
