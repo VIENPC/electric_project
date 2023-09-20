@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="cart_details")
+@Table(name = "cart_details")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,16 +20,16 @@ public class CartDetail implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="cartdetail_id")
+	@Column(name = "cartdetail_id")
 	private Integer cartdetailID;
 
 	private Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name="cart_id")
+	@JoinColumn(name = "cart_id")
 	private Cart cart;
 
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 }
