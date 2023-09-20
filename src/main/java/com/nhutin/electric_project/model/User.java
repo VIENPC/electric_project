@@ -1,5 +1,6 @@
 package com.nhutin.electric_project.model;
 
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -59,3 +60,4 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<Shipping> shippings;
 }
+
