@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý khách hàng</title>
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a href="#"><b>Danh
+							sách khách hàng</a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+
+						<div class="row element-button">
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+									onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+							</div>
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
+									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
+									title="Sao chép"><i class="fa fa-copy"></i>
+									Sao chép</a>
+							</div>
+
+							<div class="col-sm-2">
+								<a class="btn btn-excel btn-sm export" href="" title="In"><i
+										class="fa fa-file-excel-o"></i> Xuất Excel</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="In"><i
+										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
+										class="fa fa-trash-o"></i>
+									Xóa tất cả </a>
+							</div>
+						</div>
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+							<div class="row">
+								<div class="col-sm-12">
+
+									<table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+											<tr>
+												<th width="10"><input type="checkbox" id="all"></th>
+								
+												<th width="150"><span>Họ và tên</span></th>
+												<th width="250"><span>Địa chỉ</span></th>
+												<th><span>Email</span></th>
+												<th><span>Giới tính</span></th>
+												<th width="70"><span>SĐT</span></th>
+												<th><span>Trạng thái</span></th>
+												<th width="80"><span>Tính năng</span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="kh : ${items}">
+
+
+
+												<td width="10"><input type="checkbox" name="check1" value="1"></td>
+												
+												<td th:text="${kh.hotenkh}"></td>
+
+												<td th:text="${kh.diachi}"></td>
+
+												<td th:text="${kh.email}"></td>
+												<td th:text="${kh.gioitinh?'Nam':'Nữ'}"></td>
+												<td th:text="${kh.dienthoai}"></td>
+												<td> <span class="badge bg-success" th:if="${kh.trangthaikh == 1}">Hoạt
+														động</span>
+													<span class="badge bg-warning" th:if="${kh.trangthaikh == 2}">Tạm
+														khóa</span>
+													<span class="badge bg-danger" th:if="${kh.trangthaikh == 3}">Ngưng
+														hoạt
+														động</span>
+												</td>
+
+												<td class="table-td-center">
+													<button class="btn btn-primary btn-sm settt" type="button"
+														title="Sửa trạng thái" th:attr="data-user=${kh.usernamekh}">
+														<i class="fa fa-edit"></i>
+													</button>
+													<button class="btn btn-excel btn-sm unclock" type="button"
+														title="Sửa trạng thái"  th:attr="data-user=${kh.usernamekh}">
+														<i class="fa fa-unlock" aria-hidden="true"></i>
+													</button>
+												</td>
+
+
+											</tr>
+
+										</tbody>
+									</table>
+
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
