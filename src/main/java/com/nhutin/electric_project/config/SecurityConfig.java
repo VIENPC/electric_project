@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .authorizeRequests(requests -> requests
                                                 .antMatchers("/", "logout", "/login**", "/home", "/shop",
                                                                 "/registration/**",
-                                                                "/error**", "/asset/**", "/api/**",
+                                                                "/error**", "/assets/**", "/api/**",
                                                                 "/reset-password", "/codeVerification", "/resendOtp",
                                                                 "/new-password",
                                                                 "/rest/productdetails", "/rest/products",
