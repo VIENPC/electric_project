@@ -21,18 +21,18 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping(path = "registration")
+//@RequestMapping(path = "registration")
 public class RegisterController {
 
     private RegistrationService registrationService;
     private UserRepository userDAO;
 
-    @GetMapping
+    @GetMapping(path = "registration")
     public String form(Model model, @ModelAttribute("request") RegistrationRequest request) {
         return "register";
     }
 
-    @PostMapping
+    @PostMapping(path = "registration")
     public String register(Model model,
             @Valid @ModelAttribute("request") RegistrationRequest request,
             BindingResult result) {
@@ -52,8 +52,12 @@ public class RegisterController {
             model.addAttribute("duplicatePhonenumber", "Số điện thoại đã được sử dụng.");
             checked = false;
         }
-        if (!request.getPassword().equalsIgnoreCase(request.getConfirmPassword())) {
-            model.addAttribute("doesntMatchPassword", "Mật khẩu xác nhập không khớp.");
+        // Kiểm tra xem password và confirmPassword có giá trị null hay không
+        if (request.getPassword() == null || request.getConfirmPassword() == null) {
+            model.addAttribute("passwordNullError", "Mật khẩu hoặc mật khẩu xác nhận là null.");
+            checked = false;
+        } else if (!request.getPassword().equalsIgnoreCase(request.getConfirmPassword())) {
+            model.addAttribute("doesntMatchPassword", "Mật khẩu xác nhận không khớp.");
             checked = false;
         }
         if (result.hasErrors()) {
@@ -68,16 +72,17 @@ public class RegisterController {
         return "register";
     }
 
+
     @Autowired
     ConfirmationCodeDAO confirmationCodeDAO;
 
-    @GetMapping(path = "/confirm")
+    @GetMapping(path = "/registration/confirm")
     public String confirm(@RequestParam("token") String token, Model model,
             @ModelAttribute("request") RegistrationRequest request) {
         try {
             registrationService.confirmToken(token);
             model.addAttribute("successMessage", "Xác nhận tài khoản thành công.");
-            return "login";
+            return "register";
         } catch (IllegalStateException ex) {
             // Hiển thị lỗi ra màn hình
             model.addAttribute("errorMessage", ex.getMessage());

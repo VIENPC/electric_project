@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xác nhận mã OTP</title>
+  <meta name="author" content="Syahrizaldev">
+  <link rel='stylesheet' href='https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css'>
+  <!-- Css -->
+  <link rel="stylesheet" href="/asset/user/css/code-verification.css" type="text/css">
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="/asset/user/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="/asset/user/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+</head>
+<script>
+  function startCountdown() {
+    var countdownElement = document.getElementById("countdown");
+    var timeLeft = 30;
+
+    var countdownInterval = setInterval(function () {
+      countdownElement.innerText = "OTP will expire in " + timeLeft + " seconds";
+      timeLeft--;
+
+      if (timeLeft < 0) {
+        clearInterval(countdownInterval);
+        countdownElement.innerText = "OTP has expired";
+      }
+    }, 1000);
+  }
+</script>
+
+<body>
+  <main class="main">
+    <div class="container">
+      <section class="wrapper">
+        <div class="heading">
+          <h1 class="text text-large">Xác minh OTP</h1>
+          <p class="text text-normal">Nhập OTP bạn được nhận tại <span th:text="${maskedEmail}">
+              <!-- <a href="/register" class="text text-links"> Đăng ký ngay!</a> -->
+            </span>
+          </p>
+        </div>
+        <form id="otpForm" name="sign" action="/codeVerification" class="form" method="post">
+          <div id="otp" class="flex flex-row justify-center text-center px-2 ">
+            <input class="input-otp" type="text" id="first" maxlength="1" required />
+            <input class="input-otp" type="text" id="second" maxlength="1" required />
+            <input class="input-otp" type="text" id="third" maxlength="1" required />
+            <input class="input-otp" type="text" id="fourth" maxlength="1" required />
+          </div>
+          <p>Mã OTP: <span id="remainingTime" th:text="${timeRemaining}"></span> giây</p>
+          <i class="my-1" th:text="${error}" style="color: red;"></i>
+          <div class="striped">
+            <span class="striped-line"></span>
+            <span class="striped-line"></span>
+          </div>
+          <div class="input-control">
+            <a href="/reset-password" class="btn btn-light input-submit-cancel">Hủy bỏ</a>
+            <button class="btn btn-primary input-submit" style="background-color: #7fad39;" id="submitButton" onclick="combineAndShowValues()">Xác
+              nhận</button>
+          </div>
+
+          <input type="text" id="combinedInput" name="otp" style="display: none;">
+        </form>
+        <!-- Nút Gửi lại -->
+        <div class="method">
+
+          <form action="/resendOtp" method="POST">
+            <p class="text text-normal">Bạn không nhận được mã?
+              <button type="submit">Gửi lại</button>
+            </p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/asset/user/js/code-verification.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</html>

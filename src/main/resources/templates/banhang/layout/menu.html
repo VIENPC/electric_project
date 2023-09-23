@@ -41,7 +41,7 @@
           <div class="col-md-6 col-sm-6 additional-nav">
             <ul class="list-unstyled list-inline pull-right">
 
-              <li><a href="shop-checkout.html">Đăng Kí</a></li>
+              <li><a th:href="@{/registration}">Đăng Kí</a></li>
               <li><a th:href="@{/login}">Đăng Nhập</a></li>
             </ul>
           </div>
@@ -301,6 +301,22 @@
 
 
             <li><a href="">Liên hệ</a></li>
+            
+             <li class="dropdown active">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                Tài khoản
+                
+              </a>
+                
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/login}">Đăng nhập</a></li>
+                <li><a th:href="@{/registration}">Đăng ký</a></li>
+                <li><a th:href="@{/login}">Quên mật khẩu</a></li>
+                <li><a th:href="@{/login}">Đổi mật khẩu</a></li>
+                <li><a th:href="@{/login}">Trang cá nhân</a></li>
+                <li><a th:href="@{/logout}">Đăng xuất</a></li>
+              </ul>
+            </li>
 
             <!-- BEGIN TOP SEARCH -->
             <li class="menu-search">
