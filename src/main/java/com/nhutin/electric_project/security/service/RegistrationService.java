@@ -92,6 +92,12 @@ public class RegistrationService {
 
         User user = confirmationCodeDAO.findByOTPCode(token).get().getUser();
         String newToken = UUID.randomUUID().toString();
+        // Đặt loginPermission thành true
+        user.setLoginPermission(true);
+
+        // Lưu đối tượng User đã thay đổi
+        userDAO.save(user);
+        System.out.println(user.getEmail());
 
         // Lấy ngày giờ hiện tại
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
