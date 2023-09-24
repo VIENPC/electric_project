@@ -38,7 +38,7 @@ public class ProfileUserController {
             model.addAttribute("ThongTinTK", user);
             // System.out.println(user);
         }
-        return "user/profile";
+        return "taikhoan/profile";
     }
 
     @PostMapping("/user/profile/update")

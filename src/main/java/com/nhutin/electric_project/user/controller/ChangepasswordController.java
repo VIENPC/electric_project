@@ -43,7 +43,7 @@ public class ChangepasswordController {
     @GetMapping("/changepassword")
     public String changepassword() {
 
-        return "user/changepassword";
+        return "taikhoan/changepassword";
     }
 
    public User getNguoiDung() {
@@ -68,20 +68,20 @@ public class ChangepasswordController {
 
         if (!passwordEncoder.matches(password, users.getPassword())) {
             model.addAttribute("errorpassword", "Mật khẩu củ sai");
-            return "user/changepassword";
+            return "taikhoan/changepassword";
         } else if (password.equals(newpassword)) {
             model.addAttribute("errornewpassword", "Đã trùng với mật khẩu củ");
-            return "user/changepassword";
+            return "taikhoan/changepassword";
         } else if (!newpassword.equals(repassword)) {
             model.addAttribute("errorrepassword", "Nhập lại mật khẩu mới không trùng khớp");
-            return "user/changepassword";
+            return "taikhoan/changepassword";
         } else {
 
             try {
                 String subject = "Cảnh báo bảo mật";
 
                 // Đọc nội dung của file email-template.html từ thư mục nguồn (resources)
-                ClassPathResource resource = new ClassPathResource("templates/user/formemail/messageemail.html");
+                ClassPathResource resource = new ClassPathResource("templates/taikhoan/formemail/messageemail.html");
                 byte[] templateBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
                 String template = new String(templateBytes, "UTF-8");
 

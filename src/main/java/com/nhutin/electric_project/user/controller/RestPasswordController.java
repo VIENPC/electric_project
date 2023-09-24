@@ -64,7 +64,7 @@ public class RestPasswordController {
             String subject = "Lấy Lại Mật Khẩu";
 
             // Đọc nội dung của file email-template.html từ thư mục nguồn (resources)
-            ClassPathResource resource = new ClassPathResource("templates/user/formemail/formemail.html");
+            ClassPathResource resource = new ClassPathResource("templates/taikhoan/formemail/formemail.html");
             byte[] templateBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
             String template = new String(templateBytes, "UTF-8");
 
@@ -184,6 +184,10 @@ public class RestPasswordController {
         } else {
             timeRemaining = ((otpExpirationTime - currentTimestamp2) / 1000);
         }
+        
+        // Ghi log thông tin mã OTP từ email và mã OTP nhập từ form
+        System.out.println("Mã OTP từ email: " + confirmationCode.getOTPCode());
+        System.out.println("Mã OTP nhập từ form: " + enteredOtp);
 
         if (currentTimestamp.compareTo(confirmationCode.getOTPExpirationDate()) > 0 ||
                 currentTimestamp.compareTo(confirmationCode.getOTPCreationDate()) < 0) {
@@ -201,10 +205,12 @@ public class RestPasswordController {
             return "taikhoan/code-verification";
         } else if (enteredOtp.equals(confirmationCode.getOTPCode())) {
             System.out.println("Thành công");
+            System.out.println(confirmationCode.getOTPCode());
             confirmationcodeDAO.updateIsConfirmed(true, userID);
             return "taikhoan/new-password";
         } else {
             System.out.println("Thất bại");
+            System.out.println(confirmationCode.getOTPCode());
             model.addAttribute("otpExpirationTime", otpExpirationTime);
             model.addAttribute("timeRemaining", timeRemaining);
             model.addAttribute("maskedEmail", maskedEmail);
@@ -234,7 +240,7 @@ public class RestPasswordController {
             String subject = "Lấy Lại Mật Khẩu";
 
             // Đọc nội dung của file email-template.html từ thư mục nguồn (resources)
-            ClassPathResource resource = new ClassPathResource("templates/user/formemail/formemail.html");
+            ClassPathResource resource = new ClassPathResource("templates/taikhoan/formemail/formemail.html");
             byte[] templateBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
             String template = new String(templateBytes, "UTF-8");
 

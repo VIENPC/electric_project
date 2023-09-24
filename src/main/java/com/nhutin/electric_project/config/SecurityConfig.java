@@ -77,14 +77,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 http
                                 .authorizeRequests(requests -> requests
-                                                .antMatchers("/", "logout", "/login**", "/home", "/shop",
+                                                .antMatchers("/assets/**","/", "logout", "/login**", "/home", "/shop",
                                                                 "/error**", "/api/**",
                                                                 "/reset-password", "/codeVerification", "/resendOtp",
                                                                 "/new-password",
                                                                 "/rest/productdetails", "/rest/products",
                                                                 "/rest/productsbycate/**",
                                                                 "/rest/products/**","/rest/**","/product",
-                                                                "/registration/**", "/assets/**","http://localhost:8080/**")
+                                                                "/registration/**")
                                                 .permitAll()
                                                 .antMatchers("/admin/**",
                                                                 "/rest/orders/**")

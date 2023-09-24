@@ -18,12 +18,10 @@ public class RememberMeKeyConfig {
     //     SecureRandom secureRandom = new SecureRandom();
     //     byte[] key = new byte[16]; // 128 bits
     //     secureRandom.nextBytes(key);
-
     //     StringBuilder rememberMeKey = new StringBuilder();
     //     for (byte b : key) {
     //         rememberMeKey.append(String.format("%02x", b));
     //     }
-
     //     return rememberMeKey.toString();
     // }
 

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "ConfirmationCode")
 @NamedQuery(name = "ConfirmationCode.findAll", query = "SELECT c FROM ConfirmationCode c")
 public class ConfirmationCode implements Serializable {
 	private static final long serialVersionUID = 1L;
