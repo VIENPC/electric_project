@@ -3,18 +3,25 @@ package com.nhutin.electric_project.user.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.nhutin.electric_project.model.User;
-import com.nhutin.electric_project.repository.UserRepository;
-import com.nhutin.electric_project.service.UsersService;
+import com.nhutin.electric_project.model.Category;
+import com.nhutin.electric_project.repository.categorysRepository;
 
+
+@RestController
 public class UserRestController {
+    @Autowired
+    categorysRepository dmdao;
+
+    @GetMapping("/rest/danhmuc")
+	public ResponseEntity<List<Category>> findAll() {
+
+		return ResponseEntity.ok(dmdao.findAll());
+	}
+
 	@Autowired
 	UsersService userService;
 	
@@ -50,5 +57,5 @@ public class UserRestController {
 	@DeleteMapping("/rest/Users/delete/{UserID}")
 	public void delete(@PathVariable("UserID") Integer UserID) {
 		userService.delete(UserID);
-	}
+}
 }
