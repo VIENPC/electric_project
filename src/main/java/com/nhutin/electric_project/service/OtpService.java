@@ -76,7 +76,7 @@ public class OtpService {
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <div class=\"logo\">\n" +
-                "            <img src=\"https://firebasestorage.googleapis.com/v0/b/fir-e2be5.appspot.com/o/user%2Fimages%2Fmenu%2Flogo%2Flogo.png?alt=media&token=d3f193ce-da9c-4f67-a50e-f998785f29fb\" alt=\"KLBStore\" height=\"80\">\n" +
+                "            <img src=\"https://firebasestorage.googleapis.com/v0/b/fir-e2be5.appspot.com/o/user%2Fimages%2Fmenu%2Flogo%2Flogo.png?alt=media&token=d3f193ce-da9c-4f67-a50e-f998785f29fb\" alt=\"nhutin\" height=\"80\">\n" +
 
                 "        </div>\n" +
                 "        <div class=\"content\">\n" +
@@ -92,7 +92,7 @@ public class OtpService {
                 +
                 "        </div>\n" +
                 "        <div class=\"footer\">\n" +
-                "            &copy; 2023 KLBStore\n" +
+                "            &copy; 2023 nhutin\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</body>\n" +
@@ -153,7 +153,7 @@ public class OtpService {
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <div class=\"logo\">\n" +
-                "            <img src=\"https://firebasestorage.googleapis.com/v0/b/fir-e2be5.appspot.com/o/user%2Fimages%2Fmenu%2Flogo%2Flogo.png?alt=media&token=d3f193ce-da9c-4f67-a50e-f998785f29fb\" alt=\"KLBStore\" height=\"80\">\n" +
+                "            <img src=\"https://firebasestorage.googleapis.com/v0/b/fir-e2be5.appspot.com/o/user%2Fimages%2Fmenu%2Flogo%2Flogo.png?alt=media&token=d3f193ce-da9c-4f67-a50e-f998785f29fb\" alt=\"nhutin\" height=\"80\">\n" +
 
                 "        </div>\n" +
                 "        <div class=\"content\">\n" +
@@ -169,7 +169,7 @@ public class OtpService {
                 +
                 "        </div>\n" +
                 "        <div class=\"footer\">\n" +
-                "            &copy; 2023 KLBStore\n" +
+                "            &copy; 2023 nhutin\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</body>\n" +

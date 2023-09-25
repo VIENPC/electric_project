@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<style>
+</style>
+
+<body>
+	<main>
+		<div class="main">
+			<div class="container">
+				<!-- BEGIN SIDEBAR & CONTENT -->
+				<div class="row margin-bottom-40">
+					<!-- BEGIN CONTENT -->
+					<div class="">
+						<section>
+							<div class="py-5">
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-12">
+											<div>
+												<div class="card-header text-center"
+													style="background-color: #cf6125; color: white; font-size: 18px; font-weight: 700; height: 45px; padding: 10px 0px; margin-bottom: 22px">
+													Thông tin cá nhân</div>
+
+												<form action="/user/profile/update"
+													th:object="${ThongTinTK}" method="post" class="card-body">
+													<div class="form-group row">
+														<label for="username" class="col-sm-3 col-form-label"
+															style="text-align: center;">Tên đăng nhập</label>
+														<div class="col-sm-9">
+															<input type="text" th:field="*{email}" disabled
+																class="form-control" id="username" name="username"
+																required>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group row">
+														<label for="fullName" class="col-sm-3 col-form-label"
+															style="text-align: center;">Họ và tên</label>
+														<div class="col-sm-9">
+															<input type="text" th:field="*{fullName}"
+																class="form-control" id="fullName" name="fullName"
+																required>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group row">
+														<label for="email" style="text-align: center;"
+															class="col-sm-3 col-form-label">Email</label>
+														<div class="col-sm-9">
+															<input type="email" th:field="*{email}" disabled
+																class="form-control" id="email" name="email" required>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group row">
+														<label for="dob" style="text-align: center;"
+															class="col-sm-3 col-form-label">Ngày sinh</label>
+														<div class="col-sm-9">
+															<input type="date" th:field="*{dateOfBirth}"
+																onchange="validateDate()" class="form-control" id="dob"
+																name="dob" required>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group row">
+														<label class="col-sm-3 col-form-label"
+															style="text-align: center;">Giới tính</label>
+														<div class="col-sm-9 form-inline">
+															<div class="row">
+																<div class="form-check form-check-inline col-sm-6">
+																	<input th:field="*{gender}" class="form-check-input"
+																		type="radio" name="gender" id="gender-male"
+																		value="true"> <label class="form-check-label"
+																		for="gender-male">Nam</label>
+																</div>
+																<div class="form-check form-check-inline col-sm-6">
+																	<input th:field="*{gender}" class="form-check-input"
+																		type="radio" name="gender" id="gender-female"
+																		value="false"> <label class="form-check-label"
+																		for="gender-female">Nữ</label>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+													<hr>
+
+													<div class="form-group row">
+														<label for="numberPhone" style="text-align: center;"
+															class="col-sm-3 col-form-label">Số điện thoại</label>
+														<div class="col-sm-9">
+															<input type="tel" th:field="*{phoneNumber}"
+																pattern="^(0[2-9])(\d{8})$" class="form-control"
+																id="numberPhone" name="fullNnumberPhone" required>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="form-group row">
+														<label for="address" style="text-align: center;"
+															class="col-sm-3 col-form-label">Địa chỉ</label>
+														<div class="col-sm-9">
+															<textarea id="address" th:field="*{address}"
+																name="address" class="form-control" rows="5" required></textarea>
+														</div>
+													</div>
+
+													<hr>
+
+													<div class="text-center">
+														<button type="submit" class="btn btn-success"
+															style="font-size: 17px; background: #cf6125; margin-top: 20px;">Cập
+															nhật</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<script>
+							function validateDate() {
+								var dobInput = document.getElementById("dob");
+								var selectedDate = new Date(dobInput.value);
+								var currentDate = new Date();
+								var minimumAge = 18;
+
+								currentDate.setFullYear(currentDate
+										.getFullYear()
+										- minimumAge);
+
+								if (selectedDate > currentDate) {
+									alert("Bạn phải đủ 18 tuổi!");
+									dobInput.value = ""; // Xoá ngày được chọn nếu không đủ tuổi
+								}
+							}
+						</script>
+					</div>
+					<!-- END CONTENT -->
+				</div>
+				<!-- END SIDEBAR & CONTENT -->
+			</div>
+		</div>
+	</main>
+
+</body>
+
+</html>

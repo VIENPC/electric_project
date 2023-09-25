@@ -52,7 +52,7 @@ public class RegistrationService {
         String link = "http://localhost:8080/registration/confirm?token=" + token;
 
         try {
-            String subject = "XÁC NHẬN EMAIL - NNUTIN";
+            String subject = "XÁC NHẬN EMAIL - NHUTIN";
 
             MimeMessage messageMime = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(messageMime, true);
@@ -85,13 +85,19 @@ public class RegistrationService {
                 .getToken(token)
                 .orElseThrow(() -> new IllegalStateException("Không tìm thấy mã xác nhận."));
         if (userDAO.findByConfirmationCode(confirmationToken).get().getLoginPermission()) {
-            throw new IllegalStateException("Email đã được xác nhận.");
+            throw new IllegalStateException("Email đã được xác nhận..");
         }
 
         Timestamp expiredAt = confirmationToken.getOTPExpirationDate();
 
         User user = confirmationCodeDAO.findByOTPCode(token).get().getUser();
         String newToken = UUID.randomUUID().toString();
+        // Đặt loginPermission thành true
+        user.setLoginPermission(true);
+
+        // Lưu đối tượng User đã thay đổi
+        userDAO.save(user);
+        System.out.println(user.getEmail());
 
         // Lấy ngày giờ hiện tại
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -111,7 +117,7 @@ public class RegistrationService {
             String link = "http://localhost:8080/registration/confirm?token=" + newToken;
 
             try {
-                String subject = "XÁC NHẬN EMAIL - FSTORE";
+                String subject = "XÁC NHẬN EMAIL - NHUTIN";
 
                 MimeMessage messageMime = javaMailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(messageMime, true);

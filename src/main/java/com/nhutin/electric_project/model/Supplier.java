@@ -11,13 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="suppliers")
+@Table(name = "suppliers")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class Supplier implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="supplier_id")
+	@Column(name = "supplier_id")
 	private Integer supplierID;
 
 	private String address;
@@ -38,11 +40,11 @@ public class Supplier implements Serializable {
 
 	private String phone;
 
-	@Column(name="supplier_name")
+	@Column(name = "supplier_name")
 	private String supplierName;
 
 	private String website;
-
-	@OneToMany(mappedBy="supplier")
+	@JsonIgnore
+	@OneToMany(mappedBy = "supplier")
 	private List<Product> products;
 }

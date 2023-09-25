@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="order_details")
+@Table(name = "order_details")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,10 +33,10 @@ public class OrderDetail implements Serializable {
 	private Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name="order_id")
+	@JoinColumn(name = "order_id")
 	private Order order;
 
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 }

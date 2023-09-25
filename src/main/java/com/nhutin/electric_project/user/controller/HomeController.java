@@ -24,9 +24,13 @@ public class HomeController {
         return "banhang/view/product_list";
     }
 
+    @RequestMapping("/detail/{productID}")
+    public String detailid() {
+        return "banhang/view/product_detail";
+    }
+
     @RequestMapping("/detail")
     public String detail() {
-
         return "banhang/view/product_detail";
     }
 
@@ -40,12 +44,6 @@ public class HomeController {
     public String checkout() {
 
         return "banhang/view/checkout";
-    }
-
-    @RequestMapping("/login")
-    public String login() {
-
-        return "taikhoan/login";
     }
 
     @RequestMapping("/news")

@@ -16,13 +16,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="products")
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,11 +34,11 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="product_id")
+	@Column(name = "product_id")
 	private Integer productID;
 
 	private Boolean active;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "create_date")
 	private Date createDate = new Date();
@@ -47,32 +49,32 @@ public class Product implements Serializable {
 
 	private Double price;
 
-	@Column(name="product_name")
+	@Column(name = "product_name")
 	private String productName;
 
 	private Integer quantity;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cartDetails;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy = "product")
 	private List<Comment> comments;
-
-	@OneToMany(mappedBy="product")
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetails;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReviews;
 
 	@ManyToOne
-	@JoinColumn(name="brand_id")
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
 
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 
 	@ManyToOne
-	@JoinColumn(name="supplier_id")
+	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
 }

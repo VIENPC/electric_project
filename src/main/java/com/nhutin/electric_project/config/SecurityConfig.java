@@ -60,6 +60,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 rememberMeServices.setTokenValiditySeconds(86400); // 1 day
                 return rememberMeServices;
         }
+        
+        private String determineTargetUrl(Authentication authentication) {
+            String role = authentication.getAuthorities().toString();
+            if (role.contains("ADMIN")) {
+                return "/admin/index";
+            } else {
+                return "/home";
+            }
+        }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -68,14 +77,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 http
                                 .authorizeRequests(requests -> requests
-                                                .antMatchers("/", "logout", "/login**", "/home", "/shop",
-                                                                "/registration/**",
-                                                                "/error**", "/assets/**", "/api/**",
+                                                .antMatchers("/assets/**","/", "logout", "/login**", "/home", "/shop",
+                                                                "/error**", "/api/**",
                                                                 "/reset-password", "/codeVerification", "/resendOtp",
                                                                 "/new-password",
                                                                 "/rest/productdetails", "/rest/products",
                                                                 "/rest/productsbycate/**",
-                                                                "/rest/products/**","/rest/**","/product")
+                                                                "/rest/products/**","/rest/**","/product",
+                                                                "/registration/**")
                                                 .permitAll()
                                                 .antMatchers("/admin/**",
                                                                 "/rest/orders/**")
@@ -84,7 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 .authenticated())
                                 .formLogin(login -> login
                                                 .loginPage("/login")
-                                                .defaultSuccessUrl("/home", true)
+                                                .successHandler((request, response, authentication) -> {
+                                                    String targetUrl = determineTargetUrl(authentication);
+                                                    response.sendRedirect(targetUrl);
+                                                })
                                                 .failureHandler(authenticationFailureHandler)
                                                 .usernameParameter("email")
                                                 .permitAll())
@@ -131,3 +143,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
 }
+ 
