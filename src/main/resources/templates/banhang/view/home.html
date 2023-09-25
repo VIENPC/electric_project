@@ -130,7 +130,7 @@
                                             <h3 style="height: 40px;"><a href="shop-item.html">{{item.productName}}</a>
                                             </h3>
                                             <div class="pi-price">{{item.price |number : 0}} đ</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to
+                                            <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to
                                                 cart</a>
                                         </div>
                                     </div>
