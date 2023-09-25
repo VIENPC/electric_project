@@ -36,5 +36,7 @@ public class HomeController2 {
     public String baocaohoadon(){
        return "admin/view/baocaohd";
     }
+     
+     
 }
 

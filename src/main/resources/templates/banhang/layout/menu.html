@@ -172,9 +172,11 @@
               </ul>
             </li>
             <li class="dropdown">
-              <a th:href="@{/index}">
+              <a th:href="@{/home}">
                 Trang Chủ
               </a>
+
+
               <!-- END DROPDOWN MENU -->
             </li>
             <li class="dropdown">
@@ -259,6 +261,31 @@
 
 
             <li><a href="">Liên hệ</a></li>
+
+            <li class="dropdown active" th:unless="${#request.remoteUser}">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                Tài khoản
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/login}">Đăng nhập</a></li>
+                <li><a th:href="@{/registration}">Đăng ký</a></li>
+                <li><a th:href="@{/reset-password}">Quên mật khẩu</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown active" th:if="${#request.remoteUser}">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                Xin chào [[${#request.remoteUser}]]
+
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
+                <li><a th:href="@{/user/profile}">Trang cá nhân</a></li>
+                <li><a th:href="@{/logout}">Đăng xuất</a></li>
+              </ul>
+            </li>
 
             <!-- BEGIN TOP SEARCH -->
             <li class="menu-search">
