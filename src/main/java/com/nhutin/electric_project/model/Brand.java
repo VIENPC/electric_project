@@ -11,16 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
-
 @Entity
-@Table(name="brands")
+@Table(name = "brands")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,14 +29,14 @@ public class Brand implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="brand_id")
+	@Column(name = "brand_id")
 	private Integer brandID;
 
-	@Column(name="brand_name")
+	@Column(name = "brand_name")
 	private String brandName;
 
 	private String image;
-
-	@OneToMany(mappedBy="brand")
+	@JsonIgnore
+	@OneToMany(mappedBy = "brand")
 	private List<Product> products;
 }
