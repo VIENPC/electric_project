@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" th:href="@{assets/fonts/icomoon/style.css}">
+
+<link rel="stylesheet"
+	th:href="@{assets/pages/css/owl.carousel.min.css}">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{assets/pages/css/bootstrap.min.css}">
+
+<!-- Style -->
+<link rel="stylesheet" th:href="@{assets/pages/css/style.css}">
+
+<title>Login</title>
+</head>
+
+<body>
+	<div class="d-md-flex half">
+		<div class="bg"
+			style="background-image: url('assets/pages/img/bg_1.jpg');"></div>
+		<div class="contents">
+
+			<div class="container">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-md-12">
+						<div class="form-block mx-auto">
+							<div class="text-center mb-5">
+								<h3 class="text-uppercase">
+									<strong>ĐĂNG KÝ</strong>
+								</h3>
+							</div>
+							<!-- Hiển thị thông báo lỗi -->
+							<div th:if="${errorMessage}">
+								<!--RegisterController-->
+								<p th:utext="${errorMessage}" style="color: red"></p>
+							</div>
+							<div th:if="${errorMessageFromGEH}">
+								<!--GlobalExceptionHandler-->
+								<p th:utext="${errorMessageFromGEH}" style="color: red"></p>
+							</div>
+							<!-- Hiển thị thông báo thành công -->
+							<!--RegisterController-->
+							<form name="signin" th:action="@{/registration}"
+								th:object="${request}" method="post">
+								<div th:if="${!#fields.hasErrors}" style="margin-bottom: 25px;">
+									<p th:utext="${successMessage}"
+										style="color: #7fad39; margin-bottom: 0px;"></p>
+								</div>
+								<div class="form-group first">
+									<label for="username">Tên đăng nhập</label> <input type="text"
+										class="form-control" name="username"
+										placeholder="Hãy nhập tên đăng nhập" th:field="*{username}"
+										id="username">
+									<div class="error-message" style="color: red"
+										th:if="${#fields.hasErrors('username')}">
+										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+										<span th:errors="*{username}">Có lỗi xảy ra đại vương
+											ơi.</span>
+									</div>
+									<div class="error-message" style="color: red" th:if="${duplicateUsername}">
+										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+										<span th:txt="${duplicateUsername}">Tên đăng nhập đã
+											được sử dụng.</span>
+									</div>
+								</div>
+
+								<div class="form-group last mb-3">
+									<label for="password">Họ và tên</label> <input type="text"
+										class="form-control" name="fullname"
+										placeholder="Hãy nhập họ và tên" id="password"
+										th:field="*{fullname}">
+									<div class="error-message" style="color: red"
+										th:if="${#fields.hasErrors('fullname')}">
+										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+										<span th:errors="*{fullname}">Có lỗi xảy ra đại vương
+											ơi.</span>
+									</div>
+								</div>
+								
+								<div class="form-group last mb-3" style="display: block !important;">
+                        <div class="custom-control custom-radio custom-control-inline" style="margin-left: 23px;">
+                            <input type="radio" id="male" name="gender" class="custom-control-input" value="true"
+                                th:field="*{gender}">
+                            <label class="custom-control-label" for="male">Nam</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="female" name="gender" class="custom-control-input" value="false"
+                                th:field="*{gender}">
+                            <label class="custom-control-label" for="female">Nữ</label>
+                        </div>
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('gender')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{gender}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group last mb-3">
+                        <label for="birthday">Ngày sinh</label>
+                        <input type="date" name="birthday" id="birthday" class="form-control" placeholder="Ngày sinh"
+                            format th:field="*{birthday}">
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('birthday')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{birthday}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group last mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            placeholder="Hãy nhập địa chỉ email" th:field="*{email}">
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('email')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{email}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                        <div class="error-message" style="color: red" th:if="${duplicateEmail}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:txt="${duplicateEmail}">Địa chỉ email đã được sử dụng.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group last mb-3">
+                        <label for="phonenumber">Số điện thoại</label>
+                        <input type="text" name="phonenumber" id="phonenumber" class="form-control"
+                            placeholder="Hãy nhập số điện thoại" th:field="*{phonenumber}">
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('phonenumber')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{phonenumber}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                        <div class="error-message" style="color: red" th:if="${duplicatePhonenumber}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:txt="${duplicatePhonenumber}">Số điện thoại đã được sử dụng.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group last mb-3">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" name="password" id="password" class="form-control"
+                            placeholder="Hãy nhập mật khẩu" th:field="*{password}">
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('password')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{password}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group last mb-3">
+                        <label for="confirmPassword">Mật khẩu xác nhận</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+                            placeholder="Hãy nhập mật khẩu xác nhận" th:field="*{confirmPassword}">
+                        <div class="error-message" style="color: red" th:if="${#fields.hasErrors('confirmPassword')}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:errors="*{confirmPassword}">Có lỗi xảy ra đại vương ơi.</span>
+                        </div>
+                        <div class="error-message" style="color: red" th:if="${doesntMatchPassword}">
+                            <ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
+                            <span th:txt="${doesntMatchPassword}">Mật khẩu xác nhập không khớp.</span>
+                        </div>
+                    </div>
+
+								<input type="submit" value="Đăng ký"
+									class="btn btn-block py-2 btn-primary"> <span
+									class="text-center my-3 d-block">Hoặc</span>
+
+
+								<div class="">
+									<a href="#" class="btn btn-block py-2 btn-facebook"> <span
+										class="icon-facebook mr-3"></span> Đăng nhập với facebook
+									</a> <a th:href="@{/oauth2/authorization/google}"
+										class="btn btn-block py-2 btn-google"><span
+										class="icon-google mr-3"></span> Đăng nhập với Google</a>
+								</div>
+								<span
+									class="text-center my-3 d-block">Bạn đã có tài khoản? <a href="/login">Đăng nhập</a> </span>
+							</form>
+							
+							<script>
+                    // Custom input type date - Allow users over 18 years old
+                    window.onload = function () {
+                        var today = new Date();
+                        var maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+                        var maxDateString = maxDate.toISOString().split('T')[0];
+
+                        var birthdayInput = document.getElementById('birthday');
+                        birthdayInput.max = maxDateString;
+                    }
+                </script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="pages/scripts/jquery-3.3.1.min.js"></script>
+	<script src="pages/scripts/popper.min.js"></script>
+	<script src="pages/cripts/bootstrap.min.js"></script>
+	<script src="pages/scripts/main.js"></script>
+</body>
+
+</html>

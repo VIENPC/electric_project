@@ -42,12 +42,6 @@ public class HomeController {
         return "banhang/view/checkout";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-
-        return "taikhoan/login";
-    }
-
     @RequestMapping("/news")
     public String news() {
 
