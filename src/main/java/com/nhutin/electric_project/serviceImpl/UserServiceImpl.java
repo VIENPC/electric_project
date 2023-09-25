@@ -1,4 +1,4 @@
-package com.nhutin.electric_project.serviceImpl;
+package com.nhutin.electric_project.ServiceImpl;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.nhutin.electric_project.repository.UserRepository;
 import com.nhutin.electric_project.service.UsersService;
 
 @Service
-public class UserServiceImpl implements UsersService{
+public class UserServiceImpl implements UsersService {
 	@Autowired
 	UserRepository uDAO;
 
