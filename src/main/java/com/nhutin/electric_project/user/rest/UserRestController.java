@@ -22,40 +22,5 @@ public class UserRestController {
 		return ResponseEntity.ok(dmdao.findAll());
 	}
 
-	@Autowired
-	UsersService userService;
 	
-	@Autowired
-	UserRepository udao;
-	
-	@GetMapping("/rest/Users/{UserID}")
-	public User getOne(@PathVariable("UserID") Integer UserID) {
-		return userService.findById(UserID);
-	}
-	
-	@GetMapping("/rest/Users/loadall")
-	public List<User> getAll() {
-		return userService.findAllVer2();
-	}
-	
-	@GetMapping("/rest/Users/search")
-	public List<User> getUserLikeName(@PathVariable("keyword") String name) {
-		return userService.findLikeName(name);
-	}
-
-	@PostMapping("/rest/Users/create")
-	public User create(@RequestBody User User) {
-		return userService.create(User);
-	}
-
-	@PutMapping("/rest/Users/update/{UserID}")
-	public void update(@PathVariable("UserID") Integer UserID, @RequestBody User user) {
-
-		userService.update(user);
-	}
-
-	@DeleteMapping("/rest/Users/delete/{UserID}")
-	public void delete(@PathVariable("UserID") Integer UserID) {
-		userService.delete(UserID);
-}
 }
