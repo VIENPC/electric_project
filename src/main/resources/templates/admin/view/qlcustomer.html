@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Quản lý khách hàng</title>
+<meta charset="UTF-8">
+<title>Quản lý khách hàng</title>
+<!-- AngularJS -->
+
 </head>
 
 <body>
-	<main class="app-content">
+
+	<main class="app-content" ng-app="OrderApp">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
@@ -24,99 +28,88 @@
 						<div class="row element-button">
 
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
-									onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
+									title="Nhập" onclick="myFunction(this)"><i
+									class="fa fa-upload"></i> Tải từ file</a>
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
-									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+								<a class="btn btn-delete btn-sm print-file" type="button"
+									title="In" onclick="myApp.printTable()"><i
+									class="fa fa-print"></i> In dữ liệu</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
-									title="Sao chép"><i class="fa fa-copy"></i>
+								<a class="btn btn-delete btn-sm print-file js-textareacopybtn"
+									type="button" title="Sao chép"><i class="fa fa-copy"></i>
 									Sao chép</a>
 							</div>
 
 							<div class="col-sm-2">
 								<a class="btn btn-excel btn-sm export" href="" title="In"><i
-										class="fa fa-file-excel-o"></i> Xuất Excel</a>
+									class="fa fa-file-excel-o"></i> Xuất Excel</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button" title="In"><i
-										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+								<a class="btn btn-delete btn-sm pdf-file" type="button"
+									title="In"><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-										class="fa fa-trash-o"></i>
+								<a class="btn btn-delete btn-sm" type="button" title="Xóa"
+									onclick="myFunction(this)"><i class="fa fa-trash-o"></i>
 									Xóa tất cả </a>
 							</div>
 						</div>
-						<div id="sampleTable_wrapper"
+						<div id="sampleTable_wrapper" ng-controller="OrderCtrl"
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
 								<div class="col-sm-12">
 
-									<table class="table table-hover table-bordered" id="sampleTable">
+									<table class="table table-hover table-bordered"
+										id="sampleTable">
 										<thead>
 											<tr>
-												<th width="10"><input type="checkbox" id="all"></th>
-								
-												<th width="150"><span>Họ và tên</span></th>
-												<th width="250"><span>Địa chỉ</span></th>
+												<th><span>ID</span></th>
+												<th><span>Username</span></th>
 												<th><span>Email</span></th>
-												<th><span>Giới tính</span></th>
-												<th width="70"><span>SĐT</span></th>
-												<th><span>Trạng thái</span></th>
-												<th width="80"><span>Tính năng</span></th>
+												<th><span>Password</span></th>
+												<th><span>Fullname</span></th>
+												<th><span>Gender</span></th>
+												<th><span>LockStatus</span></th>
+												<th><span>DateOfBirth</span></th>
+												<th><span>Address</span></th>
+												<th><span>PhoneNumber</span></th>
+												<th><span>Permission</span></th>
+												<th><span>RegistrationDate</span></th>
+												<th><span>Role</span></th>
+												<th><span></span></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="kh : ${items}">
-
-
-
-												<td width="10"><input type="checkbox" name="check1" value="1"></td>
-												
-												<td th:text="${kh.hotenkh}"></td>
-
-												<td th:text="${kh.diachi}"></td>
-
-												<td th:text="${kh.email}"></td>
-												<td th:text="${kh.gioitinh?'Nam':'Nữ'}"></td>
-												<td th:text="${kh.dienthoai}"></td>
-												<td> <span class="badge bg-success" th:if="${kh.trangthaikh == 1}">Hoạt
-														động</span>
-													<span class="badge bg-warning" th:if="${kh.trangthaikh == 2}">Tạm
-														khóa</span>
-													<span class="badge bg-danger" th:if="${kh.trangthaikh == 3}">Ngưng
-														hoạt
-														động</span>
-												</td>
-
-												<td class="table-td-center">
-													<button class="btn btn-primary btn-sm settt" type="button"
-														title="Sửa trạng thái" th:attr="data-user=${kh.usernamekh}">
-														<i class="fa fa-edit"></i>
-													</button>
-													<button class="btn btn-excel btn-sm unclock" type="button"
-														title="Sửa trạng thái"  th:attr="data-user=${kh.usernamekh}">
-														<i class="fa fa-unlock" aria-hidden="true"></i>
-													</button>
-												</td>
-
-
+											<tr
+												ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
+												<td>{{item.userID}}</td>
+												<td>{{item.username}}</td>
+												<td ng-if="item.email.length > 6">{{item.email.substr(0,
+													6)}}..</td>
+												<td ng-if="item.password.length > 6">{{item.password.substr(0,
+													6)}}..</td>
+												<td>{{item.fullName}}</td>
+												<td>{{item.gender?'Nam':'Nữ'}}</td>
+												<td>{{item.lockStatus}}</td>
+												<td>{{item.dateOfBirth}}</td>
+												<td>{{item.address}}</td>
+												<td>{{item.phoneNumber}}</td>
+												<td>{{item.loginPermission}}</td>
+												<td ng-if="item.registrationDate.length > 12">{{item.registrationDate.substr(0,
+													8)}}..</td>
+												<td>{{item.role?'Admin':'User'}}</td>
+												<td class="align-middle text-center"><a
+													ng-click="detail(item.maGiay)"
+													class="text-secondary font-weight-bold text-xs"> Chi
+														tiết </a></td>
 											</tr>
-
 										</tbody>
 									</table>
-
-
-
-
-
-
 								</div>
 							</div>
 						</div>
@@ -126,6 +119,10 @@
 			</div>
 		</div>
 	</main>
+	<script
+		th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
+	<script th:src="@{/js/user.js}"></script>
 </body>
+
 
 </html>
