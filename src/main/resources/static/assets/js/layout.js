@@ -20,21 +20,21 @@ let host = "http://localhost:8080/rest";
 
 
 app.controller("watches", function ($scope, $http, $anchorScroll, $location) {
-    
-  
+
+
     $scope.muangay = function (masp) {
         var cart = this.cartItems.find(cart => cart.masp == masp);
         if (cart) {
             cart.qty++;
             $scope.saveToLocalStorage();
-           window.location.href="/cart";
+            window.location.href = "/cart";
         } else {
             var url = `${host}/sanpham/${masp}`;
             $http.get(url).then(resp => {
                 resp.data.qty = 1;
                 $scope.cartItems.push(resp.data);
                 $scope.saveToLocalStorage();
-                window.location.href="/cart";
+                window.location.href = "/cart";
                 $scope.cuonLenDauTrang();
 
             });
@@ -52,7 +52,7 @@ app.controller("watches", function ($scope, $http, $anchorScroll, $location) {
             cart.qty++;
             $scope.saveToLocalStorage();
 
-        } else { 
+        } else {
             var url = `${host}/sanpham/${masp}`;
             $http.get(url).then(resp => {
                 resp.data.qty = 1;
@@ -370,7 +370,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
 
 
-    
+
 
 
 });

@@ -11,15 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
-@Table(name="categorys")
+@Table(name = "categorys")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category implements Serializable {
@@ -27,12 +28,12 @@ public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="category_id")
+	@Column(name = "category_id")
 	private Integer categoryID;
 
-	@Column(name="category_name")
+	@Column(name = "category_name")
 	private String categoryName;
-
-	@OneToMany(mappedBy="category")
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
 	private List<Product> products;
 }

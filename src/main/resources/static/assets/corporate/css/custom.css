@@ -1,1 +1,119 @@
 /* here you can put your own css to customize and override the theme */
+/* Thiết lập kiểu card */
+.card {
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100px;
+    max-width: 300px;
+    /* Điều chỉnh kích thước tối đa của card */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    /* Hiệu ứng khi di chuột vào */
+}
+
+/* Định dạng hình ảnh */
+.card img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Định dạng vùng nội dung card */
+.card-body {
+    padding: 10px;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+
+/* Định dạng tiêu đề */
+.card-text {
+    font-size: 18px;
+    font-weight: lighter;
+    margin: 0;
+    color: #0a0000;
+}
+
+/* /// */
+/* Định dạng danh sách thương hiệu */
+.brand-list {
+    list-style: none;
+    /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    display: flex;
+    /* Hiển thị các mục theo hàng ngang */
+    flex-wrap: wrap;
+    /* Cho phép xuống dòng tự động nếu không đủ chỗ */
+}
+
+/* Định dạng từng mục thương hiệu */
+.brand-list li {
+    margin-right: 20px;
+    /* Khoảng cách giữa các mục thương hiệu */
+}
+
+/* Định dạng hình ảnh thương hiệu */
+.brand-list img {
+    max-width: 100px;
+    /* Điều chỉnh kích thước tối đa của hình ảnh */
+    height: auto;
+    /* Giữ tỷ lệ khung hình */
+    /* Đường viền xung quanh hình ảnh */
+    padding: 5px;
+    /* Khoảng cách viền từ hình ảnh */
+}
+body { padding-top: 50px; }
+/*#####################
+Additional Styles (required)
+######################*/
+#myCarousel .thumbnail {
+	margin-bottom: 0;
+}
+.carousel-control.left, .carousel-control.right {
+	background-image:none !important;
+}
+.carousel-control {
+	color:#fff;
+	top:40%;
+	color:#428BCA;
+	bottom:auto;
+	padding-top:4px;
+	width:30px;
+	height:30px;
+	text-shadow:none;
+	opacity:1;
+}
+.carousel-control:hover {
+	color: #d9534f;
+}
+.carousel-control.left, .carousel-control.right {
+	background-image:none !important;
+}
+.carousel-control.right {
+	left:auto;
+	right:-32px;
+}
+.carousel-control.left {
+	right:auto;
+	left:-32px;
+}
+.carousel-indicators {
+	bottom:-30px;
+}
+.carousel-indicators li {
+	border-radius:0;
+	width:10px;
+	height:10px;
+	background:#ccc;
+	border:1px solid #ccc;
+}
+.carousel-indicators .active {
+	width:12px;
+	height:12px;
+	background:#3276b1;
+	border-color:#3276b1;
+}

@@ -5,34 +5,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-    
+
     @RequestMapping("/index")
-    public String index(){
+    public String index() {
 
         return "banhang/view/home";
     }
-     @RequestMapping("/about")
-    public String about(){
+
+    @RequestMapping("/about")
+    public String about() {
 
         return "banhang/view/about";
     }
-      @RequestMapping("/shop")
-    public String product(){
+
+    @RequestMapping("/shop")
+    public String product() {
 
         return "banhang/view/product_list";
     }
-  @RequestMapping("/detail")
-    public String detail(){
 
+    @RequestMapping("/detail/{productID}")
+    public String detailid() {
         return "banhang/view/product_detail";
     }
+
+    @RequestMapping("/detail")
+    public String detail() {
+        return "banhang/view/product_detail";
+    }
+
     @RequestMapping("/cart")
-    public String cart(){
+    public String cart() {
 
         return "banhang/view/cart";
     }
+
     @RequestMapping("/checkout")
-    public String checkout(){
+    public String checkout() {
 
         return "banhang/view/checkout";
     }
