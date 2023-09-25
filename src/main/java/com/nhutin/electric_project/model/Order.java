@@ -37,12 +37,27 @@ public class Order implements Serializable {
 	@Column(name="order_id")
 	private Integer orderId;
 
+	@Column(name="name")
+	private String  name;
+	@Column(name="address")
+	private String  address;
+	@Column(name="phone")
+	private String  phone;
+
+	@Column(name="statushd")
+	private Integer statushd ;
+	@Column(name="statustt")
+	private boolean statustt ;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "order_date")
 	private Date orderDate = new Date();
 
 	@Column(name="total_amount")
 	private Double totalAmount;
+
+	@Column(name="note")
+	private String note;
 
 	@OneToMany(mappedBy="order")
 	private List<OrderDetail> orderDetails;

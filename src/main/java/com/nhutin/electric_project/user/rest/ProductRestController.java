@@ -58,4 +58,13 @@ public class ProductRestController {
         List<Product> products = productService.getProductsByCategory(categoryID);
         return products;
     }
+
+    	@GetMapping("/rest/product/{masp}")
+	public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
+		if (!productdao.existsById(masp)) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(productdao.findById(masp).get());
+	}
 }
+
