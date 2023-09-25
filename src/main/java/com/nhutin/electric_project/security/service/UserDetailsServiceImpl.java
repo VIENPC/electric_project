@@ -64,7 +64,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 
 		user.setPassword(encodedPassword);
-		user.setLoginPermission(true);
+		user.setLoginPermission(false);
 		user.setLockStatus(false);
 		userDAO.save(user);
 		// Tạo cart
@@ -144,6 +144,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		user.setPassword(dummyPassword);
 		user.setRole(Role.USER);
 		user.setFullName(name);
+		user.setLoginPermission(true);
 		userDAO.save(user);
 
 		// Tạo một đối tượng UserDetails thích hợp

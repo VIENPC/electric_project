@@ -56,7 +56,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         System.out.println("Cumstomer's Email: " + email);
 
+//        super.onAuthenticationSuccess(request, response, authentication);
+        
+        super.setDefaultTargetUrl("/home");
         super.onAuthenticationSuccess(request, response, authentication);
+
     }
 }
 
