@@ -14,8 +14,12 @@ app.controller('product-controller', function ($scope, $http, $window) {
         .then(function (response) {
             $scope.brands = response.data;
         });
+
     $scope.goToSinglePage = function (productID) {
         window.location.href = `/detail/${productID}`; // Sử dụng chuỗi template (ES6)
+    };
+    $scope.goToProduct_Detail = function (productID) {
+        window.location.href = `/detail/${productID}`;
     };
 
     $scope.loadProductsByBrand = function (brandID) {
@@ -134,5 +138,5 @@ app.controller('product-controller', function ($scope, $http, $window) {
 
 
 
-
-    });
+    }
+});

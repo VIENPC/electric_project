@@ -43,6 +43,11 @@
 
               <li><a href="shop-checkout.html">Đăng Kí</a></li>
               <li><a href="page-login.html">Đăng Nhập</a></li>
+              <li>
+                <h3><a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                    Xin chào [[${#request.remoteUser}]]
+                  </a></h3>
+              </li>
             </ul>
           </div>
           <!-- END TOP BAR MENU -->
@@ -167,7 +172,7 @@
 
             <li class="dropdown active" th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Xin chào [[${#request.remoteUser}]]
+                Tài Khoản
 
               </a>
 
