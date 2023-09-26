@@ -36,6 +36,18 @@ public class HomeController2 {
     public String baocaohoadon(){
        return "admin/view/baocaohd";
     }
+     @RequestMapping("insertUser")
+     public String insertUser(){
+        return "admin/view/qlcustomer_insert";
+     }
+     @RequestMapping("UserDetail")
+     public String UserDetail(){
+        return "admin/view/qlcustomer_detail";
+     }
+     @RequestMapping("addsanpham")
+     public String addsanpham(){
+        return "admin/view/add_product";
+     }
      
      
 }
