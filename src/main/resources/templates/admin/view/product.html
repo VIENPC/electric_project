@@ -40,16 +40,17 @@
 							</div>
 
 							<div class="col-sm-2">
-								
-								<a class="btn btn-excel btn-sm export"  title="=Xuất file excel" ><i class="fa fa-file-excel-o"></i>
+
+								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+										class="fa fa-file-excel-o"></i>
 									Xuất Excel</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"
-									><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm xoansp"  type="button" title="Xóa nhiều sản phẩm" ><i
+								<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
 										class="fa fa-trash-o"></i>
 									Xóa tất cả </a>
 							</div>
@@ -70,32 +71,30 @@
 												<th><span>Tình trạng</span></th>
 												<th><span>Giá tiền</span></th>
 												<th><span>Hãng</span></th>
-												<th><span>Ngày nhập</span></th>
 												<th><span>Chức năng</span></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="sp : ${listsp}">
-												<td width="10"><input type="checkbox" class="chkboxId" name="maspchk" th:value="${sp.masp}"></td>
-												<td th:text="${sp.masp}"></td>
+												<td width="10"><input type="checkbox" class="chkboxId" name="maspchk"
+														th:value="${sp.productID}"></td>
+												<td th:text="${sp.productID}"></td>
 
-												<td th:text="${sp.tensp}"></td>
-												<td><img th:src="@{'/images/sanpham/' + ${sp.hinhanh}}" alt=""
+												<td th:text="${sp.productName}"></td>
+												<td><img th:src="@{'/images/product/' + ${sp.image}}" alt=""
 														width="100px;"></td>
-												<td th:text="${sp.soluong}"></td>
+												<td th:text="${sp.quantity}"></td>
 												<td><span class="badge bg-success" th:block
-														th:if="${sp.trangthaisp == true}">Còn hàng</span> <span
+														th:if="${sp.active == true}">Còn hàng</span> <span
 														class="badge bg-danger" th:block
-														th:unless="${sp.trangthaisp == true}">Hết hàng</span></td>
+														th:unless="${sp.active == true}">Hết hàng</span></td>
 												<td><span
-														th:text="${#numbers.formatDecimal(sp.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+														th:text="${#numbers.formatDecimal(sp.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
 												</td>
-												<td th:text="${sp.hangsanxuat.tenhang}"></td>
-												<td th:text="${#temporals.format(sp.ngaynhap, 'yyyy-MM-dd HH:mm:ss')}">
-												</td>
+												<td th:text="${sp.brand.brandName}"></td>
+
 												<td><button class="btn btn-primary btn-sm trash" type="button"
-														title="Xóa" 
-														th:attr="data-masp=${sp.masp}">
+														title="Xóa" th:attr="data-masp=${sp.productID}">
 														<i class="fa fa-trash-o"></i>
 													</button>
 													<!-- <a th:href="@{/edit/{masp}(masp=${sp.masp})}" class="btn btn-primary btn-sm edit" ><i class="fa fa-edit"></i></a> -->
@@ -144,7 +143,7 @@
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label class="control-label">Mã sản phẩm </label> <input class="form-control" id="masp"
-									type="number" name="masp" >
+									type="number" name="masp">
 
 							</div>
 							<div class="form-group  col-md-6">
@@ -153,7 +152,7 @@
 							</div>
 							<div class="form-group col-md-12">
 								<label class="control-label">Tên sản phẩm</label> <input class="form-control"
-									type="text" id="tensp" name="tensp"  required>
+									type="text" id="tensp" name="tensp" required>
 							</div>
 
 							<div class="form-group col-md-6 ">
@@ -170,10 +169,10 @@
 							</div>
 
 						</div>
-						<a onclick="checkmasp()" ; id="editLink" 
+						<a onclick="checkmasp()" ; id="editLink"
 							style="float: right; font-weight: 600; color: #ea0000;">Chỉnh
 							sửa sản phẩm nâng cao</a> <BR> <BR>
-						<button class="btn btn-save" type="submit" >Lưu lại</button>
+						<button class="btn btn-save" type="submit">Lưu lại</button>
 						<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
 						<BR>
 					</div>
@@ -187,10 +186,10 @@ MODAL
 -->
 
 
-<!-- Button trigger modal -->
+	<!-- Button trigger modal -->
 
-  <!-- Modal -->
-	
+	<!-- Modal -->
+
 
 
 

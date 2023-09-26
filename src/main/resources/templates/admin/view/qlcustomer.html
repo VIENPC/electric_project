@@ -62,7 +62,7 @@
 										<thead>
 											<tr>
 												<th width="10"><input type="checkbox" id="all"></th>
-								
+
 												<th width="150"><span>Họ và tên</span></th>
 												<th width="250"><span>Địa chỉ</span></th>
 												<th><span>Email</span></th>
@@ -78,30 +78,33 @@
 
 
 												<td width="10"><input type="checkbox" name="check1" value="1"></td>
-												
-												<td th:text="${kh.hotenkh}"></td>
 
-												<td th:text="${kh.diachi}"></td>
+												<td th:text="${kh.username}"></td>
+
+												<td th:text="${kh.address}"></td>
 
 												<td th:text="${kh.email}"></td>
-												<td th:text="${kh.gioitinh?'Nam':'Nữ'}"></td>
-												<td th:text="${kh.dienthoai}"></td>
-												<td> <span class="badge bg-success" th:if="${kh.trangthaikh == 1}">Hoạt
+
+
+
+												<td th:text="${kh.gender ?'Nam':'Nữ'}"></td>
+
+
+												<td th:text="${kh.phoneNumber}"></td>
+												<td> <span class="badge bg-success"
+														th:if="${kh.lockStatus == false}">Hoạt
 														động</span>
-													<span class="badge bg-warning" th:if="${kh.trangthaikh == 2}">Tạm
+													<span class="badge bg-warning" th:if="${kh.lockStatus == true}">Tạm
 														khóa</span>
-													<span class="badge bg-danger" th:if="${kh.trangthaikh == 3}">Ngưng
-														hoạt
-														động</span>
 												</td>
 
 												<td class="table-td-center">
 													<button class="btn btn-primary btn-sm settt" type="button"
-														title="Sửa trạng thái" th:attr="data-user=${kh.usernamekh}">
+														title="Sửa trạng thái" th:attr="data-user=${kh.userID}">
 														<i class="fa fa-edit"></i>
 													</button>
 													<button class="btn btn-excel btn-sm unclock" type="button"
-														title="Sửa trạng thái"  th:attr="data-user=${kh.usernamekh}">
+														title="Sửa trạng thái" th:attr="data-user=${kh.userID}">
 														<i class="fa fa-unlock" aria-hidden="true"></i>
 													</button>
 												</td>

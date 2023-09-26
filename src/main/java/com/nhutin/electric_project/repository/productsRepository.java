@@ -15,4 +15,6 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
     List<Product> findByCategoryCategoryID(Integer categoryId);
 
     List<Product> findByBrandBrandID(Integer brandID);
+
+    long countByActive(Boolean tt);
 }
