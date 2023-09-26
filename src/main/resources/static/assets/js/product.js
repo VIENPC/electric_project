@@ -135,6 +135,72 @@ app.controller('product-controller', function ($scope, $http, $window) {
                 .reduce((total, amt) => total += amt, 0);
         };
         $scope.loadLocalStorage();
+        // Quan ly gio hang
+        $scope.cartItems = [];
+        $scope.addToCart = function (masp) {
+
+            var cart = this.cartItems.find(cart => cart.productID == masp);
+            if (cart) {
+
+                cart.qty++;
+                $scope.saveToLocalStorage();
+            } else {
+                var url = `/rest/product/${masp}`;
+                $http.get(url).then(resp => {
+                    resp.data.qty = 1;
+                    $scope.cartItems.push(resp.data);
+                    $scope.saveToLocalStorage();
+
+                })
+            }
+
+            swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+
+
+        }
+        $scope.saveToLocalStorage = function () {
+            var json = JSON.stringify(angular.copy($scope.cartItems));
+            localStorage.setItem("cart", json);
+        }
+        $scope.loadLocalStorage = function () {
+            var json = localStorage.getItem("cart");
+            $scope.cartItems = json ? JSON.parse(json) : [];
+
+        }
+        $scope.removesp = function (masp) {
+            swal({
+                title: "Cảnh báo",
+                text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+                buttons: ["Hủy bỏ", "Đồng ý"],
+                icon: "warning"
+            }).then((willDelete) => {
+                if (willDelete) {
+                    var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
+                    $scope.cartItems.splice(index, 1);
+                    $scope.saveToLocalStorage();
+                    swal("Thành công", "Sản phẩm đã được xóa!", "success")
+
+                    $scope.$apply();
+                }
+            })
+
+        }
+        $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
+            return $scope.cartItems
+                .map(cart => cart.qty)
+                .reduce((total, qty) => total += qty, 0);
+
+        }
+        $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
+            return cart.price * cart.qty;
+        }
+        $scope.totalAmount = function () {
+            return $scope.cartItems
+                .map(cart => this.amt_of(cart))
+                .reduce((total, amt) => total += amt, 0);
+        };
+        $scope.loadLocalStorage();
+
 
 
 
