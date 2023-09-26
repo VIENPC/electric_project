@@ -1,4 +1,4 @@
-package com.nhutin.electric_project.ServiceImpl;
+package com.nhutin.electric_project.serviceImpl;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ import com.nhutin.electric_project.service.CategorysService;
 public class CategoryServiceImpl implements CategorysService {
     @Autowired
     categorysRepository categorysRepository;
-    // 
+    //
 }
