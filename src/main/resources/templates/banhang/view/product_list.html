@@ -55,7 +55,7 @@
               <h2>Thương hiệu</h2>
               <div class="col-md-6 col-sm-12 col-xs-12 " ng-repeat="item in brands">
                 <a class="card" ng-click="loadProductsByBrand(item.brandID)">
-                  <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
+                  <img ng-src="../assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
                   <div class="card-body">
                     <h5 class="card-text">{{item.brandName}}</h5>
                   </div>
@@ -102,12 +102,12 @@
             <div class="row product-list">
               <!-- PRODUCT ITEM START -->
 
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products track by item.productID">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img ng-src="./assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                    <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
-                      <a href="./assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                      <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
                       <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>

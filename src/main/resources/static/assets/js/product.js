@@ -3,7 +3,7 @@ var app = angular.module('my-app');
 app.controller('product-controller', function ($scope, $http, $window) {
     $scope.products = [];
     $scope.brands = [];
-    $scope.products2 = {};
+    $scope.products = {};
 
 
     $http.get('/rest/product')
@@ -21,6 +21,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
     $scope.loadProductsByBrand = function (brandID) {
         $http.get('/rest/products-by-brand?brandID=' + brandID)
             .then(function (response) {
+                console.log(brandID)
                 $scope.products = response.data;
             })
             .catch(function (error) {
@@ -29,7 +30,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
     };
 
     $scope.loadProductsByCategory = function (categoryID) {
-        $http.get('/rest/products-by-category?categoryID=' + categoryID)
+        $http.get('/rest/products-by-category/' + categoryID)
             .then(function (response) {
                 $scope.products = response.data;
             })
@@ -38,8 +39,32 @@ app.controller('product-controller', function ($scope, $http, $window) {
             });
     };
 
+    // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
+    window.onhashchange = function () {
+        // Lấy fragment từ URL
+        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        console.log('Fragment:', fragment);
+        if (fragment) {
+            $scope.$apply(function () {
+                $scope.loadProductsByCategory(fragment);
+            });
+        }
+    };
+
+    // Gọi $scope.loadProductsByCategory khi trang được nạp ban đầu
+    window.onload = function () {
+        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        console.log('Fragment:', fragment);
+        if (fragment) {
+            $scope.$apply(function () {
+                $scope.loadProductsByCategory(fragment);
+            });
+        }
+    };
+
+
     $scope.addToCart = function (masp) {
-         alert(masp)
+        alert(masp)
         var cart = this.products.find(cart => cart.masp == masp);
         if (cart) {
             cart.qty++;

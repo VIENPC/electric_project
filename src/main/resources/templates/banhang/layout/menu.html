@@ -75,7 +75,7 @@
                   <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
                 </li>
                 <li>
-                  <a href="shop-item.html"><img src="./assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch"
+                  <a href="shop-item.html"><img src="../assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch"
                       width="37" height="34"></a>
                   <span class="cart-content-count">x 1</span>
                   <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
@@ -154,13 +154,13 @@
                       <div class="col-md-12 header-navigation-col">
                         <h4>Điện máy</h4>
                         <ul ng-repeat="item in categoris">
-                          <li><a ng-click="goToSinglePage()">{{item.categoryName}}</a></li>
+                          <li><a ng-click="goToCategory(item.categoryID)">{{item.categoryName}}</a></li>
                         </ul>
                       </div>
                       <div class="col-md-12 nav-brands">
                         <ul class="brand-list">
                           <li ng-repeat="item in brands" style="display: inline-block; margin-right: 20px;">
-                            <a ng-click="loadProductsByBrand(item.brandID)">
+                            <a ng-click="goToBrand(item.brandID)">
                               <img title="esprit" alt="esprit" ng-src="../assets/images/carousel/{{item.image}}">
                             </a>
                           </li>
@@ -192,7 +192,7 @@
                 Giới thiệu
 
               </a>
-            
+
             </li>
 
             <li class="dropdown dropdown100 nav-catalogue">
