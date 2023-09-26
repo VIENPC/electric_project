@@ -37,15 +37,15 @@ app.controller('product-controller', function ($scope, $http, $window) {
                 console.error('Error fetching products:', error);
             });
     };
+    // Quan ly gio hang
     $scope.cartItems = [];
     $scope.addToCart = function (masp) {
-       
+
         var cart = this.cartItems.find(cart => cart.productID == masp);
         if (cart) {
-         
+
             cart.qty++;
             $scope.saveToLocalStorage();
-
         } else {
             var url = `/rest/product/${masp}`;
             $http.get(url).then(resp => {
@@ -77,7 +77,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
             icon: "warning"
         }).then((willDelete) => {
             if (willDelete) {
-                var index = $scope.cartItems.findIndex(cart => cart.masp == masp);
+                var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
                 $scope.cartItems.splice(index, 1);
                 $scope.saveToLocalStorage();
                 swal("Thành công", "Sản phẩm đã được xóa!", "success")
@@ -102,7 +102,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
             .reduce((total, amt) => total += amt, 0);
     };
     $scope.loadLocalStorage();
-
+   
 
 
 

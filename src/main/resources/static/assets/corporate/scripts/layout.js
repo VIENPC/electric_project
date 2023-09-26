@@ -332,15 +332,9 @@ var Layout = function () {
             }(document,"script","twitter-wjs");
         },
 
-        initTouchspin: function () {
-            $(".product-quantity .form-control").TouchSpin({
-                buttondown_class: "btn quantity-down",
-                buttonup_class: "btn quantity-up"
-            });
-            $(".quantity-down").html("<i class='fa fa-angle-down'></i>");
-            $(".quantity-up").html("<i class='fa fa-angle-up'></i>");
-        },
+       
 
+        
         initFixHeaderWithPreHeader: function () {
             jQuery(window).scroll(function() {                
                 if (jQuery(window).scrollTop()>37){

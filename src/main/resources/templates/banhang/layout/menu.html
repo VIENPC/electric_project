@@ -67,12 +67,12 @@
             <div class="top-cart-content">
               <ul class="scroller" style="height: 250px;">
                 <li ng-repeat="gh in cartItems">
-                  <a href=""><img ng-src="./assets/images/product/{{gh.image}}" alt="{{gh.image}}"
+                  <a href=""><img ng-src="/assets/images/product/{{gh.image}}" alt="{{gh.image}}"
                       width="37" height="34"></a>
                   <span class="cart-content-count">X {{gh.qty}}</span>
                   <strong><a href="">{{gh.productName}}</a></strong>
                   <em>{{gh.price|number : 0}} đ</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
+                  <a href="javascript:void(0);" class="del-goods" ng-click="removesp(item.productID)">&nbsp;</a>
                 </li>
                
               
