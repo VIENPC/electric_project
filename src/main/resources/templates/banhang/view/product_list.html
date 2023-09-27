@@ -35,6 +35,14 @@
               </div>
             </div>
           </li> -->
+          <li>
+            <div class="section-title">
+              <h3><span class="orange-text">Our</span> Sản phẩm</h3>
+              <h4>Lọc:</h4>
+              <select class="form-control" ng-model="selectedPriceRange"
+                ng-options="priceRange.label for priceRange in priceRanges"></select>
+            </div>
+          </li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">

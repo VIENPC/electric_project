@@ -114,6 +114,40 @@ app.controller('product-controller', function ($scope, $http, $window) {
         $scope.showSearchResults = false;
     };
 
+    $scope.priceRanges = [
+        { min: 0, max: 5000000, label: "Dưới 5.000.000 VNĐ" },
+        { min: 15000000, max: 200000000, label: "15.000.000-20.000.000 VNĐ" },
+        { min: 20000000, max: 50000000, label: "20.000.000-50.000.000 VNĐ" },
+        // Thêm các mốc giá khác tùy ý
+    ];
+    $scope.selectedPriceRange = $scope.priceRanges[0];
+    $scope.filterItemsByPrice = function () {
+        var minPrice = $scope.selectedPriceRange.min;
+        var maxPrice = $scope.selectedPriceRange.max;
+
+        $http.get('/rest/filterByPrice', { params: { minPrice: minPrice, maxPrice: maxPrice } })
+            .then(function (response) {
+
+                $scope.products = response.data;
+                if ($scope.items.length === 0) {
+                    swal("Thất bại", "Không tìm thấy sản phẩm trong tầm giá!", "error")
+                    return;
+                }
+                swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+            })
+            .catch(function (error) {
+                console.error('Error while filtering items:', error);
+                swal("Thất bại", "Đã có lổi xãy ra!", "error")
+            });
+    };
+    // Tự động gọi hàm lọc sản phẩm khi mốc giá thay đổi
+    $scope.$watch('selectedPriceRange', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.filterItemsByPrice();
+        }
+    });
+
+
     $scope.addToCart = function (masp) {
         var cart = this.cartItems.find(cart => cart.productID == masp);
         if (cart) {

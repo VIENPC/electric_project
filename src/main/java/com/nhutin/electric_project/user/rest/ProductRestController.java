@@ -1,5 +1,6 @@
 package com.nhutin.electric_project.user.rest;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,18 @@ public class ProductRestController {
         try {
             List<Product> products = productdao.findByproductNameContaining(productName);
             return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/rest/filterByPrice")
+    public ResponseEntity<List<Product>> filterItemsByPrice(
+            @RequestParam(name = "minPrice") BigDecimal minPrice,
+            @RequestParam(name = "maxPrice") BigDecimal maxPrice) {
+        try {
+            List<Product> filteredItems = productdao.findByPriceBetween(minPrice, maxPrice);
+            return ResponseEntity.ok(filteredItems);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
