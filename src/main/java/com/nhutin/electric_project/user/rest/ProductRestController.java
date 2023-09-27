@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.User;
+import com.nhutin.electric_project.repository.UserRepository;
 import com.nhutin.electric_project.repository.productsRepository;
 import com.nhutin.electric_project.service.ProductsService;
 
@@ -25,6 +29,11 @@ public class ProductRestController {
 
     @Autowired
     ProductsService productService;
+
+    @Autowired
+    UserRepository userDAO;
+
+    
 
     @GetMapping("rest/product")
     public List<Product> findAll() {
@@ -59,12 +68,13 @@ public class ProductRestController {
         return products;
     }
 
-    	@GetMapping("/rest/product/{masp}")
-	public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
-		if (!productdao.existsById(masp)) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(productdao.findById(masp).get());
-	}
-}
+    @GetMapping("/rest/product/{masp}")
+    public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
+        if (!productdao.existsById(masp)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(productdao.findById(masp).get());
+    }
 
+    
+}

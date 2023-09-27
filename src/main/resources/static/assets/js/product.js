@@ -102,10 +102,10 @@ app.controller('product-controller', function ($scope, $http, $window) {
             .reduce((total, amt) => total += amt, 0);
     };
     $scope.loadLocalStorage();
-   
+    
 
-
-
+  
+    
 });
 
 app.controller("checkctrl", function ($scope, $http, $filter) {
@@ -172,41 +172,15 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
     }
     $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-        return cart.giasp * cart.qty;
+        return cart.price * cart.qty;
     }
     $scope.totalAmount = function () {
         return $scope.cartItems
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
-    $scope.orderDetails2 = function () {
-        return $scope.cartItems.map(cart => {
-            return {
-                sanpham: { masp: cart.masp },
-                giasp: cart.giasp,
-                soluong: cart.qty,
-            };
-        });
-    };
-    $scope.getAccount = function () {
-
-        // Replace 'YOUR_GET_TOURS_API_URL' with the actual API endpoint to fetch tour products
-        var url = 'http://localhost:8080/rest/account';
-
-
-        $http.get(url).then(resp => {
-            $scope.account = resp.data;
-            console.log("account", resp)
-            if ($scope.account != null) {
-                $scope.isLoggedIn = true;
-            } else {
-                $scope.isLoggedIn = false;
-            }
-
-        }).catch(error => {
-            console.log("Error", error)
-        });
-    };
+    
+    
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);
@@ -218,59 +192,71 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         // Xóa sạch các mặt hàng trong giỏ
 
     }
+    $scope.getAccount = function () {
+        var url = 'localhost:4444/rest/account';
+        $http.get(url).then(resp => {
+            $scope.account = resp.data;
+            console.log("account", resp)
+          
+
+        }).catch(error => {
+            console.log("Error", error)
+        });
+    };
     $scope.getAccount();
 
     $scope.loadLocalStorage();
 
-    $scope.order = {
-        ngaymua: new Date(),
-        khachhang: {},
-        tennguoinhan: "", // Thêm trường tên người nhận
-        diachinn: "",
-        dienthoainn: "",
-        trangthaihd: 1,
-        tongtien: $scope.totalAmount(),
-        ghichu: "Trống", // Thêm trường số điện thoại người nhận
-        get hoadonct() {
-            return $scope.cartItems.map(cart => {
-                return {
-                    sanpham: { masp: cart.masp },
-                    giasp: cart.giasp,
-                    soluong: cart.qty,
-                };
-            });
-        },
-        purchase() {
-            var order = angular.copy(this);
-            var url = "http://localhost:8080/rest/hoadon";
-            var khachHang = {
-                usernamekh: $scope.account.usernamekh,
+    // $scope.order = {
+    //     orderDate: new Date(),
+    //     user: {},
+    //     name: "", // Thêm trường tên người nhận
+    //     address: "",
+    //     phone: "",
+    //     statushd: 1,
+    //     statustt: 1,
+    //     totalAmount: $scope.totalAmount(),
+    //     // note: "Trống", // Thêm trường số điện thoại người nhận
+    //     get orderDetails() {
+    //         return $scope.cartItems.map(cart => {
+    //             return {
+    //                 product: { productID: cart.productID },
+    //                 price: cart.price,
+    //                 quantity: cart.qty,
+    //             };
+    //         });
+    //     },
+    //     purchase() {
+    //         var order = angular.copy(this);
+    //         var url = "/rest/hoadon";
+    //         var user = {
+    //             userID: $scope.account.userID,
 
-            };
+    //         };
 
-            order.tennguoinhan = $scope.account.hotenkh;
-            order.khachhang = khachHang,
-                order.dienthoainn = $scope.account.dienthoai;
-            order.diachinn = $scope.dnct + ',' + diachinn1;
-            order.ghichu = $scope.ghichu;
+    //         order.name = $scope.account.fullName;
+    //          order.user = user;
+    //         order.phone = $scope.account.phoneNumber;
+    //         order.address = $scope.dnct + ',' + diachinn1;
+    //         order.note = $scope.ghichu;
+    //         console.log("thông tin",$scope.totalAmount());
 
 
+    //         $http.post(url, order).then(
+    //             (resp) => {
 
-            $http.post(url, order).then(
-                (resp) => {
-
-                    $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
-                    swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
-                        window.location.href = "";
-                    });
-                },
-                (error) => {
-                    alert("Đặt hàng lỗi!");
-                    console.log("Error", error);
-                }
-            );
-        },
-    };
+    //                 $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
+    //                 swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
+    //                     window.location.href = "";
+    //                 });
+    //             },
+    //             (error) => {
+    //                 alert("Đặt hàng lỗi!");
+    //                 console.log("Error", error);
+    //             }
+    //         );
+    //     },
+    // };
 
 
 
