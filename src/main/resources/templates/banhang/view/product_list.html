@@ -24,6 +24,17 @@
           <li><a href="">Home</a></li>
           <li><a href="">Store</a></li>
           <li class="active">Men category</li>
+          <!-- <li> <span class="sep"></span>
+            <i class="fa fa-search search-btn"></i>
+            <div class="search-box">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <input type="search" class="form-control" id="productName" ng-model="searchText" name="productName">
+                  <button ng-click="searchProductsByName()" class="btn btn-primary">Search</button>
+                </span>
+              </div>
+            </div>
+          </li> -->
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -32,16 +43,11 @@
             <div class="sidebar-filter margin-bottom-25">
               <h2>Filter</h2>
               <h3>Availability</h3>
-              <div class="checkbox-list">
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
+              <div class="checkbox-list" ng-repeat="item in categoris">
+                <label>
+                  <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID)">
+                  {{item.categoryName}}
+                </label>
               </div>
 
               <h3>Price</h3>
@@ -113,7 +119,8 @@
                   </div>
                   <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
                   <div class="pi-price">{{item.price |number : 0}} đ</div>
-                  <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to cart</a>
+                  <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to
+                    cart</a>
                 </div>
               </div>
             </div>

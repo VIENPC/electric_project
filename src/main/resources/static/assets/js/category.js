@@ -28,6 +28,18 @@ app.controller('category-controller', function ($scope, $http, $window) {
         window.location.href = `/shop#${brandID}`;
     };
 
-
+    // Hàm tìm kiếm sản phẩm theo tên
+    $scope.searchProductsByName = function () {
+        $http.get('/rest/product-search?productName=' + $scope.searchText)
+            .then(function (response) {
+                $scope.products = response.data;
+                if ($scope.products.length === 0) {
+                    swal("Thất bại", "Không tìm thấy sản phẩm!", "error")
+                }
+            })
+            .catch(function (error) {
+                console.error('Error fetching products:', error);
+            });
+    };
 
 });

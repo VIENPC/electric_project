@@ -14,7 +14,9 @@
         <div class="row">
           <!-- BEGIN TOP BAR LEFT PART -->
           <div class="col-md-6 col-sm-6 additional-shop-info">
-            <ul class="list-unstyled list-inline">
+            <ul class=" list-inline">
+              <li style="height: 45px;"> <a class="site-logo" href="shop-index.html"><img
+                    src="../assets/corporate/img/logos/logo-shop-red.png" alt="Metronic Shop UI"></a></li>
               <li><i class="fa fa-phone"></i><span>+nhutin.vn</span></li>
               <!-- BEGIN CURRENCIES -->
               <li class="shop-currencies">
@@ -56,8 +58,7 @@
     </div>
     <div class="header" ng-controller="product-controller">
       <div class="container">
-        <a class="site-logo" href="shop-index.html"><img src="../assets/corporate/img/logos/logo-shop-red.png"
-            alt="Metronic Shop UI"></a>
+
 
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
@@ -79,9 +80,6 @@
                   <em>{{gh.price|number : 0}} đ</em>
                   <a href="javascript:void(0);" class="del-goods" ng-click="removesp(item.productID)">&nbsp;</a>
                 </li>
-
-
-
               </ul>
               <div class="text-right">
                 <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
@@ -97,7 +95,7 @@
           <ul>
             <li class="dropdown dropdown-megamenu">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                DANH MỤC
+                <strong>DANH MỤC</strong>
               </a>
               <ul class="dropdown-menu">
                 <li>
@@ -112,7 +110,7 @@
                       <div class="col-md-12 nav-brands">
                         <ul class="brand-list">
                           <li ng-repeat="item in brands" style="display: inline-block; margin-right: 20px;">
-                            <a ng-click="goToBrand(item.brandID)">
+                            <a>
                               <img title="esprit" alt="esprit" ng-src="../assets/images/carousel/{{item.image}}">
                             </a>
                           </li>
@@ -188,22 +186,47 @@
               <span class="sep"></span>
               <i class="fa fa-search search-btn"></i>
               <div class="search-box">
-                <form action="#">
-                  <div class="input-group">
-                    <input type="text" placeholder="Search" class="form-control">
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary" type="submit">Search</button>
-                    </span>
-                  </div>
-                </form>
+                <div class="input-group">
+                  <input type="search" placeholder="Search" class="form-control" id="productName" ng-model="searchText"
+                    name="productName">
+                  <span class="input-group-btn">
+                    <button ng-click="searchProductsByName()" class="btn btn-primary">Search</button>
+                  </span>
+                </div>
               </div>
+              <!-- Hiển thị kết quả tìm kiếm nếu showSearchResults là true -->
             </li>
             <!-- END TOP SEARCH -->
           </ul>
         </div>
         <!-- END NAVIGATION -->
       </div>
-    </div>
+      <div ng-show="showSearchResults">
+
+        <button ng-click="closeSearchResults()">&#10006;</button>
+        <!-- Đoạn mã để hiển thị kết quả tìm kiếm -->
+        <div class="row product-list">
+          <!-- PRODUCT ITEM START -->
+          <div class="col-md-2 col-sm-6 col-xs-12" ng-repeat="item in products track by item.productID">
+            <div class="product-item">
+              <div class="pi-img-wrapper">
+                <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                <div>
+                  <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                  <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                </div>
+              </div>
+              <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
+              </h3>
+              <div class="pi-price">{{item.price |number : 0}} đ</div>
+              <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
+                to
+                cart</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
 
 
 

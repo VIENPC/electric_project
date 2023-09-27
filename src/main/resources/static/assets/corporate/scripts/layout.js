@@ -332,9 +332,9 @@ var Layout = function () {
             }(document, "script", "twitter-wjs");
         },
 
-       
 
-        
+
+
         initFixHeaderWithPreHeader: function () {
             jQuery(window).scroll(function () {
                 if (jQuery(window).scrollTop() > 37) {

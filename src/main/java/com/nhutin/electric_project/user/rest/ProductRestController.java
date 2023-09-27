@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,16 @@ public class ProductRestController {
         // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
         List<Product> products = productService.getProductsByCategory(categoryID);
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/rest/product-search")
+    public ResponseEntity<List<Product>> searchProductsByName(@RequestParam(name = "productName") String productName) {
+        try {
+            List<Product> products = productdao.findByproductNameContaining(productName);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/rest/product/{masp}")

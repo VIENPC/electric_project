@@ -4,6 +4,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
     $scope.products = [];
     $scope.brands = [];
     $scope.products = {};
+    $scope.categoris = [];
 
 
     $http.get('/rest/product')
@@ -13,6 +14,10 @@ app.controller('product-controller', function ($scope, $http, $window) {
     $http.get('/rest/brand')
         .then(function (response) {
             $scope.brands = response.data;
+        });
+    $http.get('/rest/category')
+        .then(function (response) {
+            $scope.categoris = response.data;
         });
 
     $scope.goToSinglePage = function (productID) {
@@ -31,6 +36,25 @@ app.controller('product-controller', function ($scope, $http, $window) {
             .catch(function (error) {
                 console.error('Error fetching products:', error);
             });
+    };
+
+    // Hàm để lọc sản phẩm dựa trên các checkbox đã chọn và tải sản phẩm theo categoryID
+    $scope.filterProducts = function (categoryID) {
+        $scope.products = [];
+
+        // Lặp qua danh sách loại sản phẩm và tải sản phẩm nếu checkbox được chọn
+        angular.forEach($scope.categoris, function (category) {
+            if (category.selected) {
+                $http.get('/rest/products-by-category/' + category.categoryID)
+                    .then(function (response) {
+                        // Nối sản phẩm tải được vào danh sách filteredProducts
+                        $scope.products = $scope.products.concat(response.data);
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching products:', error);
+                    });
+            }
+        });
     };
 
     $scope.loadProductsByCategory = function (categoryID) {
@@ -65,144 +89,162 @@ app.controller('product-controller', function ($scope, $http, $window) {
             });
         }
     };
+    // Khởi tạo showSearchResults là false ban đầu
+    $scope.showSearchResults = false;
 
+    // Hàm tìm kiếm sản phẩm theo tên
+    $scope.searchProductsByName = function () {
+        $http.get('/rest/product-search?productName=' + $scope.searchText)
+            .then(function (response) {
+                $scope.products = response.data;
+                if ($scope.products.length === 0) {
+                    swal("Thất bại", "Không tìm thấy sản phẩm!", "error");
+                    $scope.showSearchResults = false; // Ẩn kết quả nếu không tìm thấy sản phẩm
+                } else {
+                    $scope.showSearchResults = true; // Hiển thị kết quả nếu tìm thấy sản phẩm
+                }
+            })
+            .catch(function (error) {
+                console.error('Error fetching products:', error);
+                $scope.showSearchResults = false; // Ẩn kết quả nếu có lỗi
+            });
+    };
+    // Hàm để đóng kết quả tìm kiếm
+    $scope.closeSearchResults = function () {
+        $scope.showSearchResults = false;
+    };
 
     $scope.addToCart = function (masp) {
-        alert(masp)
-        var cart = this.products.find(cart => cart.masp == masp);
-        $scope.cartItems = [];
-        $scope.addToCart = function (masp) {
+        var cart = this.cartItems.find(cart => cart.productID == masp);
+        if (cart) {
 
-            var cart = this.cartItems.find(cart => cart.productID == masp);
-            if (cart) {
+            cart.qty++;
+            $scope.saveToLocalStorage();
 
-                cart.qty++;
+        } else {
+            var url = `/rest/product/${masp}`;
+            $http.get(url).then(resp => {
+                resp.data.qty = 1;
+                $scope.cartItems.push(resp.data);
                 $scope.saveToLocalStorage();
 
-            } else {
-                var url = `/rest/product/${masp}`;
-                $http.get(url).then(resp => {
-                    resp.data.qty = 1;
-                    $scope.cartItems.push(resp.data);
-                    $scope.saveToLocalStorage();
-
-                })
-            }
-
-            swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
-
-
-        }
-        $scope.saveToLocalStorage = function () {
-            var json = JSON.stringify(angular.copy($scope.cartItems));
-            localStorage.setItem("cart", json);
-        }
-        $scope.loadLocalStorage = function () {
-            var json = localStorage.getItem("cart");
-            $scope.cartItems = json ? JSON.parse(json) : [];
-
-        }
-        $scope.removesp = function (masp) {
-            swal({
-                title: "Cảnh báo",
-                text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-                icon: "warning"
-            }).then((willDelete) => {
-                if (willDelete) {
-                    var index = $scope.cartItems.findIndex(cart => cart.masp == masp);
-                    $scope.cartItems.splice(index, 1);
-                    $scope.saveToLocalStorage();
-                    swal("Thành công", "Sản phẩm đã được xóa!", "success")
-
-                    $scope.$apply();
-                }
             })
-
         }
-        $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
-            return $scope.cartItems
-                .map(cart => cart.qty)
-                .reduce((total, qty) => total += qty, 0);
 
-        }
-        $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-            return cart.price * cart.qty;
-        }
-        $scope.totalAmount = function () {
-            return $scope.cartItems
-                .map(cart => this.amt_of(cart))
-                .reduce((total, amt) => total += amt, 0);
-        };
-        $scope.loadLocalStorage();
-        // Quan ly gio hang
-        $scope.cartItems = [];
-        $scope.addToCart = function (masp) {
-
-            var cart = this.cartItems.find(cart => cart.productID == masp);
-            if (cart) {
-
-                cart.qty++;
-                $scope.saveToLocalStorage();
-            } else {
-                var url = `/rest/product/${masp}`;
-                $http.get(url).then(resp => {
-                    resp.data.qty = 1;
-                    $scope.cartItems.push(resp.data);
-                    $scope.saveToLocalStorage();
-
-                })
-            }
-
-            swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
-
-
-        }
-        $scope.saveToLocalStorage = function () {
-            var json = JSON.stringify(angular.copy($scope.cartItems));
-            localStorage.setItem("cart", json);
-        }
-        $scope.loadLocalStorage = function () {
-            var json = localStorage.getItem("cart");
-            $scope.cartItems = json ? JSON.parse(json) : [];
-
-        }
-        $scope.removesp = function (masp) {
-            swal({
-                title: "Cảnh báo",
-                text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-                icon: "warning"
-            }).then((willDelete) => {
-                if (willDelete) {
-                    var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
-                    $scope.cartItems.splice(index, 1);
-                    $scope.saveToLocalStorage();
-                    swal("Thành công", "Sản phẩm đã được xóa!", "success")
-
-                    $scope.$apply();
-                }
-            })
-
-        }
-        $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
-            return $scope.cartItems
-                .map(cart => cart.qty)
-                .reduce((total, qty) => total += qty, 0);
-
-        }
-        $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-            return cart.price * cart.qty;
-        }
-        $scope.totalAmount = function () {
-            return $scope.cartItems
-                .map(cart => this.amt_of(cart))
-                .reduce((total, amt) => total += amt, 0);
-        };
-        $scope.loadLocalStorage();
-
-
+        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
 
 
     }
+    $scope.saveToLocalStorage = function () {
+        var json = JSON.stringify(angular.copy($scope.cartItems));
+        localStorage.setItem("cart", json);
+    }
+    $scope.loadLocalStorage = function () {
+        var json = localStorage.getItem("cart");
+        $scope.cartItems = json ? JSON.parse(json) : [];
+
+    }
+    $scope.removesp = function (masp) {
+        swal({
+            title: "Cảnh báo",
+            text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+            buttons: ["Hủy bỏ", "Đồng ý"],
+            icon: "warning"
+        }).then((willDelete) => {
+            if (willDelete) {
+                var index = $scope.cartItems.findIndex(cart => cart.masp == masp);
+                $scope.cartItems.splice(index, 1);
+                $scope.saveToLocalStorage();
+                swal("Thành công", "Sản phẩm đã được xóa!", "success")
+
+                $scope.$apply();
+            }
+        })
+
+    }
+    $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
+        return $scope.cartItems
+            .map(cart => cart.qty)
+            .reduce((total, qty) => total += qty, 0);
+
+    }
+    $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
+        return cart.price * cart.qty;
+    }
+    $scope.totalAmount = function () {
+        return $scope.cartItems
+            .map(cart => this.amt_of(cart))
+            .reduce((total, amt) => total += amt, 0);
+    };
+    $scope.loadLocalStorage();
+    // Quan ly gio hang
+    $scope.cartItems = [];
+    $scope.addToCart = function (masp) {
+
+        var cart = this.cartItems.find(cart => cart.productID == masp);
+        if (cart) {
+
+            cart.qty++;
+            $scope.saveToLocalStorage();
+        } else {
+            var url = `/rest/product/${masp}`;
+            $http.get(url).then(resp => {
+                resp.data.qty = 1;
+                $scope.cartItems.push(resp.data);
+                $scope.saveToLocalStorage();
+
+            })
+        }
+
+        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+
+
+    }
+    $scope.saveToLocalStorage = function () {
+        var json = JSON.stringify(angular.copy($scope.cartItems));
+        localStorage.setItem("cart", json);
+    }
+    $scope.loadLocalStorage = function () {
+        var json = localStorage.getItem("cart");
+        $scope.cartItems = json ? JSON.parse(json) : [];
+
+    }
+    $scope.removesp = function (masp) {
+        swal({
+            title: "Cảnh báo",
+            text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+            buttons: ["Hủy bỏ", "Đồng ý"],
+            icon: "warning"
+        }).then((willDelete) => {
+            if (willDelete) {
+                var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
+                $scope.cartItems.splice(index, 1);
+                $scope.saveToLocalStorage();
+                swal("Thành công", "Sản phẩm đã được xóa!", "success")
+
+                $scope.$apply();
+            }
+        })
+
+    }
+    $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
+        return $scope.cartItems
+            .map(cart => cart.qty)
+            .reduce((total, qty) => total += qty, 0);
+
+    }
+    $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
+        return cart.price * cart.qty;
+    }
+    $scope.totalAmount = function () {
+        return $scope.cartItems
+            .map(cart => this.amt_of(cart))
+            .reduce((total, amt) => total += amt, 0);
+    };
+    $scope.loadLocalStorage();
+
+
+
+
+
 });
