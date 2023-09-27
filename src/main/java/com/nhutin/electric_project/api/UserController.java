@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.UserRepository;
-import com.nhutin.electric_project.service.UsersService;
 
 @CrossOrigin("*")
 @RestController
@@ -66,4 +67,14 @@ public class UserController {
 		userRepo.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	public User getNguoiDung() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepo.findByEmail(auth.getName()).get();
+    }
+	
+	@GetMapping("/api/account/login")
+    public ResponseEntity<User> findUserLogin() {
+        return ResponseEntity.ok(getNguoiDung());
+    }
 }
