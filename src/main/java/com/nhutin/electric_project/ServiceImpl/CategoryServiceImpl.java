@@ -13,5 +13,5 @@ import com.nhutin.electric_project.service.CategorysService;
 public class CategoryServiceImpl implements CategorysService {
     @Autowired
     categorysRepository categorysRepository;
-    // 
+    //
 }

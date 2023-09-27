@@ -1,6 +1,7 @@
 package com.nhutin.electric_project.repository;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import com.nhutin.electric_project.model.ConfirmationCode;
 import com.nhutin.electric_project.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-	@Query("SELECT s FROM User s WHERE s.username = ?1")
+    @Query("SELECT s FROM User s WHERE s.username = ?1")
     User findBytaiKhoanTTTK(String username);
 
     User findByEmailLike(String email);
@@ -31,15 +32,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void updatepassword(String password, String username);
 
     Optional<User> findByConfirmationCode(ConfirmationCode confirmationCode);
-    
-    Optional<User> findByEmail(String email);
-    
 
-	@Query(value = "SELECT * FROM [User] a WHERE a.loginPermission = 1", nativeQuery = true)
-	List<User> finAllVer2();
-	
-	@Query(value = "SELECT * FROM [User] a WHERE a.FullName like N'%?1%' and a.LoginPermission = 1", nativeQuery = true)
-	List<User> finAllLikeName(String name);
+    Optional<User> findByEmail(String email);
+
+    @Query(value = "SELECT * FROM [User] a WHERE a.loginPermission = 1", nativeQuery = true)
+    List<User> finAllVer2();
+
+    @Query(value = "SELECT * FROM [User] a WHERE a.FullName like N'%?1%' and a.LoginPermission = 1", nativeQuery = true)
+    List<User> finAllLikeName(String name);
 
     Optional<User> findByUsername(String username);
 
@@ -50,4 +50,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("UPDATE User a " +
             "SET a.loginPermission = TRUE, registrationDate = ?2 WHERE a.email = ?1")
     int enableUser(String email, Timestamp timestamp);
+
+    // @Query("SELECT kh FROM users kh WHERE kh.registrationDate >= :fiveDaysAgo")
+    // List<User> findNewCustomers(Date fiveDaysAgo);
 }
