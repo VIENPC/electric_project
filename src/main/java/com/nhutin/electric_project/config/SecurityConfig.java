@@ -27,7 +27,6 @@ import com.nhutin.electric_project.security.service.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
-// Phân quyền trong @Controller (@PreAuthorize("hasRole('ADMIN')"))
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

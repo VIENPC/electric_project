@@ -1,4 +1,4 @@
-package com.nhutin.electric_project.ServiceImpl;
+package com.nhutin.electric_project.serviceImpl;
 
 import java.util.List;
 
