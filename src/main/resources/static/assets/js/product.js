@@ -115,9 +115,9 @@ app.controller('product-controller', function ($scope, $http, $window) {
     };
 
     $scope.priceRanges = [
-        { min: 0, max: 5000000, label: "Dưới 5.000.000 VNĐ" },
-        { min: 15000000, max: 200000000, label: "15.000.000-20.000.000 VNĐ" },
-        { min: 20000000, max: 50000000, label: "20.000.000-50.000.000 VNĐ" },
+        { min: 0, max: 500000, label: "Dưới 5.000.000 VNĐ" },
+        { min: 1500000, max: 20000000, label: "15.000.000 - 20.000.000 VNĐ" },
+        { min: 2000000, max: 50000000, label: "20.000.000 - 50.000.000 VNĐ" },
         // Thêm các mốc giá khác tùy ý
     ];
     $scope.selectedPriceRange = $scope.priceRanges[0];
@@ -127,9 +127,8 @@ app.controller('product-controller', function ($scope, $http, $window) {
 
         $http.get('/rest/filterByPrice', { params: { minPrice: minPrice, maxPrice: maxPrice } })
             .then(function (response) {
-
                 $scope.products = response.data;
-                if ($scope.items.length === 0) {
+                if ($scope.products.length === 0) {
                     swal("Thất bại", "Không tìm thấy sản phẩm trong tầm giá!", "error")
                     return;
                 }
@@ -137,6 +136,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
             })
             .catch(function (error) {
                 console.error('Error while filtering items:', error);
+                console.log(error)
                 swal("Thất bại", "Đã có lổi xãy ra!", "error")
             });
     };
@@ -429,6 +429,318 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             order.diachinn = $scope.dnct + ',' + diachinn1;
             order.ghichu = $scope.ghichu;
 
+
+
+            $http.post(url, order).then(
+                (resp) => {
+
+                    $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
+                    swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
+                        window.location.href = "";
+                    });
+                },
+                (error) => {
+                    alert("Đặt hàng lỗi!");
+                    console.log("Error", error);
+                }
+            );
+        },
+    };
+
+    app.controller("checkctrl", function ($scope, $http, $filter) {
+        const host = "https://provinces.open-api.vn/api/";
+        var callAPI = (api) => {
+            return axios.get(api)
+                .then((response) => {
+                    renderData(response.data, "province");
+                });
+        }
+        callAPI('https://provinces.open-api.vn/api/?depth=1');
+        var callApiDistrict = (api) => {
+            return axios.get(api)
+                .then((response) => {
+                    renderData(response.data.districts, "district");
+                });
+        }
+        var callApiWard = (api) => {
+            return axios.get(api)
+                .then((response) => {
+                    renderData(response.data.wards, "ward");
+                });
+        }
+
+        var renderData = (array, select) => {
+            let row = ' <option disable value="">Chọn</option>';
+            array.forEach(element => {
+                row += `<option value="${element.code}">${element.name}</option>`
+            });
+            document.querySelector("#" + select).innerHTML = row
+        }
+        $scope.diachinn = '';
+        $("#province").change(() => {
+            callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+            printResult();
+        });
+        $("#district").change(() => {
+            callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+            printResult();
+        });
+        $("#ward").change(() => {
+            printResult();
+
+        })
+        let diachinn1 = "";
+        var printResult = () => {
+            if ($("#district").val() != "" && $("#province").val() != "" &&
+                $("#ward").val() != "") {
+                let result = $("#ward option:selected").text() + ","
+                    + $("#district option:selected").text() + ","
+                    + $("#province option:selected").text();
+
+
+                diachinn1 = result;
+            }
+
+        }
+
+        $scope.loadLocalStorage = function () {
+            var json = localStorage.getItem("cart");
+            $scope.cartItems = json ? JSON.parse(json) : [];
+
+
+
+        }
+        $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
+            return cart.price * cart.qty;
+        }
+        $scope.totalAmount = function () {
+            return $scope.cartItems
+                .map(cart => this.amt_of(cart))
+                .reduce((total, amt) => total += amt, 0);
+        };
+        $scope.getAccount = function () {
+
+            $http.get('/api/account/login').then(resp => {
+                $scope.account = resp.data;
+                console.log("account", resp)
+
+
+            }).catch(error => {
+                console.log("Error", error)
+            });
+        };
+        $scope.getAccount();
+        $scope.saveToLocalStorage = function () {
+            var json = JSON.stringify(angular.copy($scope.cartItems));
+            localStorage.setItem("cart", json);
+        }
+        $scope.clear = function () {
+
+            $scope.cartItems = []
+            $scope.saveToLocalStorage();
+            // Xóa sạch các mặt hàng trong giỏ
+
+        }
+
+
+        $scope.loadLocalStorage();
+
+        $scope.order = {
+            orderDate: new Date(),
+            user: {},
+            name: "", // Thêm trường tên người nhận
+            address: "",
+            phone: "",
+            statushd: 1,
+            statustt: 1,
+            totalAmount: $scope.totalAmount(),
+            // note: "Trống", // Thêm trường số điện thoại người nhận
+            get orderDetails() {
+                return $scope.cartItems.map(cart => {
+                    return {
+                        product: { productID: cart.productID },
+                        price: cart.price,
+                        quantity: cart.qty,
+                    };
+                });
+            },
+            purchase() {
+                var order = angular.copy(this);
+                var url = "/rest/hoadon";
+                var user = {
+                    userID: $scope.account.userID,
+
+                };
+
+                order.name = $scope.account.fullName;
+                order.user = user;
+                order.phone = $scope.account.phoneNumber;
+                order.address = $scope.dnct + ',' + diachinn1;
+                order.note = $scope.ghichu;
+                console.log("thông tin", user);
+
+
+                // $http.post(url, order).then(
+                //     (resp) => {
+
+                //         $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
+                //         swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
+                //             window.location.href = "";
+                //         });
+                //     },
+                //     (error) => {
+                //         alert("Đặt hàng lỗi!");
+                //         console.log("Error", error);
+                //     }
+                // );
+            },
+        };
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+});
+app.controller("checkctrl", function ($scope, $http, $filter) {
+    const host = "https://provinces.open-api.vn/api/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, "province");
+            });
+    }
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option value="${element.code}">${element.name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+    $scope.diachinn = '';
+    $("#province").change(() => {
+        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+        printResult();
+    });
+    $("#district").change(() => {
+        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+        printResult();
+    });
+    $("#ward").change(() => {
+        printResult();
+
+    })
+    let diachinn1 = "";
+    var printResult = () => {
+        if ($("#district").val() != "" && $("#province").val() != "" &&
+            $("#ward").val() != "") {
+            let result = $("#ward option:selected").text() + ","
+                + $("#district option:selected").text() + ","
+                + $("#province option:selected").text();
+
+
+            diachinn1 = result;
+        }
+
+    }
+
+    $scope.loadLocalStorage = function () {
+        var json = localStorage.getItem("cart");
+        $scope.cartItems = json ? JSON.parse(json) : [];
+
+
+
+    }
+    $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
+        return cart.price * cart.qty;
+    }
+    $scope.totalAmount = function () {
+        return $scope.cartItems
+            .map(cart => this.amt_of(cart))
+            .reduce((total, amt) => total += amt, 0);
+    };
+    $scope.getAccount = function () {
+
+        $http.get('/api/account/login').then(resp => {
+            $scope.account = resp.data;
+            console.log("account", resp)
+
+
+        }).catch(error => {
+            console.log("Error", error)
+        });
+    };
+    $scope.getAccount();
+    $scope.saveToLocalStorage = function () {
+        var json = JSON.stringify(angular.copy($scope.cartItems));
+        localStorage.setItem("cart", json);
+    }
+    $scope.clear = function () {
+
+        $scope.cartItems = []
+        $scope.saveToLocalStorage();
+        // Xóa sạch các mặt hàng trong giỏ
+
+    }
+
+
+    $scope.loadLocalStorage();
+
+    $scope.order = {
+        orderDate: new Date(),
+        user: {},
+        name: "", // Thêm trường tên người nhận
+        address: "",
+        phone: "",
+        statushd: 1,
+        statustt: 1,
+        totalAmount: $scope.totalAmount(),
+        // note: "Trống", // Thêm trường số điện thoại người nhận
+        get orderDetails() {
+            return $scope.cartItems.map(cart => {
+                return {
+                    product: { productID: cart.productID },
+                    price: cart.price,
+                    quantity: cart.qty,
+                };
+            });
+        },
+        purchase() {
+            var order = angular.copy(this);
+            var url = "/rest/hoadon";
+            var user = {
+                userID: $scope.account.userID,
+
+            };
+
+            order.name = $scope.account.fullName;
+            order.user = user;
+            order.phone = $scope.account.phoneNumber;
+            order.address = $scope.dnct + ',' + diachinn1;
+            order.note = $scope.ghichu;
+            console.log("thông tin", user);
 
 
             $http.post(url, order).then(

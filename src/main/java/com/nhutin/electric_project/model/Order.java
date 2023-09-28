@@ -1,6 +1,5 @@
 package com.nhutin.electric_project.model;
 
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,13 +17,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,41 +35,41 @@ public class Order implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="order_id")
+	@Column(name = "order_id")
 	private Integer orderId;
 
-	@Column(name="name")
-	private String  name;
-	@Column(name="address")
-	private String  address;
-	@Column(name="phone")
-	private String  phone;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "address")
+	private String address;
+	@Column(name = "phone")
+	private String phone;
 
-	@Column(name="statushd")
-	private Integer statushd ;
-	@Column(name="statustt")
-	private boolean statustt ;
+	@Column(name = "statushd")
+	private Integer statushd;
+	@Column(name = "statustt")
+	private boolean statustt;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "order_date")
 	private Date orderDate = new Date();
 
-	@Column(name="total_amount")
+	@Column(name = "total_amount")
 	private Double totalAmount;
 
-	@Column(name="note")
+	@Column(name = "note")
 	private String note;
-
-	@OneToMany(mappedBy="order")
+	@JsonIgnore
+	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
 
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy = "order")
 	private List<Payment> payments;
 
-	@OneToOne(mappedBy="order")
+	@OneToOne(mappedBy = "order")
 	private Shipping shipping;
 }

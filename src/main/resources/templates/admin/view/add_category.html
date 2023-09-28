@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Brand mới</title>
+
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin/qlsanpham}">Danh
+                        sách sản phẩm</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/admin/add_product}">Thêm
+                        sản phẩm</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <h3 class="tile-title">Tạo mới sản phẩm</h3>
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i
+                                        class="fas fa-folder-plus"></i> Thêm nhà cung cấp</a>
+                            </div>
+
+                        </div>
+                        <form class="row" method="post" enctype="multipart/form-data">
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Mã sản phẩm </label> <input class="form-control"
+                                    type="number" placeholder="" disabled="disabled">
+
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Tên sản phẩm</label> <input class="form-control"
+                                    type="text">
+                                <i class="mgs_errors"></i><br>
+                                <i class="mgs_errors"></i><br>
+                            </div>
+                            <div class="form-group  col-md-3">
+                                <label class="control-label">Số lượng</label> <input class="form-control" type="number"
+                                    min="0" id="quantity">
+                                <i class="mgs_errors"></i><br>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Giá bán</label> <input class="form-control" type="number">
+                                <i class="mgs_errors"></i><br>
+                            </div>
+                            <div class="form-group col-md-4 ">
+                                <label for="exampleSelect1" class="control-label">Tình
+                                    trạng</label> <select class="form-control" id="tinhtrangselect">
+                                    <option value="">-- Chọn tình trạng --</option>
+
+                                    <option value="true">Còn hàng</option>
+                                    <option value="false">Hết hàng</option>
+                                </select>
+                                <i class="mgs_errors"></i><br>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Ảnh sản phẩm</label><br> <input type="file" name="image">
+                                <i class="mgs_errors"></i><br>
+
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Mô tả sản phẩm</label>
+                                <textarea class="form-control" name="description" id="description"></textarea>
+                                <script>
+                                    CKEDITOR.replace('description');
+                                </script>
+                                <i class="mgs_errors"></i><br>
+                            </div>
+                            <button class="btn btn-save ml-3">Lưu lại</button>
+                            <a class="btn btn-cancel ml-3">Reset</a>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+</body>
+
+</html>
