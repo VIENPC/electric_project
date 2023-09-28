@@ -93,7 +93,8 @@
                                 <tr th:each="itemsp : ${listspbc}">
                                     <td th:text="${itemsp[0]}"></td>
                                     <td th:text="${itemsp[1]}"></td>
-                                    <td th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}" ></td>
+                                    <td th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                    </td>
                                     <td th:text="${itemsp[3]}"></td>
                                     <td th:text="${itemsp[4]}"></td>
 
@@ -190,7 +191,7 @@
                                 <tr>
                                     <th> <span>Mã sản phẩm</span></th>
                                     <th> <span>Tên sản phẩm</span></th>
-                                    <th> <span>Ảnh</span></th>
+                                    <!-- <th> <span>Ảnh</span></th> -->
                                     <th> <span>Số lượng</span></th>
                                     <th> <span>Tình trạng</span></th>
                                     <th> <span>Giá tiền</span></th>
@@ -199,19 +200,19 @@
                             </thead>
                             <tbody>
                                 <tr th:each="itemspht :${listspht}">
-                                    <td th:text="${itemspht.masp}"></td>
-                                    <td th:text="${itemspht.tensp}"></td>
-                                    <td><img th:src="@{'/images/sanpham/' + ${itemspht.hinhanh}}" alt="" width="100px;">
+                                    <td th:text="${itemspht.productID}"></td>
+                                    <td th:text="${itemspht.productName}"></td>
+                                    <!-- <td><img th:src="@{'/images/sanpham/' + ${itemspht.hinhanh}}" alt="" width="100px;">
+                                    </td> -->
+                                    <td th:text="${itemspht.quantity}"></td>
+                                    <td><span class="badge bg-success" th:block th:if="${itemspht.active == true}">Còn
+                                            hàng</span> <span class="badge bg-danger" th:block
+                                            th:unless="${itemspht.active == true}">Hết hàng</span></td>
+
+                                    <td
+                                        th:text="${#numbers.formatDecimal(itemspht.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
                                     </td>
-                                    </td>
-                                    <td th:text="${itemspht.soluong}"></td>
-                                    <td><span class="badge bg-success" th:block
-                                            th:if="${itemspht.trangthaisp == true}">Còn hàng</span> <span
-                                            class="badge bg-danger" th:block
-                                            th:unless="${itemspht.trangthaisp == true}">Hết hàng</span></td>
-                                        
-                                    <td th:text="${#numbers.formatDecimal(itemspht.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
-                                    <td th:text="${itemspht.hangsanxuat.tenhang}"></td>
+                                    <td th:text="${itemspht.brand.brandName}    "></td>
                                 </tr>
                             </tbody>
                         </table>

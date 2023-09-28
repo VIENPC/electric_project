@@ -83,8 +83,8 @@
                                             th:href="@{'/admin/xemhoadonct/'+${hd.orderId}}"><i class="fa fa-eye"
                                                 aria-hidden="true"></i></a>
                                         <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}"
-                                            th:if="${hd.statustt ==true}"> <i class="fa fa-pencil-square-o"
-                                                aria-hidden="true"></i></a>
+                                            th:if="${hd.statustt ==false}"> <i class="fa fa-pencil-square-o"
+                                                aria-hidden="false"></i></a>
 
                                     </td>
                                 </tr>

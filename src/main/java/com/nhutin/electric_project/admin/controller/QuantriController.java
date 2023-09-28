@@ -32,17 +32,17 @@ public class QuantriController {
 		model.addAttribute("slhd", hddao.count());
 		model.addAttribute("slspht", spdao.countByActive(false));
 		model.addAttribute("tkhk", khdao.countLockedUsers());
-		// model.addAttribute("sldhh", hddao.countDontt(5));
-		// double tongtien = hddao.sumTotalAmountOfApprovedOrders();
-		// if (tongtien == null) {
-		// model.addAttribute("tthoadon", 0);
-		// } else {
-		// model.addAttribute("tthoadon", tongtien);
-		// }
+		model.addAttribute("sldhh", hddao.countDontt(5));
+		double tongtien = hddao.sumTotalAmountOfApprovedOrders();
+		if (tongtien == 0.0) {
+			model.addAttribute("tthoadon", 0);
+		} else {
+			model.addAttribute("tthoadon", tongtien);
+		}
+		System.out.println(tongtien);
 
-		// model.addAttribute("listspbc", spdao.findSanPhamBanChay());
-		model.addAttribute("listspht", spdao.findOutOfStockProducts());
-
+		model.addAttribute("listspbc", spdao.findBestSellingProducts());
+		model.addAttribute("listspht", spdao.findByActive(false));
 		return "admin/view/baocaochung";
 	}
 

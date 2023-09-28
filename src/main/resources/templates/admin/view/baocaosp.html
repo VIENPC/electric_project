@@ -27,11 +27,13 @@
                             </div>
 
                             <div class="col-sm-2">
-                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i class="fa fa-file-excel-o"></i>
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
                                     Xuất Excel</a>
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm pdf-file" title="Xuất file pdf"><i class="fa fa-file-pdf-o"></i>
+                                <a class="btn btn-delete btn-sm pdf-file" title="Xuất file pdf"><i
+                                        class="fa fa-file-pdf-o"></i>
                                     Xuất PDF</a>
                             </div>
                             <div class="col-sm-2">
@@ -44,14 +46,10 @@
                                     <select class="btn btn-delete btn-sm nhap-tu-file" id="hangSanXuatSelect"
                                         name="mahang" onchange="submitForm()">
                                         <option value="">- Thống kê theo hãng --</option>
-                                        <option th:each="hsx : ${listhxs}" th:text="${hsx.tenhang}"
-                                            th:value="${hsx.mahang}"></option>
+                                        <option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+                                            th:value="${hsx.brandID}"></option>
                                     </select>
                                 </form>
-
-
-
-
                             </div>
                         </div>
                         <div id="sampleTable_wrapper"
@@ -59,40 +57,40 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table class="table table-hover table-bordered" id="sampleTable">
-										<thead>
-										
-												<tr>
+                                        <thead>
+                                            <tr>
+                                                <th><span>ID</span></th>
+                                                <th><span>Tên sản phẩm</span></th>
+                                                <th><span>Số lượng</span></th>
+                                                <th><span>Giá tiền</span></th>
+                                                <th><span>Tổng tiền</span></th>
+                                                <th><span>Hãng phân phối</span></th>
+                                            </tr>
 
-                                                    <th><span>ID</span></th>
-                                                    <th><span>Tên sản phẩm</span></th>
-                                                    <th><span>Số lượng</span></th>
-                                                    <th><span>Giá tiền</span></th>
-                                                    <th><span>Tổng tiền</span></th>
-                                                    <th><span>Hãng phân phối</span></th>
-                                                </tr>
-											
-										</thead>
-										<tbody>
-											<tr th:each="itemsp : ${itemtksp}">
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="itemsp : ${itemtksp}">
                                                 <td th:text="${itemsp[0]}"></td>
                                                 <td th:text="${itemsp[1]}"></td>
                                                 <td th:text="${itemsp[2]}"></td>
+                                                <!-- <td th:text="${itemsp[3]}"></td> -->
+                                                <td th:text="${itemsp[4]}"></td>
+                                                <!-- <td th:text="${(itemsp[3]*itemsp[2])}"></td> -->
+
                                                 <td
                                                     th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                                </td>
-                                                <td
+                                                    1HIEU</td>
+                                                <!--<td
                                                     th:text="${#numbers.formatDecimal((itemsp[3] *itemsp[2]), 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                                </td>
-                                                <td th:text="${itemsp[4]}"></td>
-
-
+                                                </td> -->
+                                                <td th:text="${itemsp[5]}"></td>
                                                 <!-- Cập nhật giá trị của biến totalTongGiaHang -->
 
                                             </tr>
-                                            
 
 
-										</tbody>
+
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="4">Tổng cộng:</th>
@@ -103,8 +101,8 @@
                                                 <td></td>
                                             </tr>
                                         </tfoot>
-									</table>
-                                    
+                                    </table>
+
                                 </div>
                             </div>
                         </div>
