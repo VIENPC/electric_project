@@ -85,7 +85,7 @@ public class RegistrationService {
                 .getToken(token)
                 .orElseThrow(() -> new IllegalStateException("Không tìm thấy mã xác nhận."));
         if (userDAO.findByConfirmationCode(confirmationToken).get().getLoginPermission()) {
-            throw new IllegalStateException("Email đã được xác nhận..");
+            throw new IllegalStateException("Email đã được xác nhận.");
         }
 
         Timestamp expiredAt = confirmationToken.getOTPExpirationDate();

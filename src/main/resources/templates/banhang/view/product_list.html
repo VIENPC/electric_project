@@ -24,6 +24,25 @@
           <li><a href="">Home</a></li>
           <li><a href="">Store</a></li>
           <li class="active">Men category</li>
+          <!-- <li> <span class="sep"></span>
+            <i class="fa fa-search search-btn"></i>
+            <div class="search-box">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <input type="search" class="form-control" id="productName" ng-model="searchText" name="productName">
+                  <button ng-click="searchProductsByName()" class="btn btn-primary">Search</button>
+                </span>
+              </div>
+            </div>
+          </li> -->
+          <li>
+            <div class="section-title">
+              <h3><span class="orange-text">Our</span> Sản phẩm</h3>
+              <h4>Lọc:</h4>
+              <select class="form-control" ng-model="selectedPriceRange"
+                ng-options="priceRange.label for priceRange in priceRanges"></select>
+            </div>
+          </li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -32,16 +51,11 @@
             <div class="sidebar-filter margin-bottom-25">
               <h2>Filter</h2>
               <h3>Availability</h3>
-              <div class="checkbox-list">
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
+              <div class="checkbox-list" ng-repeat="item in categoris">
+                <label>
+                  <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID)">
+                  {{item.categoryName}}
+                </label>
               </div>
 
               <h3>Price</h3>
@@ -55,7 +69,7 @@
               <h2>Thương hiệu</h2>
               <div class="col-md-6 col-sm-12 col-xs-12 " ng-repeat="item in brands">
                 <a class="card" ng-click="loadProductsByBrand(item.brandID)">
-                  <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
+                  <img ng-src="../assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
                   <div class="card-body">
                     <h5 class="card-text">{{item.brandName}}</h5>
                   </div>
@@ -102,18 +116,19 @@
             <div class="row product-list">
               <!-- PRODUCT ITEM START -->
 
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products track by item.productID">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img ng-src="./assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                    <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
-                      <a href="./assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                      <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
                       <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
                   <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
                   <div class="pi-price">{{item.price |number : 0}} đ</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to
+                    cart</a>
                 </div>
               </div>
             </div>

@@ -1,11 +1,13 @@
 package com.nhutin.electric_project.user.rest;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,19 +54,47 @@ public class ProductRestController {
         return products;
     }
 
-    @GetMapping("/rest/products-by-category")
-    public List<Product> getProductsByCategory(@RequestParam Integer categoryID) {
+    @GetMapping("/rest/products-by-brand/{brandID}")
+    public ResponseEntity<List<Product>> getProductsByBrand(@PathVariable("brandID") int brandID) {
         // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
-        List<Product> products = productService.getProductsByCategory(categoryID);
-        return products;
+        List<Product> products = productService.getProductsByBrand(brandID);
+        return ResponseEntity.ok(products);
     }
 
-    	@GetMapping("/rest/product/{masp}")
-	public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
-		if (!productdao.existsById(masp)) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(productdao.findById(masp).get());
-	}
-}
+    @GetMapping("/rest/products-by-category/{categoryID}")
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("categoryID") int categoryID) {
+        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
+        List<Product> products = productService.getProductsByCategory(categoryID);
+        return ResponseEntity.ok(products);
+    }
 
+    @GetMapping("/rest/product-search")
+    public ResponseEntity<List<Product>> searchProductsByName(@RequestParam(name = "productName") String productName) {
+        try {
+            List<Product> products = productdao.findByproductNameContaining(productName);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/rest/filterByPrice")
+    public ResponseEntity<List<Product>> filterItemsByPrice(
+            @RequestParam(name = "minPrice") BigDecimal minPrice,
+            @RequestParam(name = "maxPrice") BigDecimal maxPrice) {
+        try {
+            List<Product> filteredItems = productdao.findByPriceBetween(minPrice, maxPrice);
+            return ResponseEntity.ok(filteredItems);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/rest/product/{masp}")
+    public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
+        if (!productdao.existsById(masp)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(productdao.findById(masp).get());
+    }
+}

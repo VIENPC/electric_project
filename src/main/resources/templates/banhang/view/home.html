@@ -104,11 +104,11 @@
         <!-- END SLIDER -->
         <div class="container">
             <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
-            <img src="assets/images/carousel/banner_1.png" class="img-responsive" alt="">
+            <img src="../assets/images/carousel/banner_1.png" class="img-responsive" alt="">
             <div class="row m-5 border">
                 <!-- BEGIN SALE PRODUCT -->
                 <div class="col-md-12 sale-product">
-                    <h2>Flash Sale</h2>
+                    <h1 style="margin-top: 15px;">Flash Sale</h1>
                     <!-- Carousel
                                 ================================================== -->
                     <div id="myCarousel" class="carousel slide">
@@ -118,19 +118,21 @@
                                     <div class="col-md-3" ng-repeat="item in products |limitTo: 4">
                                         <div class="product-item">
                                             <div class="pi-img-wrapper">
-                                                <img ng-src="./assets/images/product/{{item.image}}"
+                                                <img ng-src="../assets/images/product/{{item.image}}"
                                                     class="img-responsive" alt="Berry Lace Dress">
                                                 <div>
-                                                    <a href="./assets/images/product/{{item.image}}"
+                                                    <a href="../assets/images/product/{{item.image}}"
                                                         class="btn btn-default fancybox-button">Zoom</a>
                                                     <a href="#product-pop-up"
                                                         class="btn btn-default fancybox-fast-view">View</a>
                                                 </div>
                                             </div>
-                                            <h3 style="height: 40px;"><a href="shop-item.html">{{item.productName}}</a>
+                                            <h3 style="height: 40px;"><a
+                                                    ng-click="goToProduct_Detail(item.productID)">{{item.productName}}</a>
                                             </h3>
                                             <div class="pi-price">{{item.price |number : 0}} đ</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to
+                                            <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
+                                                to
                                                 cart</a>
                                         </div>
                                     </div>
@@ -141,19 +143,21 @@
                                     <div class="col-md-3" ng-repeat="item in products" ng-if="$index ===4">
                                         <div class="product-item">
                                             <div class="pi-img-wrapper">
-                                                <img ng-src="./assets/images/product/{{item.image}}"
+                                                <img ng-src="../assets/images/product/{{item.image}}"
                                                     class="img-responsive" alt="Berry Lace Dress">
                                                 <div>
-                                                    <a href="./assets/images/product/{{item.image}}"
+                                                    <a href="../assets/images/product/{{item.image}}"
                                                         class="btn btn-default fancybox-button">Zoom</a>
                                                     <a href="#product-pop-up"
                                                         class="btn btn-default fancybox-fast-view">View</a>
                                                 </div>
                                             </div>
-                                            <h3 style="height: 40px;"><a href="shop-item.html">{{item.productName}}</a>
+                                            <h3 style="height: 40px;"><a
+                                                    ng-click="goToProduct_Detail(item.productID)">{{item.productName}}</a>
                                             </h3>
                                             <div class="pi-price">{{item.price |number : 0}} đ</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to
+                                            <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
+                                                to
                                                 cart</a>
                                         </div>
                                     </div>
@@ -178,23 +182,24 @@
 
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="container">
-            <h2>Product</h2>
+            <h1 class="margin-top-15">Product</h1>
             <div class="owl-carousel owl-carousel5 ">
                 <!-- Bắt đầu lặp qua sản phẩm -->
                 <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
                     <div class="product-item">
                         <div class="pi-img-wrapper">
-                            <img ng-src="./assets/images/product/{{item.image}}" class="img-responsive"
+                            <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive"
                                 alt="Berry Lace Dress">
                             <div>
-                                <a href="./assets/images/product/{{item.image}}"
+                                <a href="../assets/images/product/{{item.image}}"
                                     class="btn btn-default fancybox-button">Zoom</a>
                                 <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                             </div>
                         </div>
                         <h3 style="height: 40px;"><a href="shop-item.html">{{item.productName}}</a></h3>
                         <div class="pi-price">{{item.price |number : 0}} đ</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
+                        <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
+                            to cart</a>
                     </div>
                 </div>
                 <!-- Kết thúc lặp qua sản phẩm -->

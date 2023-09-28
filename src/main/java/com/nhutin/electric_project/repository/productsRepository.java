@@ -1,5 +1,6 @@
 package com.nhutin.electric_project.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
@@ -15,6 +16,10 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
     List<Product> findByCategoryCategoryID(Integer categoryId);
 
     List<Product> findByBrandBrandID(Integer brandID);
+
+    List<Product> findByproductNameContaining(String productName);
+
+    List<Product> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
     long countByActive(Boolean tt);
 }

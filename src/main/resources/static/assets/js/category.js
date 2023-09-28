@@ -19,30 +19,27 @@ app.controller('category-controller', function ($scope, $http, $window) {
         .then(function (response) {
             $scope.products = response.data;
         });
-        
-    $scope.goToSinglePage = function (productID) {
-        window.location.href = `/shop`; // Sử dụng chuỗi template (ES6)
+
+    $scope.goToCategory = function (categoryID) {
+        window.location.href = `/shop#${categoryID}`;
     };
 
-    $scope.loadProductsByBrand = function (brandID) {
-        $http.get('/rest/products-by-brand?brandID=' + brandID)
+    $scope.goToBrand = function (brandID) {
+        window.location.href = `/shop#${brandID}`;
+    };
+
+    // Hàm tìm kiếm sản phẩm theo tên
+    $scope.searchProductsByName = function () {
+        $http.get('/rest/product-search?productName=' + $scope.searchText)
             .then(function (response) {
                 $scope.products = response.data;
+                if ($scope.products.length === 0) {
+                    swal("Thất bại", "Không tìm thấy sản phẩm!", "error")
+                }
             })
             .catch(function (error) {
                 console.error('Error fetching products:', error);
             });
     };
-
-    $scope.loadProductsByCategory = function (categoryID) {
-        $http.get('/rest/products-by-category?categoryID=' + categoryID)
-            .then(function (response) {
-                $scope.products = response.data;
-            })
-            .catch(function (error) {
-                console.error('Error fetching products:', error);
-            });
-    };
-
 
 });
