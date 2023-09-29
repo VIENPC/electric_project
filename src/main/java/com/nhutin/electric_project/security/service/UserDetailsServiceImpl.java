@@ -38,6 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 			String role = user.getRole().toString();
 			session.setAttribute("tenDangNhapLogin", user.getEmail());
+			
 
 			// Sử dụng User.builder() để tạo một đối tượng UserDetails
 			return User.builder().username(username).password(user.getPassword()).roles(role)
@@ -152,4 +153,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
 		return userDetails;
 	}
+
+	public boolean userExists(String email) {
+        return userDAO.findByEmail(email).isPresent();
+    }
 }
