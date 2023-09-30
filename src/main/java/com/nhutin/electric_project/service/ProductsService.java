@@ -16,4 +16,7 @@ public interface ProductsService {
     List<Product> getProductsByBrand(Integer brandID);
 
     List<Product> getProductsByCategory(Integer categoryID);
+
+    List<Product> getProductsByPrice(Double price);
+
 }

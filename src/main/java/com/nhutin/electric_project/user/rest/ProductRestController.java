@@ -90,6 +90,13 @@ public class ProductRestController {
         }
     }
 
+    @GetMapping("/rest/products-by-price")
+    public ResponseEntity<List<Product>> getProductsByPrice(@RequestParam("price") Double price) {
+        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo giá
+        List<Product> products = productService.getProductsByPrice(price);
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("/rest/product/{masp}")
     public ResponseEntity<Product> getOne(@PathVariable("masp") Integer masp) {
         if (!productdao.existsById(masp)) {

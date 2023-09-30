@@ -20,7 +20,7 @@
 
 	<!-- responsive css -->
 	<link rel="stylesheet" th:href="@{/assets/css/responsive.css}" />
-
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
 
 	<link th:href="@{/assets/css/font-awesome.min.css}" rel="stylesheet" />
 	<!-- select bootstrap -->
@@ -39,9 +39,9 @@
 	<!-- CKEDITOR -->
 	<script type="text/javascript" th:src="@{/assets/ckeditor/ckeditor.js}"></script>
 
-
 	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-
+	<script th:src="@{/assets/js/app.js}"></script>
+	<script th:src="@{/assets/js/category.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 
 	<style>
@@ -52,7 +52,7 @@
 	</style>
 </head>
 
-<body class="dashboard dashboard_1" onload="myCustomFunction()">
+<body class="dashboard dashboard_1" onload="myCustomFunction()" ng-app="my-app">
 	<div class="full_container">
 		<div class="inner_container">
 			<!-- Sidebar  -->

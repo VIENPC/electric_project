@@ -21,5 +21,7 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
+    List<Product> findByPriceLessThanEqual(Double price);
+
     long countByActive(Boolean tt);
 }

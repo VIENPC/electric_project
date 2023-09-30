@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<main class="app-content">
+	<main class="app-content" ng-controller="category-controller">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a><b>Danh
@@ -17,44 +17,69 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
+
 				<div class="tile">
 					<div class="tile-body">
-						<div class="row element-button">
-							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/admin/addCategory}" title="Thêm"><i
-										class="fa fa-plus"></i> Thêm thương hiệu</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
-									onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
-							</div>
+						<form action="" name="form">
+							<div class="row element-button">
 
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
-									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
-									title="Sao chép"><i class="fa fa-copy"></i>
-									Sao chép</a>
-							</div>
+								<div class="col-sm-2">
+									<a class="btn btn-add btn-sm" ng-disabled="form.$invalid" ng-click="addCategory()"
+										title="Thêm"><i class="fa fa-plus"></i> Thêm thương hiệu</a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-primary btn-sm nhap-tu-file" type="button" title="Nhập"
+										ng-click="updateCate(item)"><i class="fa fa-upload"></i> Cập nhật</a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+										onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+								</div>
 
-							<div class="col-sm-2">
+								<div class="col-sm-2">
+									<a class="btn btn-delete btn-sm print-file" type="button" title="In"
+										onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
+										title="Sao chép"><i class="fa fa-copy"></i>
+										Sao chép</a>
+								</div>
 
-								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
-										class="fa fa-file-excel-o"></i>
-									Xuất Excel</a>
+								<div class="col-sm-2">
+
+									<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+											class="fa fa-file-excel-o"></i>
+										Xuất Excel</a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+											class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+								</div>
+								<div class="col-sm-2">
+									<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
+											class="fa fa-trash-o"></i>
+										Xóa tất cả </a>
+								</div>
+
 							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
-										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+						</form>
+						<form class="row" method="post" enctype="multipart/form-data">
+							<div class="form-group col-md-3">
+								<label class="control-label">Mã loại </label> <input class="form-control" type="text"
+									ng-model="newCate.categoryID" placeholder="Mã loại" readonly>
 							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
-										class="fa fa-trash-o"></i>
-									Xóa tất cả </a>
+							<div class="form-group col-md-3">
+								<label class="control-label">Tên loại</label> <input class="form-control" type="text"
+									ng-model="newCate.categoryName" placeholder="Tên loại">
 							</div>
-						</div>
+							<!-- <div class="form-group col-md-3">
+								<input type="radio" id="active" name="active" ng-value="true" ng-model="newCate.active"
+									ng-required="true" /> <label for="admin">On</label><br>
+								<input type="radio" id="active" name="active" ng-value="false" ng-model="newCate.active"
+									ng-required="true" /> <label for="user">Off</label><br>
+							</div> -->
+						</form>
 						<div id="sampleTable_wrapper"
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
@@ -66,16 +91,30 @@
 												<th width="10"><input type="checkbox" id="checkboxall"></th>
 												<th><span>ID</span></th>
 												<th width="320px"><span>Tên loại</span></th>
-
-
+												<th>Trạng thái</th>
+												<th>chức năng</th>
 											</tr>
 										</thead>
 										<tbody>
+											<tr ng-repeat="item in categoris">
+												<td width="10"><input type="checkbox" name="check1" value="1"></td>
+												<td>{{item.categoryID}}</td>
+												<td>{{item.categoryName}}</td>
+												<td>{{item.active?'Còn':'Hết'}}</td>
+												<td><button class="btn btn-danger btn-sm " ng-click="delete(item)"
+														type="button">
+														<i class="fa fa-trash"></i>
 
+													</button>
+													<button class="btn btn-primary btn-sm edit" ng-click="edit(item)">
+														<i class="fa fa-edit"></i>
+													</button>
+													<button class="btn btn-info btn-sm " ng-click="updateCate(item)">
+														<i class="fa fa-refresh"></i>
 
-
-
-
+													</button>
+												</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -87,9 +126,7 @@
 			</div>
 		</div>
 	</main>
-
-
-
+	<!-- Modal -->
 
 </body>
 

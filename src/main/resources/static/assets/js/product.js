@@ -89,6 +89,25 @@ app.controller('product-controller', function ($scope, $http, $window) {
             });
         }
     };
+
+    $scope.selectedPrice = '';
+    $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
+
+    $scope.loadProductsByPrice = function (price) {
+        $http.get('/rest/products-by-price?price=' + price)
+            .then(function (response) {
+                if (response.data.length === 0) {
+                    $scope.noProductsFound = true; // Hiển thị thông báo nếu không có sản phẩm nào được tìm thấy
+                } else {
+                    $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
+                }
+
+                $scope.products = response.data;
+            })
+            .catch(function (error) {
+                console.error('Error fetching products by price:', error);
+            });
+    };
     // Khởi tạo showSearchResults là false ban đầu
     $scope.showSearchResults = false;
 
@@ -113,39 +132,6 @@ app.controller('product-controller', function ($scope, $http, $window) {
     $scope.closeSearchResults = function () {
         $scope.showSearchResults = false;
     };
-
-    $scope.priceRanges = [
-        { min: 0, max: 500000, label: "Dưới 5.000.000 VNĐ" },
-        { min: 1500000, max: 20000000, label: "15.000.000 - 20.000.000 VNĐ" },
-        { min: 2000000, max: 50000000, label: "20.000.000 - 50.000.000 VNĐ" },
-        // Thêm các mốc giá khác tùy ý
-    ];
-    $scope.selectedPriceRange = $scope.priceRanges[0];
-    $scope.filterItemsByPrice = function () {
-        var minPrice = $scope.selectedPriceRange.min;
-        var maxPrice = $scope.selectedPriceRange.max;
-
-        $http.get('/rest/filterByPrice', { params: { minPrice: minPrice, maxPrice: maxPrice } })
-            .then(function (response) {
-                $scope.products = response.data;
-                if ($scope.products.length === 0) {
-                    swal("Thất bại", "Không tìm thấy sản phẩm trong tầm giá!", "error")
-                    return;
-                }
-                swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
-            })
-            .catch(function (error) {
-                console.error('Error while filtering items:', error);
-                console.log(error)
-                swal("Thất bại", "Đã có lổi xãy ra!", "error")
-            });
-    };
-    // Tự động gọi hàm lọc sản phẩm khi mốc giá thay đổi
-    $scope.$watch('selectedPriceRange', function (newVal, oldVal) {
-        if (newVal !== oldVal) {
-            $scope.filterItemsByPrice();
-        }
-    });
 
 
     $scope.addToCart = function (masp) {
@@ -283,333 +269,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
 
 });
 
-app.controller("checkctrl", function ($scope, $http, $filter) {
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "province");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
 
-    var renderData = (array, select) => {
-        let row = ' <option disable value="">Chọn</option>';
-        array.forEach(element => {
-            row += `<option value="${element.code}">${element.name}</option>`
-        });
-        document.querySelector("#" + select).innerHTML = row
-    }
-    $scope.diachinn = '';
-    $("#province").change(() => {
-        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
-        printResult();
-    });
-    $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
-        printResult();
-    });
-    $("#ward").change(() => {
-        printResult();
-
-    })
-    let diachinn1 = "";
-    var printResult = () => {
-        if ($("#district").val() != "" && $("#province").val() != "" &&
-            $("#ward").val() != "") {
-            let result = $("#ward option:selected").text() + ","
-                + $("#district option:selected").text() + ","
-                + $("#province option:selected").text();
-
-
-            diachinn1 = result;
-        }
-
-    }
-
-    $scope.loadLocalStorage = function () {
-        var json = localStorage.getItem("cart");
-        $scope.cartItems = json ? JSON.parse(json) : [];
-
-
-
-    }
-    $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-        return cart.giasp * cart.qty;
-    }
-    $scope.totalAmount = function () {
-        return $scope.cartItems
-            .map(cart => this.amt_of(cart))
-            .reduce((total, amt) => total += amt, 0);
-    };
-    $scope.orderDetails2 = function () {
-        return $scope.cartItems.map(cart => {
-            return {
-                sanpham: { masp: cart.masp },
-                giasp: cart.giasp,
-                soluong: cart.qty,
-            };
-        });
-    };
-    $scope.getAccount = function () {
-
-        // Replace 'YOUR_GET_TOURS_API_URL' with the actual API endpoint to fetch tour products
-        var url = 'http://localhost:8080/rest/account';
-
-
-        $http.get(url).then(resp => {
-            $scope.account = resp.data;
-            console.log("account", resp)
-            if ($scope.account != null) {
-                $scope.isLoggedIn = true;
-            } else {
-                $scope.isLoggedIn = false;
-            }
-
-        }).catch(error => {
-            console.log("Error", error)
-        });
-    };
-    $scope.saveToLocalStorage = function () {
-        var json = JSON.stringify(angular.copy($scope.cartItems));
-        localStorage.setItem("cart", json);
-    }
-    $scope.clear = function () {
-
-        $scope.cartItems = []
-        $scope.saveToLocalStorage();
-        // Xóa sạch các mặt hàng trong giỏ
-
-    }
-    $scope.getAccount();
-
-    $scope.loadLocalStorage();
-
-    $scope.order = {
-        ngaymua: new Date(),
-        khachhang: {},
-        tennguoinhan: "", // Thêm trường tên người nhận
-        diachinn: "",
-        dienthoainn: "",
-        trangthaihd: 1,
-        tongtien: $scope.totalAmount(),
-        ghichu: "Trống", // Thêm trường số điện thoại người nhận
-        get hoadonct() {
-            return $scope.cartItems.map(cart => {
-                return {
-                    sanpham: { masp: cart.masp },
-                    giasp: cart.giasp,
-                    soluong: cart.qty,
-                };
-            });
-        },
-        purchase() {
-            var order = angular.copy(this);
-            var url = "http://localhost:8080/rest/hoadon";
-            var khachHang = {
-                usernamekh: $scope.account.usernamekh,
-
-            };
-
-            order.tennguoinhan = $scope.account.hotenkh;
-            order.khachhang = khachHang,
-                order.dienthoainn = $scope.account.dienthoai;
-            order.diachinn = $scope.dnct + ',' + diachinn1;
-            order.ghichu = $scope.ghichu;
-
-
-
-            $http.post(url, order).then(
-                (resp) => {
-
-                    $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
-                    swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
-                        window.location.href = "";
-                    });
-                },
-                (error) => {
-                    alert("Đặt hàng lỗi!");
-                    console.log("Error", error);
-                }
-            );
-        },
-    };
-
-    app.controller("checkctrl", function ($scope, $http, $filter) {
-        const host = "https://provinces.open-api.vn/api/";
-        var callAPI = (api) => {
-            return axios.get(api)
-                .then((response) => {
-                    renderData(response.data, "province");
-                });
-        }
-        callAPI('https://provinces.open-api.vn/api/?depth=1');
-        var callApiDistrict = (api) => {
-            return axios.get(api)
-                .then((response) => {
-                    renderData(response.data.districts, "district");
-                });
-        }
-        var callApiWard = (api) => {
-            return axios.get(api)
-                .then((response) => {
-                    renderData(response.data.wards, "ward");
-                });
-        }
-
-        var renderData = (array, select) => {
-            let row = ' <option disable value="">Chọn</option>';
-            array.forEach(element => {
-                row += `<option value="${element.code}">${element.name}</option>`
-            });
-            document.querySelector("#" + select).innerHTML = row
-        }
-        $scope.diachinn = '';
-        $("#province").change(() => {
-            callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
-            printResult();
-        });
-        $("#district").change(() => {
-            callApiWard(host + "d/" + $("#district").val() + "?depth=2");
-            printResult();
-        });
-        $("#ward").change(() => {
-            printResult();
-
-        })
-        let diachinn1 = "";
-        var printResult = () => {
-            if ($("#district").val() != "" && $("#province").val() != "" &&
-                $("#ward").val() != "") {
-                let result = $("#ward option:selected").text() + ","
-                    + $("#district option:selected").text() + ","
-                    + $("#province option:selected").text();
-
-
-                diachinn1 = result;
-            }
-
-        }
-
-        $scope.loadLocalStorage = function () {
-            var json = localStorage.getItem("cart");
-            $scope.cartItems = json ? JSON.parse(json) : [];
-
-
-
-        }
-        $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-            return cart.price * cart.qty;
-        }
-        $scope.totalAmount = function () {
-            return $scope.cartItems
-                .map(cart => this.amt_of(cart))
-                .reduce((total, amt) => total += amt, 0);
-        };
-        $scope.getAccount = function () {
-
-            $http.get('/api/account/login').then(resp => {
-                $scope.account = resp.data;
-                console.log("account", resp)
-
-
-            }).catch(error => {
-                console.log("Error", error)
-            });
-        };
-        $scope.getAccount();
-        $scope.saveToLocalStorage = function () {
-            var json = JSON.stringify(angular.copy($scope.cartItems));
-            localStorage.setItem("cart", json);
-        }
-        $scope.clear = function () {
-
-            $scope.cartItems = []
-            $scope.saveToLocalStorage();
-            // Xóa sạch các mặt hàng trong giỏ
-
-        }
-
-
-        $scope.loadLocalStorage();
-
-        $scope.order = {
-            orderDate: new Date(),
-            user: {},
-            name: "", // Thêm trường tên người nhận
-            address: "",
-            phone: "",
-            statushd: 1,
-            statustt: 1,
-            totalAmount: $scope.totalAmount(),
-            // note: "Trống", // Thêm trường số điện thoại người nhận
-            get orderDetails() {
-                return $scope.cartItems.map(cart => {
-                    return {
-                        product: { productID: cart.productID },
-                        price: cart.price,
-                        quantity: cart.qty,
-                    };
-                });
-            },
-            purchase() {
-                var order = angular.copy(this);
-                var url = "/rest/hoadon";
-                var user = {
-                    userID: $scope.account.userID,
-
-                };
-
-                order.name = $scope.account.fullName;
-                order.user = user;
-                order.phone = $scope.account.phoneNumber;
-                order.address = $scope.dnct + ',' + diachinn1;
-                order.note = $scope.ghichu;
-                console.log("thông tin", user);
-
-
-                // $http.post(url, order).then(
-                //     (resp) => {
-
-                //         $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
-                //         swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
-                //             window.location.href = "";
-                //         });
-                //     },
-                //     (error) => {
-                //         alert("Đặt hàng lỗi!");
-                //         console.log("Error", error);
-                //     }
-                // );
-            },
-        };
-
-
-
-
-
-
-
-    });
-
-
-
-
-
-
-});
 app.controller("checkctrl", function ($scope, $http, $filter) {
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -691,6 +351,17 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         }).catch(error => {
             console.log("Error", error)
         });
+
+        // $http.get('/rest/account').then(resp => {
+        //     $scope.account = resp.data;
+        //     console.log("accountthuong", resp)
+
+
+        // }).catch(error => {
+        //     console.log("Error", error)
+        // });
+
+
     };
     $scope.getAccount();
     $scope.saveToLocalStorage = function () {
@@ -710,8 +381,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
     $scope.order = {
         orderDate: new Date(),
-        user: {},
-        name: "", // Thêm trường tên người nhận
+        user: {}, name: "", // Thêm trường tên người nhận
         address: "",
         phone: "",
         statushd: 1,
@@ -729,7 +399,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         },
         purchase() {
             var order = angular.copy(this);
-            var url = "/rest/hoadon";
+            var url = '/rest/hoadon';
             var user = {
                 userID: $scope.account.userID,
 
@@ -766,4 +436,3 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
 
 });
-

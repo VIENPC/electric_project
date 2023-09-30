@@ -41,9 +41,12 @@
                       </td>
                       <td class="">
                         <div class="product-quantity">
-                          <input type="number" pattern="[0-9]*" class="form-control" id="spinner" name="value" value="1" min="1" max="200"
-													step="1" ng-change="saveToLocalStorage()" ng-model="item.qty">
+                          <input type="number" pattern="[0-9]*" class="form-control" id="spinner" name="value" value="1"
+                            min="1" max="200" step="1" ng-change="saveToLocalStorage()" ng-model="item.qty">
                         </div>
+                        <div>
+                          <span ng-if="item.qty > item.quantity">Số lượng sản phẩm trong kho không đủ</span>
+                        </div> 
                       </td>
 
                       <td class="goods-page-price">
@@ -53,7 +56,7 @@
                         <strong>{{(item.qty*item.price) |number:0}}đ</strong>
                       </td>
                       <td class="del-goods-col">
-                        <a class="del-goods" href="javascript:;" ng-click="removesp(item.productID)" >&nbsp;</a>
+                        <a class="del-goods" href="javascript:;" ng-click="removesp(item.productID)">&nbsp;</a>
                       </td>
                     </tr>
 

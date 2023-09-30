@@ -22,8 +22,7 @@ import com.nhutin.electric_project.service.OrdersService;
 @RestController
 public class CheckoutRestcontroller {
   @Autowired
-    HttpSession session;
-  
+  HttpSession session;
 
   @Autowired
   UserRepository userDAO;
@@ -32,14 +31,14 @@ public class CheckoutRestcontroller {
   OrdersService orderService;
 
   @GetMapping("/rest/account")
-    public ResponseEntity<User> getAccount() {
-        String email = (String) session.getAttribute("tenDangNhapLogin");
-       User account = userDAO.findByEmailLike(email);
-        if (account != null) {
-            return ResponseEntity.ok(account);
-        }
-        return ResponseEntity.notFound().build();
+  public ResponseEntity<User> getAccount() {
+    String email = (String) session.getAttribute("tenDangNhapLogin");
+    User account = userDAO.findByEmailLike(email);
+    if (account != null) {
+      return ResponseEntity.ok(account);
     }
+    return ResponseEntity.notFound().build();
+  }
 
   @PostMapping("/rest/hoadon")
   public Order create(@RequestBody JsonNode orderData) {

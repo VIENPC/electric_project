@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <main class="app-content">
+    <main class="app-content" ng-controller=category-controller>
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/admin/qlsanpham}">Danh
@@ -20,62 +20,36 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Tạo mới sản phẩm</h3>
+                    <h3 class="tile-title">Tạo Loại sản phẩm</h3>
                     <div class="tile-body">
                         <div class="row element-button">
-                            <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i
-                                        class="fas fa-folder-plus"></i> Thêm nhà cung cấp</a>
+                            <div class="col-sm-4">
+                                <a ng-click="addCategory()" class="btn btn-add btn-sm">Lưu lại</a>
+                                <a class="btn btn-info btn-sm">Reset</a>
                             </div>
 
                         </div>
                         <form class="row" method="post" enctype="multipart/form-data">
                             <div class="form-group col-md-3">
-                                <label class="control-label">Mã sản phẩm </label> <input class="form-control"
-                                    type="number" placeholder="" disabled="disabled">
-
+                                <label class="control-label">Mã loại </label> <input class="form-control" type="text"
+                                    ng-model="newCate.categoryID" placeholder="Mã loại" readonly>
                             </div>
                             <div class="form-group col-md-3">
-                                <label class="control-label">Tên sản phẩm</label> <input class="form-control"
-                                    type="text">
+                                <label class="control-label">Tên loại</label> <input class="form-control" type="text"
+                                    ng-model="newCate.categoryName" placeholder="Tên loại">
                                 <i class="mgs_errors"></i><br>
                                 <i class="mgs_errors"></i><br>
                             </div>
-                            <div class="form-group  col-md-3">
-                                <label class="control-label">Số lượng</label> <input class="form-control" type="number"
-                                    min="0" id="quantity">
-                                <i class="mgs_errors"></i><br>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="control-label">Giá bán</label> <input class="form-control" type="number">
-                                <i class="mgs_errors"></i><br>
-                            </div>
-                            <div class="form-group col-md-4 ">
-                                <label for="exampleSelect1" class="control-label">Tình
-                                    trạng</label> <select class="form-control" id="tinhtrangselect">
-                                    <option value="">-- Chọn tình trạng --</option>
-
-                                    <option value="true">Còn hàng</option>
-                                    <option value="false">Hết hàng</option>
-                                </select>
-                                <i class="mgs_errors"></i><br>
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Ảnh sản phẩm</label><br> <input type="file" name="image">
-                                <i class="mgs_errors"></i><br>
-
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Mô tả sản phẩm</label>
-                                <textarea class="form-control" name="description" id="description"></textarea>
-                                <script>
-                                    CKEDITOR.replace('description');
-                                </script>
-                                <i class="mgs_errors"></i><br>
-                            </div>
-                            <button class="btn btn-save ml-3">Lưu lại</button>
-                            <a class="btn btn-cancel ml-3">Reset</a>
+                            <!-- <div class="form-group col-md-3">
+                                <input type="radio" id="active" name="active" ng-value="true" ng-model="newCate.active"
+                                    ng-required="true" /> <label for="admin">On</label><br>
+                                <input type="radio" id="active" name="active" ng-value="false" ng-model="newCate.active"
+                                    ng-required="true" /> <label for="user">Off</label><br>
+                                <div ng-messages="form.status.$error" ng-if="!form.status.$dirty">
+                                    <div class="text-danger" ng-message="required">Vui lòng chọn
+                                        trạng thái!! </div>
+                                </div>
+                            </div> -->
                         </form>
                     </div>
 

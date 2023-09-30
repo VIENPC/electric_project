@@ -9,4 +9,5 @@ import com.nhutin.electric_project.model.Product;
 
 public interface categorysRepository extends JpaRepository<Category, Integer> {
     // List<Product> findByCategoryID(Integer categoryID);
+    Category findById(int categoryID);
 }

@@ -103,7 +103,7 @@
                     <div class="row">
                       <div class="col-md-12 header-navigation-col">
                         <h4>Điện máy</h4>
-                        <ul ng-repeat="item in categoris">
+                        <ul ng-repeat="item in categoris" ng-if="item.active !== false">
                           <li><a ng-click="goToCategory(item.categoryID)">{{item.categoryName}}</a></li>
                         </ul>
                       </div>
