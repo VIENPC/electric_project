@@ -32,12 +32,20 @@
             <div class="sidebar-filter margin-bottom-25">
               <h2>Filter</h2>
 
+              <div class="checkbox-list">
+                <label>
+                  <input type="checkbox" ng-model="showAllProducts" ng-change="showAllProductsChanged()">
+                  Hiển thị tất cả sản phẩm
+                </label>
+              </div>
+
               <div class="checkbox-list" ng-repeat="item in categoris">
                 <label ng-if="item.active !== false">
-                  <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID)">
+                  <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID, item)">
                   {{item.categoryName}}
                 </label>
               </div>
+
 
 
               <!-- <h3>Price</h3>
@@ -89,7 +97,8 @@
             <div class="row product-list">
               <!-- PRODUCT ITEM START -->
               <div ng-if="noProductsFound">
-                <div class="col-md-4 col-sm-4 items-info">Không có sản phẩm nào được tìm thấy theo giá bạn đã chọn.
+                <div class="col-md-12 col-sm-4 items-info">
+                  <h3>Không có sản phẩm nào được tìm thấy.</h3>
                 </div>
               </div>
               <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">

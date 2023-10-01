@@ -241,8 +241,17 @@ function editCategory(button) {
 	// Hiển thị modal
 	$("#ModalUP2").modal("show");
 }
+$(document).ready(function () {
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 2" trong Tab 1
+	$('#switchToTab2').click(function () {
+		$('#myTabs a[href="#tab2"]').tab('show');
+	});
 
-
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 1" trong Tab 2
+	$('#switchToTab1').click(function () {
+		$('#myTabs a[href="#tab1"]').tab('show');
+	});
+});
 
 
 

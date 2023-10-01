@@ -22,11 +22,6 @@
 					<div class="tile-body">
 						<form action="" name="form">
 							<div class="row element-button">
-
-								<div class="col-sm-2">
-									<a class="btn btn-add btn-sm" ng-disabled="form.$invalid" ng-click="addCategory()"
-										title="Thêm"><i class="fa fa-plus"></i> Thêm thương hiệu</a>
-								</div>
 								<div class="col-sm-2">
 									<a class="btn btn-primary btn-sm nhap-tu-file" type="button" title="Nhập"
 										ng-click="updateCate(item)"><i class="fa fa-upload"></i> Cập nhật</a>
@@ -64,21 +59,45 @@
 
 							</div>
 						</form>
-						<form class="row" method="post" enctype="multipart/form-data">
-							<div class="form-group col-md-3">
+						<form class="row" method="post" enctype="multipart/form-data" name="form">
+							<div class="form-group col-md-4">
 								<label class="control-label">Mã loại </label> <input class="form-control" type="text"
 									ng-model="newCate.categoryID" placeholder="Mã loại" readonly>
 							</div>
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-4"
+								ng-class="{'has-error': form.categoryName.$invalid && form.categoryName.$dirty}">
 								<label class="control-label">Tên loại</label> <input class="form-control" type="text"
-									ng-model="newCate.categoryName" placeholder="Tên loại">
+									ng-model="newCate.categoryName" placeholder="Tên loại" ng-required="true"
+									name="categoryName">
+								<div ng-messages="form.categoryName.$error" ng-if="!form.categoryName.$dirty">
+									<div class="text-danger" ng-message="required">Vui lòng
+										nhập tên loại</div>
+								</div>
 							</div>
-							<!-- <div class="form-group col-md-3">
-								<input type="radio" id="active" name="active" ng-value="true" ng-model="newCate.active"
-									ng-required="true" /> <label for="admin">On</label><br>
-								<input type="radio" id="active" name="active" ng-value="false" ng-model="newCate.active"
-									ng-required="true" /> <label for="user">Off</label><br>
-							</div> -->
+							<div class="form-group col-md-4">
+								<label class="col-md-12 p-0">Status</label>
+								<div class="col-md-12 border-bottom p-0">
+									<input type="radio" id="active" name="active" ng-value="true"
+										ng-model="newCate.active" ng-required="true" /> <label for="admin">Còn sản
+										phẩm</label><br>
+									<input type="radio" id="active" name="active" ng-value="false"
+										ng-model="newCate.active" ng-required="true" /> <label for="user">Hết sản
+										phẩm</label><br>
+									<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+										<div class="text-danger" ng-message="required">Vui lòng chọn
+											trạng thái!! </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<button class="btn btn-add btn-sm" ng-click="addCategory()" title="Thêm"
+									ng-disabled="form.$invalid"><i class="fa fa-plus"></i> Thêm thương hiệu</button>
+							</div>
+							<div class="col-sm-2">
+								<button class="btn btn-info btn-sm" ng-disabled="form.$invalid"
+									ng-click="updateCate(cate)" title="Thêm"><i class="fa fa-refresh"></i> Cập nhật
+									thương hiệu</button>
+							</div>
 						</form>
 						<div id="sampleTable_wrapper"
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -90,19 +109,19 @@
 											<tr>
 												<th width="10"><input type="checkbox" id="checkboxall"></th>
 												<th><span>ID</span></th>
-												<th width="320px"><span>Tên loại</span></th>
-												<th>Trạng thái</th>
-												<th>chức năng</th>
+												<th><span>Tên loại</span></th>
+												<th><span>Trạng thái</span> </th>
+												<th><span>Chức năng</span></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr ng-repeat="item in categoris">
 												<td width="10"><input type="checkbox" name="check1" value="1"></td>
-												<td>{{item.categoryID}}</td>
+												<td>CT{{item.categoryID}}</td>
 												<td>{{item.categoryName}}</td>
 												<td>{{item.active?'Còn':'Hết'}}</td>
-												<td><button class="btn btn-danger btn-sm " ng-click="delete(item)"
-														type="button">
+												<td><button class="btn btn-danger btn-sm "
+														ng-click="deleteCategory(item)" type="button">
 														<i class="fa fa-trash"></i>
 
 													</button>

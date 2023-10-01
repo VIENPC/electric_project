@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Category;
 import com.nhutin.electric_project.repository.categorysRepository;
 import com.nhutin.electric_project.service.CategorysService;
@@ -56,27 +57,20 @@ public class CategoryAdminRestController {
         }
     }
 
-    @PutMapping("/delete/{categoryID}")
-    public ResponseEntity<Category> deactivate(@PathVariable int categoryID) {
+    @PutMapping("/deleteCategory/{categoryID}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable int categoryID) {
         try {
-            Category existingItem = dmdao.findById(categoryID);
-            if (existingItem == null) {
+            Category existing = dmdao.findById(categoryID);
+            if (existing == null) {
                 return ResponseEntity.notFound().build();
             }
+            existing.setActive(false); // Cập nhật trạng thái active về false
+            Category deactivated = dmdao.save(existing);
 
-            existingItem.setActive(false); // Cập nhật trạng thái active về false
-            Category deactivatedItem = dmdao.save(existingItem);
-
-            // Ghi nhật ký để theo dõi quá trình
-            System.out.println("Category deactivated: " + deactivatedItem.toString());
-
-            return ResponseEntity.ok(deactivatedItem);
+            return ResponseEntity.ok(deactivated);
         } catch (Exception e) {
-            // Ghi nhật ký lỗi để theo dõi lỗi
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 
 }

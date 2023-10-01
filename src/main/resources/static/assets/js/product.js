@@ -5,11 +5,12 @@ app.controller('product-controller', function ($scope, $http, $window) {
     $scope.brands = [];
     $scope.products = {};
     $scope.categoris = [];
-
+    $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
 
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
+            $scope.allProducts = response.data;
         });
     $http.get('/rest/brand')
         .then(function (response) {
@@ -31,6 +32,11 @@ app.controller('product-controller', function ($scope, $http, $window) {
         $http.get('/rest/products-by-brand?brandID=' + brandID)
             .then(function (response) {
                 console.log(brandID)
+                if (response.data.length === 0) {
+                    $scope.noProductsFound = true; // Hiển thị thông báo nếu không có sản phẩm nào được tìm thấy
+                } else {
+                    $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
+                }
                 $scope.products = response.data;
             })
             .catch(function (error) {
@@ -38,24 +44,55 @@ app.controller('product-controller', function ($scope, $http, $window) {
             });
     };
 
-    // Hàm để lọc sản phẩm dựa trên các checkbox đã chọn và tải sản phẩm theo categoryID
-    $scope.filterProducts = function (categoryID) {
+    $scope.showAllProducts = false;
+    $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
+
+    $scope.showAllProductsChanged = function () {
+        if ($scope.showAllProducts) {
+            // Nếu checkbox "Hiển thị tất cả sản phẩm" được chọn, hiển thị tất cả sản phẩm
+            $scope.products = $scope.allProducts;
+            $scope.selectedCategory = null; // Hủy chọn checkbox khác nếu có
+        } else {
+            // Ngược lại, áp dụng bộ lọc thông qua các checkbox khác
+            $scope.filterProducts();
+        }
+    };
+
+    $scope.filterProducts = function () {
         $scope.products = [];
+
+        // Biến để kiểm tra xem có ít nhất một checkbox được chọn hay không
+        var atLeastOneSelected = false;
 
         // Lặp qua danh sách loại sản phẩm và tải sản phẩm nếu checkbox được chọn
         angular.forEach($scope.categoris, function (category) {
             if (category.selected) {
+                atLeastOneSelected = true; // Đánh dấu là có ít nhất một checkbox được chọn
                 $http.get('/rest/products-by-category/' + category.categoryID)
                     .then(function (response) {
                         // Nối sản phẩm tải được vào danh sách filteredProducts
                         $scope.products = $scope.products.concat(response.data);
+
+                        // Kiểm tra xem có sản phẩm phù hợp hay không để cập nhật thông báo
+                        if ($scope.products.length === 0) {
+                            $scope.noProductsFound = true; // Hiển thị thông báo nếu không có sản phẩm nào được tìm thấy
+                        } else {
+                            $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
+                        }
                     })
                     .catch(function (error) {
                         console.error('Error fetching products:', error);
                     });
             }
         });
+
+        // Nếu không có checkbox nào được chọn, hiển thị tất cả sản phẩm
+        if (!atLeastOneSelected) {
+            $scope.products = $scope.allProducts;
+            $scope.noProductsFound = false; // Ẩn thông báo
+        }
     };
+
 
     $scope.loadProductsByCategory = function (categoryID) {
         $http.get('/rest/products-by-category/' + categoryID)
@@ -91,7 +128,7 @@ app.controller('product-controller', function ($scope, $http, $window) {
     };
 
     $scope.selectedPrice = '';
-    $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
+
 
     $scope.loadProductsByPrice = function (price) {
         $http.get('/rest/products-by-price?price=' + price)
