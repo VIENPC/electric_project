@@ -357,8 +357,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
 
 });
-
-
 app.controller("checkctrl", function ($scope, $http, $filter) {
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -430,9 +428,10 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
+
     $scope.getAccount = function () {
 
-        $http.get('/api/account/login').then(resp => {
+        $http.get('/rest/account').then(resp => {
             $scope.account = resp.data;
             console.log("account", resp)
 
@@ -465,18 +464,18 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
     }
 
-
     $scope.loadLocalStorage();
 
     $scope.order = {
         orderDate: new Date(),
-        user: {}, name: "", // Thêm trường tên người nhận
+        user: {},
+        name: "", // Thêm trường tên người nhận
         address: "",
         phone: "",
         statushd: 1,
-        statustt: 1,
+        statustt: 0,
         totalAmount: $scope.totalAmount(),
-        // note: "Trống", // Thêm trường số điện thoại người nhận
+        note: "Trống", // Thêm trường số điện thoại người nhận
         get orderDetails() {
             return $scope.cartItems.map(cart => {
                 return {
@@ -488,7 +487,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         },
         purchase() {
             var order = angular.copy(this);
-            var url = '/rest/hoadon';
+            var url = "/rest/hoadon";
             var user = {
                 userID: $scope.account.userID,
 
@@ -499,29 +498,51 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             order.phone = $scope.account.phoneNumber;
             order.address = $scope.dnct + ',' + diachinn1;
             order.note = $scope.ghichu;
-            console.log("thông tin", user);
+            // console.log("thông tin",user);
+
 
 
             $http.post(url, order).then(
                 (resp) => {
+                    var order_id = resp.data.orderId
+                    if ($scope.selectedPaymentMethod == "VNPAY") {
+                        datased = {
+                            amount: $scope.totalAmount(),
+                            orderid: order_id,
+                        }
 
-                    $scope.clear(); // Xóa giỏ hàng sau khi đặt hàng thành công
-                    swal("Thành Công", "Đặt hàng thành công", "success").then(function () {
-                        window.location.href = "";
-                    });
+                        $http.post('/pay/vnpayajax', datased)
+                            .then(function (response) {
+                                var paymentUrl = response.data.paymentUrl;
+
+                                //Thực hiện chuyển hướng đến paymentUrl
+                                window.location.href = paymentUrl;
+                                //console.error("tthong tin resposte", response);
+                            })
+                            .catch(function (error) {
+                                // Xử lý lỗi nếu có
+                                console.error("API Error:", error);
+                            });
+
+
+
+                    } else {
+                        console.log("thanh công", resp);
+
+                        swal("Thành Công", "Đặt hàng thành công", "success")
+                    }
+                    $scope.clear(); l
+
                 },
                 (error) => {
                     alert("Đặt hàng lỗi!");
                     console.log("Error", error);
                 }
             );
+
+
         },
     };
 
-
-
-
-
-
-
 });
+

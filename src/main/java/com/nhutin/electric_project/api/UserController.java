@@ -3,6 +3,8 @@ package com.nhutin.electric_project.api;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.UserRepository;
 
@@ -25,6 +28,11 @@ import com.nhutin.electric_project.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepo;
+
+	@Autowired
+	CookieUtils cookieUtils;
+	@Autowired
+	HttpServletResponse resp;
 
 	@GetMapping("/rest/users")
 	public ResponseEntity<List<User>> getAll(Model model) {
@@ -70,7 +78,7 @@ public class UserController {
 
 	public User getNguoiDung() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("Mail của bạn là :" + auth.getName());
+
 		return userRepo.findByEmail(auth.getName()).get();
 	}
 

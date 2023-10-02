@@ -12,20 +12,20 @@ public class HomeController2 {
       return "admin/view/baocaochung";
    }
 
-   @RequestMapping("baocaosanpham")
-   public String baocaosanpham() {
-      return "admin/view/baocaosp";
-   }
+   // @RequestMapping("baocaosanpham")
+   // public String baocaosanpham() {
+   // return "admin/view/baocaosp";
+   // }
 
    @RequestMapping("insertUser")
    public String insertUser() {
       return "admin/view/qlcustomer_insert";
    }
 
-   @RequestMapping("UserDetail")
-   public String UserDetail() {
-      return "admin/view/qlcustomer_detail";
-   }
+   // @RequestMapping("UserDetail")
+   // public String UserDetail() {
+   // return "admin/view/qlcustomer_detail";
+   // }
 
    @RequestMapping("brand")
    public String brand() {

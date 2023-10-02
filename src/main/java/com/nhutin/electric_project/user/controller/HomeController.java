@@ -1,16 +1,26 @@
 package com.nhutin.electric_project.user.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
+ @Autowired
+    HttpSession session;
 
     @RequestMapping("/home")
     public String index() {
 
         return "banhang/view/home";
+    }
+     @RequestMapping("/success")
+    public String thongbao() {
+
+        return "banhang/view/sucessful";
     }
 
     @RequestMapping("/about")
@@ -68,8 +78,8 @@ public String productCategory(@RequestParam(name = "categoryID", required = fals
 
     @RequestMapping("/checkout")
     public String checkout() {
-
-        return "banhang/view/checkout";
+         
+         return "banhang/view/checkout";
     }
 
     @RequestMapping("/news")

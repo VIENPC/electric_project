@@ -20,14 +20,15 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Data
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
+@SuppressWarnings("serial")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order implements Serializable {

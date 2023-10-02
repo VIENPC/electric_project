@@ -50,6 +50,7 @@
                       </div>
 
 
+
                     </div>
                     <div class="col-md-6 col-sm-6">
 
@@ -112,12 +113,14 @@
                       <p>Vui lòng chọn phương thức thanh toán</p>
                       <div class="radio-list">
                         <label>
-                          <input type="radio" name="paymentMethod" value="CashOnDelivery" checked> Thanh toán khi nhận
-                          hàng
+                          <input type="radio" name="paymentMethod" ng-checked="true" value="cod"
+                            ng-model="selectedPaymentMethod"> Thanh toán khi nhận hàng
                         </label>
                         <label>
-                          <input type="radio" name="paymentMethod" value="VNPAY"> Thanh toán bằng VNPAY
+                          <input type="radio" name="paymentMethod" value="VNPAY" ng-model="selectedPaymentMethod"> Thanh
+                          toán bằng VNPAY
                         </label>
+
                       </div>
 
 
@@ -182,6 +185,7 @@
                           <li>
                             <em>Tổng tiền</em>
                             <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+
                           </li>
                           <li>
                             <em>Phí giao hàng</em>
@@ -192,14 +196,20 @@
                           <li class="checkout-total-price">
                             <em>Tổng cộng</em>
                             <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+
                           </li>
                         </ul>
                       </div>
                       <div class="clearfix"></div>
-                      <button class="btn btn-primary pull-right" type="submit" id="button-confirm"
+                      <<<<<<< HEAD <button class="btn btn-primary pull-right" type="submit" id="button-confirm"
                         ng-click="order.purchase()">Hoàn thành đặt hàng
-                      </button>
-                      <a th:href="@{/cart}" class="btn btn-default pull-right margin-right-20">Trở lại</a>
+                        </button>
+                        =======
+                        <button class="btn btn-primary pull-right" type="submit" id="button-confirm"
+                          ng-click="order.purchase()">Hoàn thành đặt hàng
+                        </button>
+                        >>>>>>> vien
+                        <a th:href="@{/cart}" class="btn btn-default pull-right margin-right-20">Trở lại</a>
                     </div>
                   </div>
                 </div>

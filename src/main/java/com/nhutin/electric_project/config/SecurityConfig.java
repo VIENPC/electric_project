@@ -59,14 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 rememberMeServices.setTokenValiditySeconds(86400); // 1 day
                 return rememberMeServices;
         }
-        
+
         private String determineTargetUrl(Authentication authentication) {
-            String role = authentication.getAuthorities().toString();
-            if (role.contains("ADMIN")) {
-                return "/admin/index";
-            } else {
-                return "/home";
-            }
+                String role = authentication.getAuthorities().toString();
+                if (role.contains("ADMIN")) {
+                        return "/admin/index";
+                } else {
+                        return "/home";
+                }
         }
 
         @Override
@@ -76,25 +76,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 http
                                 .authorizeRequests(requests -> requests
-                                                .antMatchers("/assets/**","/", "logout", "/login**", "/home", "/shop",
-                                                                "/error**", "/api/**",
-                                                                "/reset-password", "/codeVerification", "/resendOtp",
-                                                                "/new-password",
-                                                                "/rest/productdetails", "/rest/products",
-                                                                "/rest/productsbycate/**",
-                                                                "/rest/products/**","/rest/**","/product",
-                                                                "/registration/**")
+                                                .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
+                                                                "/error**", "/api/**", "/reset-password",
+                                                                "/codeVerification", "/resendOtp",
+                                                                "/new-password", "/rest/productdetails",
+                                                                "/rest/products", "/rest/productsbycate/**",
+                                                                "/rest/products/**", "/rest/**", "/product",
+                                                                "/registration/**", "/oauth2/**")
                                                 .permitAll()
-                                                .antMatchers("/admin/**",
-                                                                "/rest/orders/**")
+                                                .antMatchers("/admin/**", "/rest/orders/**")
                                                 .hasRole("ADMIN")
                                                 .anyRequest()
                                                 .authenticated())
                                 .formLogin(login -> login
                                                 .loginPage("/login")
                                                 .successHandler((request, response, authentication) -> {
-                                                    String targetUrl = determineTargetUrl(authentication);
-                                                    response.sendRedirect(targetUrl);
+                                                        // Lấy thông tin đăng nhập của người dùng, ví dụ: email
+                                                        String email = request.getParameter("email");
+
+                                                        // Lưu cookie với thông tin đăng nhập
+                                                        CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
+
+                                                        // Lấy giá trị email từ cookie
+                                                        String emailFromCookie = CookieUtils.get("tenDangNhapCookie",
+                                                                        request);
+
+                                                        // Kiểm tra xem có giá trị email từ cookie hay không
+                                                        if (!emailFromCookie.isEmpty()) {
+                                                                System.out.println(
+                                                                                "Email từ cookie: " + emailFromCookie);
+                                                        } else {
+                                                                System.out.println(
+                                                                                "Cookie email không tồn tại hoặc rỗng.");
+                                                        }
+
+                                                        String targetUrl = determineTargetUrl(authentication);
+                                                        response.sendRedirect(targetUrl);
                                                 })
                                                 .failureHandler(authenticationFailureHandler)
                                                 .usernameParameter("email")
@@ -103,7 +120,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 .key("uniqueAndSecretKey")
                                                 .rememberMeServices(rememberMeServices())
                                                 .tokenValiditySeconds(604800))
-                                .exceptionHandling(handling -> handling // Xử lý ngoại lệ
+                                .exceptionHandling(handling -> handling
                                                 .accessDeniedPage("/access-denied")
                                                 .authenticationEntryPoint((request, response, authException) -> {
                                                         response.sendRedirect("/login?error=true");
@@ -136,10 +153,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                                                                 + "/login");
                                                                         }
                                                                 })
-                                                .logoutSuccessUrl("/login?logout=true") // Trang sau khi đăng xuất thành
-                                                                                        // công
+                                                .logoutSuccessUrl("/login?logout=true")
                                                 .permitAll());
         }
 
 }
- 
