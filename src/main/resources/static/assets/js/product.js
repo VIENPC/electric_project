@@ -1,10 +1,13 @@
 var app = angular.module('my-app');
 
-app.controller('product-controller', function ($scope, $http, $window) {
+app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.products = [];
     $scope.brands = [];
     $scope.products = {};
     $scope.categoris = [];
+    $scope.suppliers = [];
+    $scope.newProduct = {};
+    $scope.form = {};
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
 
     $http.get('/rest/product')
@@ -12,6 +15,11 @@ app.controller('product-controller', function ($scope, $http, $window) {
             $scope.products = response.data;
             $scope.allProducts = response.data;
         });
+    $http.get('/rest/supplier')
+        .then(function (response) {
+            $scope.suppliers = response.data;
+        });
+
     $http.get('/rest/brand')
         .then(function (response) {
             $scope.brands = response.data;
@@ -20,6 +28,37 @@ app.controller('product-controller', function ($scope, $http, $window) {
         .then(function (response) {
             $scope.categoris = response.data;
         });
+
+    $scope.edit = function (products) {
+        $scope.newProduct = angular.copy(products);
+        $scope.switchToTab2();
+    }
+    // Hàm xử lý sự kiện chuyển về Tab 1
+    $scope.switchToTab2 = function () {
+        $('#myTabs a[href="#tab2"]').tab('show');
+    };
+
+    $scope.addProduct = function () {
+        // Lấy giá trị từ CKEditor và gán vào newProduct.configuration
+        var editor = CKEDITOR.instances.configuration;
+        $scope.newProduct.configuration = editor.getData();
+
+        // Tiếp tục với phần còn lại của hàm
+        $http.post('/admin/createProduct', $scope.newProduct)
+            .then(function (response) {
+                $scope.products.push(response.data);
+                $scope.newProduct = {};
+                swal("Thành công", "Thêm sản phẩm thành công!", "success");
+            })
+            .catch(function (error) {
+                // Xử lý lỗi nếu có
+                console.error('Lỗi khi thêm sản phẩm: ' + error);
+            });
+    };
+    $scope.trustedHtml = function (htmlCode) {
+        return $sce.trustAsHtml(htmlCode);
+    };
+
 
     $scope.goToSinglePage = function (productID) {
         window.location.href = `/detail/${productID}`; // Sử dụng chuỗi template (ES6)
@@ -170,6 +209,19 @@ app.controller('product-controller', function ($scope, $http, $window) {
         $scope.showSearchResults = false;
     };
 
+    $scope.imageChanged2 = function (files) {
+        var data = new FormData();
+        data.append('file', files[0]);
+        $http.post('/rest/uploads/images', data, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(resp => {
+            $scope.newProduct.image = resp.data.name;
+        }).catch(error => {
+            alert("Loi roi");
+            console.log("Error:" + error);
+        })
+    }
 
     $scope.addToCart = function (masp) {
         var cart = this.cartItems.find(cart => cart.productID == masp);
