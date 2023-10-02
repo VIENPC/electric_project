@@ -52,7 +52,7 @@
 	</style>
 </head>
 
-<body class="dashboard dashboard_1"  onload="myCustomFunction()">
+<body class="dashboard dashboard_1" onload="myCustomFunction()">
 	<div class="full_container">
 		<div class="inner_container">
 			<!-- Sidebar  -->
@@ -82,9 +82,13 @@
 				<div class="sidebar_blog_2">
 					<h4>Chung</h4>
 					<ul class="list-unstyled components">
-						<li class="active"><a th:href="@{/admin/index}" aria-expanded="false"><i
-									class="fa fa-dashboard yellow_color"></i>
+						<li class="active"><a th:href="@{/admin/index}" aria-expanded="false">
+
+								<i class="fa fa-dashboard yellow_color"></i>
 								<span>Bảng điều khiển</span></a>
+						<li class="active"><a th:href="@{/admin/spbanchay}" aria-expanded="false">
+								<i class="fa fa-line-chart "></i>
+								<span>Sản phẩm bán chạy</span></a>
 						<li><a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
 									class="fa fa-table purple_color2"></i> <span>Quản lý</span></a>
 							<ul class="collapse list-unstyled" id="element">
@@ -176,12 +180,6 @@
 				<main th:replace="${view}"></main>
 				<!--end view layout -->
 				<!-- footer -->
-				<div class="container-fluid">
-					<div class="footer">
-						<p>Copyright © 2023 Designed by Nguyễn Văn Viễn. All rights
-							reserved.</p>
-					</div>
-				</div>
 			</div>
 			<!-- end dashboard inner -->
 		</div>

@@ -30,6 +30,7 @@ public class DieuKhienController {
         model.addAttribute("slhd", hddao.count());
         model.addAttribute("slspht", spdao.countByActive(false));
         model.addAttribute("listhdtt", hddao.findHdTt(1));
+        model.addAttribute("listspbc", spdao.findBestSellingProducts());
         Date currentDate = new Date();
         System.out.println(khdao.count());
         // // Lấy ngày cách đây 5 ngày

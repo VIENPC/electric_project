@@ -1,14 +1,14 @@
 $('#sampleTable').DataTable();
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
-	$('#sidebarCollapse').click(function() {
+	$('#sidebarCollapse').click(function () {
 		// Thêm hoặc xóa lớp CSS 'active' của thẻ nav
 		$('#sidebar').toggleClass('active');
 	});
 
-	$('#checkboxall').click(function() {
+	$('#checkboxall').click(function () {
 		if ($(this).is(":checked")) {
 			$('.chkboxId').prop('checked', true);
 		} else {
@@ -23,6 +23,13 @@ $(document).ready(function() {
 // xử lí phần thống kê theo hãng
 function submitForm() {
 	document.getElementById("formhang").submit();
+}
+function submitFormSPBC(selectElement) {
+	var selectedValue = selectElement.value;
+	// Kiểm tra giá trị đã chọn và thực hiện hành động tương ứng
+	if (selectedValue) {
+		document.getElementById('formthang').submit();
+	}
 }
 // $('#all').click(
 // 	function(e) {
@@ -51,7 +58,7 @@ function removeFailParamFromURL() {
 	}
 }
 // Kiểm tra query parameter và hiển thị thông báo thành công
-window.onload = function() {
+window.onload = function () {
 	var urlParams = new URLSearchParams(window.location.search);
 	var successParam = urlParams.get('success');
 	var failParam = urlParams.get('fail');
@@ -69,7 +76,7 @@ window.onload = function() {
 		showSuccessMessage("Cập nhật thành công");
 		removeSuccessParamFromURL();
 	}
-	
+
 
 
 
@@ -100,9 +107,10 @@ function showSuccessMessage(message) {
 // 	})
 // });  
 
-$(document).on('click', '.settt', function() {
+$(document).on('click', '.settt', function () {
 	const mahd = $(this).data("mahd");
-	const user = $(this).data("user");
+
+
 	swal({
 		title: "Cảnh báo",
 		text: "Bạn có chắc chắn muốn chỉnh sửa trạng thái này?",
@@ -113,17 +121,14 @@ $(document).on('click', '.settt', function() {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
-			if (user != null) {
 
-				window.location.href = `/admin/qlkhachhang/editt/${user}`;
-			}
 
 		}
 	})
 
 });
 
-$('.unclock').click(function() {
+$('.unclock').click(function () {
 	const user = $(this).data("user");
 	swal({
 		title: "Cảnh báo",
@@ -142,9 +147,9 @@ $('.unclock').click(function() {
 })
 
 
-$(document).on('click', '.trash', function() {
+$(document).on('click', '.trash', function () {
 	const itemId = $(this).data("masp");
-	
+
 	swal({
 		title: "Cảnh báo",
 		text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
@@ -155,17 +160,17 @@ $(document).on('click', '.trash', function() {
 			// Chuyển hướng tới endpoint xử lý xóa sản phẩm khi người dùng nhấn "Đồng ý"
 			// Thay 123 bằng id của sản phẩm cần xóa
 			window.location.href = `/admin/qlsanpham/deletesp/${itemId}`;
-			
+
 		}
-		
+
 	});
 });
 
-$('.export').click(function() {
+$('.export').click(function () {
 	var table2excel = new Table2Excel();
 	table2excel.export(document.querySelectorAll("table.table"));
 });
-$('.pdf-file').click(function() {
+$('.pdf-file').click(function () {
 
 	var elment = document.getElementById('sampleTable');
 	var opt = {
@@ -178,8 +183,8 @@ $('.pdf-file').click(function() {
 	html2pdf(elment, opt);
 });
 
-var myApp = new function() {
-	this.printTable = function() {
+var myApp = new function () {
+	this.printTable = function () {
 		var tab = document.getElementById('sampleTable');
 		var win = window.open('', '', 'height=700,width=700');
 		win.document.write(tab.outerHTML);
@@ -195,7 +200,7 @@ function checkmasp() {
 	// alert(masp2);
 	var editLink = document.getElementById("editLink");
 	editLink.href = "/admin/addsanpham/" + masp2;
- 
+
 }
 
 function editProduct(button) {

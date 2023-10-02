@@ -148,27 +148,27 @@ app.controller('product-controller', function ($scope, $http, $window) {
     });
 
 
-    $scope.addToCart = function (masp) {
-        var cart = this.cartItems.find(cart => cart.productID == masp);
-        if (cart) {
+    // $scope.addToCart = function (masp) {
+    //     var cart = this.cartItems.find(cart => cart.productID == masp);
+    //     if (cart) {
 
-            cart.qty++;
-            $scope.saveToLocalStorage();
+    //         cart.qty++;
+    //         $scope.saveToLocalStorage();
 
-        } else {
-            var url = `/rest/product/${masp}`;
-            $http.get(url).then(resp => {
-                resp.data.qty = 1;
-                $scope.cartItems.push(resp.data);
-                $scope.saveToLocalStorage();
+    //     } else {
+    //         var url = `/rest/product/${masp}`;
+    //         $http.get(url).then(resp => {
+    //             resp.data.qty = 1;
+    //             $scope.cartItems.push(resp.data);
+    //             $scope.saveToLocalStorage();
 
-            })
-        }
+    //         })
+    //     }
 
-        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+    //     swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
 
 
-    }
+    // }
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);

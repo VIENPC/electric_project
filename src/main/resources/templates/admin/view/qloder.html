@@ -76,14 +76,28 @@
                                     <td th:text="${hd.note}"></td>
 
                                     <td th:text="${hd.statustt ?'Đã thanh toán':'Chưa thanh toán'}"></td>
-                                    <td th:text="${hd.statushd == 1 ? 'Dã xác nhận' : 'Chờ xác nhận'}"></td>
+
+
+                                    <td>
+                                        <span th:if="${hd.statushd == 1}" class="badge bg-info">Chờ xác nhận</span>
+                                        <span th:if="${hd.statushd == 2}" class="badge bg-warning">Đã xác nhận
+                                        </span>
+                                        <span th:if="${hd.statushd == 3}" class="badge bg-warning">Đang giao
+                                        </span>
+                                        <span th:if="${hd.statushd == 4}" class="badge bg-success">Hoàn thành</span>
+                                        <span th:if="${hd.statushd == 5}" class="badge bg-danger">Đã hủy</span>
+                                    </td>
+
+
 
                                     <td>
                                         <a class="btn btn-primary btn-sm "
                                             th:href="@{'/admin/xemhoadonct/'+${hd.orderId}}"><i class="fa fa-eye"
                                                 aria-hidden="true"></i></a>
+
                                         <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}"
-                                            th:if="${hd.statustt ==false}"> <i class="fa fa-pencil-square-o"
+                                            th:if="${hd.statushd == 1}">
+                                            <i class="fa fa-pencil-square-o" onclick="editProduct(this)"
                                                 aria-hidden="false"></i></a>
 
                                     </td>
@@ -99,7 +113,6 @@
     </main>
 
     <!-- Modal hiển thị chi tiết sản phẩm -->
-    <!-- 
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="hdctModal"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -137,7 +150,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
 </body>
 
