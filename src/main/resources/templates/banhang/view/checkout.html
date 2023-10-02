@@ -113,14 +113,15 @@
                       <p>Vui lòng chọn phương thức thanh toán</p>
                       <div class="radio-list">
                         <label>
-                          <input type="radio" name="paymentMethod" value="CashOnDelivery" checked> Thanh toán khi nhận hàng
+                          <input type="radio" name="paymentMethod" ng-checked="true" value="cod" ng-model="selectedPaymentMethod"> Thanh toán khi nhận hàng
                         </label>
                         <label>
-                          <input type="radio" name="paymentMethod" value="VNPAY"> Thanh toán bằng VNPAY
+                          <input type="radio" name="paymentMethod" value="VNPAY" ng-model="selectedPaymentMethod"> Thanh toán bằng VNPAY
                         </label>
+                        
                       </div>
                       
-                    
+                      
                       <button class="btn btn-primary  pull-right" type="submit" id="button-payment-method"
                         data-toggle="collapse" data-parent="#checkout-page"
                         data-target="#confirm-content">Tiếp tục</button>
@@ -181,6 +182,7 @@
                           <li>
                             <em>Tổng tiền</em>
                             <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                           
                           </li>
                           <li>
                             <em>Phí giao hàng</em>
@@ -191,6 +193,7 @@
                           <li class="checkout-total-price">
                             <em>Tổng cộng</em>
                             <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                            
                           </li>
                         </ul>
                       </div>
