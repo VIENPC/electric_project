@@ -20,14 +20,14 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Data
 @Table(name = "products")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product implements Serializable {
@@ -38,12 +38,11 @@ public class Product implements Serializable {
 	@Column(name = "product_id")
 	private Integer productID;
 
-	private Boolean active;
-
 	@Temporal(TemporalType.DATE)
 	@Column(name = "create_date")
 	private Date createDate = new Date();
 
+	@Column(name = "description")
 	private String description;
 
 	private String image;
@@ -81,5 +80,8 @@ public class Product implements Serializable {
 	@Lob
 	@Column(name = "configuration")
 	private String configuration;
+
+	@Column(name = "active")
+	private boolean active;
 
 }

@@ -103,35 +103,10 @@
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade" id="Description">
-                      <h4 ng-bind-html="product.configuration | unsafeHtml"></h4>
+                      <h4 ng-bind-html="product.description | unsafeHtml"></h4>
                     </div>
-
                     <div class="tab-pane fade" id="Information">
-                      <table class="datasheet">
-                        <tr>
-                          <th colspan="2">Additional features</th>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 1</td>
-                          <td>21 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 2</td>
-                          <td>700 gr.</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 3</td>
-                          <td>10 person</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 4</td>
-                          <td>14 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 5</td>
-                          <td>plastic</td>
-                        </tr>
-                      </table>
+                      <h4 ng-bind-html="product.configuration | unsafeHtml"></h4>
                     </div>
                     <div class="tab-pane fade in active" id="Reviews">
                       <!--<p>There are no reviews for this product.</p>-->
@@ -208,12 +183,7 @@
         <!-- BEGIN SIMILAR PRODUCTS -->
         <div class="row margin-bottom-40">
           <div class="col-md-12 col-sm-12">
-            <h2>Most popular products</h2>
             <div class="owl-carousel owl-carousel4">
-
-
-
-
               <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in relatedProducts">
                 <div class="product-item">
                   <div class="pi-img-wrapper">

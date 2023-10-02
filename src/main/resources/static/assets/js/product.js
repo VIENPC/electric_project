@@ -31,8 +31,14 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
     $scope.edit = function (products) {
         $scope.newProduct = angular.copy(products);
+        $scope.newProduct.configuration = products.configuration;
+        $scope.newProduct.description = products.description;
+        // Cập nhật giá trị CKEditor
+        CKEDITOR.instances.configuration.setData($scope.newProduct.configuration);
+        CKEDITOR.instances.description.setData($scope.newProduct.description);
         $scope.switchToTab2();
     }
+
     // Hàm xử lý sự kiện chuyển về Tab 1
     $scope.switchToTab2 = function () {
         $('#myTabs a[href="#tab2"]').tab('show');
@@ -42,6 +48,10 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         // Lấy giá trị từ CKEditor và gán vào newProduct.configuration
         var editor = CKEDITOR.instances.configuration;
         $scope.newProduct.configuration = editor.getData();
+
+        // Lấy giá trị từ CKEditor cho trường description và gán vào newProduct.description
+        var descriptionEditor = CKEDITOR.instances.description;
+        $scope.newProduct.description = descriptionEditor.getData();
 
         // Tiếp tục với phần còn lại của hàm
         $http.post('/admin/createProduct', $scope.newProduct)
@@ -55,6 +65,69 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 console.error('Lỗi khi thêm sản phẩm: ' + error);
             });
     };
+
+    $scope.updateProduct = function () {
+        // Lấy giá trị từ CKEditor và gán vào newProduct.configuration
+        var editor = CKEDITOR.instances.configuration;
+        $scope.newProduct.configuration = editor.getData();
+
+        // Lấy giá trị từ CKEditor cho trường description và gán vào newProduct.description
+        var descriptionEditor = CKEDITOR.instances.description;
+        $scope.newProduct.description = descriptionEditor.getData();
+
+        // Thực hiện kiểm tra form có hợp lệ hay không
+        if ($scope.form.$invalid) {
+            // Hiển thị thông báo lỗi nếu form không hợp lệ
+            $scope.alertWaring("Vui lòng điền đầy đủ thông tin hợp lệ.");
+            return;
+        }
+
+        // Gọi API để cập nhật thông tin item
+        $http.put(`/adminUpdateProduct/${$scope.newProduct.productID}`, $scope.newProduct)
+            .then(function (response) {
+                // Tìm và cập nhật thông tin sản phẩm trong mảng $scope.products
+                var index = $scope.products.findIndex(product => product.productID === $scope.newProduct.productID);
+                if (index !== -1) {
+                    $scope.products[index] = response.data;
+                }
+                // Xóa thông tin sản phẩm trong biểu mẫu sau khi cập nhật thành công
+                $scope.newProduct = {};
+                swal("Thành công", "Cập nhật sản phẩm thành công!", "success");
+            })
+            .catch(function (error) {
+                // Xử lý lỗi nếu có
+                swal("Thất bại", "Cập nhật sản phẩm thất bại!" + error.statusText, "error");
+                console.error(error);
+            });
+    };
+
+    $scope.deleteProduct = function (product) {
+        // Xác nhận người dùng muốn cập nhật trạng thái active về false
+        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+            product.active = false;
+
+            // Gọi API để cập nhật trạng thái active của người dùng
+            $http.put(`/deleteProduct/${product.productID}`, product)
+                .then(function (response) {
+                    // Cập nhật thông tin người dùng trong mảng $scope.users
+                    var index = $scope.products.findIndex(u => u.productID === product.productID);
+                    if (index !== -1) {
+                        $scope.products[index] = response.data;
+                        swal("Thành công", "Xóa sản phẩm thành công!", "success")
+                    }
+                })
+                .catch(function (error) {
+                    // Xử lý lỗi nếu có
+                    swal("Thất bại", "Xóa không thành công!", "error")
+                    console.error(error);
+                    // Phục hồi trạng thái active về true nếu xảy ra lỗi
+                    product.active = true;
+                });
+        }
+    };
+
+
+
     $scope.trustedHtml = function (htmlCode) {
         return $sce.trustAsHtml(htmlCode);
     };
@@ -289,10 +362,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     // Quan ly gio hang
     $scope.cartItems = [];
     $scope.addToCart = function (masp) {
-
         var cart = this.cartItems.find(cart => cart.productID == masp);
         if (cart) {
-
             cart.qty++;
             $scope.saveToLocalStorage();
         } else {
@@ -301,13 +372,9 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 resp.data.qty = 1;
                 $scope.cartItems.push(resp.data);
                 $scope.saveToLocalStorage();
-
             })
         }
-
         swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
-
-
     }
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
@@ -316,7 +383,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.loadLocalStorage = function () {
         var json = localStorage.getItem("cart");
         $scope.cartItems = json ? JSON.parse(json) : [];
-
     }
     $scope.removesp = function (masp) {
         swal({
@@ -334,7 +400,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 $scope.$apply();
             }
         })
-
     }
     $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
         return $scope.cartItems
@@ -351,11 +416,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             .reduce((total, amt) => total += amt, 0);
     };
     $scope.loadLocalStorage();
-
-
-
-
-
 });
 app.controller("checkctrl", function ($scope, $http, $filter) {
     const host = "https://provinces.open-api.vn/api/";
@@ -397,7 +457,6 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
     });
     $("#ward").change(() => {
         printResult();
-
     })
     let diachinn1 = "";
     var printResult = () => {
@@ -406,19 +465,13 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             let result = $("#ward option:selected").text() + ","
                 + $("#district option:selected").text() + ","
                 + $("#province option:selected").text();
-
-
             diachinn1 = result;
         }
-
     }
 
     $scope.loadLocalStorage = function () {
         var json = localStorage.getItem("cart");
         $scope.cartItems = json ? JSON.parse(json) : [];
-
-
-
     }
     $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
         return cart.price * cart.qty;
@@ -439,17 +492,6 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         }).catch(error => {
             console.log("Error", error)
         });
-
-        // $http.get('/rest/account').then(resp => {
-        //     $scope.account = resp.data;
-        //     console.log("accountthuong", resp)
-
-
-        // }).catch(error => {
-        //     console.log("Error", error)
-        // });
-
-
     };
     $scope.getAccount();
     $scope.saveToLocalStorage = function () {

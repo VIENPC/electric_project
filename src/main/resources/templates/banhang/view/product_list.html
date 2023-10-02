@@ -39,7 +39,7 @@
                 </label>
               </div>
 
-              <div class="checkbox-list" ng-repeat="item in categoris">
+              <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
                 <label ng-if="item.active !== false">
                   <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID, item)">
                   {{item.categoryName}}
@@ -58,7 +58,7 @@
             </div>
             <div class="sidebar-products">
               <h2>Thương hiệu</h2>
-              <div class="col-md-6 col-sm-12 col-xs-12 " ng-repeat="item in brands">
+              <div class="col-md-6 col-sm-12 col-xs-12 " ng-repeat="item in brands" ng-if="item.active !== false">
                 <a class="card" ng-click="loadProductsByBrand(item.brandID)">
                   <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
                   <div class="card-body">
@@ -101,7 +101,7 @@
                   <h3>Không có sản phẩm nào được tìm thấy.</h3>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products" ng-if="item.active !== false">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
                     <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">

@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.Product;
 
-import com.nhutin.electric_project.repository.brandsRepository;
 import com.nhutin.electric_project.repository.productsRepository;
-import com.nhutin.electric_project.service.BrandsService;
+import com.nhutin.electric_project.service.ProductsService;
 
 @CrossOrigin("*")
 @RestController
@@ -25,7 +24,7 @@ public class ProductAdminRestController {
     @Autowired
     productsRepository dmdao;
     @Autowired
-    BrandsService brandService;
+    ProductsService ProductService;
 
     @PostMapping("/admin/createProduct")
     public ResponseEntity<Product> Create(@RequestBody Product product) {
@@ -38,39 +37,46 @@ public class ProductAdminRestController {
         }
     }
 
-    // @PutMapping("/adminUpdateBrand/{brandID}")
-    // public ResponseEntity<Brand> updateBrand(@PathVariable int brandID,
-    // @RequestBody Brand update) {
-    // try {
-    // Brand existing = dmdao.findById(brandID);
-    // if (existing == null) {
-    // return ResponseEntity.notFound().build();
-    // }
-    // // Cập nhật thông tin từ update vào existing
-    // existing.setBrandName(update.getBrandName());
-    // existing.setImage(update.getImage());
-    // existing.setActive(update.isActive() == true);
+    @PutMapping("/adminUpdateProduct/{productID}")
+    public ResponseEntity<Product> updateProduct(@PathVariable int productID,
+            @RequestBody Product update) {
+        try {
+            Product existing = dmdao.findById(productID);
+            if (existing == null) {
+                return ResponseEntity.notFound().build();
+            }
+            // Cập nhật thông tin từ update vào existing
+            existing.setProductName(update.getProductName());
+            existing.setPrice(update.getPrice());
+            existing.setCategory(update.getCategory());
+            existing.setBrand(update.getBrand());
+            existing.setConfiguration(update.getConfiguration());
+            existing.setDescription(update.getDescription());
+            existing.setQuantity(update.getQuantity());
+            existing.setSupplier(update.getSupplier());
+            existing.setImage(update.getImage());
+            existing.setActive(update.isActive() == true);
 
-    // Brand save = dmdao.save(existing);
-    // return ResponseEntity.ok(save);
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    // }
-    // }
+            Product save = dmdao.save(existing);
+            return ResponseEntity.ok(save);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-    // @PutMapping("/deleteBrand/{brandID}")
-    // public ResponseEntity<Brand> deleteBrand(@PathVariable int brandID) {
-    // try {
-    // Brand existing = dmdao.findById(brandID);
-    // if (existing == null) {
-    // return ResponseEntity.notFound().build();
-    // }
-    // existing.setActive(false); // Cập nhật trạng thái active về false
-    // Brand deactivatedAccount = dmdao.save(existing);
+    @PutMapping("/deleteProduct/{productID}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable int productID) {
+        try {
+            Product existing = dmdao.findById(productID);
+            if (existing == null) {
+                return ResponseEntity.notFound().build();
+            }
+            existing.setActive(false); // Cập nhật trạng thái active về false
+            Product deactivatedAccount = dmdao.save(existing);
 
-    // return ResponseEntity.ok(deactivatedAccount);
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    // }
-    // }
+            return ResponseEntity.ok(deactivatedAccount);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
