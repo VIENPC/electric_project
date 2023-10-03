@@ -1,4 +1,4 @@
-$('#sampleTable').DataTable();
+
 
 
 $(document).ready(function () {
