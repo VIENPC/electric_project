@@ -1,6 +1,4 @@
 $('#sampleTable').DataTable();
-
-
 $(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
 	$('#sidebarCollapse').click(function () {
@@ -109,7 +107,6 @@ function showSuccessMessage(message) {
 
 $(document).on('click', '.settt', function () {
 	const mahd = $(this).data("mahd");
-
 
 	swal({
 		title: "Cảnh báo",
@@ -230,7 +227,73 @@ function editProduct(button) {
 }
 
 
+var categories = [];
+var data = [];
+// Lấy tất cả các hàng trong bảng
+var rows = document.querySelectorAll('table tr');
 
+// Lặp qua từng hàng trong bảng
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+});
+//Đây là biểu đồ
+const chart = Highcharts.chart('container', {
+	title: {
+		text: 'THỐNG KÊ DOANH THU',
+		align: 'center'
+	},
+	colors: [
+		'#4caefe',
+		'#3fbdf3',
+		'#35c3e8',
+		'#2bc9dc',
+		'#20cfe1',
+		'#16d4e6',
+		'#0dd9db',
+		'#03dfd0',
+		'#00e4c5',
+		'#00e9ba',
+		'#00eeaf',
+		'#23e274'
+	],
+	xAxis: {
+		categories: categories
+	},
+	series: [{
+		type: 'column',
+		name: 'Doanh thu',
+		borderRadius: 5,
+		colorByPoint: true,
+		data: data,
+		showInLegend: false
+	}]
+});
+
+document.getElementById('plain').addEventListener('click', () => {
+	chart.update({
+		chart: {
+			inverted: false,
+			polar: false
+		},
+
+	});
+});
+
+document.getElementById('inverted').addEventListener('click', () => {
+	chart.update({
+		chart: {
+			inverted: true,
+			polar: false
+		},
+	});
+});
 
 
 

@@ -25,4 +25,25 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.statushd = 1")
     Double sumTotalAmountOfApprovedOrders();
 
+    // Thống kê biểu đồ
+    @Query(nativeQuery = true, value = "SELECT t.thang, COALESCE(SUM(o.total_amount), 0) AS doanh_thu_thang " +
+            "FROM (SELECT 1 AS thang " +
+            "      UNION SELECT 2 " +
+            "      UNION SELECT 3 " +
+            "      UNION SELECT 4 " +
+            "      UNION SELECT 5 " +
+            "      UNION SELECT 6 " +
+            "      UNION SELECT 7 " +
+            "      UNION SELECT 8 " +
+            "      UNION SELECT 9 " +
+            "      UNION SELECT 10 " +
+            "      UNION SELECT 11 " +
+            "      UNION SELECT 12) t " +
+            "LEFT JOIN orders o ON MONTH(o.order_date) = t.thang " +
+            "                  AND o.statushd = 4 " +
+            "                  AND o.statustt = 1 " +
+            "                  AND o.order_date >= DATEADD(MONTH, -12, GETDATE()) " +
+            "GROUP BY t.thang " +
+            "ORDER BY t.thang")
+    List<Object[]> calculateRevenueByMonth();
 }

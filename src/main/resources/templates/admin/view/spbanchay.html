@@ -42,16 +42,14 @@
 					<!-- col-6 -->
 					<div class="col-md-6">
 						<div class="widget-small warning coloured-icon">
-							<img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${listspbctheongay[0][7]}}"
-								alt="">
+							<!-- <img style="width: 20%;" th:if="${listspbctheongay[0][7].length() }" th:src="@{'/assets/images/carousel/'+${listspbctheongay[0][7]}}"> -->
 							<div class="info">
-								<h4 th:if="${ngay2 == null}" th:text="'sản phẩm bán chạy nhất tháng '+${ngay1}">
+								<h4 th:if="${ngay2 == null}" th:text="'sản phẩm bán chạy nhất ngày '+${ngay1}">
 								</h4>
-								<h4 th:if=" ${ngay1==null}" th:text="'sản phẩm bán chạy nhất tháng '+${ngay2}">
+								<h4 th:if=" ${ngay1==null}" th:text="'sản phẩm bán chạy nhất ngày '+${ngay2}">
 								</h4>
 
 								<div th:each=" itemsp : ${listspbctheongay}">
-									<!-- <img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${itemsp[7]}}" alt=""> -->
 									<p>
 										<b th:text="${itemsp[1]}"></b>
 									</p>
@@ -64,36 +62,21 @@
 					<!-- col-6 -->
 					<div class="col-md-6">
 						<div class="widget-small info coloured-icon">
-							<img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${listspbctheomonth[0][7]}}">
+							<!-- <img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${listspbctheomonth[0][7]}}"> -->
 
 							<div class="info">
 								<h4 th:if="${thang1 == null}">sản phẩm bán chạy nhất tháng [(${thangHomNay})]</h4>
-								<div>
-									<!-- <img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${itemsp[7]}}" alt=""> -->
+								<h4 th:if="${thang1 != null}">sản phẩm bán chạy nhất tháng [(${thang1})]</h4>
+								<div th:each=" itemsp : ${listspbctheomonth}">
 									<p>
-										<b th:text="${listspbctheomonth[0][1]}"></b>
+										<b th:text="${itemsp[1]}"></b>
 									</p>
 									<p class="info-tong" style="font-size: 25px;"
-										th:text="'Tổng số sản phẩm được bán: '+ ${listspbctheomonth	[0][2]}">
-									</p>
+										th:text="'Tổng số sản phẩm được bán: '+ ${itemsp[2]}">
 								</div>
-
 							</div>
 						</div>
 					</div>
-					<!-- col-6 -->
-					<!-- <div class="col-md-6">
-						<div class="widget-small danger coloured-icon">
-							<i class='icon bx bxs-error-alt fa-3x'></i>
-							<div class="info">
-								<h4>Hết hàng</h4>
-								<p>
-
-								</p>
-								<p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>
 			<!--Right-->
@@ -116,16 +99,6 @@
 										</tr>
 									</thead>
 									<tbody>
-										<!-- <tr th:each="itemsp : ${listspbc}">
-											<td th:text="${itemsp[0]}"></td>
-											<td th:text="${itemsp[1]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-											</td>
-											<td th:text="${itemsp[3]}"></td>
-											<td th:text="${itemsp[4]}"></td>
-										</tr> -->
-										<!-- Chỉ hiện sản phẩm bán chạy nhất của cửa hàng -->
 										<tr>
 											<td th:text="${listspbc[0][0]}"></td>
 											<td th:text="${listspbc[0][1]}"></td>
@@ -194,18 +167,6 @@
 											<td th:text="${#dates.format(itemsp[6], 'dd/MM/yyyy')}"></td>
 
 										</tr>
-										<!-- Chỉ hiện sản phẩm bán chạy nhất của cửa hàng -->
-										<!-- <tr>
-											<td th:text="${listspbc[0][0]}"></td>
-											<td th:text="${listspbc[0][1]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(listspbc[0][2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-											</td>
-											<td th:text="${listspbc[0][3]}"></td>
-											<td th:text="${listspbc[0][4]}"></td>
-											<td th:text="${listspbc[0][5]}"></td>
-											<td th:text="${listspbc[0][5]}"></td>
-										</tr> -->
 
 									</tbody>
 								</table>
@@ -223,7 +184,6 @@
 									<label for="ngay">Ngày:</label>
 									<input type="date" id="ngay" name="ngay">
 									<button type="submit">Tìm kiếm</button>
-									<!-- <h4 th:text="${#dates.format(ngay1, 'dd/MM/yyyy')}"></h4> -->
 									<br>
 									<br>
 									<span>
@@ -259,7 +219,6 @@
 											</td>
 											<td th:text="${itemsp[6]}"></td>
 											<td th:text="${#dates.format(itemsp[5], 'dd/MM/yyyy')}"></td>
-
 										</tr>
 									</tbody>
 								</table>
