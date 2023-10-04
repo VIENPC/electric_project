@@ -4,6 +4,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CookieUtils {
 	// Tạo và gửi cookie về client để lưu
 	public static Cookie add(String name, String value, int hours, HttpServletResponse resp) {

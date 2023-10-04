@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.UserRepository;
 
@@ -28,9 +27,6 @@ import com.nhutin.electric_project.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepo;
-
-	@Autowired
-	CookieUtils cookieUtils;
 	@Autowired
 	HttpServletResponse resp;
 
