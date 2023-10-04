@@ -3,23 +3,17 @@ package com.nhutin.electric_project.user.rest;
 import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.config.VnpayConfig;
 import com.nhutin.electric_project.model.Order;
-import com.nhutin.electric_project.model.PaymentDTO;
 import com.nhutin.electric_project.model.PaymentQR;
-import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.UserRepository;
 import com.nhutin.electric_project.repository.ordersRepository;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,14 +23,11 @@ import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class VnpayPaymentController {
@@ -49,19 +40,6 @@ public class VnpayPaymentController {
 
 	@Autowired
 	ordersRepository orderDAO;
-
-	// @GetMapping
-	// public ModelAndView payVNP() {
-	// ModelAndView modelAndView = new ModelAndView("index");
-	// modelAndView.addObject("pay", new PaymentQR());
-	// return modelAndView;
-	// }
-	// @GetMapping("/pay")
-	// public ModelAndView payQR(){
-	// ModelAndView modelAndView = new ModelAndView("vnpay_pay");
-	// modelAndView.addObject("payment",new PaymentQR());
-	// return modelAndView;
-	// }
 
 	@PostMapping("/totalAmount")
 	public ResponseEntity<String> receiveTotalAmount(@RequestBody PaymentQR request) {
