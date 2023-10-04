@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<main class="app-content">
+	<main class="app-content" ng-controller="product-controller">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a th:href="@{/admin/qlsanpham}"><b>Danh
@@ -40,95 +40,271 @@
 							</div>
 
 							<div class="col-sm-2">
-								
-								<a class="btn btn-excel btn-sm export"  title="=Xuất file excel" ><i class="fa fa-file-excel-o"></i>
+
+								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+										class="fa fa-file-excel-o"></i>
 									Xuất Excel</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"
-									><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm xoansp"  type="button" title="Xóa nhiều sản phẩm" ><i
+								<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
 										class="fa fa-trash-o"></i>
 									Xóa tất cả </a>
 							</div>
 						</div>
-						<div id="sampleTable_wrapper"
-							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
-							<div class="row">
-								<div class="col-sm-12">
-									<table class="table table-hover table-bordered" id="sampleTable">
-										<thead>
-											<tr>
-												<th width="10"><input type="checkbox" id="checkboxall"></th>
-												<th><span>ID</span></th>
-												<th width="320px"><span>Tên sản phẩm</span></th>
-												<th><span>Ảnh</span></th>
-												<th><span>Số lượng</span></th>
-												<th><span>Tình trạng</span></th>
-												<th><span>Giá tiền</span></th>
-												<th><span>Hãng</span></th>
-												<th><span>Ngày nhập</span></th>
-												<th><span>Chức năng</span></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="sp : ${listsp}">
-												<td width="10"><input type="checkbox" class="chkboxId" name="maspchk" th:value="${sp.masp}"></td>
-												<td th:text="${sp.masp}"></td>
-
-												<td th:text="${sp.tensp}"></td>
-												<td><img th:src="@{'/images/sanpham/' + ${sp.hinhanh}}" alt=""
-														width="100px;"></td>
-												<td th:text="${sp.soluong}"></td>
-												<td><span class="badge bg-success" th:block
-														th:if="${sp.trangthaisp == true}">Còn hàng</span> <span
-														class="badge bg-danger" th:block
-														th:unless="${sp.trangthaisp == true}">Hết hàng</span></td>
-												<td><span
-														th:text="${#numbers.formatDecimal(sp.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
-												</td>
-												<td th:text="${sp.hangsanxuat.tenhang}"></td>
-												<td th:text="${#temporals.format(sp.ngaynhap, 'yyyy-MM-dd HH:mm:ss')}">
-												</td>
-												<td><button class="btn btn-primary btn-sm trash" type="button"
-														title="Xóa" 
-														th:attr="data-masp=${sp.masp}">
-														<i class="fa fa-trash-o"></i>
-													</button>
-													<!-- <a th:href="@{/edit/{masp}(masp=${sp.masp})}" class="btn btn-primary btn-sm edit" ><i class="fa fa-edit"></i></a> -->
-
-
-													<button class="btn btn-primary btn-sm edit"
-														onclick="editProduct(this)">
-														<i class="fa fa-edit"></i>
-													</button>
-												</td>
-
-
-											</tr>
-
-
+						<!-- Tabs Navigation -->
+						<ul class="nav nav-tabs" id="myTabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+									aria-controls="tab1" aria-selected="true">Danh sách sản phẩm</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
+									aria-controls="tab2" aria-selected="false">Chỉnh sửa</a>
+							</li>
+						</ul>
+						<!-- Tabs Content -->
+						<div class="tab-content" id="myTabsContent">
+							<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+								<div id="sampleTable_wrapper"
+									class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table table-hover table-bordered" id="sampleTable">
+												<thead>
+													<tr>
+														<th width="10"><input type="checkbox" id="checkboxall"></th>
+														<th><span>ID</span></th>
+														<th><span>Tên sản phẩm</span></th>
+														<th><span>Số lượng</span></th>
+														<th><span>Giá tiền</span></th>
+														<th><span>Tình trạng</span></th>
+														<th><span>Hãng</span></th>
+														<th><span>Loại</span></th>
+														<th><span>Nhà cung cấp</span></th>
+														<th><span>Mô tả</span></th>
+														<th><span>Cấu hình</span></th>
+														<th><span>Ảnh</span></th>
+														<th><span>Chức năng</span></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="item in products">
+														<td width="10"><input type="checkbox" class="chkboxId"
+																name="maspchk"></td>
+														<td>{{item.productID}}</td>
+														<td>{{item.productName}}</td>
+														<td>{{item.quantity}}</td>
+														<td>{{item.price | number: 0}}</td>
+														<td>{{item.active?'Còn':'Hết'}}</td>
+														<td>{{item.brand.brandName}}</td>
+														<td>{{item.category.categoryName}}</td>
+														<td>{{item.supplier.supplierName}}</td>
+														<td>{{item.description.length>10?( item.description |
+															limitTo: 10)+'...':item.description}}</td>
+														<td>{{item.configuration.length>10?( item.configuration |
+															limitTo: 10)+'...':item.configuration}}</td>
+														<td><img ng-src="../assets/images/product/{{item.image}}"
+																style="width: 50px; height: 50px">
 
 
-
-										</tbody>
-									</table>
+														<td><button class="btn btn-primary btn-sm trash" type="button"
+																title="Xóa" ng-click="deleteProduct(item)">
+																<i class="fa fa-trash-o"></i>
+															</button>
+															<!-- <a th:href="@{/edit/{masp}(masp=${sp.masp})}" class="btn btn-primary btn-sm edit" ><i class="fa fa-edit"></i></a> -->
+															<button class="btn btn-primary btn-sm edit"
+																ng-click="edit(item)">
+																<i class="fa fa-edit"></i>
+															</button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</div>
+							<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+								<form method="post" enctype="multipart/form-data" name="form">
+									<div class="modal-body">
+										<div class="row">
+											<div class="form-group  col-md-12">
+												<span class="thong-tin-thanh-toan">
+													<h5>Chỉnh sửa thông tin sản phẩm cơ bản</h5>
+												</span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-md-6">
+												<label class="control-label">Mã sản phẩm </label> <input
+													class="form-control" id="" type="number" name=""
+													ng-model="newProduct.productID" readonly>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.quantity.$invalid && form.quantity.$dirty}">
+												<label class="control-label">Số lượng</label>
+												<input class="form-control" type="number" name="quantity" id="soluong"
+													ng-model="newProduct.quantity" required>
+												<div ng-messages="form.quantity.$error" ng-if="!form.quantity.$dirty">
+													<div class="text-danger" ng-message="required">Vui lòng
+														nhập số lượng sản phẩm</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.productName.$invalid && form.productName.$dirty}">
+												<label class="control-label">Tên sản phẩm</label>
+												<input class="form-control" type="text" id="tensp" name="productName"
+													ng-model="newProduct.productName" required>
+												<div ng-messages="form.productName.$error"
+													ng-if="!form.productName.$dirty">
+													<div class="text-danger" ng-message="required">Vui lòng
+														nhập tên sản phẩm</div>
+												</div>
+											</div>
 
+											<div class="form-group col-md-6">
+												<label class="col-md-12 p-0">Status</label>
+												<div class="col-md-12 border-bottom p-0">
+													<input type="radio" id="active" name="active" ng-value="true"
+														ng-model="newProduct.active" ng-required="true" /> <label
+														for="admin">Còn sản
+														phẩm</label><br>
+													<input type="radio" id="active" name="active" ng-value="false"
+														ng-model="newProduct.active" ng-required="true" /> <label
+														for="user">Hết sản
+														phẩm</label><br>
+													<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+														<div class="text-danger" ng-message="required">Vui lòng chọn
+															trạng thái!! </div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.brand.$invalid && form.brand.$dirty}">
+												<label class="col-md-12 p-0">Thương hiệu</label>
+												<div class="col-md-12 border-bottom p-0">
+													<select name="brand" class="form-control" id="brand"
+														ng-model="newProduct.brand"
+														ng-options="brand as brand.brandName for brand in brands track by brand.brandID">
+														<option value="">Chon thương hiệu</option>
+													</select>
+													<div ng-messages="form.brand.$error" ng-if="!form.brand.$dirty">
+														<div class="text-danger" ng-message="required">Vui lòng chọn
+															thương hiệu sản phẩm</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.category.$invalid && form.category.$dirty}">
+												<label class="col-md-12 p-0">Loại</label>
+												<div class="col-md-12 border-bottom p-0">
+													<select name="category" class="form-control" id="category"
+														ng-model="newProduct.category"
+														ng-options="cate as cate.categoryName for cate in categoris track by cate.categoryID">
+														<option value="">Chon loại</option>
+													</select>
+													<div ng-messages="form.category.$error"
+														ng-if="!form.category.$dirty">
+														<div class="text-danger" ng-message="required">Vui lòng chọn
+															loại sản phẩm</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.supplier.$invalid && form.supplier.$dirty}">
+												<label class="col-md-12 p-0">Nhà sản xuất</label>
+												<div class="col-md-12 border-bottom p-0">
+													<select name="supplier" class="form-control" id="supplier"
+														ng-model="newProduct.supplier"
+														ng-options="supplier as supplier.supplierName for supplier in suppliers track by supplier.supplierID">
+														<option value="">Chon thương hiệu</option>
+													</select>
+													<div ng-messages="form.supplier.$error"
+														ng-if="!form.supplier.$dirty">
+														<div class="text-danger" ng-message="required">Vui lòng chọn
+															thương hiệu sản phẩm</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.price.$invalid && form.price.$dirty}">
+												<label class="control-label">Giá bán</label> <input class="form-control"
+													type="text" name="price" ng-model="newProduct.price">
+												<div ng-messages="form.price.$error" ng-if="!form.price.$dirty">
+													<div class="text-danger" ng-message="required">Vui lòng
+														nhập tên thương hiệu</div>
+												</div>
+											</div>
+											<div class="form-group col-md-12">
+												<label class="control-label">Cấu hình</label>
+												<textarea class="form-control" name="configuration"
+													ng-model="newProduct.configuration" id="configuration"></textarea>
+												<script>
+													CKEDITOR.replace('configuration');
+												</script>
+											</div>
+											<div class="form-group col-md-12">
+												<label class="control-label">Mô tả</label>
+												<textarea class="form-control" name="description"
+													ng-model="newProduct.description" id="description"></textarea>
+												<script>
+													CKEDITOR.replace('description');
+												</script>
+											</div>
+											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.image.$invalid && form.image.$touched}">
+												<div class="form-group"
+													style="border: 1px solid rgb(221, 218, 218); height: 200px; width: 300px;">
+													<div class="nk-int-st image-container">
+														<img class="object-fit" id="image"
+															ng-src="../assets/images/product/{{newProduct.image}}"
+															alt="Uploaded Image" name="image" ng-required="true"
+															style="max-height: 100%; max-width: 100%;">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="fileInput" class="fw-bold">Chọn Hình</label>
+													<div class="input-group">
+														<input style="object-fit: contain;" type="file"
+															class="form-control" ng-model="newProduct.image"
+															onchange="angular.element(this).scope().imageChanged2(this.files)"
+															accept=".png, .jpg, .jpeg, .gif" id="imageInput"
+															name="image" ng-required="true">
+														<div ng-if="form.image.$touched && form.image.$error.required"
+															class="text-danger">Vui
+															lòng
+															chọn ảnh</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addProduct()"
+											ng-disabled="form.$invalid"><i class="fa fa-plus"></i>Thêm mới</button>
+										<button class="btn btn-info btn-sm" id="switchToTab2"
+											ng-click="updateProduct(product)" ng-disabled="form.$invalid"><i
+												class="fa fa-refresh"></i>Cập nhật</button>
+										<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
+										<BR>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</main>
 	<!--
   MODAL
 -->
-	<div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+	<!-- <div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
 		data-keyboard="false">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -144,7 +320,7 @@
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label class="control-label">Mã sản phẩm </label> <input class="form-control" id="masp"
-									type="number" name="masp" >
+									type="number" name="masp">
 
 							</div>
 							<div class="form-group  col-md-6">
@@ -153,7 +329,7 @@
 							</div>
 							<div class="form-group col-md-12">
 								<label class="control-label">Tên sản phẩm</label> <input class="form-control"
-									type="text" id="tensp" name="tensp"  required>
+									type="text" id="tensp" name="tensp" required>
 							</div>
 
 							<div class="form-group col-md-6 ">
@@ -170,10 +346,10 @@
 							</div>
 
 						</div>
-						<a onclick="checkmasp()" ; id="editLink" 
+						<a onclick="checkmasp()" ; id="editLink"
 							style="float: right; font-weight: 600; color: #ea0000;">Chỉnh
 							sửa sản phẩm nâng cao</a> <BR> <BR>
-						<button class="btn btn-save" type="submit" >Lưu lại</button>
+						<button class="btn btn-save" type="submit">Lưu lại</button>
 						<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
 						<BR>
 					</div>
@@ -181,16 +357,16 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!--
 MODAL
 -->
 
 
-<!-- Button trigger modal -->
+	<!-- Button trigger modal -->
 
-  <!-- Modal -->
-	
+	<!-- Modal -->
+
 
 
 

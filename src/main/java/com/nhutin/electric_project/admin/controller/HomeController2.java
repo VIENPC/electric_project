@@ -7,48 +7,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("admin")
 public class HomeController2 {
 
+   @RequestMapping("baocaochung")
+   public String baocaochung() {
+      return "admin/view/baocaochung";
+   }
 
-    @RequestMapping("index")
-    public String index(){
-       return "admin/view/dashboard";
-    }
-    @RequestMapping("qlsanpham")
-    public String qlsanpham(){
-       return "admin/view/product";
-    }
-    @RequestMapping("qldonhang")
-    public String qldonhang(){
-       return "admin/view/qloder";
-    }
-     @RequestMapping("qlkhachhang")
-    public String qlkhachhang(){
-       return "admin/view/qlcustomer";
-    }
-     @RequestMapping("baocaochung")
-    public String baocaochung(){
-       return "admin/view/baocaochung";
-    }
-    @RequestMapping("baocaosanpham")
-    public String baocaosanpham(){
-       return "admin/view/baocaosp";
-    }
-     @RequestMapping("baocaohoadon")
-    public String baocaohoadon(){
-       return "admin/view/baocaohd";
-    }
-     @RequestMapping("insertUser")
-     public String insertUser(){
-        return "admin/view/qlcustomer_insert";
-     }
-     @RequestMapping("UserDetail")
-     public String UserDetail(){
-        return "admin/view/qlcustomer_detail";
-     }
-     @RequestMapping("addsanpham")
-     public String addsanpham(){
-        return "admin/view/add_product";
-     }
-     
-     
+   // @RequestMapping("baocaosanpham")
+   // public String baocaosanpham() {
+   // return "admin/view/baocaosp";
+   // }
+
+   @RequestMapping("insertUser")
+   public String insertUser() {
+      return "admin/view/qlcustomer_insert";
+   }
+
+   // @RequestMapping("UserDetail")
+   // public String UserDetail() {
+   // return "admin/view/qlcustomer_detail";
+   // }
+
+   @RequestMapping("brand")
+   public String brand() {
+      return "admin/view/qlbrand";
+   }
+
+   @RequestMapping("category")
+   public String category() {
+      return "admin/view/qlcategorys";
+   }
+
+   @RequestMapping("addBrand")
+   public String add() {
+      return "admin/view/add_brand";
+   }
+
+   @RequestMapping("addCategory")
+   public String addCate() {
+      return "admin/view/add_category";
+   }
 }
-

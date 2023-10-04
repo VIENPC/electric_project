@@ -16,15 +16,15 @@ import com.nhutin.electric_project.service.CategorysService;
 @CrossOrigin("*")
 @RestController
 public class CategoryRestController {
-    @Autowired
-    categorysRepository dmdao;
+	@Autowired
+	categorysRepository dmdao;
 
-    @Autowired
-    CategorysService categoryService;
+	@Autowired
+	CategorysService categoryService;
 
-    @GetMapping("/rest/category")
-    public ResponseEntity<List<Category>> findAll() {
-        return ResponseEntity.ok(dmdao.findAll());
-    }
+	@GetMapping("/rest/category")
+	public ResponseEntity<List<Category>> findAll() {
+		return ResponseEntity.ok(dmdao.findAll());
+	}
 
 }

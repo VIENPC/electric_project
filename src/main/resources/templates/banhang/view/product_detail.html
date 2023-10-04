@@ -46,30 +46,7 @@
                       <em>$<span>62.00</span></em>
                     </div>
                     <div class="availability">
-                      Availability: <strong>In Stock</strong>
-                    </div>
-                  </div>
-                  <div class="description">
-                    <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore
-                      magna aliquarm erat volutpat
-                      Nostrud duis molestie at dolore.</p>
-                  </div>
-                  <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label">Size:</label>
-                      <select class="form-control input-sm">
-                        <option>L</option>
-                        <option>M</option>
-                        <option>XL</option>
-                      </select>
-                    </div>
-                    <div class="pull-left">
-                      <label class="control-label">Color:</label>
-                      <select class="form-control input-sm">
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                      </select>
+                      Category: <strong>{{product.category.categoryName}}</strong>
                     </div>
                   </div>
                   <div class="product-page-cart">
@@ -102,46 +79,13 @@
                     <li class="active"><a href="#Reviews" data-toggle="tab">Reviews (2)</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade" id="Description">
-                      <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet
-                        dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut
-                        sit
-                        ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat
-                        sit
-                        volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore adipiscing elit,
-                        sed
-                        sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis
-                        molestie
-                        at dolore. </p>
+                    <div class="tab-pane fade in active" id="Description">
+                      <h4 ng-bind-html="product.description | unsafeHtml"></h4>
                     </div>
                     <div class="tab-pane fade" id="Information">
-                      <table class="datasheet">
-                        <tr>
-                          <th colspan="2">Additional features</th>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 1</td>
-                          <td>21 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 2</td>
-                          <td>700 gr.</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 3</td>
-                          <td>10 person</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 4</td>
-                          <td>14 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 5</td>
-                          <td>plastic</td>
-                        </tr>
-                      </table>
+                      <h4 ng-bind-html="product.configuration | unsafeHtml"></h4>
                     </div>
-                    <div class="tab-pane fade in active" id="Reviews">
+                    <div class="tab-pane fade" id="Reviews">
                       <!--<p>There are no reviews for this product.</p>-->
                       <div class="review-item clearfix">
                         <div class="review-item-submitted">
@@ -216,12 +160,7 @@
         <!-- BEGIN SIMILAR PRODUCTS -->
         <div class="row margin-bottom-40">
           <div class="col-md-12 col-sm-12">
-            <h2>Most popular products</h2>
             <div class="owl-carousel owl-carousel4">
-
-
-
-
               <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in relatedProducts">
                 <div class="product-item">
                   <div class="pi-img-wrapper">

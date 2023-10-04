@@ -4,30 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Tin Tức</title>
 </head>
-<style>
-
-</style>
 
 <body>
   <main>
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="">Store</a></li>
-          <li class="active"> &amp; Tin tức</li>
+          <li><a th:href="@{/home}">Home</a></li>
+          <li><a th:href="@{/shop}">Store</a></li>
+          <li class="active">Tin tức</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-3">
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding-bottom: 10px; cursor: pointer;">
               <img src="assets/pages/img/news/anhnews1.jpg" style="width: 100%; padding-bottom: 10px;">
               <a>Chip dành cho laptop của Intel tích hợp AI tạo sinh </a>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding-bottom: 10px;">
               <img src="assets/pages/img/news/anhnews1.jpg" style="width: 100%; padding-bottom: 10px;">
               <a>Chip dành cho laptop của Intel tích hợp AI tạo sinh </a>
             </div>
@@ -63,11 +60,13 @@
             <h1>Chip dành cho laptop của Intel tích hợp AI tạo sinh</h1>
             <div class="content-page">
               <p><img src="assets/pages/img/news/anhnews1.jpg" alt="About us" class="img-responsive"></p>
-              <p>Chip Core Ultra của Intel có thể chạy trực tiếp chatbot AI tạo sinh trên
+              <p style="color: black; font-size: 15px;">Chip Core Ultra của Intel có thể chạy trực tiếp chatbot AI tạo
+                sinh trên
                 laptop thay vì cần tới sức
                 mạnh từ trung tâm dữ liệu đám mây.</p>
               <br>
-              <p style="font-weight: bold;">Chatbot AI tạo sinh hiện nay phụ thuộc vào việc xử lý dữ liệu trên cloud để
+              <p style="color: black; font-size: 15px;">Chatbot AI tạo sinh hiện nay phụ thuộc vào việc xử lý dữ liệu
+                trên cloud để
                 có thể đưa ra câu trả
                 lời
                 đa dạng và phức tạp cho người dùng. Điều này một phần do hoạt động này đòi hỏi sức mạnh tính toán lớn
@@ -76,16 +75,15 @@
                 nhật
                 dữ liệu mới thường xuyên để cải thiện hiệu suất và độ chính xác. Tuy nhiên, dữ liệu đám mây cũng đặt
                 ra
-                các thách thức về bảo mật, chi phí sử dụng tài nguyên đám mây cũng như khả năng đảm bảo sự luôn sẵn
+                các thách thức về bảo mật,chi phí sử dụng tài nguyên đám mây cũng như khả năng đảm bảo sự luôn sẵn
                 sàng
-                của hệ thống.</p>
+                của hệ thống.
+              </p>
 
 
             </div>
           </div>
-          <!-- END CONTENT -->
         </div>
-        <!-- END SIDEBAR & CONTENT -->
       </div>
     </div>
   </main>

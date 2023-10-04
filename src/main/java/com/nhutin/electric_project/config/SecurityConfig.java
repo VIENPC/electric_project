@@ -59,14 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 rememberMeServices.setTokenValiditySeconds(86400); // 1 day
                 return rememberMeServices;
         }
-        
+
         private String determineTargetUrl(Authentication authentication) {
-            String role = authentication.getAuthorities().toString();
-            if (role.contains("ADMIN")) {
-                return "/admin/index";
-            } else {
-                return "/home";
-            }
+                String role = authentication.getAuthorities().toString();
+                if (role.contains("ADMIN")) {
+                        return "/admin/index";
+                } else {
+                        return "/home";
+                }
         }
 
         @Override

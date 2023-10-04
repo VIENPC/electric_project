@@ -31,13 +31,14 @@
                             </div>
 
                             <div class="col-sm-2">
-                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i class="fa fa-file-excel-o"></i>
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
                                     Xuất Excel</a>
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file pdf"
-                                    ><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
-                            </div> 
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file pdf"><i
+                                        class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
                             <div class="col-sm-2">
                                 <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
                                         class="fa fa-trash-o"></i>
@@ -57,34 +58,34 @@
                                     <th><span>Ngày mua</span></th>
                                     <th><span>Ghi chú</span></th>
                                     <th><span>Tình trạng</span></th>
+                                    <th><span>Tình trạng đơn hàng</span></th>
                                     <th width="80px"><span>Tính năng</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="hd : ${listhd}">
                                     <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                    <td th:text="${hd.mahd}"></td>
-                                    <td th:text="${hd.tennguoinhan}"></td>
-                                    <td th:text="${#numbers.formatDecimal(hd.tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                    <td th:text="${hd.orderId}"></td>
+                                    <td th:text="${hd.name}"></td>
+                                    <td
+                                        th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
                                     </td>
-                                    <td th:text="${hd.diachinn}"></td>
-                                    <td th:text="${hd.dienthoainn}"></td>
-                                    <td th:text="${#dates.format(hd.ngaymua,'dd-MM-yyyy')}"></td>
-                                    <td th:text="${hd.ghichu}"></td>
-                                    <td>
-                                        <span th:if="${hd.trangthaihd == 1}" class="badge bg-info">Chờ xác nhận</span>
-                                        <span th:if="${hd.trangthaihd == 2}" class="badge bg-success">Đã xác nhận
-                                           </span>
-                                        <span th:if="${hd.trangthaihd == 3}" class="badge bg-warning">Đang giao
-                                            </span>
-                                        <span th:if="${hd.trangthaihd == 4}" class="badge bg-success">Hoàn thành</span>
-                                        <span th:if="${hd.trangthaihd == 5}" class="badge bg-danger">Đã hủy</span>
-                                    </td>
+                                    <td th:text="${hd.address}"></td>
+                                    <td th:text="${hd.phone}"></td>
+                                    <td th:text="${#dates.format(hd.orderDate,'dd-MM-yyyy')}"></td>
+                                    <td th:text="${hd.note}"></td>
+
+                                    <td th:text="${hd.statustt ?'Đã thanh toán':'Chưa thanh toán'}"></td>
+                                    <td th:text="${hd.statushd == 1 ? 'Dã xác nhận' : 'Chờ xác nhận'}"></td>
 
                                     <td>
-                                        <a class="btn btn-primary btn-sm " th:href="@{'/admin/xemhoadonct/'+${hd.mahd}}"><i class="fa fa-eye" aria-hidden="true"></i></a> 
-                                        <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.mahd}" th:if="${hd.trangthaihd == 1}"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                       
+                                        <a class="btn btn-primary btn-sm "
+                                            th:href="@{'/admin/xemhoadonct/'+${hd.orderId}}"><i class="fa fa-eye"
+                                                aria-hidden="true"></i></a>
+                                        <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}"
+                                            th:if="${hd.statustt ==true}"> <i class="fa fa-pencil-square-o"
+                                                aria-hidden="true"></i></a>
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -98,40 +99,42 @@
     </main>
 
     <!-- Modal hiển thị chi tiết sản phẩm -->
-
-    <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="hdctModal"
+    <!-- 
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="hdctModal"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
-                   
+
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                             <tr>
-                                
+
                                 <th width="10"><input type="checkbox" id="all"></th>
                                 <th><span>Tên sản phẩm</span></th>
-                                <th ><span>Số lượng </span></th>
-                                <th ><span>Giá sản phẩm </span></th>
-                                <th ><span>Tổng tiền</span></th>
-                             
+                                <th><span>Số lượng </span></th>
+                                <th><span>Giá sản phẩm </span></th>
+                                <th><span>Tổng tiền</span></th>
+
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="hdct : ${listhdct}">
                                 <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                               
-                                <td th:text="${hdct.sanpham.tensp}"></td>
-                                <td th:text="${hdct.soluong}"></td>
-                                <td th:text="${#numbers.formatDecimal(hdct.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
-                                <td th:text="${#numbers.formatDecimal(hdct.soluong * hdct.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
+
+                                <td th:text="${hdct.product.productName}"></td>
+                                <td th:text="${hdct.quantity}"></td>
+                                <td th:text="${#numbers.formatDecimal(hdct.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
+                                <td
+                                    th:text="${#numbers.formatDecimal(hdct.quantity * hdct.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                  </div>
+                </div>
             </div>
         </div>
     </div> -->

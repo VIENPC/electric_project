@@ -1,14 +1,14 @@
-$('#sampleTable').DataTable();
 
 
-$(document).ready(function() {
+
+$(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
-	$('#sidebarCollapse').click(function() {
+	$('#sidebarCollapse').click(function () {
 		// Thêm hoặc xóa lớp CSS 'active' của thẻ nav
 		$('#sidebar').toggleClass('active');
 	});
 
-	$('#checkboxall').click(function() {
+	$('#checkboxall').click(function () {
 		if ($(this).is(":checked")) {
 			$('.chkboxId').prop('checked', true);
 		} else {
@@ -51,7 +51,7 @@ function removeFailParamFromURL() {
 	}
 }
 // Kiểm tra query parameter và hiển thị thông báo thành công
-window.onload = function() {
+window.onload = function () {
 	var urlParams = new URLSearchParams(window.location.search);
 	var successParam = urlParams.get('success');
 	var failParam = urlParams.get('fail');
@@ -69,7 +69,7 @@ window.onload = function() {
 		showSuccessMessage("Cập nhật thành công");
 		removeSuccessParamFromURL();
 	}
-	
+
 
 
 
@@ -100,7 +100,7 @@ function showSuccessMessage(message) {
 // 	})
 // });  
 
-$(document).on('click', '.settt', function() {
+$(document).on('click', '.settt', function () {
 	const mahd = $(this).data("mahd");
 	const user = $(this).data("user");
 	swal({
@@ -123,7 +123,7 @@ $(document).on('click', '.settt', function() {
 
 });
 
-$('.unclock').click(function() {
+$('.unclock').click(function () {
 	const user = $(this).data("user");
 	swal({
 		title: "Cảnh báo",
@@ -142,9 +142,9 @@ $('.unclock').click(function() {
 })
 
 
-$(document).on('click', '.trash', function() {
+$(document).on('click', '.trash', function () {
 	const itemId = $(this).data("masp");
-	
+
 	swal({
 		title: "Cảnh báo",
 		text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
@@ -155,17 +155,17 @@ $(document).on('click', '.trash', function() {
 			// Chuyển hướng tới endpoint xử lý xóa sản phẩm khi người dùng nhấn "Đồng ý"
 			// Thay 123 bằng id của sản phẩm cần xóa
 			window.location.href = `/admin/qlsanpham/deletesp/${itemId}`;
-			
+
 		}
-		
+
 	});
 });
 
-$('.export').click(function() {
+$('.export').click(function () {
 	var table2excel = new Table2Excel();
 	table2excel.export(document.querySelectorAll("table.table"));
 });
-$('.pdf-file').click(function() {
+$('.pdf-file').click(function () {
 
 	var elment = document.getElementById('sampleTable');
 	var opt = {
@@ -178,8 +178,8 @@ $('.pdf-file').click(function() {
 	html2pdf(elment, opt);
 });
 
-var myApp = new function() {
-	this.printTable = function() {
+var myApp = new function () {
+	this.printTable = function () {
 		var tab = document.getElementById('sampleTable');
 		var win = window.open('', '', 'height=700,width=700');
 		win.document.write(tab.outerHTML);
@@ -195,7 +195,7 @@ function checkmasp() {
 	// alert(masp2);
 	var editLink = document.getElementById("editLink");
 	editLink.href = "/admin/addsanpham/" + masp2;
- 
+
 }
 
 function editProduct(button) {
@@ -224,7 +224,34 @@ function editProduct(button) {
 	$("#ModalUP").modal("show");
 }
 
+function editCategory(button) {
 
+	// Trích xuất thông tin sản phẩm từ hàng đã chọn
+	var row = button.closest("tr");
+	var categoryID = row.querySelector("td:nth-child(2)").innerText;
+	var categoryName = row.querySelector("td:nth-child(3)").innerText;
+	var active = row.querySelector("td:nth-child(4)").innerText;
+
+	// Đổ thông tin sản phẩm vào modal
+	document.getElementById("categoryID").value = categoryID;
+	document.getElementById("categoryName").value = categoryName;
+	document.getElementById("active").value = active;
+
+
+	// Hiển thị modal
+	$("#ModalUP2").modal("show");
+}
+$(document).ready(function () {
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 2" trong Tab 1
+	$('#switchToTab2').click(function () {
+		$('#myTabs a[href="#tab2"]').tab('show');
+	});
+
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 1" trong Tab 2
+	$('#switchToTab1').click(function () {
+		$('#myTabs a[href="#tab1"]').tab('show');
+	});
+});
 
 
 

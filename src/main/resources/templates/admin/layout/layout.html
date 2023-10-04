@@ -7,7 +7,7 @@
 	<!-- site icon -->
 	<link rel="shortcut icon" th:href="@{/assets/images/fevicon.png}" type="image/x-icon">
 
- 
+
 	<!-- bootstrap css -->
 	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 
@@ -20,7 +20,7 @@
 
 	<!-- responsive css -->
 	<link rel="stylesheet" th:href="@{/assets/css/responsive.css}" />
-
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
 
 	<link th:href="@{/assets/css/font-awesome.min.css}" rel="stylesheet" />
 	<!-- select bootstrap -->
@@ -39,9 +39,10 @@
 	<!-- CKEDITOR -->
 	<script type="text/javascript" th:src="@{/assets/ckeditor/ckeditor.js}"></script>
 
-
 	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-
+	<script th:src="@{/assets/js/app.js}"></script>
+	<script th:src="@{/assets/js/category.js}"></script>
+	<script th:src="@{/assets/js/product.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 
 	<style>
@@ -52,7 +53,7 @@
 	</style>
 </head>
 
-<body class="dashboard dashboard_1"  onload="myCustomFunction()">
+<body class="dashboard dashboard_1" onload="myCustomFunction()" ng-app="my-app">
 	<div class="full_container">
 		<div class="inner_container">
 			<!-- Sidebar  -->
@@ -61,14 +62,14 @@
 					<div class="sidebar-header">
 						<div class="logo_section">
 							<a th:href="@{/admin/home}"><img class="logo_icon img-responsive"
-								th:src="@{/assets/images/logo/logo_icon.png}"	 alt="#" /></a>
+									th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /></a>
 						</div>
 					</div>
 					<div class="sidebar_user_info">
 						<div class="icon_setting"></div>
 						<div class="user_profle_side">
 							<div class="user_img">
-								<img class="img-responsive" 	th:src="@{/assets/images/logo/logoadm.png}" alt="#" />
+								<img class="img-responsive" th:src="@{/assets/images/logo/logoadm.png}" alt="#" />
 							</div>
 							<div class="user_info" th:object="${#request.userPrincipal}">
 								<h6></h6>
@@ -82,7 +83,7 @@
 				<div class="sidebar_blog_2">
 					<h4>Chung</h4>
 					<ul class="list-unstyled components">
-						<li class="active"><a th:href="@{/admin/home}" aria-expanded="false"><i
+						<li class="active"><a th:href="@{/admin/index}" aria-expanded="false"><i
 									class="fa fa-dashboard yellow_color"></i>
 								<span>Bảng điều khiển</span></a>
 						<li><a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
@@ -93,6 +94,8 @@
 								<li><a th:href="@{/admin/qldonhang}">> <span>Đơn hàng</span></a></li>
 								<li><a th:href="@{/admin/qlkhachhang}">> <span>Khách
 											hàng</span></a></li>
+								<li><a th:href="@{/admin/brand}">> <span>Thương hiệu</span></a></li>
+								<li><a th:href="@{/admin/category}">> <span>Loại</span></a></li>
 							</ul>
 						</li>
 						<!-- <li><a th:href="@{/admin/qlnoibo}"><i class="fa fa-users blue2_color"
@@ -152,9 +155,9 @@
 										<li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a>
 										</li>
 									</ul>
-									
+
 									<ul class="user_profile_dd" th:object="${#request.userPrincipal}">
-									
+
 										<li><a class="dropdown-toggle" data-toggle="dropdown"><img
 													class="img-responsive rounded-circle"
 													th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /><span
@@ -165,7 +168,7 @@
 											</div>
 										</li>
 									</ul>
-									
+
 								</div>
 							</div>
 						</div>
@@ -186,7 +189,7 @@
 			<!-- end dashboard inner -->
 		</div>
 	</div>
-	
+
 	<!-- Thư viện xuất file excel -->
 	<script th:src="@{/assets/js/table2excel.js}"></script>
 	<script th:inline="javascript">
@@ -229,13 +232,13 @@
 				return i;
 			}
 		}
-		document.addEventListener("DOMContentLoaded", function() {
-        myCustomFunction();
-    });
+		document.addEventListener("DOMContentLoaded", function () {
+			myCustomFunction();
+		});
 	</script>
 	<!-- Thư viện xuất file pdf -->
 	<script th:src="@{/assets/js/html2pdf.bundle.min.js}"></script>
-	
+
 	<!-- jQuery -->
 
 	<script th:src="@{/assets/js/popper.min.js}"></script>
@@ -243,7 +246,7 @@
 	<script th:src="@{https://unpkg.com/sweetalert/dist/sweetalert.min.js}"></script>
 
 	<!-- wow animation -->
-	
+
 
 	<!-- select country -->
 	<script th:src="@{/assets/js/bootstrap-select.js}"></script>
@@ -256,21 +259,18 @@
 	<script th:src="@{/assets/js/chart.js}"></script>
 	<script th:src="@{/assets/js/chart_custom_style1.js}"></script>
 	<script th:src="@{/assets/js/utils.js}"></script>
-
 	<script th:src="@{/assets/js/pace.min.js}"></script>
-	
+
 	<!-- nice scrollbar -->
 	<script th:src="@{/assets/js/perfect-scrollbar.min.js}"></script>
-	
-	<script type="text/javascript" th:src="@{/assets/plugins/jquery.dataTables.min.js}"></script>
 
+	<!-- <script type="text/javascript" th:src="@{/assets/plugins/jquery.dataTables.min.js}"></script> -->
 
-	<script type="text/javascript" th:src="@{/assets/plugins/dataTables.bootstrap.min.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{/assets/plugins/dataTables.bootstrap.min.js}"></script> -->
 
 	<!-- custom js -->
 	<script th:src="@{/assets/js/custom.js}"></script>
-
-
+	<!-- Đoạn mã JavaScript sử dụng Thymeleaf -->
 
 
 </body>
