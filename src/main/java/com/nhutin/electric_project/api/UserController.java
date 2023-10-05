@@ -67,14 +67,14 @@ public class UserController {
 		userRepo.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	public User getNguoiDung() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userRepo.findByEmail(auth.getName()).get();
-    }
-	
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userRepo.findByEmail(auth.getName()).get();
+	}
+
 	@GetMapping("/api/account/login")
-    public ResponseEntity<User> findUserLogin() {
-        return ResponseEntity.ok(getNguoiDung());
-    }
+	public ResponseEntity<User> findUserLogin() {
+		return ResponseEntity.ok(getNguoiDung());
+	}
 }

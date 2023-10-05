@@ -9,10 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Product;
 
 public interface productsRepository extends JpaRepository<Product, Integer> {
         List<Product> findAll();
+
+        Product findById(int productID);
 
         List<Product> findByCategory_CategoryIDAndProductIDNot(Integer categoryId, Integer currentItemId);
 
@@ -92,4 +95,5 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
                         "GROUP BY p.productID, p.productName, p.price, p.brand.brandName")
         List<Object[]> thongkesptg(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+        List<Product> findByPriceLessThanEqual(Double price);
 }

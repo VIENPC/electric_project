@@ -6,9 +6,9 @@ const form = document.getElementById("form");
 const nam = document.getElementById("nam");
 const nu = document.getElementById("nu");
 
-app.controller("OrderCtrl", function ($scope, $http, $window) {
+app.controller("OrderCtrl", function($scope, $http,$window) {
 	$scope.listusers = [];
-	$scope.load_all = function () {
+	$scope.load_all = function() {
 		const url = `${host}/users`;
 		$http.get(url).then((resp) => {
 			$scope.listusers = resp.data;
@@ -21,12 +21,12 @@ app.controller("OrderCtrl", function ($scope, $http, $window) {
 		})
 	}
 	$scope.edit = {};
-	var userID = ""
-	$scope.showUserDetails = function (user) {
+	var userID =""
+	$scope.showUserDetails = function(user) {
 		form2.style.display = "block";
 		table.style.display = "none";
 		$scope.edit = angular.copy(user);
-		userID = user.userID
+        userID = user.userID
 		if ($scope.edit.gender == true) {
 			document.getElementById('nam').checked = true;
 		} else {
@@ -46,20 +46,20 @@ app.controller("OrderCtrl", function ($scope, $http, $window) {
 		}
 	};
 	var table = document.getElementById("myTable");
-	var form2 = document.getElementById("form2");
-	var button = document.getElementById("toggleButton");
-	var form = document.getElementById("form");
-	var historyLink = document.getElementById("historyLink");
-	$scope.showHistory = function () {
-		form.style.display = "block";
-		form2.style.display = "none"; // Ẩn form2
-		table.style.display = "none";
-	}
-	$scope.toggleTableAndInputs = function () {
-		table.style.display = "table";
-		form.style.display = "none";
-		form2.style.display = "none"; // Hiển thị form2
-	}
+		var form2 = document.getElementById("form2");
+		var button = document.getElementById("toggleButton");
+		var form = document.getElementById("form");
+		var historyLink = document.getElementById("historyLink");
+        $scope.showHistory = function() {		
+			form.style.display = "block";
+			form2.style.display = "none"; // Ẩn form2
+			table.style.display = "none";
+		}
+      $scope.toggleTableAndInputs = function() {			
+			table.style.display = "table";
+			form.style.display = "none";
+			form2.style.display = "none"; // Hiển thị form2
+		}
 	$scope.setLimit = (soSanPham) => {
 		$scope.pageNumber = 1;
 		$scope.limit = soSanPham;
@@ -74,35 +74,35 @@ app.controller("OrderCtrl", function ($scope, $http, $window) {
 
 
 	$scope.updateUser = (listusers) => {
-		var id = parseInt(userID, 10);
-		console.log(listusers)
+		var id=parseInt(userID, 10);
+console.log(listusers)
 		$http.put("http://localhost:8080/rest/users/" + id, listusers).then(resp => {
 			console.log("sucesss", resp.data)
 			alert("Sửa thành công!");
-			$window.location.href = 'qlkhachhang';
+			 $window.location.href = 'qlkhachhang';
 		})
 	};
-	$scope.deleteUser = function () {
-		var id = parseInt(userID, 10);
-		$http.delete("http://localhost:8080/rest/users/" + id).then(
-			resp => {
-				console.log("success", resp.data);
-				alert("Xóa thành công!");
-				$window.location.href = 'qlkhachhang';
-			},
-			error => {
-				console.error("error", error);
+$scope.deleteUser = function() {
+    var id = parseInt(userID, 10);
+    $http.delete("http://localhost:8080/rest/users/" + id).then(
+        resp => {
+            console.log("success", resp.data);
+            alert("Xóa thành công!");
+            $window.location.href = 'qlkhachhang';
+        },
+        error => {
+            console.error("error", error);
 
-				if (error.status === 500) {
-					// Lỗi server - có thể là lỗi khóa ngoại
-					alert("Không thể xóa người dùng này vì có ràng buộc khóa ngoại.");
-				} else {
-					// Xử lý các lỗi khác tùy theo trường hợp
-					alert("Đã xảy ra lỗi khi xóa người dùng.");
-				}
-			}
-		);
-	};
+            if (error.status === 500) {
+                // Lỗi server - có thể là lỗi khóa ngoại
+                alert("Không thể xóa người dùng này vì có ràng buộc khóa ngoại.");
+            } else {
+                // Xử lý các lỗi khác tùy theo trường hợp
+                alert("Đã xảy ra lỗi khi xóa người dùng.");
+            }
+        }
+    );
+};
 
 
 
@@ -114,8 +114,8 @@ app.controller("OrderCtrl", function ($scope, $http, $window) {
 }
 
 );
-app.filter('range', function () {
-	return function (input, total) {
+app.filter('range', function() {
+	return function(input, total) {
 		total = parseInt(total);
 
 		for (var i = 0; i < total; i++) {

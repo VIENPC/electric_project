@@ -212,7 +212,7 @@ public class SanPhamController {
 			sp2.setProductName(sp.getProductName());
 			sp2.setQuantity(sp.getQuantity());
 			sp2.setPrice(sp.getPrice());
-			sp2.setActive(sp.getActive());
+			sp2.setActive(sp.isActive());
 			sp2.setBrand(sp.getBrand());
 			// sp2.set(sp.getXuatsu());
 			sp2.setDescription(sp.getDescription());

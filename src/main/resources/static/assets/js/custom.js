@@ -294,6 +294,35 @@ document.getElementById('inverted').addEventListener('click', () => {
 		},
 	});
 });
+function editCategory(button) {
+
+	// Trích xuất thông tin sản phẩm từ hàng đã chọn
+	var row = button.closest("tr");
+	var categoryID = row.querySelector("td:nth-child(2)").innerText;
+	var categoryName = row.querySelector("td:nth-child(3)").innerText;
+	var active = row.querySelector("td:nth-child(4)").innerText;
+
+	// Đổ thông tin sản phẩm vào modal
+	document.getElementById("categoryID").value = categoryID;
+	document.getElementById("categoryName").value = categoryName;
+	document.getElementById("active").value = active;
+
+
+	// Hiển thị modal
+	$("#ModalUP2").modal("show");
+}
+$(document).ready(function () {
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 2" trong Tab 1
+	$('#switchToTab2').click(function () {
+		$('#myTabs a[href="#tab2"]').tab('show');
+	});
+
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 1" trong Tab 2
+	$('#switchToTab1').click(function () {
+		$('#myTabs a[href="#tab1"]').tab('show');
+	});
+});
+
 
 
 

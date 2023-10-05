@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.Supplier;
 import com.nhutin.electric_project.repository.productsRepository;
+import com.nhutin.electric_project.repository.suppliersRepository;
 import com.nhutin.electric_project.service.ProductsService;
 
 @CrossOrigin("*")
@@ -26,11 +28,19 @@ public class ProductRestController {
     productsRepository productdao;
 
     @Autowired
+    suppliersRepository suppliersRepository;
+
+    @Autowired
     ProductsService productService;
 
     @GetMapping("rest/product")
-    public List<Product> findAll() {
+    public List<Product> findAllProduct() {
         return productdao.findAll();
+    }
+
+    @GetMapping("rest/supplier")
+    public List<Supplier> findAll() {
+        return suppliersRepository.findAll();
     }
 
     @GetMapping("/rest/detail/{productID}")
@@ -88,6 +98,13 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/rest/products-by-price")
+    public ResponseEntity<List<Product>> getProductsByPrice(@RequestParam("price") Double price) {
+        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo giá
+        List<Product> products = productService.getProductsByPrice(price);
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/rest/product/{masp}")
