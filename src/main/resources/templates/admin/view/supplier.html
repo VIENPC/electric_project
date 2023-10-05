@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quản nhà sản xuất sản phẩm</title>
+</head>
+
+<body>
+    <main class="app-content" ng-controller="product-controller">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a><b>Danh
+                            sách nhà sản xuất sản phẩm</b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="tile">
+                    <div class="tile-body">
+                        <form action="" name="form">
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-primary btn-sm nhap-tu-file" type="button" title="Nhập"
+                                        ng-click="updateCate(item)"><i class="fa fa-upload"></i> Cập nhật</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+                                        onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                        onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
+                                        title="Sao chép"><i class="fa fa-copy"></i>
+                                        Sao chép</a>
+                                </div>
+
+                                <div class="col-sm-2">
+
+                                    <a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+                                            class="fa fa-file-excel-o"></i>
+                                        Xuất Excel</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+                                            class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
+                                            class="fa fa-trash-o"></i>
+                                        Xóa tất cả </a>
+                                </div>
+
+                            </div>
+                        </form>
+                        <!-- Tabs Navigation -->
+                        <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+                                    aria-controls="tab1" aria-selected="true">Danh sách nhà sản xuất</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
+                                    aria-controls="tab2" aria-selected="false">Chỉnh sửa</a>
+                            </li>
+                        </ul>
+                        <!-- Tabs Content -->
+                        <div class="tab-content" id="myTabsContent">
+                            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                                <form class="row" method="post" enctype="multipart/form-data" name="form">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Mã nhà sản xuất </label> <input
+                                            class="form-control" type="text" ng-model="newSup.supplierID"
+                                            placeholder="Mã loại" readonly>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.supplierName.$invalid && form.supplierName.$dirty}">
+                                        <label class="control-label">Tên nhà sản xuất</label> <input
+                                            class="form-control" type="text" ng-model="newSup.supplierName"
+                                            placeholder="Tên loại" ng-required="true" name="supplierName">
+                                        <div ng-messages="form.supplierName.$error" ng-if="!form.supplierName.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                nhập tên nhà sản xuất</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.address.$invalid && form.address.$dirty}">
+                                        <label class="control-label">Địa chỉ</label> <input class="form-control"
+                                            type="text" ng-model="newSup.address" placeholder="Tên loại"
+                                            ng-required="true" name="address">
+                                        <div ng-messages="form.address.$error" ng-if="!form.address.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                nhập địa chỉ</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.phone.$invalid && form.phone.$dirty}">
+                                        <label class="control-label">Số diện thoại</label> <input class="form-control"
+                                            type="text" ng-model="newSup.phone" placeholder="Tên loại"
+                                            ng-required="true" name="phone">
+                                        <div ng-messages="form.phone.$error" ng-if="!form.phone.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                nhập số điện thoại</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.email.$invalid && form.email.$dirty}">
+                                        <label class="control-label">Email</label> <input class="form-control"
+                                            type="text" ng-model="newSup.email" placeholder="Tên loại"
+                                            ng-required="true" name="email">
+                                        <div ng-messages="form.email.$error" ng-if="!form.email.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                nhập Emai</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.website.$invalid && form.website.$dirty}">
+                                        <label class="control-label">Website</label> <input class="form-control"
+                                            type="text" ng-model="newSup.website" placeholder="Tên loại"
+                                            ng-required="true" name="website">
+                                        <div ng-messages="form.website.$error" ng-if="!form.website.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                Website</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4"
+                                        ng-class="{'has-error': form.describe.$invalid && form.describe.$dirty}">
+                                        <label class="control-label">Ghi chú</label> <input class="form-control"
+                                            type="text" ng-model="newSup.describe" placeholder="Tên loại"
+                                            ng-required="true" name="describe">
+                                        <div ng-messages="form.describe.$error" ng-if="!form.describe.$dirty">
+                                            <div class="text-danger" ng-message="required">Vui lòng
+                                                ghi chú</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="col-md-12 p-0">Status</label>
+                                        <div class="col-md-12 border-bottom p-0">
+                                            <input type="radio" id="active" name="active" ng-value="true"
+                                                ng-model="newSup.active" ng-required="true" /> <label for="admin">Còn
+                                                sản
+                                                phẩm</label><br>
+                                            <input type="radio" id="active" name="active" ng-value="false"
+                                                ng-model="newSup.active" ng-required="true" /> <label for="user">Hết sản
+                                                phẩm</label><br>
+                                            <div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+                                                <div class="text-danger" ng-message="required">Vui lòng chọn
+                                                    trạng thái!! </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-add btn-sm" ng-click="addSupplier()" title="Thêm"
+                                            ng-disabled="form.$invalid"><i class="fa fa-plus"></i> Thêm nhà sản
+                                            xuất</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-info btn-sm" ng-disabled="form.$invalid"
+                                            ng-click="updateSupplier(sup)" title="Thêm"><i class="fa fa-refresh"></i>
+                                            Cập
+                                            nhật nhà sản xuất</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                                <div id="sampleTable_wrapper"
+                                    class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-hover table-bordered" id="sampleTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th><span>ID</span></th>
+                                                        <th><span>Tên Nhà sản xuất</span></th>
+                                                        <th><span>Số điện thoại</span></th>
+                                                        <th><span>Email</span></th>
+                                                        <th><span>Địa chỉ</span></th>
+                                                        <th><span>Website</span></th>
+                                                        <th><span>Ghi chú</span></th>
+                                                        <th><span>Trạng thái</span> </th>
+                                                        <th><span>Chức năng</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in suppliers">
+                                                        <td>SP{{item.supplierID}}</td>
+                                                        <td>{{item.supplierName}}</td>
+                                                        <td>{{item.phone}}</td>
+                                                        <td>{{item.email}}</td>
+                                                        <td>{{item.address}}</td>
+                                                        <td>{{item.website}}</td>
+                                                        <td>{{item.describe}}</td>
+                                                        <td>{{item.active?'Còn':'Hết'}}</td>
+                                                        <td><button class="btn btn-danger btn-sm "
+                                                                ng-click="deleteSupplier(item)" type="button">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                            <button class="btn btn-primary btn-sm edit"
+                                                                ng-click="editSupplier(item)">
+                                                                <i class="fa fa-edit"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Modal -->
+
+</body>
+
+</html>

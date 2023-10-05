@@ -12,10 +12,10 @@ public class HomeController2 {
       return "admin/view/baocaochung";
    }
 
-   // @RequestMapping("baocaosanpham")
-   // public String baocaosanpham() {
-   // return "admin/view/baocaosp";
-   // }
+   @RequestMapping("supplier")
+   public String baocaosanpham() {
+   return "admin/view/supplier";
+   }
 
    @RequestMapping("insertUser")
    public String insertUser() {
