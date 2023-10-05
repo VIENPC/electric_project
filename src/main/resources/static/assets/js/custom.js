@@ -24,13 +24,6 @@ $(document).ready(function () {
 function submitForm() {
 	document.getElementById("formhang").submit();
 }
-function submitFormSPBC(selectElement) {
-	var selectedValue = selectElement.value;
-	// Kiểm tra giá trị đã chọn và thực hiện hành động tương ứng
-	if (selectedValue) {
-		document.getElementById('formthang').submit();
-	}
-}
 // $('#all').click(
 // 	function(e) {
 // 		$('#sampleTable tbody :checkbox').prop('checked',
@@ -109,8 +102,7 @@ function showSuccessMessage(message) {
 
 $(document).on('click', '.settt', function () {
 	const mahd = $(this).data("mahd");
-
-
+	const user = $(this).data("user");
 	swal({
 		title: "Cảnh báo",
 		text: "Bạn có chắc chắn muốn chỉnh sửa trạng thái này?",
@@ -121,7 +113,10 @@ $(document).on('click', '.settt', function () {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
+			if (user != null) {
 
+				window.location.href = `/admin/qlkhachhang/editt/${user}`;
+			}
 
 		}
 	})
@@ -229,7 +224,34 @@ function editProduct(button) {
 	$("#ModalUP").modal("show");
 }
 
+function editCategory(button) {
 
+	// Trích xuất thông tin sản phẩm từ hàng đã chọn
+	var row = button.closest("tr");
+	var categoryID = row.querySelector("td:nth-child(2)").innerText;
+	var categoryName = row.querySelector("td:nth-child(3)").innerText;
+	var active = row.querySelector("td:nth-child(4)").innerText;
+
+	// Đổ thông tin sản phẩm vào modal
+	document.getElementById("categoryID").value = categoryID;
+	document.getElementById("categoryName").value = categoryName;
+	document.getElementById("active").value = active;
+
+
+	// Hiển thị modal
+	$("#ModalUP2").modal("show");
+}
+$(document).ready(function () {
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 2" trong Tab 1
+	$('#switchToTab2').click(function () {
+		$('#myTabs a[href="#tab2"]').tab('show');
+	});
+
+	// Bắt sự kiện khi bấm vào nút "Chuyển đến Tab 1" trong Tab 2
+	$('#switchToTab1').click(function () {
+		$('#myTabs a[href="#tab1"]').tab('show');
+	});
+});
 
 
 

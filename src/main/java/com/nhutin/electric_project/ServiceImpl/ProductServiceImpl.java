@@ -33,4 +33,9 @@ public class ProductServiceImpl implements ProductsService {
         return productsRepository.findByCategoryCategoryID(categoryID);
     }
 
+    @Override
+    public List<Product> getProductsByPrice(Double price) {
+        return productsRepository.findByPriceLessThanEqual(price);
+    }
+
 }

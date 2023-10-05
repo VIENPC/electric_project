@@ -18,11 +18,8 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
 
     @Query("SELECT o FROM Order o where o.statushd= ?1")
     List<Order> findHdTt(Integer tthd);
-
-    @Query("SELECT COUNT(o) FROM Order o where o.statushd= ?1")
-    Integer countDontt(Integer tthd);
-
-    @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.statushd = 1")
-    Double sumTotalAmountOfApprovedOrders();
+    
+    @Query("SELECT o FROM Order o where o.user.userID= ?1")
+    List<Order> findHistory(Integer user);
 
 }

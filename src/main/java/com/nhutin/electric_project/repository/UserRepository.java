@@ -53,7 +53,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // @Query("SELECT kh FROM users kh WHERE kh.registrationDate >= :fiveDaysAgo")
     // List<User> findNewCustomers(Date fiveDaysAgo);
-    @Query("SELECT COUNT(u) FROM User u WHERE u.lockStatus = true")
-
-    long countLockedUsers();
 }

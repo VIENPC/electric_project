@@ -103,43 +103,10 @@
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade" id="Description">
-                      <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet
-                        dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut
-                        sit
-                        ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat
-                        sit
-                        volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore adipiscing elit,
-                        sed
-                        sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis
-                        molestie
-                        at dolore. </p>
+                      <h4 ng-bind-html="product.description | unsafeHtml"></h4>
                     </div>
                     <div class="tab-pane fade" id="Information">
-                      <table class="datasheet">
-                        <tr>
-                          <th colspan="2">Additional features</th>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 1</td>
-                          <td>21 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 2</td>
-                          <td>700 gr.</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 3</td>
-                          <td>10 person</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 4</td>
-                          <td>14 cm</td>
-                        </tr>
-                        <tr>
-                          <td class="datasheet-features-type">Value 5</td>
-                          <td>plastic</td>
-                        </tr>
-                      </table>
+                      <h4 ng-bind-html="product.configuration | unsafeHtml"></h4>
                     </div>
                     <div class="tab-pane fade in active" id="Reviews">
                       <!--<p>There are no reviews for this product.</p>-->
@@ -175,31 +142,69 @@
                       </div>
 
                       <!-- BEGIN FORM-->
-                      <form action="#" class="reviews-form" role="form">
-                        <h2>Write a review</h2>
-                        <div class="form-group">
-                          <label for="name">Name <span class="require">*</span></label>
-                          <input type="text" class="form-control" id="name">
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="text" class="form-control" id="email">
-                        </div>
-                        <div class="form-group">
-                          <label for="review">Review <span class="require">*</span></label>
-                          <textarea class="form-control" rows="8" id="review"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Rating</label>
-                          <input type="range" value="4" step="0.25" id="backing5">
-                          <div class="rateit" data-rateit-backingfld="#backing5" data-rateit-resetable="false"
-                            data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                          </div>
-                        </div>
-                        <div class="padding-top-20">
-                          <button type="submit" class="btn btn-primary">Send</button>
-                        </div>
-                      </form>
+<!--                       <form action="#" class="reviews-form" role="form">
+                                                   <!-- User Reviews
+
+                            <div class="col-lg-6 reviews_col">
+                                <div class="tab_title reviews_title">
+                                    <h4>Đánh giá ({{soLuongDanhGia}})</h4>
+                                </div>
+                                User Review
+                                <div ng-if="!checkDanhGia" class="chuaCoDanhGia">Sản phẩm này chưa có đánh giá nào</div>
+                                <div ng-if="checkDanhGia" class="user_review_container d-flex flex-column flex-sm-row" ng-repeat="danhGia in listDanhGia">
+                                    <div class="user">
+                                        <img class="img-thumbnail" ng-src="{{srcImage}}/{{danhGia.hinh}}">
+                                        <div class="user_rating">
+                                            <ul class="star_rating">
+                                                <li ng-repeat="n in [] | range:danhGia.soSao"><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li ng-repeat="n in [] | range:(5-danhGia.soSao)"><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="review">
+                                        <div class="review_date">{{danhGia.ngayDanhGia}}</div>
+                                        <div class="user_name">{{danhGia.hoVaTen}}</div>
+                                        <p>{{danhGia.nhanXet}}</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            Add Review
+
+                            <div class="col-lg-6 add_review_col">
+                                <form>
+                                    <div class="add_review">
+                                        <div>
+                                            <h1>Thêm đánh giá</h1>
+                                            <input ng-model="DanhGia.HoVaTen" class="form_input input_name" type="text" name="name" placeholder="Họ và tên*" required="required">
+                                            <input ng-model="DanhGia.Email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required">
+                                        </div>
+                                        <div style="margin: 15px 0;">
+                                            <input name="rdoGioiTinh" type="radio" value="Nam" checked>
+                                            <span>Nam</span>
+                                            <input style="margin-left: 8px;" name="rdoGioiTinh" type="radio" value="Nu">
+                                            <span>Nữ</span>
+                                        </div>
+                                        <div>
+                                            <h1>Số sao:</h1>
+                                            <ul class="user_star_rating">
+                                                <li><i class="fa fa-star" ng-click="guiSao(1)" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" ng-click="guiSao(2)" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" ng-click="guiSao(3)" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" ng-click="guiSao(4)" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star-o" ng-click="guiSao(5)" aria-hidden="true"></i></li>
+                                            </ul>
+                                            <textarea ng-model="DanhGia.NhanXet" id="review_message" class="input_review" name="message" placeholder="Nhận xét" rows="4" required data-error="Viết đánh giá của bạn"></textarea>
+                                        </div>
+                                        <div class="text-left text-sm-right">
+                                            <button ng-click="guiDanhGia()" id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Gửi</button>
+                                        </div>
+                                </form>
+
+                            </div>
+                      </form> --> -->
                       <!-- END FORM-->
                     </div>
                   </div>
@@ -216,12 +221,7 @@
         <!-- BEGIN SIMILAR PRODUCTS -->
         <div class="row margin-bottom-40">
           <div class="col-md-12 col-sm-12">
-            <h2>Most popular products</h2>
             <div class="owl-carousel owl-carousel4">
-
-
-
-
               <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in relatedProducts">
                 <div class="product-item">
                   <div class="pi-img-wrapper">

@@ -1,86 +1,30 @@
 package com.nhutin.electric_project.repository;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
+import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Product;
 
 public interface productsRepository extends JpaRepository<Product, Integer> {
-        List<Product> findAll();
+    List<Product> findAll();
 
-        List<Product> findByCategory_CategoryIDAndProductIDNot(Integer categoryId, Integer currentItemId);
+    Product findById(int productID);
 
-        List<Product> findByCategoryCategoryID(Integer categoryId);
+    List<Product> findByCategory_CategoryIDAndProductIDNot(Integer categoryId, Integer currentItemId);
 
-        List<Product> findByBrandBrandID(Integer brandID);
+    List<Product> findByCategoryCategoryID(Integer categoryId);
 
-        List<Product> findByproductNameContaining(String productName);
+    List<Product> findByBrandBrandID(Integer brandID);
 
-        List<Product> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
+    List<Product> findByproductNameContaining(String productName);
 
-        long countByActive(Boolean tt);
+    List<Product> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
-        // sản phẩm bán chạy nhất
-        @Query("SELECT p.productID, p.productName, p.price, od.quantity, p.brand.brandName, SUM(od.quantity) AS totalSold, p.image "
-                        +
-                        "FROM OrderDetail od " +
-                        "INNER JOIN od.product p " +
-                        "GROUP BY p.productID, p.productName, p.price, od.quantity, p.brand.brandName, p.image " +
-                        "ORDER BY totalSold DESC")
-        List<Object[]> findBestSellingProducts();
+    List<Product> findByPriceLessThanEqual(Double price);
 
-        // sản phẩm bán chạy theo tháng
-        @Query("SELECT p.productID, p.productName, SUM(od.quantity) AS totalQuantity, p.price AS unitPrice, SUM(od.quantity * p.price) AS totalSales, b.brandName, o.orderDate, p.image "
-                        +
-                        "FROM OrderDetail od " +
-                        "INNER JOIN od.product p " +
-                        "INNER JOIN p.brand b " +
-                        "INNER JOIN od.order o " +
-                        "WHERE o.statushd = 4 " +
-                        "AND o.statustt = true " +
-                        "AND MONTH(o.orderDate) = :month " +
-                        "GROUP BY p.productID, p.productName, p.price, b.brandName, o.orderDate, p.image " +
-                        "ORDER BY totalQuantity DESC")
-        List<Object[]> findBestSellingProductsMonth(Integer month);
-
-        // sản phẩm bán chạy theo Ngày
-        @Query("SELECT p.productID, p.productName, SUM(od.quantity) AS totalQuantity, " +
-                        "p.price AS unitPrice, SUM(od.quantity * p.price) AS total_price, " +
-                        "MIN(o.orderDate) AS orderDate, b.brandName AS brandName,p.image " +
-                        "FROM OrderDetail od " +
-                        "INNER JOIN od.product p " +
-                        "INNER JOIN od.order o " +
-                        "INNER JOIN p.brand b " +
-                        "WHERE o.statushd = 4 AND o.statustt = 1 AND " +
-                        "CONVERT(DATE, o.orderDate) = :selectedDate " + // Sử dụng tham số :selectedDate
-                        "GROUP BY p.productID, p.productName, p.price, b.brandName,p.image " +
-                        "ORDER BY totalQuantity DESC")
-        List<Object[]> findProductsSoldOnDate(@Param("selectedDate") Date selectedDate);
-
-        @Query("SELECT p.productID, p.productName, p.quantity, SUM(od.quantity) AS totalSold, p.price, b.brandName " +
-                        "FROM Order o " +
-                        "JOIN o.orderDetails od " +
-                        "JOIN od.product p " +
-                        "JOIN p.brand b " +
-                        "WHERE b.brandID = ?1 " +
-                        "GROUP BY p.productID, p.productName, p.quantity, p.price, b.brandName")
-        List<Object[]> thongkesph(Integer mahang);
-
-        @Query("SELECT p.productID, p.productName, od.quantity AS quantity, p.price AS unitPrice, (od.quantity * p.price) AS totalPrice, p.brand.brandName AS brandName "
-                        +
-                        "FROM OrderDetail od " +
-                        "JOIN Product p ON od.product.productID = p.productID " +
-                        "JOIN Brand b ON p.brand.brandID = b.brandID " +
-                        "JOIN Order o ON od.order.orderId = o.orderId " +
-                        "WHERE o.statushd = 4 AND b.brandID = ?1")
-        List<Object[]> thongkeSanPhamTheoBrand(int brandId);
-
-        List<Product> findByActive(Boolean active);
-
+    long countByActive(Boolean tt);
 }

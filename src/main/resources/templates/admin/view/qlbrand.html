@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý thương hiệu</title>
+</head>
+
+<body>
+	<main class="app-content" ng-controller="category-controller">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a><b>Danh
+							sách thương hiệu</b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="col-md-12">
+			<div class="row element-button">
+				<div class="col-sm-2">
+					<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+						onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+				</div>
+
+				<div class="col-sm-2">
+					<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+							class="fa fa-print"></i> In dữ liệu</a>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
+							class="fa fa-copy"></i>
+						Sao chép</a>
+				</div>
+
+				<div class="col-sm-2">
+
+					<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i class="fa fa-file-excel-o"></i>
+						Xuất Excel</a>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+							class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
+							class="fa fa-trash-o"></i>
+						Xóa tất cả </a>
+				</div>
+			</div>
+		</div>
+		<!-- Tabs Navigation -->
+		<ul class="nav nav-tabs" id="myTabs" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+					aria-selected="true">Danh sách thương hiệu</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+					aria-selected="false">Chỉnh sửa</a>
+			</li>
+		</ul>
+		<!-- Tabs Content -->
+		<div class="tab-content" id="myTabsContent">
+			<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+				<form class="row" method="post" enctype="multipart/form-data" name="form">
+					<div class="form-group col-md-4">
+						<label class="control-label">Mã thương hiệu </label> <input class="form-control" type="text"
+							ng-model="newBrand.brandID" placeholder="Mã loại" readonly>
+					</div>
+					<div class="form-group col-md-4"
+						ng-class="{'has-error': form.brandName.$invalid && form.brandName.$dirty}">
+						<label class="control-label">Tên thương hiệu</label>
+						<input class="form-control" type="text" ng-model="newBrand.brandName" placeholder="Tên loại"
+							name="brandName">
+						<div ng-messages="form.brandName.$error" ng-if="!form.brandName.$dirty">
+							<div class="text-danger" ng-message="required">Vui lòng
+								nhập tên thương hiệu</div>
+						</div>
+					</div>
+					<div class="form-group col-md-4">
+						<label class="col-md-12 p-0">Status</label>
+						<div class="col-md-12 border-bottom p-0">
+							<input type="radio" id="active" name="active" ng-value="true" ng-model="newBrand.active"
+								ng-required="true" /> <label for="admin">Còn sản
+								phẩm</label><br>
+							<input type="radio" id="active" name="active" ng-value="false" ng-model="newBrand.active"
+								ng-required="true" /> <label for="user">Hết sản
+								phẩm</label><br>
+							<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+								<div class="text-danger" ng-message="required">Vui lòng chọn
+									trạng thái!! </div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-md-6"
+						ng-class="{'has-error': form.image.$invalid && form.image.$touched}">
+						<div class="form-group"
+							style="border: 1px solid rgb(221, 218, 218); height: 200px; width: 300px;">
+							<div class="nk-int-st image-container">
+								<img class="object-fit" id="image" ng-src="../assets/images/carousel/{{newBrand.image}}"
+									alt="Uploaded Image" name="image" ng-required="true"
+									style="max-height: 100%; max-width: 100%;">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fileInput" class="fw-bold">Chọn Hình</label>
+							<div class="input-group">
+								<input style="object-fit: contain;" type="file" class="form-control"
+									ng-model="newBrand.image"
+									onchange="angular.element(this).scope().imageChanged(this.files)"
+									accept=".png, .jpg, .jpeg, .gif" id="imageInput" name="image" ng-required="true">
+								<div ng-if="form.image.$touched && form.image.$error.required" class="text-danger">Vui
+									lòng
+									chọn ảnh</div>
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class=" form-group col-md-6">
+						<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addBrand()"
+							ng-disabled="form.$invalid"><i class="fa fa-plus"></i>Thêm mới</button>
+						<button class="btn btn-info btn-sm" ng-click="updateBrand(brand)" ng-disabled="form.$invalid"><i
+								class="fa fa-refresh"></i>Cập nhật</button>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+				<div class="col-md-12">
+					<div class="tile">
+						<div class="tile-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+											<tr>
+												<th width="10"><input type="checkbox" id="checkboxall"></th>
+												<th><span>ID</span></th>
+												<th><span>Tên thương hiệu</span></th>
+												<th><span>Ảnh</span></th>
+												<th><span>Trạng thái</span></th>
+												<th><span>Chức năng</span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="item in brands">
+												<td width="10"><input type="checkbox" name="check1" value="1"></td>
+												<td>{{item.brandID}}</td>
+												<td>{{item.brandName}}</td>
+												<td><img ng-src="../assets/images/carousel/{{item.image}}"
+														style="width: 50px; height: 50px">
+												</td>
+												<td>{{item.active?'Còn':'Hết'}}</td>
+												<td><button class="btn btn-danger btn-sm " ng-click="deleteBrand(item)"
+														type="button">
+														<i class="fa fa-trash"></i></button>
+													<button class="btn btn-primary btn-sm" ng-click="editbrand(item)">
+														<i class="fa fa-edit"></i></button>
+
+												</td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
+
+
+
+
+</body>
+
+</html>

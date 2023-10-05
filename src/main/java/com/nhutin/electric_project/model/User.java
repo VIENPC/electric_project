@@ -59,10 +59,10 @@ public class User implements Serializable {
 	private Boolean gender;
 
 	@Column(name = "LockStatus")
-	private Boolean lockStatus;
+	private Boolean lockStatus = false;
 
 	@Column(name = "LoginPermission") // Quyền đăng nhập (true/false) => kích hoạt tk với token từ email
-	private Boolean loginPermission;
+	private Boolean loginPermission = false;
 
 	@Column(name = "Password")
 	private String password;

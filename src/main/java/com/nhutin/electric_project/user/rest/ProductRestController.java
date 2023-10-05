@@ -1,5 +1,6 @@
 package com.nhutin.electric_project.user.rest;
 
+import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhutin.electric_project.model.Comment;
+import com.nhutin.electric_project.model.Order;
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.ProductReview;
+import com.nhutin.electric_project.model.Supplier;
+import com.nhutin.electric_project.repository.commentsRepository;
+import com.nhutin.electric_project.repository.ordersRepository;
 import com.nhutin.electric_project.repository.productsRepository;
+import com.nhutin.electric_project.repository.suppliersRepository;
 import com.nhutin.electric_project.service.ProductsService;
+
+import jakarta.enterprise.inject.Model;
 
 @CrossOrigin("*")
 @RestController
@@ -26,28 +36,42 @@ public class ProductRestController {
     productsRepository productdao;
 
     @Autowired
+    suppliersRepository suppliersRepository;
+
+    @Autowired
     ProductsService productService;
+  
+    
+    
 
     @GetMapping("rest/product")
-    public List<Product> findAll() {
+    public List<Product> findAllProduct() {
         return productdao.findAll();
+    }
+
+    @GetMapping("rest/supplier")
+    public List<Supplier> findAll() {
+        return suppliersRepository.findAll();
     }
 
     @GetMapping("/rest/detail/{productID}")
     public ResponseEntity<Map<String, Object>> getItemDetails(@PathVariable("productID") int productID) {
-        Product product = productService.findById(productID);
+    	Product product = productService.findById(productID);
+    	
         if (product == null) {
             return ResponseEntity.notFound().build();
         }
         List<Product> relatedProducts = productService.getRelateditemsExcludingCurrent(
                 product.getCategory().getCategoryID(), productID);
         Map<String, Object> response = new HashMap<>();
-        response.put("product", product);
+        response.put("product", product); 
+        
         response.put("relatedProducts", relatedProducts);
+        // Đưa danh sách các Comment vào đối tượng response
         return ResponseEntity.ok(response);
     }
-
-    @GetMapping("/rest/products-by-brand")
+    
+	@GetMapping("/rest/products-by-brand")
     public List<Product> getProductsByBrand(@RequestParam Integer brandID) {
         // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
         List<Product> products = productService.getProductsByBrand(brandID);
@@ -88,6 +112,13 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/rest/products-by-price")
+    public ResponseEntity<List<Product>> getProductsByPrice(@RequestParam("price") Double price) {
+        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo giá
+        List<Product> products = productService.getProductsByPrice(price);
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/rest/product/{masp}")

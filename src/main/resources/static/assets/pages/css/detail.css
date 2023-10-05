@@ -1,0 +1,128 @@
+.carousel-control-prev:hover {
+    background-color: rgb(201, 201, 201);
+}
+
+.carousel-control-next:hover {
+    background-color: rgb(201, 201, 201);
+}
+
+.caroulsel-inner img {
+    margin: 0 auto;
+    height: 300px;
+    max-width: 95%;
+}
+
+#accordion .panel-heading {
+    cursor: pointer;
+}
+
+.img-thumbnail {
+    height: 50px;
+    max-width: 95%;
+}
+
+.headerA strong {
+    font-size: 18px;
+}
+
+.headerA strike {
+    color: rgb(97, 97, 97);
+}
+
+.headerA span {
+    color: red;
+}
+
+.headerA .traGop {
+    margin-left: 8px;
+    color: black;
+    background-color: rgb(216, 213, 213);
+    padding: 2px;
+}
+
+.tablePromotions {
+    border: 2px solid gray;
+    padding: 0 10px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding-bottom: 10px;
+}
+
+.tablePromotions .headPromotions h4 {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.tablePromotions .headPromotions div {
+    color: rgb(126, 125, 125);
+    margin-bottom: 5px;
+}
+
+.tablePromotions a {
+    color: gray;
+}
+
+.cauHinh {
+    border: 2px solid gray;
+    padding: 0 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px 15px;
+}
+
+.cauHinh h4 {
+    font-weight: 600;
+}
+
+.btnMua {
+    margin: 10px 0;
+}
+
+.carousel-indicators li {
+    border-color: #000;
+}
+
+.carousel-indicators .active {
+    background-color: #000;
+}
+
+.carousel-inner {
+    height: 450px;
+    max-height: 450px;
+}
+
+.soLuong {
+    width: 80px;
+}
+
+.product_size {
+    margin-top: 27px;
+}
+
+.product_size select {
+    border-radius: 5px;
+    width: 70px;
+    padding: 10px;
+}
+
+.lienHe {
+    color: #b5aec4;
+    height: 50px;
+    line-height: 50px;
+}
+
+.fieldSet {
+    margin-top: 20px;
+}
+
+.fieldSet .img-thumbnail {
+    width: 70px;
+    height: 70px;
+}
+
+.chuaCoDanhGia {
+    color: rgb(207, 145, 30);
+    font-size: 25px;
+    font-style: italic;
+}
