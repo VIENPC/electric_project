@@ -76,13 +76,4 @@ public class SPBanChayController {
         }
         return "admin/view/spbanchay";
     }
-    // @PostMapping("/spbanchay")
-    // public String spbcTheoThang(Model model, @RequestParam("thang") int thang) {
-    // System.out.println(thang);
-    // // model.addAttribute("listspbc", spdao.findBestSellingProducts());
-    // // model.addAttribute("produtcMONTH",
-    // // spdao.findBestSellingProductsMonth(thang));
-    // return "admin/view/spbanchay";
-    // }
-
 }

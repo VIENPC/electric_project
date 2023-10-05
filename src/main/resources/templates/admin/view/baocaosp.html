@@ -73,23 +73,15 @@
                                                 <td th:text="${itemsp[0]}"></td>
                                                 <td th:text="${itemsp[1]}"></td>
                                                 <td th:text="${itemsp[2]}"></td>
-                                                <!-- <td th:text="${itemsp[3]}"></td> -->
-                                                <td th:text="${itemsp[4]}"></td>
-                                                <!-- <td th:text="${(itemsp[3]*itemsp[2])}"></td> -->
-
                                                 <td
                                                     th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                                    1HIEU</td>
-                                                <!--<td
-                                                    th:text="${#numbers.formatDecimal((itemsp[3] *itemsp[2]), 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                                </td> -->
+                                                </td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(itemsp[4], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
                                                 <td th:text="${itemsp[5]}"></td>
                                                 <!-- Cập nhật giá trị của biến totalTongGiaHang -->
-
                                             </tr>
-
-
-
                                         </tbody>
                                         <tfoot>
                                             <tr>

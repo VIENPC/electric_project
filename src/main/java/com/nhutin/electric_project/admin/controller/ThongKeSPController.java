@@ -39,13 +39,13 @@ public class ThongKeSPController {
         model.addAttribute("listhxs", hsxdao.findAll());
         List<Object[]> listsp = spdao.thongkeSanPhamTheoBrand(mahang);
         System.out.println(listsp);
-        // int totalTongGiaHang = 0;
-        // for (Object[] itemsp : listsp) {
-        // totalTongGiaHang += Double.parseDouble(itemsp[3].toString()) *
-        // Double.parseDouble(itemsp[2].toString());
-        // }
+        int totalTongGiaHang = 0;
+        for (Object[] itemsp : listsp) {
+            totalTongGiaHang += Double.parseDouble(itemsp[3].toString()) *
+                    Double.parseDouble(itemsp[2].toString());
+        }
         model.addAttribute("itemtksp", listsp);
-        // model.addAttribute("tongcong", totalTongGiaHang);
+        model.addAttribute("tongcong", totalTongGiaHang);
 
         return "admin/view/baocaosp";
     }
@@ -57,14 +57,14 @@ public class ThongKeSPController {
             RedirectAttributes redirectAttributes) {
         model.addAttribute("listhxs", hsxdao.findAll());
 
-        // List<Object[]> listsp = spdao.thongkesptg(startDate, endDate);
-        // int totalTongGiaHang = 0;
-        // for (Object[] itemsp : listsp) {
-        // totalTongGiaHang += Integer.parseInt(itemsp[3].toString()) *
-        // Integer.parseInt(itemsp[2].toString());
-        // }
-        // model.addAttribute("itemtksp", listsp);
-        // model.addAttribute("tongcong", totalTongGiaHang);
+        List<Object[]> listsp = spdao.thongkesptg(startDate, endDate);
+        int totalTongGiaHang = 0;
+        for (Object[] itemsp : listsp) {
+            totalTongGiaHang += Double.parseDouble(itemsp[3].toString()) *
+                    Double.parseDouble(itemsp[2].toString());
+        }
+        model.addAttribute("itemtksp", listsp);
+        model.addAttribute("tongcong", totalTongGiaHang);
         return "admin/view/baocaosp";
     }
 }

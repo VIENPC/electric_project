@@ -83,4 +83,13 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
         List<Product> findByActive(Boolean active);
 
+        @Query("SELECT p.productID AS masp, p.productName AS tensp, SUM(od.quantity) AS soluong, p.price AS giasp, " +
+                        "SUM(od.quantity * p.price) AS totalPrice, p.brand.brandName AS tenhang " +
+                        "FROM OrderDetail od " +
+                        "INNER JOIN od.product p " +
+                        "WHERE od.order.orderDate BETWEEN :startDate AND :endDate " +
+                        "AND od.order.statushd = 4 " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName")
+        List<Object[]> thongkesptg(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
 }

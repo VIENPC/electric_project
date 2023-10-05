@@ -39,10 +39,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- col-6 -->
+					<!-- col-6 theo ngay -->
 					<div class="col-md-6">
 						<div class="widget-small warning coloured-icon">
-							<!-- <img style="width: 20%;" th:if="${listspbctheongay[0][7].length() }" th:src="@{'/assets/images/carousel/'+${listspbctheongay[0][7]}}"> -->
 							<div class="info">
 								<h4 th:if="${ngay2 == null}" th:text="'sản phẩm bán chạy nhất ngày '+${ngay1}">
 								</h4>
@@ -59,7 +58,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- col-6 -->
+					<!-- col-6 bán chạy theo tháng -->
 					<div class="col-md-6">
 						<div class="widget-small info coloured-icon">
 							<!-- <img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${listspbctheomonth[0][7]}}"> -->
@@ -164,9 +163,9 @@
 												th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 											</td>
 											<td th:text="${itemsp[5]}"></td>
-											<td th:text="${#dates.format(itemsp[6], 'dd/MM/yyyy')}"></td>
+											<td th:text="${#dates.format(itemsp[6],'dd/MM/yyyy')}"></td>
 
-										</tr>
+										</tr> <!---->
 
 									</tbody>
 								</table>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
 
 <head>
-<meta charset="UTF-8">
-<title>Quản lý khách hàng</title>
-<!-- AngularJS -->
+	<meta charset="UTF-8">
+	<title>Quản lý khách hàng</title>
+	<!-- AngularJS -->
 
 </head>
 
@@ -49,8 +48,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr
-												ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
+											<tr ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
 												<td>{{item.userID}}</td>
 												<td ng-if="item.email.length > 6">{{item.email.substr(0,
 													6)}}..</td>
@@ -63,13 +61,13 @@
 												<td>{{item.address}}</td>
 												<td>{{item.phoneNumber}}</td>
 												<td>{{item.loginPermission}}</td>
-												<td ng-if="item.registrationDate.length > 12">{{item.registrationDate.substr(0,
+												<td ng-if="item.registrationDate.length > 12">
+													{{item.registrationDate.substr(0,
 													8)}}..</td>
 
 												<td>{{ item.role}}</td>
-												<td class="align-middle text-center"><a
-													ng-click="showUserDetails(item)"
-													class="text-secondary font-weight-bold text-xs"> Chi
+												<td class="align-middle text-center"><a ng-click="showUserDetails(item)"
+														class="text-secondary font-weight-bold text-xs"> Chi
 														tiết </a></td>
 
 											</tr>
@@ -79,13 +77,13 @@
 										<div class="row element-button">
 											<div class="col-sm-2">
 												<a id="toggleButton" ng-click="toggleTableAndInputs()"
-													class="btn btn-add btn-sm"><i
-													class="fas fa-folder-plus"></i>Quay lại bảng</a>
+													class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Quay
+													lại bảng</a>
 											</div>
 											<div class="col-sm-2">
 												<a id="historyLink" ng-click="showHistory()"
-													class="btn btn-add btn-sm"><i
-													class="fas fa-folder-plus"></i>Lịch sử mua hàng</a>
+													class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Lịch sử
+													mua hàng</a>
 											</div>
 										</div>
 										<div class="row">
@@ -103,14 +101,14 @@
 														ng-model="edit.fullName">
 												</div>
 												<div style="margin-bottom: 20px;" class="form-group">
-													<label>PhoneNumber</label> <input name="phoneNumber"
-														type="text" class="form-control"
+													<label>PhoneNumber</label> <input name="phoneNumber" type="text"
+														class="form-control"
 														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
 														ng-model="edit.phoneNumber">
 												</div>
 												<div style="margin-bottom: 20px;" class="form-group">
-													<label>DayOfBirth</label> <input name="dateOfBirth"
-														type="text" class="form-control"
+													<label>DayOfBirth</label> <input name="dateOfBirth" type="text"
+														class="form-control"
 														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
 														ng-model="edit.dateOfBirth| date:'dd-MM-yyyy'">
 												</div>
@@ -125,28 +123,27 @@
 														ng-model="edit.address">
 												</div>
 												<div style="margin-bottom: 20px;" class="form-group">
-													<label>RegistrationDate</label> <input
-														name="registrationDate" type="text" class="form-control"
+													<label>RegistrationDate</label> <input name="registrationDate"
+														type="text" class="form-control"
 														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
 														ng-model="edit.registrationDate| date:'dd-MM-yyyy'">
 												</div>
 												<div class="row">
 													<div class="col-md-4">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
+														<div style="margin-bottom: 20px; background-color: #EFCACA;"
 															class="form-group">
 															<label>LockStatus</label>
 															<div class="radio-group">
 																<input type="radio" id="true" name="lockStatus"
 																	value="True"> <label for="user">True</label> <input
-																	type="radio" id="false" name="lockStatus" value="False">
+																	type="radio" id="false" name="lockStatus"
+																	value="False">
 																<label for="user">False</label>
 															</div>
 														</div>
 													</div>
 													<div class="col-md-4">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
+														<div style="margin-bottom: 20px; background-color: #EFCACA;"
 															class="form-group">
 															<label>Gender</label>
 															<div class="radio-group">
@@ -158,12 +155,12 @@
 														</div>
 													</div>
 													<div class="col-md-4 rounded">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
+														<div style="margin-bottom: 20px; background-color: #EFCACA;"
 															class="form-group">
 															<label>Role</label>
 															<div class="radio-group">
-																<input type="radio" id="admin" name="role" value="ADMIN">
+																<input type="radio" id="admin" name="role"
+																	value="ADMIN">
 																<label for="user">Admin</label> <input type="radio"
 																	id="user" name="role" value="USER"> <label
 																	for="user">User</label>
@@ -182,11 +179,11 @@
 											type="submit">Xóa</button>
 									</form>
 									<div id="form" style="display: none;">
-																				<div class="col-sm-2">
-												<a id="toggleButton" ng-click="toggleTableAndInputs()"
-													class="btn btn-add btn-sm"><i
-													class="fas fa-folder-plus"></i>Quay lại bảng</a>
-											</div>
+										<div class="col-sm-2">
+											<a id="toggleButton" ng-click="toggleTableAndInputs()"
+												class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Quay lại
+												bảng</a>
+										</div>
 										<table class="table table-hover table-bordered" id="myTable2">
 											<thead>
 												<tr>
@@ -215,7 +212,6 @@
 												<td>{{item.loginPermission}}</td>
 												<td ng-if="item.registrationDate.length > 12">{{item.registrationDate.substr(0,
 													8)}}..</td>
-
 												<td>{{ item.role}}</td>
 												<td class="align-middle text-center"><a
 													ng-click="showUserDetails(item)"
@@ -235,8 +231,7 @@
 			</div>
 		</div>
 	</main>
-	<script
-		th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
 	<script th:src="@{/js/user.js}"></script>
 
 </body>
