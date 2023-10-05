@@ -57,14 +57,16 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cartDetails;
 
-	@OneToMany(mappedBy = "product")
-	private List<Comment> comments;
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetails;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReviews;
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	private List<Comment> comment;
 
 	@ManyToOne
 	@JoinColumn(name = "brand_id")

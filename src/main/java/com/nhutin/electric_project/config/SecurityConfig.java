@@ -21,6 +21,10 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.util.UrlPathHelper;
 
+import com.nhutin.electric_project.model.Cart;
+import com.nhutin.electric_project.model.User;
+import com.nhutin.electric_project.repository.UserRepository;
+import com.nhutin.electric_project.repository.cartsRepository;
 import com.nhutin.electric_project.security.handler.CustomAuthenticationFailureHandler;
 import com.nhutin.electric_project.security.handler.OAuth2LoginSuccessHandler;
 import com.nhutin.electric_project.security.service.CustomOAuth2UserService;
@@ -32,6 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Autowired
         private UserDetailsService userDetailsService;
+
+        @Autowired
+        cartsRepository cartDAO;
+
+        @Autowired
+        UserRepository userDAO;
 
         @Bean
         public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -79,12 +89,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
                                                                 "/error**", "/api/**", "/reset-password",
                                                                 "/codeVerification", "/resendOtp",
-                                                                "/new-password", "/rest/productdetails",
+                                                                "/new-password", "/rest/detail/**",
                                                                 "/rest/products", "/rest/productsbycate/**",
                                                                 "/rest/products/**", "/rest/**", "/product",
                                                                 "/registration/**", "/oauth2/**")
                                                 .permitAll()
-                                                .antMatchers("/admin/**", "/rest/orders/**")
+                                                .antMatchers("/admin/**")
                                                 .hasRole("ADMIN")
                                                 .anyRequest()
                                                 .authenticated())
@@ -101,6 +111,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                         String emailFromCookie = CookieUtils.get("tenDangNhapCookie",
                                                                         request);
 
+                                                        if (!email.isEmpty()) {
+                                                                User us = userDAO.findByEmailLike(email);
+                                                                Cart cart = null;
+                                                                cart = cartDAO.findByUserID(us.getUserID());
+                                                                if (cart == null) {
+                                                                        cart = new Cart();
+                                                                        cart.setUser(us);
+                                                                        cartDAO.save(cart);
+                                                                }
+
+                                                                }
                                                         // Kiểm tra xem có giá trị email từ cookie hay không
                                                         if (!emailFromCookie.isEmpty()) {
                                                                 System.out.println(
