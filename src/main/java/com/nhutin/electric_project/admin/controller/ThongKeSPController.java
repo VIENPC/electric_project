@@ -63,7 +63,7 @@ public class ThongKeSPController {
             totalTongGiaHang += Double.parseDouble(itemsp[3].toString()) *
                     Double.parseDouble(itemsp[2].toString());
         }
-        model.addAttribute("itemtksp", listsp); 
+        model.addAttribute("itemtksp", listsp);
         model.addAttribute("tongcong", totalTongGiaHang);
         return "admin/view/baocaosp";
     }
