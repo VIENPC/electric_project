@@ -112,7 +112,10 @@
 			<version>9.1.0</version> <!-- Thay version bằng phiên bản hiện tại của Jakarta EE -->
 			<scope>provided</scope>
 		</dependency>
-		
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
 
 	</dependencies>
