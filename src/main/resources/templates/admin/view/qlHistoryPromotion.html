@@ -68,6 +68,7 @@
 												<th><span>Tên người nhận</span></th>
 												<th><span>Số điện thoại khách</span></th>
 												<th><span>Vào ngày</span></th>
+		                                        <th><span>Trạng Thái</span></th>
 												<th><span>Tổng số tiền được giảm</span></th>
 												<th><span></span></th>
 											</tr>
@@ -82,6 +83,7 @@
 												<td th:text="${km.order.name}"></td>
 												<td th:text="${km.order.phone}"></td>						
 												<td th:text="${#dates.format(km.usedDate, 'dd-MM-yyyy')}"></td>	
+												<td th:text="${km.status}"></td>
 												<td th:text="${km.discountAmount}"></td>													
 												<td><a class="btn btn-primary btn-sm "
 													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"><i
