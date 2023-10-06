@@ -18,5 +18,8 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
 
     @Query("SELECT o FROM Order o where o.statushd= ?1")
     List<Order> findHdTt(Integer tthd);
+    
+    @Query("SELECT o FROM Order o where o.user.userID= ?1")
+    List<Order> findHistory(Integer user);
 
 }

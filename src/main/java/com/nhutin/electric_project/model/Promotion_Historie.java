@@ -11,13 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,31 +27,36 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name="product_reviews")
-@Getter
-@Setter
+@Table(name = "`promotion_histories`")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductReview implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Promotion_Historie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="review_id")
-	private Integer reviewID;
-
-	@Column(name = "rating")
-	private Integer rating = 5;
-
-	@Column(name = "review_data")
-	private Date reviewDate;
-	
-	@ManyToOne
-	@JoinColumn(name="product_id")
-	private Product product;
+	@Column(name = "id")
+	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
+
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
+
+	@Column(name = "discount_amount")
+	private Float discountAmount;
+
+	@ManyToOne
+	@JoinColumn(name = "promotion_id")
+	private Promotion promotion;
+
+	@Temporal(TemporalType.TIME)
+	@Column(name = "date_user")
+	private Date usedDate;
+
+	@Column(name = "status")
+	private boolean status;
 
 }

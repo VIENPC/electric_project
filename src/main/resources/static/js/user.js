@@ -1,5 +1,5 @@
-const host = "http://localhost:8080/rest";
-const app = angular.module("OrderApp", []);
+
+var app = angular.module("my-app", []);
 const table = document.getElementById("myTable");
 const button = document.getElementById("toggleButton");
 const form = document.getElementById("form");

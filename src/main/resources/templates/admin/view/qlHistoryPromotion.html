@@ -15,7 +15,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách khách hàng</a></li>
+							sách tổng số khuyến mãi đã sử dụng</a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -55,49 +55,45 @@
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
-								<div onload="showTable()" class="col-sm-12">
+								<div class="col-sm-12">
 
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
-												<th><span>Fullname</span></th>
-												<th><span>Address</span></th>
 												<th><span>ID</span></th>
-												<th><span>Email</span></th>
-												<th><span>Gender</span></th>
-												<th><span>LockStatus</span></th>
-												<th><span>DateOfBirth</span></th>
-												<th><span>PhoneNumber</span></th>
-												<th><span>Permission</span></th>
-												<th><span>RegistrationDate</span></th>
-												<th><span>Role</span></th>
+												<th><span>ID Khách hàng</span></th>
+												<th><span>ID Mã khuyến mãi</span></th>
+												<th><span>ID Hóa đơn</span></th>
+												<th><span>Tên người mua</span></th>
+												<th><span>Tên người nhận</span></th>
+												<th><span>Số điện thoại khách</span></th>
+												<th><span>Vào ngày</span></th>
+												<th><span>Tổng số tiền được giảm</span></th>
 												<th><span></span></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="kh : ${items}">
-												<td th:text="${kh.fullName}"></td>
-												<td th:text="${kh.address}"></td>
-												<td th:text="${kh.userID}"></td>
-												<td th:text="${kh.email}"></td>
-												<td th:text="${kh.gender} ? 'Nam' : 'Nữ'"></td>
-												<td th:text="${kh.lockStatus} ? 'Tạm khóa' : 'Hoạt động'"></td>
-												<td th:text="${#dates.format(kh.dateOfBirth, 'dd-MM-yyyy')}"></td>
-												<td th:text="${kh.phoneNumber}"></td>
-												<td th:text="${kh.loginPermission} ? 'Có' : 'Không'"></td>
-												<td
-													th:text="${#dates.format(kh.registrationDate, 'dd-MM-yyyy')}"></td>
-												<td th:text="${kh.role}"></td>
+											<tr th:each="km : ${items}">
+												<td th:text="${km.id}"></td>
+												<td th:text="${km.user.userID}"></td>
+												<td th:text="${km.promotion.id}"></td>
+												<td th:text="${km.order.orderId}"></td>
+												<td th:text="${km.user.fullName}"></td>
+												<td th:text="${km.order.name}"></td>
+												<td th:text="${km.order.phone}"></td>						
+												<td th:text="${#dates.format(km.usedDate, 'dd-MM-yyyy')}"></td>	
+												<td th:text="${km.discountAmount}"></td>													
 												<td><a class="btn btn-primary btn-sm "
-													th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
+													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"><i
 														class="fa fa-eye" aria-hidden="true"></i></a> <a
 													class="btn btn-danger btn-sm"
-													th:href="@{/admin/qlkhachhang/delete/{user}(user=${kh.userID})}">
+													th:href="@{/admin/qlkhuyenmai/delete/{id}(id=${km.id})}">
 														<i class="fa fa-trash"></i>
 												</a></td>
 											</tr>
 										</tbody>
 									</table>
+								<p>Tổng số mã khuyến mãi đã được sử dụng: <span th:text="${userPromotionCount}"></span></p>
 								</div>
 							</div>
 						</div>
