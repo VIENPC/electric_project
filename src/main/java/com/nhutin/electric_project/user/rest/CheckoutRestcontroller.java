@@ -38,7 +38,7 @@ public class CheckoutRestcontroller {
   @GetMapping("/rest/account")
   public ResponseEntity<User> getAccount(HttpServletRequest req) {
     String email = cook.get("tenDangNhapCookie", req);
-   
+
     User kh = userDAO.findByEmailLike(email);
     if (kh != null) {
       return ResponseEntity.ok(kh);
