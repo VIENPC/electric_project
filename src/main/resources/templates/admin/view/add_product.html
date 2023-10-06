@@ -9,108 +9,95 @@
 
 <body>
 	<main class="app-content">
-		<noscript>
-			<h2>Ohh! Trình duyệt của bạn không hỗ trợ Javascript</h2>
-		</noscript>
-
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><a th:href="@{/admin/qlsanpham}">Danh
+						sách sản phẩm</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/admin/add_product}">Thêm
+						sản phẩm</a></li>
+			</ul>
 		</div>
-		<form class="row" th:action="@{/admin/addsanpham/save}" method="post" th:object="${sp}"
-			enctype="multipart/form-data">
-			<div class="form-group col-md-3">
-				<label class="control-label">Mã sản phẩm </label> <input class="form-control" type="number"
-					placeholder="" disabled="disabled" th:field="*{productID}">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<h3 class="tile-title">Tạo mới sản phẩm</h3>
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-add btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i
+										class="fas fa-folder-plus"></i> Thêm nhà cung cấp</a>
+							</div>
 
-			</div>
-			<div class="form-group col-md-3">
-				<label class="control-label">Tên sản phẩm</label> <input class="form-control" type="text"
-					th:field="*{productName}">
-				<i th:errors="*{productName}" class="mgs_errors"></i><br>
-				<i th:text="${loitensp}" class="mgs_errors"></i><br>
-			</div>
-			<div class="form-group  col-md-3">
-				<label class="control-label">Số lượng</label> <input class="form-control" type="number" min="0"
-					id="quantity" th:field="*{quantity}">
-				<i th:errors="*{quantity}" class="mgs_errors"></i><br>
-			</div>
-			<div class="form-group col-md-3">
-				<label class="control-label">Giá bán</label> <input class="form-control" type="number"
-					th:field="*{price}">
-				<i th:errors="*{price}" class="mgs_errors"></i><br>
-			</div>
-			<div class="form-group col-md-4 ">
-				<label for="exampleSelect1" class="control-label">Tình
-					trạng</label> <select class="form-control" id="tinhtrangselect" th:field="*{active}">
-					<option value="">-- Chọn tình trạng --</option>
-
-					<option value="true">Còn hàng</option>
-					<option value="false">Hết hàng</option>
-				</select>
-				<i th:errors="*{active}" class="mgs_errors"></i><br>
-			</div>
-			<div class="form-group col-md-4 ">
-
-				<label for="exampleSelect1" class="control-label">Nhà cung cấp</label>
-				<select class="form-control" id="hangSanXuatSelect" name="hangsanxuat" th:field="*{brand}">
-					<option value="">-- Chọn nhà cung cấp --</option>
-					<option th:each="hsx : ${listhsx}" th:text="${hsx.brandName}" th:value="${hsx.brandID}">
-					</option>
-				</select>
-				<i th:errors="*{brand}" class="mgs_errors"></i><br>
-			</div>
-			<div class="form-group col-md-12">
-				<label class="control-label">Ảnh sản phẩm</label><br> <input type="file" name="image">
-				<i th:text="${image}" class="mgs_errors"></i><br>
-
-			</div>
-			<div class="form-group col-md-12">
-				<label class="control-label">Mô tả sản phẩm</label>
-				<textarea class="form-control" name="description" id="description" th:field="*{description}"></textarea>
-				<script>
-					CKEDITOR.replace('description');
-				</script>
-				<i th:errors="*{description}" class="mgs_errors"></i><br>
-			</div>
-			<button class="btn btn-save ml-3" type="submit">Lưu lại</button>
-
-			<a class="btn btn-cancel ml-3" th:href="@{/addsanpham}">Reset</a>
-		</form>
-		<div id="username-page">
-			<div class="username-page-container">
-				<h1 class="title">Tên của bạn</h1>
-				<form id="usernameForm" name="usernameForm">
-					<div class="form-group">
-						<input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-					</div>
-					<div class="form-group">
-						<button type="submit" class="accent username-submit">Bắt Đầu Chat</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-		<div id="chat-page" class="hidden">
-			<div class="chat-container">
-				<div class="chat-header">
-					<h2>Chào mừng đến với app chat sử dung WebSocket</h2>
-				</div>
-				<div class="connecting">
-					Kết nối...
-				</div>
-				<ul id="messageArea">
-
-				</ul>
-				<form id="messageForm" name="messageForm">
-					<div class="form-group">
-						<div class="input-group clearfix">
-							<input type="text" id="message" placeholder="Type a message..." autocomplete="off"
-								class="form-control" />
-							<button type="submit" class="primary">Gửi</button>
 						</div>
+						<form class="row" th:action="@{/admin/addsanpham/save}" method="post" th:object="${sp}"
+							enctype="multipart/form-data">
+							<div class="form-group col-md-3">
+								<label class="control-label">Mã sản phẩm </label> <input class="form-control"
+									type="number" placeholder="" disabled="disabled" th:field="*{productID}">
+
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Tên sản phẩm</label> <input class="form-control"
+									type="text" th:field="*{productName}">
+								<i th:errors="*{productName}" class="mgs_errors"></i><br>
+								<i th:text="${loitensp}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group  col-md-3">
+								<label class="control-label">Số lượng</label> <input class="form-control" type="number"
+									min="0" id="quantity" th:field="*{quantity}">
+								<i th:errors="*{quantity}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Giá bán</label> <input class="form-control" type="number"
+									th:field="*{price}">
+								<i th:errors="*{price}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group col-md-4 ">
+								<label for="exampleSelect1" class="control-label">Tình
+									trạng</label> <select class="form-control" id="tinhtrangselect"
+									th:field="*{active}">
+									<option value="">-- Chọn tình trạng --</option>
+
+									<option value="true">Còn hàng</option>
+									<option value="false">Hết hàng</option>
+								</select>
+								<i th:errors="*{active}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group col-md-4 ">
+
+								<label for="exampleSelect1" class="control-label">Nhà cung cấp</label>
+								<select class="form-control" id="hangSanXuatSelect" name="hangsanxuat"
+									th:field="*{brand}">
+									<option value="">-- Chọn nhà cung cấp --</option>
+									<option th:each="hsx : ${listhsx}" th:text="${hsx.brandName}"
+										th:value="${hsx.brandID}">
+									</option>
+								</select>
+								<i th:errors="*{brand}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group col-md-12">
+								<label class="control-label">Ảnh sản phẩm</label><br> <input type="file" name="image">
+								<i th:text="${image}" class="mgs_errors"></i><br>
+
+							</div>
+							<div class="form-group col-md-12">
+								<label class="control-label">Mô tả sản phẩm</label>
+								<textarea class="form-control" name="description" id="description"
+									th:field="*{description}"></textarea>
+								<script>
+									CKEDITOR.replace('description');
+								</script>
+								<i th:errors="*{description}" class="mgs_errors"></i><br>
+							</div>
+							<button class="btn btn-save ml-3" type="submit">Lưu lại</button>
+
+							<a class="btn btn-cancel ml-3" th:href="@{/addsanpham}">Reset</a>
+						</form>
 					</div>
-				</form>
+
+				</div>
 			</div>
 		</div>
-
 	</main>
 	<!-- Model đồ hãng cung cấp -->
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
