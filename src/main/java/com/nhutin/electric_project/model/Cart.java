@@ -3,6 +3,8 @@ package com.nhutin.electric_project.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,7 @@ public class Cart implements Serializable {
 	@Column(name="card_id")
 	private Integer cardID;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="cart")
 	private List<CartDetail> cartDetails;
 

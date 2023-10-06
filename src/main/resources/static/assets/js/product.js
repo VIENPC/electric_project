@@ -421,7 +421,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         var json = localStorage.getItem("cart");
         var cartItems = json ? JSON.parse(json) : [];
 
-        var productData = cartItems.map(function (item) {
+         var productData = cartItems.map(function (item) {
             return { productId: item.productID, quantity: item.qty };
         });
         console.log("thông tin dữ liệu", productData);
