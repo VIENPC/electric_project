@@ -47,7 +47,4 @@ public class Supplier implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "supplier")
 	private List<Product> products;
-
-	@Column(name = "active")
-	private boolean active;
 }
