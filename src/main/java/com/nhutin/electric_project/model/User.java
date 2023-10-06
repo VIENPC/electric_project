@@ -50,7 +50,6 @@ public class User implements Serializable {
 
 	@Column(name = "Email")
 	private String email;
-
 	@Column(name = "FullName")
 	private String fullName;
 
@@ -104,7 +103,6 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "user")
 	private ConfirmationCode confirmationCode;
-
 
 	public Integer getUserID() {
 		return this.userID;
@@ -223,14 +221,15 @@ public class User implements Serializable {
 
 		return cart;
 	}
-	 public Role getRole() {
-        return role;
-    }
 
-    // Setter cho trường 'role'
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	public Role getRole() {
+		return role;
+	}
+
+	// Setter cho trường 'role'
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public ConfirmationCode getConfirmationCode() {
 		return this.confirmationCode;
@@ -285,15 +284,16 @@ public class User implements Serializable {
 		return loginPermission; // false được cho phép >< true không cho phép
 	}
 
-	 public User(String username, String fullname, Boolean gender, Date birthday, String email, String phonenumber, String password, Role role) {
-        this.username = username;
-        this.fullName = fullname;
-        this.gender = gender;
-        this.dateOfBirth = birthday;
-        this.email = email;
-        this.phoneNumber = phonenumber;
-        this.password = password;
-        this.role = role;
-    }
+	public User(String username, String fullname, Boolean gender, Date birthday, String email, String phonenumber,
+			String password, Role role) {
+		this.username = username;
+		this.fullName = fullname;
+		this.gender = gender;
+		this.dateOfBirth = birthday;
+		this.email = email;
+		this.phoneNumber = phonenumber;
+		this.password = password;
+		this.role = role;
+	}
 
 }

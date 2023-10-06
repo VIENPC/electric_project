@@ -18,7 +18,4 @@ import com.nhutin.electric_project.repository.CommentsDao;
 @RestController
 public class CommentRestController {
 
-    
-
-
 }
