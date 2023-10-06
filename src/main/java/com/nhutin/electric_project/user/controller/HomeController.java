@@ -1,17 +1,26 @@
 package com.nhutin.electric_project.user.controller;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.nhutin.electric_project.model.Order;
+import com.nhutin.electric_project.repository.ordersRepository;
+
 
 @Controller
 public class HomeController {
  @Autowired
     HttpSession session;
-
+@Autowired
+    ordersRepository orderDao;
     @RequestMapping("/home")
     public String index() {
 
@@ -77,8 +86,7 @@ public String productCategory(@RequestParam(name = "categoryID", required = fals
     }
 
     @RequestMapping("/checkout")
-    public String checkout() {
-         
+    public String checkout(Model model) {      
          return "banhang/view/checkout";
     }
 

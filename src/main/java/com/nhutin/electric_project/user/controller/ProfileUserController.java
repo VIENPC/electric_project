@@ -74,6 +74,7 @@ public class ProfileUserController {
     public String xemhdct(@PathVariable("mahd") Integer mahd, Model model) {
         List<OrderDetail> orderdetail = orderdetailDAO.findOrderDetailsByOrderId(mahd);
         model.addAttribute("orderdetail", orderdetail);
+        
         for (OrderDetail order : orderdetail) {
             System.out.println("Order ID: " + order.getProduct().getProductName());
         }

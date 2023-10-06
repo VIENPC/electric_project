@@ -27,51 +27,36 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "orders")
-@SuppressWarnings("serial")
+@Table(name = "`promotion_histories`")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Promotion_Historie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "order_id")
-	private Integer orderId;
-
-	@Column(name = "name")
-	private String name;
-	@Column(name = "address")
-	private String address;
-	@Column(name = "phone")
-	private String phone;
-
-	@Column(name = "statushd")
-	private Integer statushd;
-	
-	@Column(name = "statustt")
-	private boolean statustt;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "order_date")
-	private Date orderDate = new Date();
-
-	@Column(name = "total_amount")
-	private Double totalAmount;
-
-	@Column(name = "note")
-	private String note;
-	@JsonIgnore
-	@OneToMany(mappedBy = "order")
-	private List<OrderDetail> orderDetails;
+	@Column(name = "id")
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "order")
-	private List<Payment> payments;
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 
-	@OneToOne(mappedBy = "order")
-	private Shipping shipping;
+	@Column(name = "discount_amount")
+	private Float discountAmount;
+
+	@ManyToOne
+	@JoinColumn(name = "promotion_id")
+	private Promotion promotion;
+
+	@Temporal(TemporalType.TIME)
+	@Column(name = "date_user")
+	private Date usedDate;
+
+	@Column(name = "status")
+	private boolean status;
+
 }

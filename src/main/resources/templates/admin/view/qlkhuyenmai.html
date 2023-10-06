@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+<meta charset="UTF-8">
+<title>Quản lý khách hàng</title>
+<!-- AngularJS -->
+
+</head>
+
+<body>
+
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a href="#"><b>Danh
+							sách khuyến mãi</a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
+									title="Nhập" onclick="myFunction(this)"><i
+									class="fa fa-upload"></i> Tải từ file</a>
+							</div>
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file" type="button"
+									title="In" onclick="myApp.printTable()"><i
+									class="fa fa-print"></i> In dữ liệu</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+									class="fa fa-file-excel-o"></i> Xuất Excel</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm pdf-file" type="button"
+									title="Xuất file fpf"><i class="fa fa-file-pdf-o"></i> Xuất
+									PDF</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm xoansp" type="button"
+									title="Xóa nhiều sản phẩm"><i class="fa fa-trash-o"></i>
+									Xóa tất cả </a>
+							</div>
+						</div>
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+							<div class="row">
+								<div class="col-sm-12">
+
+									<table class="table table-hover table-bordered">
+										<thead>
+											<tr>
+												<th><span>ID</span></th>
+												<th><span>Tên khuyến mãi</span></th>
+												<th><span>Chiết khấu cho khách</span></th>
+												<th><span>Giá trị tối thiểu đơn hàng</span></th>
+												<th><span>Ngày tạo</span></th>
+												<th><span>Trạng thái</span></th>
+												<th><span></span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="km : ${items}">
+												<td th:text="${km.id}"></td>
+												<td th:text="${km.name}"></td>
+												<td th:text="${km.discountPercent}"></td>
+												<td th:text="${km.minOrderAmount}"></td>
+												<td th:text="${#dates.format(km.usedDates, 'dd-MM-yyyy')}"></td>
+												<td th:text="${km.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></td>
+												<td><a class="btn btn-primary btn-sm "
+													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"><i
+														class="fa fa-eye" aria-hidden="true"></i></a> <a
+													class="btn btn-danger btn-sm"
+													th:href="@{/admin/qlkhuyenmai/delete/{id}(id=${km.id})}">
+														<i class="fa fa-trash"></i>
+												</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<script
+		th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
+
+</body>
+
+
+</html>
