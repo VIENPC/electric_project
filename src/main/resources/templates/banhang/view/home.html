@@ -128,8 +128,7 @@
                                                         <div>
                                                             <a href="../assets/images/product/{{item.image}}"
                                                                 class="btn btn-default fancybox-button">Zoom</a>
-                                                            <a href="#product-pop-up"
-                                                                class="btn btn-default fancybox-fast-view">View</a>
+
                                                         </div>
                                                     </div>
                                                     <h3 style="height: 40px;"><a
@@ -155,8 +154,7 @@
                                                         <div>
                                                             <a href="../assets/images/product/{{item.image}}"
                                                                 class="btn btn-default fancybox-button">Zoom</a>
-                                                            <a href="#product-pop-up"
-                                                                class="btn btn-default fancybox-fast-view">View</a>
+
                                                         </div>
                                                     </div>
                                                     <h3 style="height: 40px;"><a
@@ -206,7 +204,7 @@
                                 <div>
                                     <a href="../assets/images/product/{{item.image}}"
                                         class="btn btn-default fancybox-button">Zoom</a>
-                                    <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+
                                 </div>
                             </div>
                             <h3 style="height: 40px;"><a href="shop-item.html">{{item.productName}}</a></h3>
@@ -219,6 +217,84 @@
                     <!-- Kết thúc lặp qua sản phẩm -->
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h1>MÁY LẠNH</h1>
+                </div>
+                <div class="panel-body ">
+                    <!-- Bắt đầu lặp qua sản phẩm -->
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products |limitTo: 8"
+                        ng-if="item.active !== false && item.category.categoryID === 1">
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img style="height: 193.46px;" ng-src="../assets/images/product/{{item.image}}"
+                                    class="img-responsive" alt="Berry Lace Dress">
+                                <div>
+                                    <a href="../assets/images/product/{{item.image}}"
+                                        class="btn btn-default fancybox-button">Zoom</a>
+
+                                </div>
+                            </div>
+                            <h3 style="height: 40px;"><a
+                                    ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
+                            <div class="pi-price">{{item.price |number : 0}} đ</div>
+                            <a href="javascript:;" class="btn btn-default add2cart"
+                                ng-click="addToCart(item.productID)">Add
+                                to cart</a>
+                        </div>
+                    </div>
+                    <!-- Kết thúc lặp qua sản phẩm -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h1>MÁY GIẶC</h1>
+                </div>
+                <div class="panel-body ">
+                    <!-- Bắt đầu lặp qua sản phẩm -->
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products"
+                        ng-if="item.active !== false && item.category.categoryID == 21">
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img style="height: 193.46px;" ng-src="../assets/images/product/{{item.image}}"
+                                    class="img-responsive" alt="Berry Lace Dress">
+                                <div>
+                                    <a href="../assets/images/product/{{item.image}}"
+                                        class="btn btn-default fancybox-button">Zoom</a>
+
+                                </div>
+                            </div>
+                            <h3 style="height: 40px;"><a
+                                    ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
+                            <div class="pi-price">{{item.price |number : 0}} đ</div>
+                            <a href="javascript:;" class="btn btn-default add2cart"
+                                ng-click="addToCart(item.productID)">Add
+                                to cart</a>
+                        </div>
+                    </div>
+                    <!-- Kết thúc lặp qua sản phẩm -->
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <!-- <div class="col-md-4 col-sm-4 items-info">Items 1 to 9 of 10 total</div> -->
+            <!-- <div class="col-md-8 col-sm-8">
+                <ul class="pagination pull-right">
+                    <li><a href="javascript:;">&laquo;</a></li>
+                    <li><a href="javascript:;" ng-repeat="pageNumber in pageNumbers" ng-click="goToPage(pageNumber)">{{
+                            pageNumber}}</a></li>
+                    <li><a href="javascript:;">&raquo;</a></li>
+                </ul>
+            </div> -->
         </div>
     </main>
 </body>
