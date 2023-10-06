@@ -7,14 +7,43 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.categoris = [];
     $scope.suppliers = [];
     $scope.newProduct = {};
+    $scope.newSup = {};
     $scope.form = {};
+    $scope.pageNumbers = []; // Các số trang
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
+    $scope.currentPage = 1;  // Trang hiện tại
+    $scope.pageSize = 9;
 
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
             $scope.allProducts = response.data;
+            // $scope.calculatePageNumbers(); // Tính toán số trang sau khi tải dữ liệu
+            // $scope.updateDisplayedProducts();
         });
+
+    // Hàm để cập nhật danh sách sản phẩm được hiển thị trên trang hiện tại
+    $scope.updateDisplayedProducts = function () {
+        var startIndex = ($scope.currentPage - 1) * $scope.pageSize;
+        var endIndex = startIndex + $scope.pageSize;
+        $scope.products = $scope.allProducts.slice(startIndex, endIndex);
+    };
+    // Hàm để tính toán danh sách các số trang
+    $scope.calculatePageNumbers = function () {
+        var totalPages = Math.ceil($scope.allProducts.length / $scope.pageSize);
+        $scope.pageNumbers = [];
+        for (var i = 1; i <= totalPages; i++) {
+            $scope.pageNumbers.push(i);
+        }
+    }
+
+    // Hàm để chuyển đến trang khác
+    $scope.goToPage = function (page) {
+        $scope.currentPage = page;
+        $scope.updateDisplayedProducts();
+    };
+
+
     $http.get('/rest/supplier')
         .then(function (response) {
             $scope.suppliers = response.data;
@@ -38,10 +67,80 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         CKEDITOR.instances.description.setData($scope.newProduct.description);
         $scope.switchToTab2();
     }
+    $scope.editSupplier = function (suppliers) {
+        $scope.newSup = angular.copy(suppliers);
+        $scope.switchToTab1();
+    }
 
-    // Hàm xử lý sự kiện chuyển về Tab 1
+
+    $scope.addSupplier = function () {
+        $http.post('/admin/createSupplier', $scope.newSup)
+            .then(function (response) {
+                $scope.suppliers.push(response.data);;
+                $scope.newSup = {};
+                swal("Thành công", "Thêm nhà sản xuẩt thành công!", "success")
+            });
+    };
+    $scope.updateSupplier = function () {
+        // Thực hiện kiểm tra form có hợp lệ hay không
+        if ($scope.form.$invalid) {
+            // Hiển thị thông báo lỗi nếu form không hợp lệ
+            swal("Thất bại", "Vui lòng nhập vào để thay đổi!", "error")
+            return;
+        }
+
+        // Gọi API để cập nhật thông tin item
+        $http.put(`/adminUpdateSupplier/${$scope.newSup.supplierID}`, $scope.newSup)
+            .then(function (response) {
+                // Tìm và cập nhật thông tin người dùng trong mảng $scope.users
+                var index = $scope.suppliers.findIndex(sup => sup.supplierID === $scope.newSup.supplierID);
+                if (index !== -1) {
+                    $scope.suppliers[index] = response.data;
+                }
+                $scope.newSup = {};
+                swal("Thành công", "Cập nhật nhà sản xuất thành công!", "success")
+            })
+            .catch(function (error) {
+                // Xử lý lỗi nếu có
+                swal("Thất bại", "Cập nhật nhà sản xuất không thành công!", "error")
+                console.error(error);
+            });
+    };
+    $scope.deleteSupplier = function (supplier) {
+        // Xác nhận người dùng muốn cập nhật trạng thái active về false
+        if (confirm("Bạn có chắc chắn muốn xóa loại này?")) {
+            supplier.active = false;
+
+            // Gọi API để cập nhật trạng thái active của người dùng
+            $http.put(`/deleteSupplier/${supplier.supplierID}`, supplier)
+                .then(function (response) {
+                    // Cập nhật thông tin người dùng trong mảng $scope.users
+                    var index = $scope.suppliers.findIndex(u => u.supplierID === supplier.supplierID);
+                    if (index !== -1) {
+                        $scope.suppliers[index] = response.data;
+                        swal("Thành công", "Xóa nhấ sản xuất thành công!", "success")
+                    }
+                })
+                .catch(function (error) {
+                    // Xử lý lỗi nếu có
+                    swal("Thất bại", "Xóa không thành công!", "error")
+                    console.error(error);
+                    // Phục hồi trạng thái active về true nếu xảy ra lỗi
+                    category.active = true;
+                });
+        }
+    };
+
+
+
+
+    // Hàm xử lý sự kiện chuyển về Tab 2
     $scope.switchToTab2 = function () {
         $('#myTabs a[href="#tab2"]').tab('show');
+    };
+    // Hàm xử lý sự kiện chuyển về Tab 1
+    $scope.switchToTab1 = function () {
+        $('#myTabs a[href="#tab1"]').tab('show');
     };
 
     $scope.addProduct = function () {
@@ -215,6 +314,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 console.error('Error fetching products:', error);
             });
     };
+
 
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
