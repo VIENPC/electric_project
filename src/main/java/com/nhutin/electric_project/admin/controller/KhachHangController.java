@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhutin.electric_project.model.Order;
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.UserRepository;
 import com.nhutin.electric_project.repository.ordersRepository;
@@ -87,8 +88,10 @@ public class KhachHangController {
 }
     @PostMapping("/qlkhachhang/updata/{user}")
 	public String update(@PathVariable("user") Integer user, @Valid User items, BindingResult result, Model model) {    	
-        khdao.save(items);
-        System.out.println("kkakak"+ items.getFullName());
+    	User kh = khdao.findById(user).get();
+
+		items.setDateOfBirth(kh.getDateOfBirth());
+    	khdao.save(items);
         return "redirect:/admin/qlkhachhang";
     }
 

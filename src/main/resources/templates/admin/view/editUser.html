@@ -14,8 +14,8 @@
 	<main class="app-content">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
-				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách khách hàng</a></li>
+				<li class="breadcrumb-item active"><a href="#"><b>Chi
+							tiết khách hàng</a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -33,14 +33,18 @@
 									<div class="row element-button">
 										<div class="col-sm-2">
 											<a id="toggleButton" class="btn btn-add btn-sm"
-												th:href="@{'/admin/qlkhachhang'}">  <i class="fa fa-arrow-left" style="margin-right: 5px;"></i>Quay lại bảng </a>
+												th:href="@{'/admin/qlkhachhang'}"> <i
+												class="fa fa-arrow-left" style="margin-right: 5px;"></i>Quay
+												lại bảng
+											</a>
 										</div>
 
 										<div class="col-sm-2">
 											<a id="historyLink"
 												th:href="@{'/admin/historyOrder/'+${items.userID}}"
-												class="btn btn-add btn-sm"> <i class="fa fa-history" style="margin-right: 5px;"></i>Lịch
-												sử mua hàng</a>
+												class="btn btn-add btn-sm"> <i class="fa fa-history"
+												style="margin-right: 5px;"></i>Lịch sử mua hàng
+											</a>
 										</div>
 									</div>
 
@@ -89,64 +93,49 @@
 														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
 														th:field="*{registrationDate}" readonly="readonly">
 												</div>
-												<div class="row">
-													<div class="col-md-4">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>LockStatus</label>
-															<div class="radio-group">
-																<input type="radio" id="true" name="lockStatus"
-																	value="True" th:checked="${items.lockStatus}">
-																<label for="true">True</label> <input type="radio"
-																	id="false" name="lockStatus" value="False"
-																	th:field="*{lockStatus}"> <label for="false">False</label>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>Gender</label>
-															<div class="radio-group">
-																<input type="radio" id="nam" name="gender" value="Nam"
-																	th:checked="${items.gender == true}"> <label
-																	for="nam">Nam</label> <input type="radio" id="nu"
-																	name="gender" value="Nữ"
-																	th:checked="${items.gender == false}"> <label
-																	for="nu">Nữ</label>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-4 rounded">
-														<div
-															style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>Role</label>
-															<div class="radio-group">
-																<input type="radio" id="admin" name="role" value="ADMIN"
-																	th:field="${items.role}"
-																	th:checked="${items.role == T(com.nhutin.electric_project.model.Role).ADMIN}">
-																<label for="admin">Admin</label> <input type="radio"
-																	id="user" name="role" value="USER"
-																	th:field="${items.role}"
-																	th:checked="${items.role == T(com.nhutin.electric_project.model.Role).USER}">
-																<label for="user">User</label>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-4 rounded">
-														<button type="submit" class="btn btn-success"
-															style="font-size: 17px; background: #cf6125; margin-top: 20px;">
-															<!-- Sử dụng biểu tượng Font Awesome -->
-															  <i class="fa fa-pencil" style="margin-right: 5px;"></i> Sửa
-															Cập nhật
-														</button>
-													</div>
+<div class="row">
+    <div class="col-md-4">
+        <label>LockStatus</label>
+        <div class="form-group bg-light">
+            <div class="radio-group">
+                <input type="radio" id="true" name="lockStatus" value="True" th:checked="${items.lockStatus}">
+                <label for="true">True</label> 
+                <input type="radio" id="false" name="lockStatus" value="False" th:field="*{lockStatus}">
+                <label for="false">False</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label>Gender</label>
+        <div class="form-group bg-light">
+            <div class="radio-group">
+                <input type="radio" id="nam" name="gender" value="True" th:checked="${items.gender == true}">
+                <label for="nam">Nam</label> 
+                <input type="radio" id="nu" name="gender" value="False" th:checked="${items.gender == false}">
+                <label for="nu">Nữ</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 rounded">
+        <label>Role</label>
+        <div class="form-group bg-light">
+            <div class="radio-group">
+                <input type="radio" id="admin" name="role" value="ADMIN" th:field="${items.role}" th:checked="${items.role == T(com.nhutin.electric_project.model.Role).ADMIN}">
+                <label for="admin">Admin</label> 
+                <input type="radio" id="user" name="role" value="USER" th:field="${items.role}" th:checked="${items.role == T(com.nhutin.electric_project.model.Role).USER}">
+                <label for="user">User</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 rounded" style="float: right; text-align: right;">
+        <button type="submit" class="btn btn-success" style="font-size: 17px; background: #cf6125; margin-top: 20px;">
+            <!-- Sử dụng biểu tượng Font Awesome -->
+            <i class="fa fa-pencil" style="margin-right: 5px;"></i>
+            Lưu
+        </button>
+    </div>
+</div>
 
-
-												</div>
 											</div>
 										</div>
 									</form>

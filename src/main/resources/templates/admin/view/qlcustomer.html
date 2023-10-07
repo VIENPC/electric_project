@@ -4,7 +4,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Quản lý khách hàng</title>
+<title>Quản lý khuyến mãi</title>
 <!-- AngularJS -->
 
 </head>
@@ -88,9 +88,8 @@
 												<td
 													th:text="${#dates.format(kh.registrationDate, 'dd-MM-yyyy')}"></td>
 												<td th:text="${kh.role}"></td>
-												<td><a class="btn btn-primary btn-sm "
-													th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
-														class="fa fa-eye" aria-hidden="true"></i></a> <a
+												<td><a class="btn btn-primary btn-sm"
+													th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i class="fa fa-pencil mr-2"></i></a><a
 													class="btn btn-danger btn-sm"
 													th:href="@{/admin/qlkhachhang/delete/{user}(user=${kh.userID})}">
 														<i class="fa fa-trash"></i>

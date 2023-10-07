@@ -15,7 +15,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách tổng số khuyến mãi đã sử dụng</a></li>
+							sách tổng số của 1 khuyến mãi đã sử dụng</a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -68,7 +68,7 @@
 												<th><span>Tên người nhận</span></th>
 												<th><span>Số điện thoại khách</span></th>
 												<th><span>Vào ngày</span></th>
-		                                        <th><span>Trạng Thái</span></th>
+												<th><span>Trạng Thái</span></th>
 												<th><span>Tổng số tiền được giảm</span></th>
 												<th><span></span></th>
 											</tr>
@@ -76,18 +76,26 @@
 										<tbody>
 											<tr th:each="km : ${items}">
 												<td th:text="${km.id}"></td>
-												<td th:text="${km.user.userID}"></td>
+												<td><a
+													th:href="@{'/admin/qlkhuyenmai/id/'+${km.user.userID}}"
+													title="Hiển thị theo khách hàng"
+													th:text="${km.user.userID}"></a></td>
 												<td th:text="${km.promotion.id}"></td>
 												<td th:text="${km.order.orderId}"></td>
-												<td th:text="${km.user.fullName}"></td>
-												<td th:text="${km.order.name}"></td>
-												<td th:text="${km.order.phone}"></td>						
-												<td th:text="${#dates.format(km.usedDate, 'dd-MM-yyyy')}"></td>	
+												<td><a
+													th:href="@{'/admin/qlkhuyenmai/nameUser/'+${km.user.fullName}}"
+													title="Hiển thị theo khách hàng"
+													th:text="${km.user.fullName}"></a></td>
+												<td><a
+													th:href="@{'/admin/qlkhuyenmai/nameOrder/'+${km.order.name}}"
+													title="Hiển thị theo khách hàng"
+													th:text="${km.order.name}"></a></td>
+												<td th:text="${km.order.phone}"></td>
+												<td
+													th:text="${#dates.format(km.usedDate,'ss:mm:HH dd-MM-yyyy')}"></td>
 												<td th:text="${km.status}"></td>
-												<td th:text="${km.discountAmount}"></td>													
-												<td><a class="btn btn-primary btn-sm "
-													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"><i
-														class="fa fa-eye" aria-hidden="true"></i></a> <a
+												<td th:text="${km.discountAmount}"></td>
+												<td><a
 													class="btn btn-danger btn-sm"
 													th:href="@{/admin/qlkhuyenmai/delete/{id}(id=${km.id})}">
 														<i class="fa fa-trash"></i>
@@ -95,7 +103,10 @@
 											</tr>
 										</tbody>
 									</table>
-								<p>Tổng số mã khuyến mãi đã được sử dụng: <span th:text="${userPromotionCount}"></span></p>
+									<p>
+										Tổng số mã khuyến mãi đã được sử dụng: <span
+											th:text="${userPromotionCount}"></span>
+									</p>
 								</div>
 							</div>
 						</div>
