@@ -75,7 +75,10 @@
 												<td><a><span th:text="${km.id}"></span></a></td>
 												<td th:text="${km.name}"></td>
 												<td th:text="${km.discountPercent}"></td>
-												<td th:text="${km.minOrderAmount}"></td>
+												<td><span th:text="${km.minOrderAmount} + ' VND'"></span>
+												</td>
+
+
 												<td
 													th:text="${#dates.format(km.usedDates,'ss:mm:HH dd-MM-yyyy')}"></td>
 												<td

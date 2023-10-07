@@ -1,7 +1,9 @@
 package com.nhutin.electric_project.admin.controller;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.Promotion_Historie;
@@ -36,7 +39,11 @@ prmotionHistoryRepositpry promoHistoryDao;
 Promotion pro = new Promotion();
 	 @RequestMapping("/qlkhuyenmai")
 	    public String qlkhuyenmai(Model model) {
-	        List<Promotion> kmlist = prmoDao.findAll();	       
+		  
+		   
+	        List<Promotion> kmlist = prmoDao.findAll();	
+	      
+	      
 	        model.addAttribute("items", kmlist);
 	        return "admin/view/qlkhuyenmai";
 	    }
@@ -77,6 +84,29 @@ Promotion pro = new Promotion();
 	        model.addAttribute("userPromotionCount", userP);
 	        return "admin/view/qlHistoryPromotion";
 	    }
+	 
+	    @RequestMapping(value = "/qlkhuyenmai/delete/{id}")
+	    public String deletesp(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+	    	try {
+	          
+	    		prmoDao.deleteById(id);
+	           
+				/*
+				 * redirectAttributes.addFlashAttribute("successMessage",
+				 * "Đã xóa sản phẩm thành công!");
+				 */
+	            return "redirect:/admin/qlkhuyenmai"; 
+	        } catch (Exception e) {
+	            
+				/*
+				 * redirectAttributes.addFlashAttribute("errorMessage",
+				 * "Xóa sản phẩm không thành công: " + e.getMessage());
+				 */
+	            return "redirect:/admin/qlkhuyenmai";
+	        }
+			
+	}
+	    
 	 @RequestMapping("/qlkhuyenmai/nameUser/{fullName}")
 	    public String qlLSkhuyenmaiUser(@PathVariable("fullName") String fullName, Model model) {
 		 List<Promotion_Historie> listHitory= promoHistoryDao.findPromotionHistoriesByUserFullName(fullName);
