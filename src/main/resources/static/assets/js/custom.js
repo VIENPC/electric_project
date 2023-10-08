@@ -1,4 +1,4 @@
-$('#sampleTable').DataTable();
+
 $(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
 	$('#sidebarCollapse').click(function () {
@@ -12,7 +12,6 @@ $(document).ready(function () {
 		} else {
 			$('.chkboxId').prop('checked', false);
 		}
-
 	});
 
 
