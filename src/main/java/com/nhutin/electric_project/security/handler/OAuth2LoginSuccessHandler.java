@@ -39,10 +39,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 		OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
 		System.out.println("Customer's OAuth2User: " + oauth2User);
-		
+
 		String email = oauth2User.getAttribute("email");
 		String name = oauth2User.getAttribute("name");
-
 
 		// Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
 		Optional<User> existingUser = userRepository.findByEmail(email);

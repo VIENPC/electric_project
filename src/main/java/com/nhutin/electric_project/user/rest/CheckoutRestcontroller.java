@@ -5,8 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +36,7 @@ public class CheckoutRestcontroller {
   @GetMapping("/rest/account")
   public ResponseEntity<User> getAccount(HttpServletRequest req) {
     String email = cook.get("tenDangNhapCookie", req);
-    System.out.println(email);
+
     User kh = userDAO.findByEmailLike(email);
     if (kh != null) {
       return ResponseEntity.ok(kh);

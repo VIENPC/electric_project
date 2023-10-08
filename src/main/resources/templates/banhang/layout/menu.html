@@ -41,7 +41,10 @@
           <!-- END TOP BAR LEFT PART -->
           <!-- BEGIN TOP BAR MENU -->
           <div class="col-md-6 col-sm-6 additional-nav">
-            <ul class="list-unstyled list-inline pull-right">
+            <ul class="list-unstyled list-inline pull-right"> -->
+
+              <li><a href="shop-checkout.html">Đăng Kí</a></li>
+              <li><a href="page-login.html">Đăng Nhập</a></li>
               <li>
                 <h3><a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
                     Xin chào [[${#request.remoteUser}]]
@@ -71,7 +74,7 @@
             <div class="top-cart-content">
               <ul class="scroller" style="height: 250px;">
                 <li ng-repeat="gh in cartItems">
-                  <a href=""><img ng-src="./assets/images/product/{{gh.image}}" alt="{{gh.image}}" width="37"
+                  <a href=""><img ng-src="../assets/images/product/{{gh.image}}" alt="{{gh.image}}" width="37"
                       height="34"></a>
                   <span class="cart-content-count">X {{gh.qty}}</span>
                   <strong><a href="">{{gh.productName}}</a></strong>

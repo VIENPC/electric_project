@@ -60,6 +60,7 @@ public class Order implements Serializable {
 
 	@Column(name = "note")
 	private String note;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;

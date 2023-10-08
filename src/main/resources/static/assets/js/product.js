@@ -7,12 +7,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.categoris = [];
     $scope.suppliers = [];
     $scope.newProduct = {};
-    $scope.newSup = {};
     $scope.form = {};
-    $scope.pageNumbers = []; // Các số trang
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
-    $scope.currentPage = 1;  // Trang hiện tại
-    $scope.pageSize = 9;
 
     $http.get('/rest/product')
         .then(function (response) {
@@ -99,10 +95,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     // Hàm xử lý sự kiện chuyển về Tab 2
     $scope.switchToTab2 = function () {
         $('#myTabs a[href="#tab2"]').tab('show');
-    };
-    // Hàm xử lý sự kiện chuyển về Tab 1
-    $scope.switchToTab1 = function () {
-        $('#myTabs a[href="#tab1"]').tab('show');
     };
 
     $scope.addProduct = function () {
@@ -276,7 +268,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 console.error('Error fetching products:', error);
             });
     };
-
 
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
@@ -478,6 +469,33 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             .reduce((total, amt) => total += amt, 0);
     };
     $scope.loadLocalStorage();
+
+    $scope.saveToDatabase = function () {
+        var json = localStorage.getItem("cart");
+        var cartItems = json ? JSON.parse(json) : [];
+
+        var productData = cartItems.map(function (item) {
+            return { productId: item.productID, quantity: item.qty };
+        });
+        console.log("thông tin dữ liệu", productData);
+        $http.post('/rest/cartdetail', productData)
+            .then(function (response) {
+                // Xử lý kết quả sau khi lưu vào cơ sở dữ liệu thành công
+                console.log('Mã sản phẩm đã được lưu vào cơ sở dữ liệu.');
+            })
+            .catch(function (error) {
+                // Xử lý lỗi nếu có
+                console.error('Lỗi khi lưu mã sản phẩm vào cơ sở dữ liệu:', error);
+            });
+    };
+
+
+    $scope.saveToDatabase();
+
+
+
+
+
 });
 app.controller("checkctrl", function ($scope, $http, $filter) {
     const host = "https://provinces.open-api.vn/api/";
@@ -543,7 +561,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
-
+    $scope.account = []
     $scope.getAccount = function () {
 
         $http.get('/rest/account').then(resp => {

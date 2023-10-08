@@ -1,6 +1,4 @@
-
-
-
+$('#sampleTable').DataTable();
 $(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
 	$('#sidebarCollapse').click(function () {
@@ -23,6 +21,13 @@ $(document).ready(function () {
 // xử lí phần thống kê theo hãng
 function submitForm() {
 	document.getElementById("formhang").submit();
+}
+function submitFormSPBC(selectElement) {
+	var selectedValue = selectElement.value;
+	// Kiểm tra giá trị đã chọn và thực hiện hành động tương ứng
+	if (selectedValue) {
+		document.getElementById('formthang').submit();
+	}
 }
 // $('#all').click(
 // 	function(e) {
@@ -102,7 +107,7 @@ function showSuccessMessage(message) {
 
 $(document).on('click', '.settt', function () {
 	const mahd = $(this).data("mahd");
-	const user = $(this).data("user");
+
 	swal({
 		title: "Cảnh báo",
 		text: "Bạn có chắc chắn muốn chỉnh sửa trạng thái này?",
@@ -113,10 +118,7 @@ $(document).on('click', '.settt', function () {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
-			if (user != null) {
 
-				window.location.href = `/admin/qlkhachhang/editt/${user}`;
-			}
 
 		}
 	})
@@ -224,6 +226,74 @@ function editProduct(button) {
 	$("#ModalUP").modal("show");
 }
 
+
+var categories = [];
+var data = [];
+// Lấy tất cả các hàng trong bảng
+var rows = document.querySelectorAll('table tr');
+
+// Lặp qua từng hàng trong bảng
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+});
+//Đây là biểu đồ
+const chart = Highcharts.chart('container', {
+	title: {
+		text: 'THỐNG KÊ DOANH THU',
+		align: 'center'
+	},
+	colors: [
+		'#4caefe',
+		'#3fbdf3',
+		'#35c3e8',
+		'#2bc9dc',
+		'#20cfe1',
+		'#16d4e6',
+		'#0dd9db',
+		'#03dfd0',
+		'#00e4c5',
+		'#00e9ba',
+		'#00eeaf',
+		'#23e274'
+	],
+	xAxis: {
+		categories: categories
+	},
+	series: [{
+		type: 'column',
+		name: 'Doanh thu',
+		borderRadius: 5,
+		colorByPoint: true,
+		data: data,
+		showInLegend: false
+	}]
+});
+
+document.getElementById('plain').addEventListener('click', () => {
+	chart.update({
+		chart: {
+			inverted: false,
+			polar: false
+		},
+
+	});
+});
+
+document.getElementById('inverted').addEventListener('click', () => {
+	chart.update({
+		chart: {
+			inverted: true,
+			polar: false
+		},
+	});
+});
 function editCategory(button) {
 
 	// Trích xuất thông tin sản phẩm từ hàng đã chọn
@@ -253,125 +323,7 @@ $(document).ready(function () {
 	});
 });
 
-//websocket 
-'use strict';
 
-var usernamePage = document.querySelector('#username-page');
-var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
-var messageForm = document.querySelector('#messageForm');
-var messageInput = document.querySelector('#message');
-var messageArea = document.querySelector('#messageArea');
-var connectingElement = document.querySelector('.connecting');
-
-var stompClient = null;
-var username = null;
-
-var colors = [
-	'#2196F3', '#32c787', '#00BCD4', '#ff5652',
-	'#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
-
-function connect(event) {
-	username = document.querySelector('#name').value.trim();
-
-	if (username) {
-		usernamePage.classList.add('hidden');
-		chatPage.classList.remove('hidden');
-
-		var socket = new SockJS('/ws');
-		stompClient = Stomp.over(socket);
-
-		stompClient.connect({}, onConnected, onError);
-	}
-	event.preventDefault();
-}
-
-
-function onConnected() {
-	// Subscribe to the Public Topic
-	stompClient.subscribe('/topic/public', onMessageReceived);
-
-	// Tell your username to the server
-	stompClient.send("/app/chat.addUser",
-		{},
-		JSON.stringify({ sender: username, type: 'JOIN' })
-	)
-
-	connectingElement.classList.add('hidden');
-}
-
-
-function onError(error) {
-	connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-	connectingElement.style.color = 'red';
-}
-
-
-function sendMessage(event) {
-	var messageContent = messageInput.value.trim();
-	if (messageContent && stompClient) {
-		var chatMessage = {
-			sender: username,
-			content: messageInput.value,
-			type: 'CHAT'
-		};
-		stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-		messageInput.value = '';
-	}
-	event.preventDefault();
-}
-
-
-function onMessageReceived(payload) {
-	var message = JSON.parse(payload.body);
-
-	var messageElement = document.createElement('li');
-
-	if (message.type === 'JOIN') {
-		messageElement.classList.add('event-message');
-		message.content = message.sender + ' vừa  vào!';
-	} else if (message.type === 'LEAVE') {
-		messageElement.classList.add('event-message');
-		message.content = message.sender + ' vừa ra!';
-	} else {
-		messageElement.classList.add('chat-message');
-
-		var avatarElement = document.createElement('i');
-		var avatarText = document.createTextNode(message.sender[0]);
-		avatarElement.appendChild(avatarText);
-		avatarElement.style['background-color'] = getAvatarColor(message.sender);
-
-		messageElement.appendChild(avatarElement);
-
-		var usernameElement = document.createElement('span');
-		var usernameText = document.createTextNode(message.sender);
-		usernameElement.appendChild(usernameText);
-		messageElement.appendChild(usernameElement);
-	}
-
-	var textElement = document.createElement('p');
-	var messageText = document.createTextNode(message.content);
-	textElement.appendChild(messageText);
-
-	messageElement.appendChild(textElement);
-
-	messageArea.appendChild(messageElement);
-	messageArea.scrollTop = messageArea.scrollHeight;
-}
-
-
-function getAvatarColor(messageSender) {
-	var hash = 0;
-	for (var i = 0; i < messageSender.length; i++) {
-		hash = 31 * hash + messageSender.charCodeAt(i);
-	}
-	var index = Math.abs(hash % colors.length);
-	return colors[index];
-}
-
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
 
 
 

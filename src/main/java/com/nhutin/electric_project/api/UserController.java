@@ -3,8 +3,6 @@ package com.nhutin.electric_project.api;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,8 +25,6 @@ import com.nhutin.electric_project.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepo;
-	@Autowired
-	HttpServletResponse resp;
 
 	@GetMapping("/rest/users")
 	public ResponseEntity<List<User>> getAll(Model model) {
@@ -74,7 +70,6 @@ public class UserController {
 
 	public User getNguoiDung() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 		return userRepo.findByEmail(auth.getName()).get();
 	}
 

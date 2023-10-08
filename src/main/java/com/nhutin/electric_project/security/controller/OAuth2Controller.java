@@ -11,7 +11,7 @@ public class OAuth2Controller {
     public String loginSuccess(OAuth2AuthenticationToken authentication) {
     	System.out.println(authentication);
         // Xử lý logic sau khi đăng nhập thành công
-        return "redirect:/home";
+        return "redirect:/home"; 
     }
 }
 

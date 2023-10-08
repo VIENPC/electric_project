@@ -107,7 +107,7 @@
                     <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
                       <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
-
+                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
                   <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
@@ -125,8 +125,11 @@
             <div class="col-md-8 col-sm-8">
               <ul class="pagination pull-right">
                 <li><a href="javascript:;">&laquo;</a></li>
-                <li><a href="javascript:;" ng-repeat="pageNumber in pageNumbers" ng-click="goToPage(pageNumber)">{{
-                    pageNumber}}</a></li>
+                <li><a href="javascript:;">1</a></li>
+                <li><span>2</span></li>
+                <li><a href="javascript:;">3</a></li>
+                <li><a href="javascript:;">4</a></li>
+                <li><a href="javascript:;">5</a></li>
                 <li><a href="javascript:;">&raquo;</a></li>
               </ul>
             </div>

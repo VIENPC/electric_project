@@ -32,13 +32,7 @@
 									<table class="table table-hover table-bordered" id="myTable">
 										<thead>
 											<tr>
-												<th width="10"><input type="checkbox" id="all"></th>
-
-												<th width="150"><span>Họ và tên</span></th>
-												<th width="250"><span>Địa chỉ</span></th>
-											
 												<th><span>ID</span></th>
-											
 												<th><span>Email</span></th>
 												<th><span>Password</span></th>
 												<th><span>Fullname</span></th>
@@ -54,40 +48,6 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="kh : ${items}">
-												
-												<td width="10"><input type="checkbox" name="check1" value="1"></td>
-
-												<td th:text="${kh.username}"></td>
-
-												<td th:text="${kh.address}"></td>
-
-												<td th:text="${kh.email}"></td>
-
-
-
-												<td th:text="${kh.gender ?'Nam':'Nữ'}"></td>
-
-
-												<td th:text="${kh.phoneNumber}"></td>
-												<td> <span class="badge bg-success"
-														th:if="${kh.lockStatus == false}">Hoạt
-														động</span>
-													<span class="badge bg-warning" th:if="${kh.lockStatus == true}">Tạm
-														khóa</span>
-												</td>
-
-												<td class="table-td-center">
-													<button class="btn btn-primary btn-sm settt" type="button"
-														title="Sửa trạng thái" th:attr="data-user=${kh.userID}">
-														<i class="fa fa-edit"></i>
-													</button>
-													<button class="btn btn-excel btn-sm unclock" type="button"
-														title="Sửa trạng thái" th:attr="data-user=${kh.userID}">
-														<i class="fa fa-unlock" aria-hidden="true"></i>
-													</button>
-												</td>
-
 											<tr ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
 												<td>{{item.userID}}</td>
 												<td ng-if="item.email.length > 6">{{item.email.substr(0,
@@ -104,7 +64,6 @@
 												<td ng-if="item.registrationDate.length > 12">
 													{{item.registrationDate.substr(0,
 													8)}}..</td>
-												>>>>>>> quangminh
 
 												<td>{{ item.role}}</td>
 												<td class="align-middle text-center"><a ng-click="showUserDetails(item)"
@@ -253,7 +212,6 @@
 												<td>{{item.loginPermission}}</td>
 												<td ng-if="item.registrationDate.length > 12">{{item.registrationDate.substr(0,
 													8)}}..</td>
-
 												<td>{{ item.role}}</td>
 												<td class="align-middle text-center"><a
 													ng-click="showUserDetails(item)"

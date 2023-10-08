@@ -15,13 +15,7 @@ app.run(function ($rootScope) {
     });
 });
 
-
 let host = "http://localhost:8080/rest";
-
-
-
-
-
 
 
 app.filter('emailProtection', function () {
@@ -33,4 +27,6 @@ app.filter('emailProtection', function () {
         }
         return result;
     };
+
 });
+
