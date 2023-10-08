@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.nhutin.electric_project.model.OrderDetail;
 
 public interface orderDetailsRepository extends JpaRepository<OrderDetail, Integer> {
+	
     @Query("SELECT od FROM OrderDetail od WHERE od.order.orderId = :orderId")
     List<OrderDetail> findOrderDetailsByOrderId(Integer orderId);
 }
