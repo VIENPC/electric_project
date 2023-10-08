@@ -27,8 +27,8 @@
 						<div class="row element-button">
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
-									title="Nhập" onclick="myFunction(this)"><i
-									class="fa fa-upload"></i> Tải từ file</a>
+									th:href="@{/admin/qlkhuyenmai/addPromotion}" title="Thêm"><i
+									class="fa fa-plus mr-2"></i>Tạo khuyến mãi</a>
 							</div>
 
 							<div class="col-sm-2">
@@ -60,6 +60,7 @@
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
+
 												<th><span>ID</span></th>
 												<th><span>Tên khuyến mãi</span></th>
 												<th><span>Chiết khấu cho khách</span></th>
@@ -71,15 +72,24 @@
 										</thead>
 										<tbody>
 											<tr th:each="km : ${items}">
-												<td th:text="${km.id}"></td>
+												<td><a><span th:text="${km.id}"></span></a></td>
 												<td th:text="${km.name}"></td>
 												<td th:text="${km.discountPercent}"></td>
-												<td th:text="${km.minOrderAmount}"></td>
-												<td th:text="${#dates.format(km.usedDates, 'dd-MM-yyyy')}"></td>
-												<td th:text="${km.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></td>
-												<td><a class="btn btn-primary btn-sm "
-													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"><i
-														class="fa fa-eye" aria-hidden="true"></i></a> <a
+												<td><span th:text="${km.minOrderAmount} + ' VND'"></span>
+												</td>
+
+
+												<td
+													th:text="${#dates.format(km.usedDates,'ss:mm:HH dd-MM-yyyy')}"></td>
+												<td
+													th:text="${km.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></td>
+												<td><a class="btn btn-primary btn-sm"
+													th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"
+													title="Hiển thị theo mã"> <i class="fa fa-search"
+														aria-hidden="true"></i>
+												</a> <a class="btn btn-primary btn-sm "
+													th:href="@{'/admin/qlkhuyenmai/edit/'+${km.id}}"
+													title="Sửa"><i class="fa fa-pencil mr-2"></i></a> <a
 													class="btn btn-danger btn-sm"
 													th:href="@{/admin/qlkhuyenmai/delete/{id}(id=${km.id})}">
 														<i class="fa fa-trash"></i>
