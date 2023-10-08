@@ -107,7 +107,8 @@
                       </div>
                       <div class="col-md-12 nav-brands">
                         <ul class="brand-list">
-                          <li ng-repeat="item in brands" style="display: inline-block; margin-right: 20px;">
+                          <li ng-repeat="item in brands" ng-if="item.active !== false"
+                            style="display: inline-block; margin-right: 20px;">
                             <a>
                               <img title="esprit" alt="esprit" ng-src="../assets/images/carousel/{{item.image}}">
                             </a>

@@ -18,30 +18,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         .then(function (response) {
             $scope.products = response.data;
             $scope.allProducts = response.data;
-            // $scope.calculatePageNumbers(); // Tính toán số trang sau khi tải dữ liệu
-            // $scope.updateDisplayedProducts();
         });
-
-    // Hàm để cập nhật danh sách sản phẩm được hiển thị trên trang hiện tại
-    $scope.updateDisplayedProducts = function () {
-        var startIndex = ($scope.currentPage - 1) * $scope.pageSize;
-        var endIndex = startIndex + $scope.pageSize;
-        $scope.products = $scope.allProducts.slice(startIndex, endIndex);
-    };
-    // Hàm để tính toán danh sách các số trang
-    $scope.calculatePageNumbers = function () {
-        var totalPages = Math.ceil($scope.allProducts.length / $scope.pageSize);
-        $scope.pageNumbers = [];
-        for (var i = 1; i <= totalPages; i++) {
-            $scope.pageNumbers.push(i);
-        }
-    }
-
-    // Hàm để chuyển đến trang khác
-    $scope.goToPage = function (page) {
-        $scope.currentPage = page;
-        $scope.updateDisplayedProducts();
-    };
 
 
     $http.get('/rest/supplier')
@@ -57,21 +34,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         .then(function (response) {
             $scope.categoris = response.data;
         });
-
-    $scope.edit = function (products) {
-        $scope.newProduct = angular.copy(products);
-        $scope.newProduct.configuration = products.configuration;
-        $scope.newProduct.description = products.description;
-        // Cập nhật giá trị CKEditor
-        CKEDITOR.instances.configuration.setData($scope.newProduct.configuration);
-        CKEDITOR.instances.description.setData($scope.newProduct.description);
-        $scope.switchToTab2();
-    }
-    $scope.editSupplier = function (suppliers) {
-        $scope.newSup = angular.copy(suppliers);
-        $scope.switchToTab1();
-    }
-
 
     $scope.addSupplier = function () {
         $http.post('/admin/createSupplier', $scope.newSup)

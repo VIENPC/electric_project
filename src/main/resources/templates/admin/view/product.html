@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<main class="app-content" ng-controller="product-controller">
+	<main class="app-content" ng-controller="productAdmin-controller">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a th:href="@{/admin/qlsanpham}"><b>Danh
@@ -21,28 +21,23 @@
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/admin/addsanpham}" title="Thêm"><i
-										class="fa fa-plus"></i> Tạo mới sản phẩm</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
-									onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
+										class="fa fa-upload"></i> Tải từ file</a>
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
-									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+										class="fa fa-print"></i> In dữ liệu</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
-									title="Sao chép"><i class="fa fa-copy"></i>
+								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
+										class="fa fa-copy"></i>
 									Sao chép</a>
 							</div>
 
 							<div class="col-sm-2">
 
-								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
-										class="fa fa-file-excel-o"></i>
+								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i class="fa fa-file-excel-o"></i>
 									Xuất Excel</a>
 							</div>
 							<div class="col-sm-2">
@@ -59,25 +54,23 @@
 						<!-- Tabs Navigation -->
 						<ul class="nav nav-tabs" id="myTabs" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
-									aria-controls="tab1" aria-selected="true">Danh sách sản phẩm</a>
+								<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+									aria-selected="true">Danh sách sản phẩm</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
-									aria-controls="tab2" aria-selected="false">Chỉnh sửa</a>
+								<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+									aria-selected="false">Chỉnh sửa</a>
 							</li>
 						</ul>
 						<!-- Tabs Content -->
 						<div class="tab-content" id="myTabsContent">
 							<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-								<div id="sampleTable_wrapper"
-									class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+								<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 									<div class="row">
 										<div class="col-sm-12">
 											<table class="table table-hover table-bordered" id="sampleTable">
 												<thead>
 													<tr>
-														<th width="10"><input type="checkbox" id="checkboxall"></th>
 														<th><span>ID</span></th>
 														<th><span>Tên sản phẩm</span></th>
 														<th><span>Số lượng</span></th>
@@ -94,9 +87,8 @@
 												</thead>
 												<tbody>
 													<tr ng-repeat="item in products">
-														<td width="10"><input type="checkbox" class="chkboxId"
-																name="maspchk"></td>
-														<td>{{item.productID}}</td>
+
+														<td>IT{{item.productID}}</td>
 														<td>{{item.productName}}</td>
 														<td>{{item.quantity}}</td>
 														<td>{{item.price | number: 0}}</td>
@@ -108,23 +100,36 @@
 															limitTo: 10)+'...':item.description}}</td>
 														<td>{{item.configuration.length>10?( item.configuration |
 															limitTo: 10)+'...':item.configuration}}</td>
-														<td><img ng-src="../assets/images/product/{{item.image}}"
-																style="width: 50px; height: 50px">
+														<td><img ng-src="../assets/images/product/{{item.image}}" style="width: 50px; height: 50px">
 
 
-														<td><button class="btn btn-primary btn-sm trash" type="button"
-																title="Xóa" ng-click="deleteProduct(item)">
+														<td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+																ng-click="deleteProduct(item)">
 																<i class="fa fa-trash-o"></i>
 															</button>
 															<!-- <a th:href="@{/edit/{masp}(masp=${sp.masp})}" class="btn btn-primary btn-sm edit" ><i class="fa fa-edit"></i></a> -->
-															<button class="btn btn-primary btn-sm edit"
-																ng-click="edit(item)">
+															<button class="btn btn-primary btn-sm edit" ng-click="edit(item)">
 																<i class="fa fa-edit"></i>
 															</button>
 														</td>
 													</tr>
 												</tbody>
 											</table>
+											<div class="container">
+												<div class="row">
+													<div class="col-md-8 col-sm-8">
+														<ul class="pagination pull-right">
+															<li class="page-item"><a class="page-link" href="javascript:;">&laquo;</a></li>
+															<li class="page-item" ng-repeat="pageNumber in pageNumbers">
+																<a class="page-link" href="javascript:;" ng-click="goToPage(pageNumber)">{{ pageNumber
+																	}}</a>
+															</li>
+															<li class="page-item"><a class="page-link" href="javascript:;">&raquo;</a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+
 										</div>
 									</div>
 								</div>
@@ -141,9 +146,8 @@
 										</div>
 										<div class="row">
 											<div class="form-group col-md-6">
-												<label class="control-label">Mã sản phẩm </label> <input
-													class="form-control" id="" type="number" name=""
-													ng-model="newProduct.productID" readonly>
+												<label class="control-label">Mã sản phẩm </label> <input class="form-control" id=""
+													type="number" name="" ng-model="newProduct.productID" readonly>
 											</div>
 											<div class="form-group col-md-6"
 												ng-class="{'has-error': form.quantity.$invalid && form.quantity.$dirty}">
@@ -160,8 +164,7 @@
 												<label class="control-label">Tên sản phẩm</label>
 												<input class="form-control" type="text" id="tensp" name="productName"
 													ng-model="newProduct.productName" required>
-												<div ng-messages="form.productName.$error"
-													ng-if="!form.productName.$dirty">
+												<div ng-messages="form.productName.$error" ng-if="!form.productName.$dirty">
 													<div class="text-danger" ng-message="required">Vui lòng
 														nhập tên sản phẩm</div>
 												</div>
@@ -170,13 +173,11 @@
 											<div class="form-group col-md-6">
 												<label class="col-md-12 p-0">Status</label>
 												<div class="col-md-12 border-bottom p-0">
-													<input type="radio" id="active" name="active" ng-value="true"
-														ng-model="newProduct.active" ng-required="true" /> <label
-														for="admin">Còn sản
+													<input type="radio" id="active" name="active" ng-value="true" ng-model="newProduct.active"
+														ng-required="true" /> <label for="admin">Còn sản
 														phẩm</label><br>
-													<input type="radio" id="active" name="active" ng-value="false"
-														ng-model="newProduct.active" ng-required="true" /> <label
-														for="user">Hết sản
+													<input type="radio" id="active" name="active" ng-value="false" ng-model="newProduct.active"
+														ng-required="true" /> <label for="user">Hết sản
 														phẩm</label><br>
 													<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
@@ -188,8 +189,7 @@
 												ng-class="{'has-error': form.brand.$invalid && form.brand.$dirty}">
 												<label class="col-md-12 p-0">Thương hiệu</label>
 												<div class="col-md-12 border-bottom p-0">
-													<select name="brand" class="form-control" id="brand"
-														ng-model="newProduct.brand"
+													<select name="brand" class="form-control" id="brand" ng-model="newProduct.brand"
 														ng-options="brand as brand.brandName for brand in brands track by brand.brandID">
 														<option value="">Chon thương hiệu</option>
 													</select>
@@ -203,13 +203,11 @@
 												ng-class="{'has-error': form.category.$invalid && form.category.$dirty}">
 												<label class="col-md-12 p-0">Loại</label>
 												<div class="col-md-12 border-bottom p-0">
-													<select name="category" class="form-control" id="category"
-														ng-model="newProduct.category"
+													<select name="category" class="form-control" id="category" ng-model="newProduct.category"
 														ng-options="cate as cate.categoryName for cate in categoris track by cate.categoryID">
 														<option value="">Chon loại</option>
 													</select>
-													<div ng-messages="form.category.$error"
-														ng-if="!form.category.$dirty">
+													<div ng-messages="form.category.$error" ng-if="!form.category.$dirty">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
 															loại sản phẩm</div>
 													</div>
@@ -219,22 +217,20 @@
 												ng-class="{'has-error': form.supplier.$invalid && form.supplier.$dirty}">
 												<label class="col-md-12 p-0">Nhà sản xuất</label>
 												<div class="col-md-12 border-bottom p-0">
-													<select name="supplier" class="form-control" id="supplier"
-														ng-model="newProduct.supplier"
+													<select name="supplier" class="form-control" id="supplier" ng-model="newProduct.supplier"
 														ng-options="supplier as supplier.supplierName for supplier in suppliers track by supplier.supplierID">
-														<option value="">Chon thương hiệu</option>
+														<option value="">Chon nhà sản xuất</option>
 													</select>
-													<div ng-messages="form.supplier.$error"
-														ng-if="!form.supplier.$dirty">
+													<div ng-messages="form.supplier.$error" ng-if="!form.supplier.$dirty">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
-															thương hiệu sản phẩm</div>
+															nhà sản xuất sản phẩm</div>
 													</div>
 												</div>
 											</div>
 											<div class="form-group col-md-6"
 												ng-class="{'has-error': form.price.$invalid && form.price.$dirty}">
-												<label class="control-label">Giá bán</label> <input class="form-control"
-													type="text" name="price" ng-model="newProduct.price">
+												<label class="control-label">Giá bán</label> <input class="form-control" type="text"
+													name="price" ng-model="newProduct.price">
 												<div ng-messages="form.price.$error" ng-if="!form.price.$dirty">
 													<div class="text-danger" ng-message="required">Vui lòng
 														nhập tên thương hiệu</div>
@@ -242,16 +238,16 @@
 											</div>
 											<div class="form-group col-md-12">
 												<label class="control-label">Cấu hình</label>
-												<textarea class="form-control" name="configuration"
-													ng-model="newProduct.configuration" id="configuration"></textarea>
+												<textarea class="form-control" name="configuration" ng-model="newProduct.configuration"
+													id="configuration"></textarea>
 												<script>
 													CKEDITOR.replace('configuration');
 												</script>
 											</div>
 											<div class="form-group col-md-12">
 												<label class="control-label">Mô tả</label>
-												<textarea class="form-control" name="description"
-													ng-model="newProduct.description" id="description"></textarea>
+												<textarea class="form-control" name="description" ng-model="newProduct.description"
+													id="description"></textarea>
 												<script>
 													CKEDITOR.replace('description');
 												</script>
@@ -261,8 +257,7 @@
 												<div class="form-group"
 													style="border: 1px solid rgb(221, 218, 218); height: 200px; width: 300px;">
 													<div class="nk-int-st image-container">
-														<img class="object-fit" id="image"
-															ng-src="../assets/images/product/{{newProduct.image}}"
+														<img class="object-fit" id="image" ng-src="../assets/images/product/{{newProduct.image}}"
 															alt="Uploaded Image" name="image" ng-required="true"
 															style="max-height: 100%; max-width: 100%;">
 													</div>
@@ -270,13 +265,11 @@
 												<div class="form-group">
 													<label for="fileInput" class="fw-bold">Chọn Hình</label>
 													<div class="input-group">
-														<input style="object-fit: contain;" type="file"
-															class="form-control" ng-model="newProduct.image"
+														<input style="object-fit: contain;" type="file" class="form-control"
+															ng-model="newProduct.image"
 															onchange="angular.element(this).scope().imageChanged2(this.files)"
-															accept=".png, .jpg, .jpeg, .gif" id="imageInput"
-															name="image" ng-required="true">
-														<div ng-if="form.image.$touched && form.image.$error.required"
-															class="text-danger">Vui
+															accept=".png, .jpg, .jpeg, .gif" id="imageInput" name="image" ng-required="true">
+														<div ng-if="form.image.$touched && form.image.$error.required" class="text-danger">Vui
 															lòng
 															chọn ảnh</div>
 													</div>
@@ -286,9 +279,9 @@
 										</div>
 										<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addProduct()"
 											ng-disabled="form.$invalid"><i class="fa fa-plus"></i>Thêm mới</button>
-										<button class="btn btn-info btn-sm" id="switchToTab2"
-											ng-click="updateProduct(product)" ng-disabled="form.$invalid"><i
-												class="fa fa-refresh"></i>Cập nhật</button>
+										<button class="btn btn-info btn-sm" id="switchToTab1" ng-click="updateProduct(product)"
+											ng-disabled="form.$invalid"><i class="fa fa-refresh"></i>Cập
+											nhật</button>
 										<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
 										<BR>
 									</div>
@@ -301,76 +294,6 @@
 		</div>
 
 	</main>
-	<!--
-  MODAL
--->
-	<!-- <div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
-		data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<form method="post" th:action="@{/admin/qlsanpham/updatesp}">
-					<div class="modal-body">
-						<div class="row">
-							<div class="form-group  col-md-12">
-								<span class="thong-tin-thanh-toan">
-									<h5>Chỉnh sửa thông tin sản phẩm cơ bản</h5>
-								</span>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-md-6">
-								<label class="control-label">Mã sản phẩm </label> <input class="form-control" id="masp"
-									type="number" name="masp">
-
-							</div>
-							<div class="form-group  col-md-6">
-								<label class="control-label">Số lượng</label> <input class="form-control" type="number"
-									name="soluong" id="soluong" required>
-							</div>
-							<div class="form-group col-md-12">
-								<label class="control-label">Tên sản phẩm</label> <input class="form-control"
-									type="text" id="tensp" name="tensp" required>
-							</div>
-
-							<div class="form-group col-md-6 ">
-								<label for="tinhtrang" class="control-label">Tình
-									trạng sản phẩm</label> <select class="form-control" name="tinhtrang" id="tinhtrang">
-									<option>Còn hàng</option>
-									<option>Hết hàng</option>
-
-								</select>
-							</div>
-							<div class="form-group col-md-6">
-								<label class="control-label">Giá bán</label> <input class="form-control" type="text"
-									name="giasp" id="giasp">
-							</div>
-
-						</div>
-						<a onclick="checkmasp()" ; id="editLink"
-							style="float: right; font-weight: 600; color: #ea0000;">Chỉnh
-							sửa sản phẩm nâng cao</a> <BR> <BR>
-						<button class="btn btn-save" type="submit">Lưu lại</button>
-						<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
-						<BR>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div> -->
-	<!--
-MODAL
--->
-
-
-	<!-- Button trigger modal -->
-
-	<!-- Modal -->
-
-
-
-
-
 </body>
 
 </html>
