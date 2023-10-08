@@ -174,7 +174,7 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li><a th:href="@{/admin/index}">Trang quản lý</a></li>
+                <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}">Trang quản lý</a></li>
                 <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
                 <li><a th:href="@{/user/profile}">Trang cá nhân</a></li>
                 <li><a th:href="@{/logout}">Đăng xuất</a></li>

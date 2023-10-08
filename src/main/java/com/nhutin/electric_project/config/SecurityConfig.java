@@ -71,90 +71,84 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-                http.csrf(csrf -> csrf.disable())
-                                .cors(cors -> cors.disable());
+            http.csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable());
 
-                http
-                                .authorizeRequests(requests -> requests
-                                                .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
-                                                                "/error**", "/api/**", "/reset-password",
-                                                                "/codeVerification", "/resendOtp",
-                                                                "/new-password", "/rest/productdetails",
-                                                                "/rest/products", "/rest/productsbycate/**",
-                                                                "/rest/products/**", "/rest/**", "/product",
-                                                                "/registration/**", "/oauth2/**")
-                                                .permitAll()
-                                                .antMatchers("/admin/**", "/rest/orders/**")
-                                                .hasRole("ADMIN")
-                                                .anyRequest()
-                                                .authenticated())
-                                .formLogin(login -> login
-                                                .loginPage("/login")
-                                                .successHandler((request, response, authentication) -> {
-                                                        // Lấy thông tin đăng nhập của người dùng, ví dụ: email
-                                                        String email = request.getParameter("email");
+            http
+                .authorizeRequests(requests -> requests
+                    .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
+                        "/error**", "/api/**", "/reset-password", "/codeVerification", "/resendOtp",
+                        "/new-password", "/rest/productdetails", "/rest/products", "/rest/productsbycate/**",
+                        "/rest/products/**", "/rest/**", "/product", "/registration/**", "/oauth2/**")
+                        .permitAll()
+                    .antMatchers("/admin/**", "/rest/orders/**")
+                        .hasRole("ADMIN")
+                    .anyRequest()
+                        .authenticated())
+                .formLogin(login -> login
+                    .loginPage("/login")
+                    .successHandler((request, response, authentication) -> {
+                    	// Lấy thông tin đăng nhập của người dùng, ví dụ: email
+                        String email = request.getParameter("email");
 
-                                                        // Lưu cookie với thông tin đăng nhập
-                                                        CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
+                        // Lưu cookie với thông tin đăng nhập
+                        CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
 
-                                                        // Lấy giá trị email từ cookie
-                                                        String emailFromCookie = CookieUtils.get("tenDangNhapCookie",
-                                                                        request);
+                        // Lấy giá trị email từ cookie
+                        String emailFromCookie = CookieUtils.get("tenDangNhapCookie", request);
 
-                                                        // Kiểm tra xem có giá trị email từ cookie hay không
-                                                        if (!emailFromCookie.isEmpty()) {
-                                                                System.out.println(
-                                                                                "Email từ cookie: " + emailFromCookie);
-                                                        } else {
-                                                                System.out.println(
-                                                                                "Cookie email không tồn tại hoặc rỗng.");
-                                                        }
+                        // Kiểm tra xem có giá trị email từ cookie hay không
+                        if (!emailFromCookie.isEmpty()) {
+                            System.out.println("Email từ cookie: " + emailFromCookie);
+                        } else {
+                            System.out.println("Cookie email không tồn tại hoặc rỗng.");
+                        }
+                        
+                        String targetUrl = determineTargetUrl(authentication);
+                        response.sendRedirect(targetUrl);
+                    })
+                    .failureHandler(authenticationFailureHandler)
+                    .usernameParameter("email")
+                    .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                    .key("uniqueAndSecretKey")
+                    .rememberMeServices(rememberMeServices())
+                    .tokenValiditySeconds(604800))
+                .exceptionHandling(handling -> handling
+                    .accessDeniedPage("/access-denied")
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.sendRedirect("/login?error=true");
+                    })
+                    .accessDeniedHandler((request, response, accessDeniedException) -> {
+                        response.sendRedirect("/access-denied");
+                    }))
+                .oauth2Login(t -> t
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true")
+                    .userInfoEndpoint().userService(oAuth2UserService).and()
+                    .successHandler(oAuth2LoginSuccessHandler)
+                    .permitAll().permitAll())
+                .logout(logout -> logout
+                    .logoutSuccessUrl("/home")
+                    .logoutSuccessHandler(
+                        new LogoutSuccessHandler() {
+                            @Override
+                            public void onLogoutSuccess(
+                                HttpServletRequest request,
+                                HttpServletResponse response,
+                                Authentication authentication)
+                                throws IOException,
+                                ServletException {
+                                    UrlPathHelper helper = new UrlPathHelper();
+                                    String context = helper.getContextPath(
+                                        request);
 
-                                                        String targetUrl = determineTargetUrl(authentication);
-                                                        response.sendRedirect(targetUrl);
-                                                })
-                                                .failureHandler(authenticationFailureHandler)
-                                                .usernameParameter("email")
-                                                .permitAll())
-                                .rememberMe(rememberMe -> rememberMe
-                                                .key("uniqueAndSecretKey")
-                                                .rememberMeServices(rememberMeServices())
-                                                .tokenValiditySeconds(604800))
-                                .exceptionHandling(handling -> handling
-                                                .accessDeniedPage("/access-denied")
-                                                .authenticationEntryPoint((request, response, authException) -> {
-                                                        response.sendRedirect("/login?error=true");
-                                                })
-                                                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                                                        response.sendRedirect("/access-denied");
-                                                }))
-                                .oauth2Login(t -> t
-                                                .loginPage("/login")
-                                                .failureUrl("/login?error=true")
-                                                .userInfoEndpoint().userService(oAuth2UserService).and()
-                                                .successHandler(oAuth2LoginSuccessHandler)
-                                                .permitAll().permitAll())
-                                .logout(logout -> logout
-                                                .logoutSuccessUrl("/home")
-                                                .logoutSuccessHandler(
-                                                                new LogoutSuccessHandler() {
-                                                                        @Override
-                                                                        public void onLogoutSuccess(
-                                                                                        HttpServletRequest request,
-                                                                                        HttpServletResponse response,
-                                                                                        Authentication authentication)
-                                                                                        throws IOException,
-                                                                                        ServletException {
-                                                                                UrlPathHelper helper = new UrlPathHelper();
-                                                                                String context = helper.getContextPath(
-                                                                                                request);
-
-                                                                                response.sendRedirect(context
-                                                                                                + "/login");
-                                                                        }
-                                                                })
-                                                .logoutSuccessUrl("/login?logout=true")
-                                                .permitAll());
+                                    response.sendRedirect(context
+                                        + "/login");
+                            }
+                        })
+                    .logoutSuccessUrl("/login?logout=true")
+                    .permitAll());
         }
-
 }
+ 

@@ -1,15 +1,12 @@
 package com.nhutin.electric_project.config;
 
-
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-
-@Service
+@Component
 public class CookieUtils {
 	// Tạo và gửi cookie về client để lưu
 	public static Cookie add(String name, String value, int hours, HttpServletResponse resp) {
@@ -33,9 +30,6 @@ public class CookieUtils {
 		return "";
 	}
 	
-
-		
-		
 	public static void delete(String name, HttpServletResponse resp, HttpServletRequest req) {
 		Cookie[] cookie = req.getCookies();
 		

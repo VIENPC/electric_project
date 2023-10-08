@@ -17,6 +17,12 @@ public class HomeController {
 
         return "banhang/view/home";
     }
+    
+    @RequestMapping("/")
+    public String index1() {
+
+        return "banhang/view/home";
+    }
      @RequestMapping("/success")
     public String thongbao() {
 
