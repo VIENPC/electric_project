@@ -43,10 +43,11 @@ public class HoaDonController {
 
     @RequestMapping("/qldonhang/suatthd/{mahd}")
     public String edittthd(@PathVariable("mahd") Integer mahd) {
-        System.out.println(mahd);
+
         Order hd = hddao.findById(mahd).get();
-        hd.setStatustt(false);
+        hd.setStatushd(2);
         hddao.save(hd);
+        System.out.println("Sửa thành công");
         return "redirect:/admin/qldonhang?success=updatesp";
     }
 
@@ -55,29 +56,29 @@ public class HoaDonController {
         return "admin/view/baocaohd";
     }
 
-    // @RequestMapping("/thongkehdtg")
-    // public String thongketg(Model model,
-    // @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date
-    // startDate,
-    // @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date
-    // endDate) {
+    @RequestMapping("/thongkehdtg")
+    public String thongketg(Model model,
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        System.out.println(startDate);
+        System.out.println(endDate);
+        List<Object[]> listhd = hddao.thongKeDonHang(startDate, endDate);
+        int tongcong = 0;
+        for (Object[] itemsp : listhd) {
+            tongcong += Double.parseDouble(itemsp[3].toString()) *
+                    Double.parseDouble(itemsp[4].toString());
+        }
+        System.out.println(tongcong);
+        model.addAttribute("listhd", listhd);
+        model.addAttribute("tongcong", tongcong);
+        // // model.addAttribute("listhd", hddao.thongkehdtg(startDate, endDate));
+        return "admin/view/baocaohd";
+    }
 
-    // List<Object[]> listhd = hddao.findOrderDetailsByOrderId(startDate, endDate);
-    // int tongcong = 0;
-    // for (Object[] itemsp : listhd) {
-    // tongcong += Integer.parseInt(itemsp[3].toString()) *
-    // Integer.parseInt(itemsp[4].toString());
-    // }
-
-    // model.addAttribute("listhd", listhd);
-    // model.addAttribute("tongcong", tongcong);
-    // // model.addAttribute("listhd", hddao.thongkehdtg(startDate, endDate));
-    // return "admin/view/baocaohd";
-    // }
     // @RequestMapping("xemhoadonct")
-    // public String xemhdct(@RequestParam("mahd") Integer mahd, Model model){
+    // public String xemhdct2(@RequestParam("mahd") Integer mahd, Model model) {
     // System.out.println(mahd);
-    // List<HoaDonCT> itemhdct = hdctdao.findChiTietHoaDonByMaHoaDon(mahd);
+    // List<> itemhdct = hdctdao.findChiTietHoaDonByMaHoaDon(mahd);
     // model.addAttribute("listhdct", itemhdct);
     // for (HoaDonCT it : itemhdct) {
     // System.out.println(it.getSanpham().getTensp());

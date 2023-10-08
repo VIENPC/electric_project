@@ -21,24 +21,22 @@ public class KhachHangController {
     public String qlkhachhang(Model model) {
 
         List<User> khlist = khdao.findAll();
-
         model.addAttribute("items", khlist);
-
         return "admin/view/qlcustomer";
     }
 
     @RequestMapping("/qlkhachhang/editt/{user}")
-    public String edittkh(@PathVariable("user") Integer user) {
-        User kh = khdao.findById(user).get();
-        // kh.setTrangthaikh(2);
+    public String edittkh(@PathVariable("user") String user) {
+        User kh = khdao.findByUser(user);
+        kh.setLockStatus(true);
         khdao.save(kh);
         return "redirect:/admin/qlkhachhang?success=updatesp";
     }
 
     @RequestMapping("/qlkhachhang/unclock/{user}")
-    public String unclockh(@PathVariable("user") Integer user) {
-        User kh = khdao.findById(user).get();
-        // kh.setTrangthaikh(1);
+    public String unclockh(@PathVariable("user") String user) {
+        User kh = khdao.findByUser(user);
+        kh.setLockStatus(false);
         khdao.save(kh);
         return "redirect:/admin/qlkhachhang?success=updatesp";
     }

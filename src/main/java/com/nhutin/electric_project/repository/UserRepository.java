@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT s FROM User s WHERE s.username = ?1")
     User findBytaiKhoanTTTK(String username);
 
+    @Query("SELECT s FROM User s WHERE s.userID = ?1")
+    User findByUser(String username);
+
     User findByEmailLike(String email);
 
     User findByUserIDLike(int userID);
@@ -53,4 +56,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // @Query("SELECT kh FROM users kh WHERE kh.registrationDate >= :fiveDaysAgo")
     // List<User> findNewCustomers(Date fiveDaysAgo);
+    @Query("SELECT COUNT(u) FROM User u WHERE u.lockStatus = true")
+    long countLockedUsers();
+
 }

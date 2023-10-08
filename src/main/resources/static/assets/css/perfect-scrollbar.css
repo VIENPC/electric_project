@@ -39,6 +39,10 @@
   position: absolute;
 }
 
+
+.radio-group label {
+            margin-right: 20px; /* Khoảng cách giữa các nút radio */
+        }
 .ps--active-x>.ps__rail-x,
 .ps--active-y>.ps__rail-y {
   display: block;

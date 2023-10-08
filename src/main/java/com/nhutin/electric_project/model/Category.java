@@ -33,7 +33,11 @@ public class Category implements Serializable {
 
 	@Column(name = "category_name")
 	private String categoryName;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	private List<Product> products;
+
+	@Column(name = "active")
+	private boolean active;
 }

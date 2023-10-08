@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -29,8 +30,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Users")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
@@ -51,7 +50,6 @@ public class User implements Serializable {
 
 	@Column(name = "Email")
 	private String email;
-
 	@Column(name = "FullName")
 	private String fullName;
 
@@ -59,10 +57,10 @@ public class User implements Serializable {
 	private Boolean gender;
 
 	@Column(name = "LockStatus")
-	private Boolean lockStatus;
+	private Boolean lockStatus = false;
 
 	@Column(name = "LoginPermission") // Quyền đăng nhập (true/false) => kích hoạt tk với token từ email
-	private Boolean loginPermission;
+	private Boolean loginPermission = false;
 
 	@Column(name = "Password")
 	private String password;
@@ -79,15 +77,22 @@ public class User implements Serializable {
 	// New column - ROLE
 	@Enumerated(EnumType.STRING)
 	private Role role;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Cart> carts;
 
-	@OneToMany(mappedBy = "user")
-	private List<Comment> comments;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Order> orders;
+
+	@OneToMany(mappedBy = "responder", cascade = CascadeType.ALL)
+	private List<Reply> sentReplies;
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private List<Reply> receivedReplies;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Comment> comments;
 
 	@OneToMany(mappedBy = "user")
 	private List<ProductReview> productReviews;
@@ -98,18 +103,6 @@ public class User implements Serializable {
 	@JsonIgnore
 	@OneToOne(mappedBy = "user")
 	private ConfirmationCode confirmationCode;
-
-	public User(String username, String fullName, Boolean gender, Date dateOfBirth, String email, String phoneNumber,
-			String password, Role role) {
-		this.username = username;
-		this.fullName = fullName;
-		this.gender = gender;
-		this.dateOfBirth = dateOfBirth;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.password = password;
-		this.role = role;
-	}
 
 	public Integer getUserID() {
 		return this.userID;
@@ -229,6 +222,15 @@ public class User implements Serializable {
 		return cart;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	// Setter cho trường 'role'
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public ConfirmationCode getConfirmationCode() {
 		return this.confirmationCode;
 	}
@@ -259,14 +261,12 @@ public class User implements Serializable {
 		return order;
 	}
 
-
-
-//	@JsonIgnore
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-//		return Collections.singletonList(authority);
-//	}
+	// @JsonIgnore
+	// @Override
+	// public Collection<? extends GrantedAuthority> getAuthorities() {
+	// SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+	// return Collections.singletonList(authority);
+	// }
 
 	public boolean isAccountNonExpired() {
 		return true;
@@ -284,16 +284,15 @@ public class User implements Serializable {
 		return loginPermission; // false được cho phép >< true không cho phép
 	}
 
-	public User(String address, Date dateOfBirth, String email, String fullName, Boolean lockStatus, String phoneNumber,
-			String username, Role role) {
-		super();
-		this.address = address;
-		this.dateOfBirth = dateOfBirth;
-		this.email = email;
-		this.fullName = fullName;
-		this.lockStatus = lockStatus;
-		this.phoneNumber = phoneNumber;
+	public User(String username, String fullname, Boolean gender, Date birthday, String email, String phonenumber,
+			String password, Role role) {
 		this.username = username;
+		this.fullName = fullname;
+		this.gender = gender;
+		this.dateOfBirth = birthday;
+		this.email = email;
+		this.phoneNumber = phonenumber;
+		this.password = password;
 		this.role = role;
 	}
 

@@ -1,126 +1,116 @@
 <!DOCTYPE html>
 <html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    <main>
-        <div class="main">
-            <div class="container">
-              <!-- BEGIN SIDEBAR & CONTENT -->
-              <div class="row margin-bottom-40">
-                <!-- BEGIN CONTENT -->
-                <div class="col-md-12 col-sm-12">
-                  <h1>Shopping cart</h1>
-                  <div class="shopping-cart-page">
-                    <div class="shopping-cart-data clearfix">
-                      <p>Your shopping cart is empty!</p>
-                    </div>
-                  </div>
+  <main>
+    <div class="main">
+      <div class="container" ng-controller="product-controller">
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+          <!-- BEGIN CONTENT -->
+
+          <div class="col-md-12 col-sm-12">
+            <h1>Shopping cart</h1>
+            <div class="goods-page">
+              <div class="goods-data clearfix">
+                <div class="table-wrapper-responsive">
+                  <table summary="Shopping cart">
+                    <tr>
+                      <th class="goods-page-image">Ảnh</th>
+                      <th class="goods-page-description">Tên sản phẩm</th>
+
+                      <th class="goods-page-quantity">Số lượng</th>
+                      <th class="goods-page-price">Giá </th>
+                      <th class="goods-page-total" colspan="2">Tổng giá</th>
+                    </tr>
+
+                    <tr ng-repeat="item in cartItems">
+                      <td class="goods-page-image">
+                        <a href="javascript:;"><img ng-src="./assets/images/product/{{item.image}}"
+                            alt="Berry Lace Dress"></a>
+                      </td>
+                      <td class="goods-page-description">
+                        <h3><a href="javascript:;" ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
+                        </h3>
+
+
+                      </td>
+                      <td class="">
+                        <div class="product-quantity">
+                          <input type="number" pattern="[0-9]*" class="form-control" id="spinner" name="value" value="1"
+                            min="1" max="200" step="1" ng-change="saveToLocalStorage()" ng-model="item.qty">
+                        </div>
+
+                        <div ng-if="item.qty > item.quantity" style="color: red;">
+                          Số lượng sản phẩm trong kho không đủ
+
+                        </div>
+
+
+
+
+
+                      </td>
+
+                      <td class="goods-page-price">
+                        <strong>{{item.price |number : 0}}đ</strong>
+                      </td>
+                      <td class="goods-page-total">
+                        <strong>{{(item.qty*item.price) |number:0}}đ</strong>
+                      </td>
+                      <td class="del-goods-col">
+                        <a class="del-goods" href="javascript:;" ng-click="removesp(item.productID)">&nbsp;</a>
+                      </td>
+                    </tr>
+
+                  </table>
                 </div>
-                <!-- END CONTENT -->
-              </div>
-              <!-- END SIDEBAR & CONTENT -->
-      
-              <!-- BEGIN SIMILAR PRODUCTS -->
-              <div class="row margin-bottom-40">
-                <div class="col-md-12 col-sm-12">
-                  <h2>Most popular products</h2>
-                  <div class="owl-carousel owl-carousel4">
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                        <div class="sticker sticker-new"></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress2</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress3</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress4</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                        <div class="sticker sticker-sale"></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress5</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="pi-img-wrapper">
-                          <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                          <div>
-                            <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                          </div>
-                        </div>
-                        <h3><a href="shop-item.html">Berry Lace Dress6</a></h3>
-                        <div class="pi-price">$29.00</div>
-                        <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                      </div>
-                    </div>
-                  </div>
+
+                <div class="shopping-total">
+                  <ul>
+                    <li>
+                      <em>Tổng tiền</em>
+                      <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                    </li>
+                    <li>
+                      <em>Phí giao hàng</em>
+                      <strong class="price">0đ</strong>
+                    </li>
+                    <li class="shopping-total-price">
+                      <em>Tổng cộng</em>
+                      <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <!-- END SIMILAR PRODUCTS -->
+
+
+
+              <a class="btn btn-default" th:href="@{/shop}">Tiếp tục mua sắm <i class="fa fa-shopping-cart"></i></a>
+              <div>
+                <a class="btn btn-primary" th:href="@{/checkout}">Tiến hàng thanh
+                  toán <i class="fa fa-check"></i></a>
+              </div>
+
+
+
             </div>
           </div>
-    </main>
+          <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+
+
+      </div>
+    </div>
+
+  </main>
 </body>
+
 </html>

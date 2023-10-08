@@ -151,11 +151,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(),
 				user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
 		return userDetails;
-
-//		return User.withUserDetails(user).password(dummyPassword).roles(user.getRole().toString())
-//				.disabled(!user.isEnabled()).accountLocked(!user.isAccountNonLocked()).build();
-//		return User.withUserDetails(user).password(dummyPassword).roles(user.getRole().toString())
-//				.disabled(!user.isEnabled()).accountLocked(!user.isAccountNonLocked()).build();
 	}
-
 }

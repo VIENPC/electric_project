@@ -38,5 +38,3 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authenticationType);
     }
 }
-
-

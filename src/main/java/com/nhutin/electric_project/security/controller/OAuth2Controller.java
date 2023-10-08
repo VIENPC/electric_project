@@ -10,7 +10,7 @@ public class OAuth2Controller {
     @GetMapping("/loginSuccess")
     public String loginSuccess(OAuth2AuthenticationToken authentication) {
         // Xử lý logic sau khi đăng nhập thành công
-        return "redirect:/home";
+        return "redirect:/home"; 
     }
 }
 

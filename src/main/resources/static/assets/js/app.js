@@ -1,5 +1,7 @@
 var app = angular.module('my-app', []); // Đăng ký module
-$('#myCarousel').carousel({
-    interval: 4000
-});
 
+app.filter('unsafeHtml', ['$sce', function ($sce) {
+    return function (val) {
+        return $sce.trustAsHtml(val);
+    };
+}]);

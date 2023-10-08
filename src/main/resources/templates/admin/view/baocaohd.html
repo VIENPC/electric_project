@@ -31,7 +31,7 @@
                                         class="fa fa-file-excel-o"></i> Xuất Excel</a>
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm pdf-file"  title="Xuất file pdf"><i
+                                <a class="btn btn-delete btn-sm pdf-file" title="Xuất file pdf"><i
                                         class="fa fa-file-pdf-o"></i> Xuất PDF</a>
                             </div>
                             <div class="col-sm-2">
@@ -55,38 +55,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="hoadon, index : ${listhd}">
-                                                <!-- Lấy thông tin mã hóa đơn (mahd), tên người nhận (tennguoinhan), số lượng sản phẩm (soluong), và tổng tiền (tongtien) -->
-                                                <th:block
-                                                    th:with="mahd=${hoadon[0]}, tennguoinhan=${hoadon[1]}, tensp=${hoadon[2]}, soluong=${hoadon[3]}, giasp=${hoadon[4]}">
-                                                    <!-- Kiểm tra nếu mã hóa đơn tiếp theo không trùng khớp với mã hóa đơn hiện tại -->
-                                                    <th:block
-                                                        th:if="${index.index == 0 or mahd != listhd[index.index - 1][0]}">
-                                                        <td th:text="${mahd}"></td>
-                                                        <td th:text="${tennguoinhan}"></td>
-                                                    </th:block>
-                                                    <th:block
-                                                        th:if="${index.index > 0 and mahd == listhd[index.index - 1][0]}">
-                                                        <!-- Ô ẩn để giữ cố định vị trí cột -->
-                                                        <td></td>
-                                                        <td></td>
-                                                    </th:block>
+                                            <tr th:each="hoadon : ${listhd}">
+                                                <td th:text="${hoadon[0]}"></td>
+                                                <td th:text="${hoadon[1]}"></td>
+                                                <td th:text="${hoadon[2]}"></td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(hoadon[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(hoadon[4], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
 
-                                                    <!-- Hiển thị thông tin sản phẩm -->
-                                                    <td th:text="${tensp}"></td>
-                                                    <td th:text="${soluong}"></td>
-                                                    <td
-                                                        th:text="${#numbers.formatDecimal((soluong *giasp), 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                                    </td>
-                                                </th:block>
+                                                <!-- Cập nhật giá trị của biến totalTongGiaHang -->
                                             </tr>
-                                            
+
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="4">Tổng cộng:</th>
                                                 <td
-                                                    th:text="${#numbers.formatDecimal(tongcong, 1, 'POINT', 0, 'DEFAULT')+'đ'}">0
+                                                    th:text="${#numbers.formatDecimal(tongcong, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                    0
                                                 </td>
                                             </tr>
                                         </tfoot>

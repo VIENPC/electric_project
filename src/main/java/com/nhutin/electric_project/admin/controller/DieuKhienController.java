@@ -26,28 +26,20 @@ public class DieuKhienController {
     @RequestMapping("/index")
     public String index(Model model) {
         model.addAttribute("slkh", khdao.count());
-        model.addAttribute("slsp", spdao.count());
-        model.addAttribute("slhd", hddao.count());
-        model.addAttribute("slspht", spdao.countByActive(false));
-        model.addAttribute("listhdtt", hddao.findHdTt(1));
-        Date currentDate = new Date();
-        System.out.println(khdao.count());
-        // // Lấy ngày cách đây 5 ngày
-        // long fiveDaysInMillis = 5 * 24 * 60 * 60 * 1000;
-        // Date fiveDaysAgo = new Date(currentDate.getTime() - fiveDaysInMillis);
-        // model.addAttribute("khm", khdao.findNewCustomers(fiveDaysAgo));
 
+        model.addAttribute("slsp", spdao.count());
+
+        model.addAttribute("slhd", hddao.count());
+
+        model.addAttribute("slspht", spdao.countByActive(false));
+
+        model.addAttribute("listhdtt", hddao.findHdTt(1));
+
+        model.addAttribute("listspbc", spdao.findBestSellingProducts());
+
+        List<Object[]> revenueData = hddao.calculateRevenueByMonth();
+        model.addAttribute("revenueData", revenueData);
+        // System.out.println("Thống kê" + revenueData);
         return "admin/view/dashboard";
     }
-
-    // @ModelAttribute
-    // public void setthoigianhd() {
-    // // Date currentDate = new Date();
-    // // Date dateToCompare = new Date(this.mua.getTime() + 3 * 24 * 60 * 60 *
-    // 1000); // Ngày đặt + 3 ngày
-    // // List<HoaDon> listhd = hddao.findAll();
-    // // for (HoaDon hoaDon : listhd) {
-    // // if()
-    // // }
-    // }
 }
