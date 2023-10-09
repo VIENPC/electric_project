@@ -1,5 +1,6 @@
 package com.nhutin.electric_project.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -40,9 +41,8 @@ public class Promotion {
 	@OneToMany(mappedBy = "promotion")
 	private List<Promotion_Historie> promotionHistories;
 
-	@Temporal(TemporalType.TIME)
-	@Column(name = "dates")
-	private Date usedDates;
+	@Column(name = "date") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
+	private LocalDateTime usedDates;
 
 	@Column(name = "status")
 	private boolean status;

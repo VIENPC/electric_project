@@ -29,133 +29,132 @@ import com.nhutin.electric_project.repository.productsRepository;
 @Controller
 @RequestMapping("admin")
 public class KhuyenMai {
-	
-@Autowired
-prmotionRepositpry prmoDao;
 
-@Autowired 
-prmotionHistoryRepositpry promoHistoryDao;
+	@Autowired
+	prmotionRepositpry prmoDao;
 
-Promotion pro = new Promotion();
-	 @RequestMapping("/qlkhuyenmai")
-	    public String qlkhuyenmai(Model model) {
-		  
-		   
-	        List<Promotion> kmlist = prmoDao.findAll();	
-	      
-	      
-	        model.addAttribute("items", kmlist);
-	        return "admin/view/qlkhuyenmai";
-	    }
-	 @RequestMapping("/qlkhuyenmai/{id}")
-	    public String qlLSkhuyenmai(@PathVariable("id") Integer id, Model model) {
+	@Autowired
+	prmotionHistoryRepositpry promoHistoryDao;
 
-	        List<Promotion_Historie> listHitory= promoHistoryDao.findPromoHistory(id);	       
-	        int userP =0;
-	        for (Promotion_Historie km : listHitory) {
-	        	userP++;
-	        }
-	        model.addAttribute("items", listHitory);
-	        model.addAttribute("userPromotionCount", userP);
-	        return "admin/view/qlHistoryPromotion";
-	    }
-	 @RequestMapping("/qlkhuyenmai/id/{userID}")
-	    public String qlLSkhuyenmaiID(@PathVariable("userID") Integer userID, Model model) {
+	Promotion pro = new Promotion();
 
-	        List<Promotion_Historie> listHitory= promoHistoryDao.findIDHistory(userID);	       
-	        int userP =0;
-	        for (Promotion_Historie km : listHitory) {
-	        	userP++;
-	        }
-	        model.addAttribute("items", listHitory);
-	        model.addAttribute("userPromotionCount", userP);
-	        return "admin/view/qlHistoryPromotion";
-	    }
-	 @RequestMapping("/qlkhuyenmai/nameOrder/{name}")
-	    public String qlLSkhuyenmaiOrder(@PathVariable("name") String name, Model model) {
+	@RequestMapping("/qlkhuyenmai")
+	public String qlkhuyenmai(Model model) {
 
-		 List<Promotion_Historie> listHitory= promoHistoryDao.findPromotionHistoriesByOrderName(name);
-     
-	        int userP =0;
-	        for (Promotion_Historie km : listHitory) {
-	        	userP++;
-	        }
-	        model.addAttribute("items", listHitory);
-	        model.addAttribute("userPromotionCount", userP);
-	        return "admin/view/qlHistoryPromotion";
-	    }
-	 
-	    @RequestMapping(value = "/qlkhuyenmai/delete/{id}")
-	    public String deletesp(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-	    	try {
-	          
-	    		prmoDao.deleteById(id);
-	           
-				/*
-				 * redirectAttributes.addFlashAttribute("successMessage",
-				 * "Đã xóa sản phẩm thành công!");
-				 */
-	            return "redirect:/admin/qlkhuyenmai"; 
-	        } catch (Exception e) {
-	            
-				/*
-				 * redirectAttributes.addFlashAttribute("errorMessage",
-				 * "Xóa sản phẩm không thành công: " + e.getMessage());
-				 */
-	            return "redirect:/admin/qlkhuyenmai";
-	        }
-			
+		List<Promotion> kmlist = prmoDao.findAll();
+
+		model.addAttribute("items", kmlist);
+		return "admin/view/qlkhuyenmai";
 	}
-	    
-	 @RequestMapping("/qlkhuyenmai/nameUser/{fullName}")
-	    public String qlLSkhuyenmaiUser(@PathVariable("fullName") String fullName, Model model) {
-		 List<Promotion_Historie> listHitory= promoHistoryDao.findPromotionHistoriesByUserFullName(fullName);
 
-	        int userP =0;
-	        for (Promotion_Historie km : listHitory) {
-	        	userP++;
-	        }
-	        model.addAttribute("items", listHitory);
-	        model.addAttribute("userPromotionCount", userP);
-	        return "admin/view/qlHistoryPromotion";
-	    }
-	 
-	 @RequestMapping("/qlkhuyenmai/edit/{id}")
-	    public String edittkh(@PathVariable("id") Integer id, Model model) {    	
-	        Promotion kh = prmoDao.findById(id).get();
-	        model.addAttribute("items", kh); // Thêm đối tượng items vào model
-	       return "admin/view/editPromotion";
-	    }
-	 
-	 @PostMapping("/qlkhuyenmai/updata/{id}")
-		public String update(@PathVariable("id") Integer id, @Valid Promotion items, BindingResult result, Model model) {    	
-		 
-		 Promotion kh = prmoDao.findById(id).get();
+	@RequestMapping("/qlkhuyenmai/{id}")
+	public String qlLSkhuyenmai(@PathVariable("id") Integer id, Model model) {
 
-		 System.out.println("tên:" +kh.getUsedDates());
-		 items.setUsedDates(kh.getUsedDates());
-		 prmoDao.save(items);
-		
-	        return "redirect:/admin/qlkhuyenmai";
-	    }
-	 
-	 @GetMapping("/qlkhuyenmai/addPromotion")
-		public String AddPromotion(Model model) { 
-		 model.addAttribute("promotion", new Promotion()); // Promotion là đối tượng khuyến mãi
-	        return "/admin/view/addPromotion";
-	    }
-	 @PostMapping("/qlkhuyenmai/addPromotion/add")
-	 public String addPromotion(@ModelAttribute("promotion") Promotion promotion) {
-	    
-	     
-	     LocalDateTime currentDateTime = LocalDateTime.now();
-	     Timestamp timestamp = Timestamp.valueOf(currentDateTime);
-	     
-	     // Gán giá trị ngày giờ hiện tại cho trường usedDates của đối tượng Promotion
-	     promotion.setUsedDates(timestamp);
-	     prmoDao.save(promotion);
+		List<Promotion_Historie> listHitory = promoHistoryDao.findPromoHistory(id);
+		int userP = 0;
+		for (Promotion_Historie km : listHitory) {
+			userP++;
+		}
+		model.addAttribute("items", listHitory);
+		model.addAttribute("userPromotionCount", userP);
+		return "admin/view/qlHistoryPromotion";
+	}
 
-	     return "redirect:/admin/qlkhuyenmai";
-	 }
+	@RequestMapping("/qlkhuyenmai/id/{userID}")
+	public String qlLSkhuyenmaiID(@PathVariable("userID") Integer userID, Model model) {
+
+		List<Promotion_Historie> listHitory = promoHistoryDao.findIDHistory(userID);
+		int userP = 0;
+		for (Promotion_Historie km : listHitory) {
+			userP++;
+		}
+		model.addAttribute("items", listHitory);
+		model.addAttribute("userPromotionCount", userP);
+		return "admin/view/qlHistoryPromotion";
+	}
+
+	@RequestMapping("/qlkhuyenmai/nameOrder/{name}")
+	public String qlLSkhuyenmaiOrder(@PathVariable("name") String name, Model model) {
+
+		List<Promotion_Historie> listHitory = promoHistoryDao.findPromotionHistoriesByOrderName(name);
+
+		int userP = 0;
+		for (Promotion_Historie km : listHitory) {
+			userP++;
+		}
+		model.addAttribute("items", listHitory);
+		model.addAttribute("userPromotionCount", userP);
+		return "admin/view/qlHistoryPromotion";
+	}
+
+	@RequestMapping(value = "/qlkhuyenmai/delete/{id}")
+	public String deletesp(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+		try {
+
+			prmoDao.deleteById(id);
+
+			/*
+			 * redirectAttributes.addFlashAttribute("successMessage",
+			 * "Đã xóa sản phẩm thành công!");
+			 */
+			return "redirect:/admin/qlkhuyenmai";
+		} catch (Exception e) {
+
+			/*
+			 * redirectAttributes.addFlashAttribute("errorMessage",
+			 * "Xóa sản phẩm không thành công: " + e.getMessage());
+			 */
+			return "redirect:/admin/qlkhuyenmai";
+		}
+
+	}
+
+	@RequestMapping("/qlkhuyenmai/nameUser/{fullName}")
+	public String qlLSkhuyenmaiUser(@PathVariable("fullName") String fullName, Model model) {
+		List<Promotion_Historie> listHitory = promoHistoryDao.findPromotionHistoriesByUserFullName(fullName);
+
+		int userP = 0;
+		for (Promotion_Historie km : listHitory) {
+			userP++;
+		}
+		model.addAttribute("items", listHitory);
+		model.addAttribute("userPromotionCount", userP);
+		return "admin/view/qlHistoryPromotion";
+	}
+
+	@RequestMapping("/qlkhuyenmai/edit/{id}")
+	public String edittkh(@PathVariable("id") Integer id, Model model) {
+		Promotion kh = prmoDao.findById(id).get();
+		model.addAttribute("items", kh); // Thêm đối tượng items vào model
+		return "admin/view/editPromotion";
+	}
+
+	@PostMapping("/qlkhuyenmai/updata/{id}")
+	public String update(@PathVariable("id") Integer id, @Valid Promotion items, BindingResult result, Model model) {
+
+		Promotion kh = prmoDao.findById(id).get();
+
+		System.out.println("tên:" + kh.getUsedDates());
+		items.setUsedDates(kh.getUsedDates());
+		prmoDao.save(items);
+
+		return "redirect:/admin/qlkhuyenmai";
+	}
+
+	@GetMapping("/qlkhuyenmai/addPromotion")
+	public String AddPromotion(Model model) {
+		model.addAttribute("promotion", new Promotion()); // Promotion là đối tượng khuyến mãi
+		return "/admin/view/addPromotion";
+	}
+
+	@PostMapping("/qlkhuyenmai/addPromotion/add")
+	public String addPromotion(@ModelAttribute("promotion") Promotion promotion) {
+
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		promotion.setUsedDates(currentDateTime);
+		prmoDao.save(promotion);
+
+		return "redirect:/admin/qlkhuyenmai";
+	}
 
 }

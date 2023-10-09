@@ -31,7 +31,7 @@ import jakarta.jws.soap.SOAPBinding.Use;
 public class KhachHangController {
     @Autowired
     UserRepository khdao;
-    
+
     @Autowired
     ordersRepository orderDao;
 
@@ -39,36 +39,40 @@ public class KhachHangController {
     public String qlkhachhang(Model model) {
 
         List<User> khlist = khdao.findAll();
+
+        for (User comment : khlist) {
+            System.out.println("Comment ID: " + comment.getUserID());
+            System.out.println("-----");
+        }
         model.addAttribute("items", khlist);
         return "admin/view/qlcustomer";
     }
 
-    @RequestMapping("/qlkhachhang/editt/{user}")
-    public String edittkh(@PathVariable("user") String user) {
-        User kh = khdao.findByUser(user);
-        kh.setLockStatus(true);
-        khdao.save(kh);
-        return "redirect:/admin/qlkhachhang?success=updatesp";
+    @RequestMapping("/qlkhachhang/{user}")
+    public String edittkh(@PathVariable("user") Integer user, Model model) {
+        User kh = khdao.findById(user).get();
+        model.addAttribute("items", kh);
+        return "admin/view/editUser";
     }
-    
+
     @RequestMapping("/historyOrder/{user}")
     public String history(@PathVariable("user") Integer user, Model model) {
-       List<Order> order = orderDao.findHistory(user);
-       model.addAttribute("listhd", order);
-       return "admin/view/qloder";
+        List<Order> order = orderDao.findHistory(user);
+        model.addAttribute("listhd", order);
+        return "admin/view/qloder";
     }
-    
+
     @RequestMapping("/qlkhachhang/unclock/{user}")
-    public String unclockh(@PathVariable("user") String user) {
-        User kh = khdao.findByUser(user);
-        kh.setLockStatus(false);
+    public String unclockh(@PathVariable("user") Integer user) {
+        User kh = khdao.findById(user).get();
+        // kh.setTrangthaikh(1);
         khdao.save(kh);
         return "redirect:/admin/qlkhachhang?success=updatesp";
     }
-    
+
     @RequestMapping(value = "/qlkhachhang/delete/{user}")
     public String deletesp(@PathVariable("user") Integer user, RedirectAttributes redirectAttributes) {
-    	try {
+        try {
             // Gọi service hoặc repository để xóa sản phẩm dựa vào id
             khdao.deleteById(user);
             // Chuyển hướng tới trang hiển thị thông báo xóa thành công
@@ -79,16 +83,16 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Xóa sản phẩm không thành công: " + e.getMessage());
             return "redirect:/admin/qlkhachhang";
         }
-		
-}
-    @PostMapping("/qlkhachhang/updata/{user}")
-	public String update(@PathVariable("user") Integer user, @Valid User items, BindingResult result, Model model) {    	
-    	User kh = khdao.findById(user).get();
 
-		items.setDateOfBirth(kh.getDateOfBirth());
-    	khdao.save(items);
+    }
+
+    @PostMapping("/qlkhachhang/updata/{user}")
+    public String update(@PathVariable("user") Integer user, @Valid User items, BindingResult result, Model model) {
+        User kh = khdao.findById(user).get();
+
+        items.setDateOfBirth(kh.getDateOfBirth());
+        khdao.save(items);
         return "redirect:/admin/qlkhachhang";
     }
 
-   
 }
