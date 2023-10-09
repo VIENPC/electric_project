@@ -10,16 +10,15 @@ import com.nhutin.electric_project.repository.prmotionRepositpry;
 
 @Controller
 public class PromotionController {
+	
+
 @Autowired
 prmotionRepositpry promo;
-/*
- * @RequestMapping("/user/promotion") public String getProfileUser(Model model)
- * {
- * 
- * String email = (String) session.getAttribute("tenDangNhapLogin");
- * System.out.println("da lay duoc session : " + email); if (email != null) {
- * 
- * User user = userDAO.findByEmailLike(email); model.addAttribute("ThongTinTK",
- * user); // System.out.println(user); } return "taikhoan/profile"; }
- */
+
+  @RequestMapping("/user/promotion") 
+  public String getPromotion(Model model) {
+
+     
+      return "taikhoan/promotion";
+  }
 }
