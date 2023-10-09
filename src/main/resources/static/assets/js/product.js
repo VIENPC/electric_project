@@ -31,155 +31,10 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             $scope.categoris = response.data;
         });
 
-    $scope.addSupplier = function () {
-        $http.post('/admin/createSupplier', $scope.newSup)
-            .then(function (response) {
-                $scope.suppliers.push(response.data);;
-                $scope.newSup = {};
-                swal("Thành công", "Thêm nhà sản xuẩt thành công!", "success")
-            });
-    };
-    $scope.updateSupplier = function () {
-        // Thực hiện kiểm tra form có hợp lệ hay không
-        if ($scope.form.$invalid) {
-            // Hiển thị thông báo lỗi nếu form không hợp lệ
-            swal("Thất bại", "Vui lòng nhập vào để thay đổi!", "error")
-            return;
-        }
-
-        // Gọi API để cập nhật thông tin item
-        $http.put(`/adminUpdateSupplier/${$scope.newSup.supplierID}`, $scope.newSup)
-            .then(function (response) {
-                // Tìm và cập nhật thông tin người dùng trong mảng $scope.users
-                var index = $scope.suppliers.findIndex(sup => sup.supplierID === $scope.newSup.supplierID);
-                if (index !== -1) {
-                    $scope.suppliers[index] = response.data;
-                }
-                $scope.newSup = {};
-                swal("Thành công", "Cập nhật nhà sản xuất thành công!", "success")
-            })
-            .catch(function (error) {
-                // Xử lý lỗi nếu có
-                swal("Thất bại", "Cập nhật nhà sản xuất không thành công!", "error")
-                console.error(error);
-            });
-    };
-    $scope.deleteSupplier = function (supplier) {
-        // Xác nhận người dùng muốn cập nhật trạng thái active về false
-        if (confirm("Bạn có chắc chắn muốn xóa loại này?")) {
-            supplier.active = false;
-
-            // Gọi API để cập nhật trạng thái active của người dùng
-            $http.put(`/deleteSupplier/${supplier.supplierID}`, supplier)
-                .then(function (response) {
-                    // Cập nhật thông tin người dùng trong mảng $scope.users
-                    var index = $scope.suppliers.findIndex(u => u.supplierID === supplier.supplierID);
-                    if (index !== -1) {
-                        $scope.suppliers[index] = response.data;
-                        swal("Thành công", "Xóa nhấ sản xuất thành công!", "success")
-                    }
-                })
-                .catch(function (error) {
-                    // Xử lý lỗi nếu có
-                    swal("Thất bại", "Xóa không thành công!", "error")
-                    console.error(error);
-                    // Phục hồi trạng thái active về true nếu xảy ra lỗi
-                    category.active = true;
-                });
-        }
-    };
-
-
-
-
     // Hàm xử lý sự kiện chuyển về Tab 2
     $scope.switchToTab2 = function () {
         $('#myTabs a[href="#tab2"]').tab('show');
     };
-
-    $scope.addProduct = function () {
-        // Lấy giá trị từ CKEditor và gán vào newProduct.configuration
-        var editor = CKEDITOR.instances.configuration;
-        $scope.newProduct.configuration = editor.getData();
-
-        // Lấy giá trị từ CKEditor cho trường description và gán vào newProduct.description
-        var descriptionEditor = CKEDITOR.instances.description;
-        $scope.newProduct.description = descriptionEditor.getData();
-
-        // Tiếp tục với phần còn lại của hàm
-        $http.post('/admin/createProduct', $scope.newProduct)
-            .then(function (response) {
-                $scope.products.push(response.data);
-                $scope.newProduct = {};
-                swal("Thành công", "Thêm sản phẩm thành công!", "success");
-            })
-            .catch(function (error) {
-                // Xử lý lỗi nếu có
-                console.error('Lỗi khi thêm sản phẩm: ' + error);
-            });
-    };
-
-    $scope.updateProduct = function () {
-        // Lấy giá trị từ CKEditor và gán vào newProduct.configuration
-        var editor = CKEDITOR.instances.configuration;
-        $scope.newProduct.configuration = editor.getData();
-
-        // Lấy giá trị từ CKEditor cho trường description và gán vào newProduct.description
-        var descriptionEditor = CKEDITOR.instances.description;
-        $scope.newProduct.description = descriptionEditor.getData();
-
-        // Thực hiện kiểm tra form có hợp lệ hay không
-        if ($scope.form.$invalid) {
-            // Hiển thị thông báo lỗi nếu form không hợp lệ
-            $scope.alertWaring("Vui lòng điền đầy đủ thông tin hợp lệ.");
-            return;
-        }
-
-        // Gọi API để cập nhật thông tin item
-        $http.put(`/adminUpdateProduct/${$scope.newProduct.productID}`, $scope.newProduct)
-            .then(function (response) {
-                // Tìm và cập nhật thông tin sản phẩm trong mảng $scope.products
-                var index = $scope.products.findIndex(product => product.productID === $scope.newProduct.productID);
-                if (index !== -1) {
-                    $scope.products[index] = response.data;
-                }
-                // Xóa thông tin sản phẩm trong biểu mẫu sau khi cập nhật thành công
-                $scope.newProduct = {};
-                swal("Thành công", "Cập nhật sản phẩm thành công!", "success");
-            })
-            .catch(function (error) {
-                // Xử lý lỗi nếu có
-                swal("Thất bại", "Cập nhật sản phẩm thất bại!" + error.statusText, "error");
-                console.error(error);
-            });
-    };
-
-    $scope.deleteProduct = function (product) {
-        // Xác nhận người dùng muốn cập nhật trạng thái active về false
-        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
-            product.active = false;
-
-            // Gọi API để cập nhật trạng thái active của người dùng
-            $http.put(`/deleteProduct/${product.productID}`, product)
-                .then(function (response) {
-                    // Cập nhật thông tin người dùng trong mảng $scope.users
-                    var index = $scope.products.findIndex(u => u.productID === product.productID);
-                    if (index !== -1) {
-                        $scope.products[index] = response.data;
-                        swal("Thành công", "Xóa sản phẩm thành công!", "success")
-                    }
-                })
-                .catch(function (error) {
-                    // Xử lý lỗi nếu có
-                    swal("Thất bại", "Xóa không thành công!", "error")
-                    console.error(error);
-                    // Phục hồi trạng thái active về true nếu xảy ra lỗi
-                    product.active = true;
-                });
-        }
-    };
-
-
 
     $scope.trustedHtml = function (htmlCode) {
         return $sce.trustAsHtml(htmlCode);
@@ -349,27 +204,27 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         })
     }
 
-    $scope.addToCart = function (masp) {
-        var cart = this.cartItems.find(cart => cart.productID == masp);
-        if (cart) {
+    // $scope.addToCart = function (masp) {
+    //     var cart = this.cartItems.find(cart => cart.productID == masp);
+    //     if (cart) {
 
-            cart.qty++;
-            $scope.saveToLocalStorage();
+    //         cart.qty++;
+    //         $scope.saveToLocalStorage();
 
-        } else {
-            var url = `/rest/product/${masp}`;
-            $http.get(url).then(resp => {
-                resp.data.qty = 1;
-                $scope.cartItems.push(resp.data);
-                $scope.saveToLocalStorage();
+    //     } else {
+    //         var url = `/rest/product/${masp}`;
+    //         $http.get(url).then(resp => {
+    //             resp.data.qty = 1;
+    //             $scope.cartItems.push(resp.data);
+    //             $scope.saveToLocalStorage();
 
-            })
-        }
+    //         })
+    //     }
 
-        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+    //     swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
 
 
-    }
+    // }
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);
@@ -424,11 +279,22 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             $http.get(url).then(resp => {
                 resp.data.qty = 1;
                 $scope.cartItems.push(resp.data);
+                $scope.cartItemCount = $scope.getcount(); // Cập nhật biến trong $scope
                 $scope.saveToLocalStorage();
+                // Sử dụng $timeout để đảm bảo cập nhật $scope sẽ xảy ra sau khi hoàn tất tác vụ bất đồng bộ
+                $timeout(function () {
+                    $scope.$apply();
+                });
             })
         }
         swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+        // Bắt buộc AngularJS cập nhật giao diện
+
     }
+    $scope.$watch('cartItems', function () {
+        $scope.cartItemCount = $scope.getcount();
+    }, true);
+
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);

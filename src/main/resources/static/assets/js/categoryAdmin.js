@@ -17,8 +17,6 @@ app.controller('categoryAdmin-controller', function ($scope, $http, $window) {
       $scope.updateDisplayedCategories();
     });
 
-
-
   // Hàm để cập nhật danh sách sản phẩm được hiển thị trên trang hiện tại
   $scope.updateDisplayedCategories = function () {
     var startIndex = ($scope.currentPage - 1) * $scope.pageSize;

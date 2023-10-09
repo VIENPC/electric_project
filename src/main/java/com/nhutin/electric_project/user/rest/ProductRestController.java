@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,8 @@ import com.nhutin.electric_project.model.Supplier;
 import com.nhutin.electric_project.repository.productsRepository;
 import com.nhutin.electric_project.repository.suppliersRepository;
 import com.nhutin.electric_project.service.ProductsService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @CrossOrigin("*")
 @RestController
@@ -114,4 +117,5 @@ public class ProductRestController {
         }
         return ResponseEntity.ok(productdao.findById(masp).get());
     }
+
 }
