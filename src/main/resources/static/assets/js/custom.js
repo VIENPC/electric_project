@@ -118,11 +118,8 @@ $(document).on('click', '.settt', function () {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
-
-
 		}
 	})
-
 });
 
 $('.unclock').click(function () {
