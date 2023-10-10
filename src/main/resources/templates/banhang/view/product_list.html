@@ -31,14 +31,12 @@
           <div class="sidebar col-md-3 col-sm-5">
             <div class="sidebar-filter margin-bottom-25">
               <h2>Filter</h2>
-
               <div class="checkbox-list">
                 <label>
                   <input type="checkbox" ng-model="showAllProducts" ng-change="showAllProductsChanged()">
                   Hiển thị tất cả sản phẩm
                 </label>
               </div>
-
               <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
                 <label ng-if="item.active !== false">
                   <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID, item)">
@@ -122,7 +120,7 @@
           <!-- BEGIN PAGINATOR -->
           <div class="row">
             <!-- <div class="col-md-4 col-sm-4 items-info">Items 1 to 9 of 10 total</div> -->
-            <div class="col-md-8 col-sm-8">
+            <!-- <div class="col-md-8 col-sm-8">
               <ul class="pagination pull-right">
                 <li><a href="javascript:;">&laquo;</a></li>
                 <li><a href="javascript:;">1</a></li>
@@ -132,7 +130,7 @@
                 <li><a href="javascript:;">5</a></li>
                 <li><a href="javascript:;">&raquo;</a></li>
               </ul>
-            </div>
+            </div> -->
           </div>
           <!-- END PAGINATOR -->
         </div>

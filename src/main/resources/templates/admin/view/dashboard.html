@@ -104,8 +104,7 @@
 												<td th:text="${hd.orderId}"></td>
 												<td th:text="${hd.name}"></td>
 
-												<td
-													th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+												<td th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 												</td>
 												<td><span class="badge bg-info">Chờ xử lí</span></td>
 											</tr>
@@ -128,8 +127,8 @@
 					<div class="col-md-12">
 						<figure class="highcharts-figure">
 							<div id="container" class=""></div>
-							<button id="plain">Dọc</button>
-							<button id="inverted">Ngang</button>
+							<button class="btn btn-excel" id="plain">Dọc</button>
+							<button class="btn btn-danger" id="inverted">Ngang</button>
 						</figure>
 					</div>
 				</div>

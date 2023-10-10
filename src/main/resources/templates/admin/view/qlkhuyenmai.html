@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Quản lý khuyến mãi</title>
+	<title>Quản lý khách hàng</title>
 	<!-- AngularJS -->
 
 </head>
@@ -14,7 +14,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách khách hàng</a></li>
+							sách khuyến mãi</a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -25,8 +25,8 @@
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-										class="fa fa-upload"></i> Tải từ file</a>
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" th:href="@{/admin/qlkhuyenmai/addPromotion}"
+									title="Thêm"><i class="fa fa-plus mr-2"></i>Tạo khuyến mãi</a>
 							</div>
 
 							<div class="col-sm-2">
@@ -51,41 +51,39 @@
 						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
-								<div onload="showTable()" class="col-sm-12">
+								<div class="col-sm-12">
 
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
-												<th><span>Fullname</span></th>
-												<th><span>Address</span></th>
+
 												<th><span>ID</span></th>
-												<th><span>Email</span></th>
-												<th><span>Gender</span></th>
-												<th><span>LockStatus</span></th>
-												<th><span>DateOfBirth</span></th>
-												<th><span>PhoneNumber</span></th>
-												<th><span>Permission</span></th>
-												<th><span>RegistrationDate</span></th>
-												<th><span>Role</span></th>
+												<th><span>Tên khuyến mãi</span></th>
+												<th><span>Chiết khấu cho khách (%)</span></th>
+												<th><span>Giá trị tối thiểu đơn hàng</span></th>
+												<th><span>Ngày tạo</span></th>
+												<th><span>Trạng thái</span></th>
 												<th><span></span></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="kh : ${items}">
-												<td th:text="${kh.fullName}"></td>
-												<td th:text="${kh.address}"></td>
-												<td th:text="${kh.userID}"></td>
-												<td th:text="${kh.email}"></td>
-												<td th:text="${kh.gender} ? 'Nam' : 'Nữ'"></td>
-												<td th:text="${kh.lockStatus} ? 'Tạm khóa' : 'Hoạt động'"></td>
-												<td th:text="${#dates.format(kh.dateOfBirth, 'dd-MM-yyyy')}"></td>
-												<td th:text="${kh.phoneNumber}"></td>
-												<td th:text="${kh.loginPermission} ? 'Có' : 'Không'"></td>
-												<td th:text="${#dates.format(kh.registrationDate, 'dd-MM-yyyy')}"></td>
-												<td th:text="${kh.role}"></td>
-												<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
-															class="fa fa-pencil mr-2"></i></a><a class="btn btn-danger btn-sm"
-														th:href="@{/admin/qlkhachhang/delete/{user}(user=${kh.userID})}">
+											<tr th:each="km : ${items}">
+												<td><a><span th:text="${km.id}"></span></a></td>
+												<td th:text="${km.name}"></td>
+												<td th:text="${km.discountPercent}+ '%'"></td>
+												<td><span
+														th:text="${#numbers.formatDecimal(km.minOrderAmount, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
+
+												</td>
+
+
+												<td th:text="${#temporals.format(km.usedDates, 'HH:mm:ss dd-MM-yyyy')}"></td>
+												<td th:text="${km.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></td>
+												<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"
+														title="Hiển thị theo mã"> <i class="fa fa-search" aria-hidden="true"></i>
+													</a> <a class="btn btn-primary btn-sm " th:href="@{'/admin/qlkhuyenmai/edit/'+${km.id}}"
+														title="Sửa"><i class="fa fa-pencil mr-2"></i></a> <a class="btn btn-danger btn-sm"
+														th:href="@{/admin/qlkhuyenmai/delete/{id}(id=${km.id})}">
 														<i class="fa fa-trash"></i>
 													</a></td>
 											</tr>
