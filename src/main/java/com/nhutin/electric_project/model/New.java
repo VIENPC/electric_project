@@ -21,6 +21,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class New implements Serializable {
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

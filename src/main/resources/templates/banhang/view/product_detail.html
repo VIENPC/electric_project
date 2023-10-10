@@ -167,26 +167,31 @@
         <!-- END SIDEBAR & CONTENT -->
 
         <!-- BEGIN SIMILAR PRODUCTS -->
-        <div class="row margin-bottom-40">
-          <div class="col-md-12 col-sm-12">
-            <div class="owl-carousel owl-carousel4">
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in relatedProducts">
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img ng-src="../assets/images/product/{{product.image}}" class="img-responsive"
-                      alt="Berry Lace Dress">
-                    <div>
-                      <a href="../assets/images/product/{{product.image}}"
-                        class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+        <div class="panel panel-info">
+          <div class="panel panel-heading">
+            <h1 style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Sản phẩm cùng loại</h1>
+          </div>
+          <div class="panel panel-body">
+            <div class="row margin-bottom-40">
+              <div class="col-md-12 col-sm-12">
+                <div class="owl-carousel owl-carousel4">
+                  <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="product in relatedProducts">
+                    <div class="product-item">
+                      <div class="pi-img-wrapper">
+                        <img ng-src="../assets/images/product/{{product.image}}" class="img-responsive"
+                          alt="Berry Lace Dress">
+                        <div>
+                          <a href="../assets/images/product/{{product.image}}"
+                            class="btn btn-default fancybox-button">Zoom</a>
+                        </div>
+                      </div>
+                      <h3><a href="shop-item.html">{{product.productName}}</a></h3>
+                      <div class="pi-price">{{product.price | number: 0}} đ</div>
+                      <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">{{product.productName}}</a></h3>
-                  <div class="pi-price">{{product.price | number: 0}} đ</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

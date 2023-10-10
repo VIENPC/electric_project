@@ -59,11 +59,10 @@
                                                 <td th:text="${hoadon[0]}"></td>
                                                 <td th:text="${hoadon[1]}"></td>
                                                 <td th:text="${hoadon[2]}"></td>
-                                                <td
-                                                    th:text="${#numbers.formatDecimal(hoadon[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                <td th:text="${hoadon[3]}">
                                                 </td>
                                                 <td
-                                                    th:text="${#numbers.formatDecimal(hoadon[4], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                    th:text="${#numbers.formatDecimal(hoadon[4], 1, 'POINT', 0, 'DEFAULT')+ ' đ'}">
                                                 </td>
 
                                                 <!-- Cập nhật giá trị của biến totalTongGiaHang -->

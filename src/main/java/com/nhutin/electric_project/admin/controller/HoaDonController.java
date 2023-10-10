@@ -42,12 +42,11 @@ public class HoaDonController {
     }
 
     @RequestMapping("/qldonhang/suatthd/{mahd}")
-    public String edittthd(@PathVariable("mahd") Integer mahd) {
-
+    public String edittthd(@PathVariable("mahd") Integer mahd) { 
+        System.out.println(mahd);
         Order hd = hddao.findById(mahd).get();
-        hd.setStatushd(2);
+        hd.setStatushd(mahd);
         hddao.save(hd);
-        System.out.println("Sửa thành công");
         return "redirect:/admin/qldonhang?success=updatesp";
     }
 

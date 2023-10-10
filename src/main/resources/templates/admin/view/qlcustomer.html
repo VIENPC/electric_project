@@ -3,14 +3,14 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Quản lý khách hàng</title>
+	<title>Quản lý khuyến mãi</title>
 	<!-- AngularJS -->
 
 </head>
 
 <body>
 
-	<main class="app-content" ng-app="OrderApp">
+	<main class="app-content">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
@@ -23,205 +23,74 @@
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-						<div id="sampleTable_wrapper" ng-controller="OrderCtrl"
-							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
+										class="fa fa-upload"></i> Tải từ file</a>
+							</div>
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+										class="fa fa-print"></i> In dữ liệu</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-excel btn-sm export" title="Xuất file excel"><i class="fa fa-file-excel-o"></i> Xuất
+									Excel</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+										class="fa fa-file-pdf-o"></i> Xuất
+									PDF</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm xoansp" type="button" title="Xóa nhiều sản phẩm"><i
+										class="fa fa-trash-o"></i>
+									Xóa tất cả </a>
+							</div>
+						</div>
+						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
 								<div onload="showTable()" class="col-sm-12">
 
-									<table class="table table-hover table-bordered" id="myTable">
+									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
 												<th><span>ID</span></th>
-												<th><span>Email</span></th>
-												<th><span>Password</span></th>
 												<th><span>Fullname</span></th>
+												<th><span>Email</span></th>
 												<th><span>Gender</span></th>
 												<th><span>LockStatus</span></th>
 												<th><span>DateOfBirth</span></th>
-												<th><span>Address</span></th>
 												<th><span>PhoneNumber</span></th>
 												<th><span>Permission</span></th>
 												<th><span>RegistrationDate</span></th>
 												<th><span>Role</span></th>
+												<th><span>Address</span></th>
 												<th><span></span></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
-												<td>{{item.userID}}</td>
-												<td ng-if="item.email.length > 6">{{item.email.substr(0,
-													6)}}..</td>
-												<td ng-if="item.password.length > 6">{{item.password.substr(0,
-													6)}}..</td>
-												<td>{{item.fullName}}</td>
-												<td>{{item.gender?'Nam':'Nữ'}}</td>
-												<td>{{item.lockStatus}}</td>
-												<td>{{item.dateOfBirth}}</td>
-												<td>{{item.address}}</td>
-												<td>{{item.phoneNumber}}</td>
-												<td>{{item.loginPermission}}</td>
-												<td ng-if="item.registrationDate.length > 12">
-													{{item.registrationDate.substr(0,
-													8)}}..</td>
-
-												<td>{{ item.role}}</td>
-												<td class="align-middle text-center"><a ng-click="showUserDetails(item)"
-														class="text-secondary font-weight-bold text-xs"> Chi
-														tiết </a></td>
-
+											<tr th:each="kh : ${items}">
+												<td th:text="${kh.userID}"></td>
+												<td th:text="${kh.fullName}"></td>
+												<td th:text="${kh.email}"></td>
+												<td th:text="${kh.gender} ? 'Nam' : 'Nữ'"></td>
+												<td th:text="${kh.lockStatus} ? 'Tạm khóa' : 'Hoạt động'"></td>
+												<td th:text="${#dates.format(kh.dateOfBirth, 'dd-MM-yyyy')}"></td>
+												<td th:text="${kh.phoneNumber}"></td>
+												<td th:text="${kh.loginPermission} ? 'Có' : 'Không'"></td>
+												<td th:text="${#dates.format(kh.registrationDate, 'dd-MM-yyyy')}"></td>
+												<td th:text="${kh.role}"></td>
+												<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
+															class="fa fa-pencil mr-2"></i></a><a class="btn btn-danger btn-sm"
+														th:href="@{/admin/qlkhachhang/delete/{user}(user=${kh.userID})}">
+														<i class="fa fa-trash"></i>
+													</a></td>
+												<td th:text="${kh.address}"></td>
 											</tr>
 										</tbody>
 									</table>
-									<form id="form2" style="display: none;">
-										<div class="row element-button">
-											<div class="col-sm-2">
-												<a id="toggleButton" ng-click="toggleTableAndInputs()"
-													class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Quay
-													lại bảng</a>
-											</div>
-											<div class="col-sm-2">
-												<a id="historyLink" ng-click="showHistory()"
-													class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Lịch sử
-													mua hàng</a>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>Email</label> <input name="email" type="text"
-														class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.email">
-												</div>
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>Fullname</label> <input name="fullname" type="text"
-														class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.fullName">
-												</div>
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>PhoneNumber</label> <input name="phoneNumber" type="text"
-														class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.phoneNumber">
-												</div>
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>DayOfBirth</label> <input name="dateOfBirth" type="text"
-														class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.dateOfBirth| date:'dd-MM-yyyy'">
-												</div>
-
-											</div>
-											<div class="col-md-6">
-
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>Adddress</label> <input name="address" type="text"
-														class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.address">
-												</div>
-												<div style="margin-bottom: 20px;" class="form-group">
-													<label>RegistrationDate</label> <input name="registrationDate"
-														type="text" class="form-control"
-														style="border: inset rgb(112, 112, 112); width: 500px; padding: 10px;"
-														ng-model="edit.registrationDate| date:'dd-MM-yyyy'">
-												</div>
-												<div class="row">
-													<div class="col-md-4">
-														<div style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>LockStatus</label>
-															<div class="radio-group">
-																<input type="radio" id="true" name="lockStatus"
-																	value="True"> <label for="user">True</label> <input
-																	type="radio" id="false" name="lockStatus"
-																	value="False">
-																<label for="user">False</label>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>Gender</label>
-															<div class="radio-group">
-																<input type="radio" id="nam" name="gender" value="Nam">
-																<label for="nam">Nam</label> <input type="radio" id="nu"
-																	name="gender" value="Nữ"> <label for="nu">Nữ</label>
-															</div>
-
-														</div>
-													</div>
-													<div class="col-md-4 rounded">
-														<div style="margin-bottom: 20px; background-color: #EFCACA;"
-															class="form-group">
-															<label>Role</label>
-															<div class="radio-group">
-																<input type="radio" id="admin" name="role"
-																	value="ADMIN">
-																<label for="user">Admin</label> <input type="radio"
-																	id="user" name="role" value="USER"> <label
-																	for="user">User</label>
-															</div>
-														</div>
-													</div>
-												</div>
-
-
-
-											</div>
-										</div>
-										<button ng-click="updateUser(edit)" class="btn btn-info"
-											type="submit">Sửa</button>
-										<button ng-click="deleteUser()" class="btn btn-danger"
-											type="submit">Xóa</button>
-									</form>
-									<div id="form" style="display: none;">
-										<div class="col-sm-2">
-											<a id="toggleButton" ng-click="toggleTableAndInputs()"
-												class="btn btn-add btn-sm"><i class="fas fa-folder-plus"></i>Quay lại
-												bảng</a>
-										</div>
-										<table class="table table-hover table-bordered" id="myTable2">
-											<thead>
-												<tr>
-													<th><span>ID</span></th>
-													<th><span>Email</span></th>
-													<th><span>Password</span></th>
-													<th><span>Fullname</span></th>
-													<th><span>Gender</span></th>
-
-												</tr>
-											</thead>
-											<tbody>
-												<!-- <tr
-												ng-repeat="item in listusers|limitTo:limit:(pageNumber-1)*limit">
-												<td>{{item.userID}}</td>
-												<td ng-if="item.email.length > 6">{{item.email.substr(0,
-													6)}}..</td>
-												<td ng-if="item.password.length > 6">{{item.password.substr(0,
-													6)}}..</td>
-												<td>{{item.fullName}}</td>
-												<td>{{item.gender?'Nam':'Nữ'}}</td>
-												<td>{{item.lockStatus}}</td>
-												<td>{{item.dateOfBirth}}</td>
-												<td>{{item.address}}</td>
-												<td>{{item.phoneNumber}}</td>
-												<td>{{item.loginPermission}}</td>
-												<td ng-if="item.registrationDate.length > 12">{{item.registrationDate.substr(0,
-													8)}}..</td>
-												<td>{{ item.role}}</td>
-												<td class="align-middle text-center"><a
-													ng-click="showUserDetails(item)"
-													class="text-secondary font-weight-bold text-xs"> Chi
-														tiết </a></td>
-
-											</tr> -->
-											</tbody>
-										</table>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -230,9 +99,9 @@
 				</div>
 			</div>
 		</div>
+
 	</main>
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
-	<script th:src="@{/js/user.js}"></script>
 
 </body>
 

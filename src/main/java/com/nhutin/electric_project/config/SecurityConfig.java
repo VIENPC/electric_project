@@ -34,148 +34,130 @@ import com.nhutin.electric_project.security.service.CustomOAuth2UserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-        @Autowired
-        cartsRepository cartDAO;
+    @Autowired
+    cartsRepository cartDAO;
 
-        @Autowired
-        UserRepository userDAO;
+    @Autowired
+    UserRepository userDAO;
 
-        @Bean
-        public BCryptPasswordEncoder bCryptPasswordEncoder() {
-                return new BCryptPasswordEncoder();
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    private CustomAuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
+
+    @Bean
+    public TokenBasedRememberMeServices rememberMeServices() {
+        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices(
+                "uniqueAndSecretKey", userDetailsService);
+        rememberMeServices.setTokenValiditySeconds(86400); // 1 day
+        return rememberMeServices;
+    }
+
+    private String determineTargetUrl(Authentication authentication) {
+        String role = authentication.getAuthorities().toString();
+        if (role.contains("ADMIN")) {
+            return "/admin/index";
+        } else {
+            return "/home";
         }
+    }
 
-        @Autowired
-        private CustomAuthenticationFailureHandler authenticationFailureHandler;
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable());
 
-        @Autowired
-        private CustomOAuth2UserService oAuth2UserService;
+        http
+                .authorizeRequests(requests -> requests
+                        .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
+                                "/error**", "/api/**", "/reset-password", "/codeVerification", "/resendOtp",
+                                "/new-password", "/rest/productdetails", "/rest/products", "/rest/productsbycate/**",
+                                "/rest/products/**", "/rest/**", "/product", "/registration/**", "/oauth2/**")
+                        .permitAll()
+                        .antMatchers("/admin/**", "/rest/orders/**")
+                        .hasRole("ADMIN")
+                        .anyRequest()
+                        .authenticated())
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .successHandler((request, response, authentication) -> {
+                            // Lấy thông tin đăng nhập của người dùng, ví dụ: email
+                            String email = request.getParameter("email");
 
-        @Autowired
-        private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+                            // Lưu cookie với thông tin đăng nhập
+                            CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
 
-        @Override
-        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-                auth.userDetailsService(userDetailsService);
-        }
+                            // Lấy giá trị email từ cookie
+                            String emailFromCookie = CookieUtils.get("tenDangNhapCookie", request);
 
-        @Bean
-        public TokenBasedRememberMeServices rememberMeServices() {
-                TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices(
-                                "uniqueAndSecretKey", userDetailsService);
-                rememberMeServices.setTokenValiditySeconds(86400); // 1 day
-                return rememberMeServices;
-        }
+                            // Kiểm tra xem có giá trị email từ cookie hay không
+                            if (!emailFromCookie.isEmpty()) {
+                                System.out.println("Email từ cookie: " + emailFromCookie);
+                            } else {
+                                System.out.println("Cookie email không tồn tại hoặc rỗng.");
+                            }
 
-        private String determineTargetUrl(Authentication authentication) {
-                String role = authentication.getAuthorities().toString();
-                if (role.contains("ADMIN")) {
-                        return "/admin/index";
-                } else {
-                        return "/home";
-                }
-        }
+                            String targetUrl = determineTargetUrl(authentication);
+                            response.sendRedirect(targetUrl);
+                        })
+                        .failureHandler(authenticationFailureHandler)
+                        .usernameParameter("email")
+                        .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                        .key("uniqueAndSecretKey")
+                        .rememberMeServices(rememberMeServices())
+                        .tokenValiditySeconds(604800))
+                .exceptionHandling(handling -> handling
+                        .accessDeniedPage("/access-denied")
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/login?error=true");
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.sendRedirect("/access-denied");
+                        }))
+                .oauth2Login(t -> t
+                        .loginPage("/login")
+                        .failureUrl("/login?error=true")
+                        .userInfoEndpoint().userService(oAuth2UserService).and()
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .permitAll().permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/home")
+                        .logoutSuccessHandler(
+                                new LogoutSuccessHandler() {
+                                    @Override
+                                    public void onLogoutSuccess(
+                                            HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            Authentication authentication)
+                                            throws IOException,
+                                            ServletException {
+                                        UrlPathHelper helper = new UrlPathHelper();
+                                        String context = helper.getContextPath(
+                                                request);
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-                http.csrf(csrf -> csrf.disable())
-                                .cors(cors -> cors.disable());
-
-                http
-                                .authorizeRequests(requests -> requests
-                                                .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
-                                                                "/error**", "/api/**", "/reset-password",
-                                                                "/codeVerification", "/resendOtp",
-                                                                "/new-password", "/rest/detail/**",
-                                                                "/rest/products", "/rest/productsbycate/**",
-                                                                "/rest/products/**", "/rest/**", "/product",
-                                                                "/registration/**", "/oauth2/**")
-                                                .permitAll()
-                                                .antMatchers("/admin/**")
-                                                .hasRole("ADMIN")
-                                                .anyRequest()
-                                                .authenticated())
-                                .formLogin(login -> login
-                                                .loginPage("/login")
-                                                .successHandler((request, response, authentication) -> {
-                                                        // Lấy thông tin đăng nhập của người dùng, ví dụ: email
-                                                        String email = request.getParameter("email");
-
-                                                        // Lưu cookie với thông tin đăng nhập
-                                                        CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
-
-                                                        // Lấy giá trị email từ cookie
-                                                        String emailFromCookie = CookieUtils.get("tenDangNhapCookie",
-                                                                        request);
-
-                                                        if (!email.isEmpty()) {
-                                                                User us = userDAO.findByEmailLike(email);
-                                                                Cart cart = null;
-                                                                cart = cartDAO.findByUserID(us.getUserID());
-                                                                if (cart == null) {
-                                                                        cart = new Cart();
-                                                                        cart.setUser(us);
-                                                                        cartDAO.save(cart);
-                                                                }
-
-                                                                }
-                                                        // Kiểm tra xem có giá trị email từ cookie hay không
-                                                        if (!emailFromCookie.isEmpty()) {
-                                                                System.out.println(
-                                                                                "Email từ cookie: " + emailFromCookie);
-                                                        } else {
-                                                                System.out.println(
-                                                                                "Cookie email không tồn tại hoặc rỗng.");
-                                                        }
-
-                                                        String targetUrl = determineTargetUrl(authentication);
-                                                        response.sendRedirect(targetUrl);
-                                                })
-                                                .failureHandler(authenticationFailureHandler)
-                                                .usernameParameter("email")
-                                                .permitAll())
-                                .rememberMe(rememberMe -> rememberMe
-                                                .key("uniqueAndSecretKey")
-                                                .rememberMeServices(rememberMeServices())
-                                                .tokenValiditySeconds(604800))
-                                .exceptionHandling(handling -> handling
-                                                .accessDeniedPage("/access-denied")
-                                                .authenticationEntryPoint((request, response, authException) -> {
-                                                        response.sendRedirect("/login?error=true");
-                                                })
-                                                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                                                        response.sendRedirect("/access-denied");
-                                                }))
-                                .oauth2Login(t -> t
-                                                .loginPage("/login")
-                                                .failureUrl("/login?error=true")
-                                                .userInfoEndpoint().userService(oAuth2UserService).and()
-                                                .successHandler(oAuth2LoginSuccessHandler)
-                                                .permitAll().permitAll())
-                                .logout(logout -> logout
-                                                .logoutSuccessUrl("/home")
-                                                .logoutSuccessHandler(
-                                                                new LogoutSuccessHandler() {
-                                                                        @Override
-                                                                        public void onLogoutSuccess(
-                                                                                        HttpServletRequest request,
-                                                                                        HttpServletResponse response,
-                                                                                        Authentication authentication)
-                                                                                        throws IOException,
-                                                                                        ServletException {
-                                                                                UrlPathHelper helper = new UrlPathHelper();
-                                                                                String context = helper.getContextPath(
-                                                                                                request);
-
-                                                                                response.sendRedirect(context
-                                                                                                + "/login");
-                                                                        }
-                                                                })
-                                                .logoutSuccessUrl("/login?logout=true")
-                                                .permitAll());
-        }
-
+                                        response.sendRedirect(context
+                                                + "/login");
+                                    }
+                                })
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll());
+    }
 }
