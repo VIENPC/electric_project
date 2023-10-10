@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-// @RequestMapping(path = "registration")
+//@RequestMapping(path = "registration")
 public class RegisterController {
 
     private RegistrationService registrationService;
@@ -72,6 +72,7 @@ public class RegisterController {
         return "register";
     }
 
+
     @Autowired
     ConfirmationCodeDAO confirmationCodeDAO;
 
@@ -100,3 +101,4 @@ public class RegisterController {
     }
 
 }
+

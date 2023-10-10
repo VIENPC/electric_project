@@ -26,11 +26,6 @@ public class ProductAdminRestController {
     @Autowired
     ProductsService ProductService;
 
-    @GetMapping("rest/productAdmin")
-    public List<Product> findAllProduct() {
-        return dmdao.findAll();
-    }
-
     @PostMapping("/admin/createProduct")
     public ResponseEntity<Product> Create(@RequestBody Product product) {
         try {

@@ -3,7 +3,6 @@ package com.nhutin.electric_project.ServiceImpl;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
@@ -30,27 +29,26 @@ public class UploadServiceImpl implements UploadService {
                 dir.mkdirs();
             }
 
-            String originalFileName = file.getOriginalFilename();
-            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            String name = UUID.randomUUID().toString() + extension; // Sử dụng UUID ngẫu nhiên làm tên file
+            String s = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+            String name = Integer.toHexString(s.hashCode()) + "-" + s.substring(s.lastIndexOf("."));
             File savedFile = new File(dir, name);
             file.transferTo(savedFile);
             System.out.println(savedFile.getAbsolutePath());
 
             return savedFile;
         } catch (IllegalStateException e) {
-            // Xử lý IllegalStateException (ví dụ: nếu tệp lớn hơn cho phép)
+            // Handle IllegalStateException (e.g., if the file is larger than allowed)
             e.printStackTrace();
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
-            // Xử lý FileNotFoundException (ví dụ: nếu thư mục không tồn tại)
+            // Handle FileNotFoundException (e.g., if the directory doesn't exist)
             e.printStackTrace();
             throw new RuntimeException(e);
         } catch (IOException e) {
-            // Xử lý các lỗi IO khác
+            // Handle other IO exceptions
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
 
+    }
 }

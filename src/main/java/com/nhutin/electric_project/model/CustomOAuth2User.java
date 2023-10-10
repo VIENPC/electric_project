@@ -36,4 +36,9 @@ public class CustomOAuth2User implements OAuth2User {
     public String getEmail() {
         return oauth2User.getAttribute("email");
     }
+    
+ // Thêm phương thức để truy xuất số điện thoại
+    public String getPhoneNumber() {
+        return oauth2User.getAttribute("phone_number");
+    }
 }

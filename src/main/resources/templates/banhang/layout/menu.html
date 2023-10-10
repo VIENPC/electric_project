@@ -41,57 +41,55 @@
           <!-- END TOP BAR LEFT PART -->
           <!-- BEGIN TOP BAR MENU -->
           <div class="col-md-6 col-sm-6 additional-nav">
-            <ul class="list-unstyled list-inline pull-right">
+            <ul class="list-unstyled list-inline pull-right"> -->
+
+              <li><a href="shop-checkout.html">Đăng Kí</a></li>
+              <li><a href="page-login.html">Đăng Nhập</a></li>
               <li>
                 <h3><a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
                     Xin chào [[${#request.remoteUser}]]
                   </a></h3>
-
               </li>
             </ul>
           </div>
           <!-- END TOP BAR MENU -->
-          
         </div>
-        
       </div>
-      
     </div>
-    
     <div class="header" ng-controller="product-controller">
       <div class="container">
 
 
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
-	<!-- BEGIN CART -->
-											<div class="top-cart-block">
-												<div class="top-cart-info">
-													<a href="">CART</a> <a href="javascript:void(0);"
-														class="top-cart-info-value"> <i
-														class="fa fa-shopping-cart"> {{getcount()}}</i>
-													</a>
-												</div>
 
-												<div class="top-cart-content-wrapper">
-													<div class="top-cart-content">
-														<ul class="scroller" style="height: 250px;">
-															<li ng-repeat="gh in cartItems"><a href=""><img
-																	ng-src="../assets/images/product/{{gh.image}}"
-																	alt="{{gh.image}}" width="37" height="34"></a> <span
-																class="cart-content-count">X {{gh.qty}}</span> <strong><a
-																	href="">{{gh.productName}}</a></strong> <em>{{gh.price|number
-																	: 0}} đ</em> <a href="javascript:void(0);" class="del-goods"
-																ng-click="removesp(item.productID)">&nbsp;</a></li>
-														</ul>
-														<div class="text-right">
-															<a th:href="@{/cart}" class="btn btn-default">View
-																Cart</a> <a th:href="@{/checkout}" class="btn btn-primary">Checkout</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!--END CART -->
-        
+        <!-- BEGIN CART -->
+        <div class="top-cart-block">
+          <div class="top-cart-info">
+            <a href="">Cart</a>
+            <a href="javascript:void(0);" class="top-cart-info-value"> <i class="fa fa-shopping-cart">
+                {{getcount()}}</i> </a>
+          </div>
+
+          <div class="top-cart-content-wrapper">
+            <div class="top-cart-content">
+              <ul class="scroller" style="height: 250px;">
+                <li ng-repeat="gh in cartItems">
+                  <a href=""><img ng-src="../assets/images/product/{{gh.image}}" alt="{{gh.image}}" width="37"
+                      height="34"></a>
+                  <span class="cart-content-count">X {{gh.qty}}</span>
+                  <strong><a href="">{{gh.productName}}</a></strong>
+                  <em>{{gh.price|number : 0}} đ</em>
+                  <a href="javascript:void(0);" class="del-goods" ng-click="removesp(item.productID)">&nbsp;</a>
+                </li>
+              </ul>
+              <div class="text-right">
+                <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
+                <a th:href="@{/checkout}" class="btn btn-primary">Checkout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END CART -->
 
         <!-- BEGIN NAVIGATION -->
         <div class="header-navigation">
@@ -112,8 +110,7 @@
                       </div>
                       <div class="col-md-12 nav-brands">
                         <ul class="brand-list">
-                          <li ng-repeat="item in brands" ng-if="item.active !== false"
-                            style="display: inline-block; margin-right: 20px;">
+                          <li ng-repeat="item in brands" style="display: inline-block; margin-right: 20px;">
                             <a>
                               <img title="esprit" alt="esprit" ng-src="../assets/images/carousel/{{item.image}}">
                             </a>
@@ -179,9 +176,8 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}">Trang quản lý</a></li>
+                <li><a th:href="@{/admin/index}">Trang quản lý</a></li>
                 <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
-                <li><a th:href="@{/user/history}">Lịch sử mua hàng</a></li>
                 <li><a th:href="@{/user/profile}">Trang cá nhân</a></li>
                 <li><a th:href="@{/logout}">Đăng xuất</a></li>
               </ul>
@@ -203,8 +199,6 @@
               <!-- Hiển thị kết quả tìm kiếm nếu showSearchResults là true -->
             </li>
             <!-- END TOP SEARCH -->
-            
-            
           </ul>
         </div>
         <!-- END NAVIGATION -->

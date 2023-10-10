@@ -63,7 +63,18 @@
 								</select>
 								<i th:errors="*{active}" class="mgs_errors"></i><br>
 							</div>
+							<div class="form-group col-md-4 ">
 
+								<label for="exampleSelect1" class="control-label">Nhà cung cấp</label>
+								<select class="form-control" id="hangSanXuatSelect" name="hangsanxuat"
+									th:field="*{brand}">
+									<option value="">-- Chọn nhà cung cấp --</option>
+									<option th:each="hsx : ${listhsx}" th:text="${hsx.brandName}"
+										th:value="${hsx.brandID}">
+									</option>
+								</select>
+								<i th:errors="*{brand}" class="mgs_errors"></i><br>
+							</div>
 							<div class="form-group col-md-12">
 								<label class="control-label">Ảnh sản phẩm</label><br> <input type="file" name="image">
 								<i th:text="${image}" class="mgs_errors"></i><br>
@@ -78,7 +89,7 @@
 								</script>
 								<i th:errors="*{description}" class="mgs_errors"></i><br>
 							</div>
-							<button class="btn btn-save ml-3">Lưu lại</button>
+							<button class="btn btn-save ml-3" type="submit">Lưu lại</button>
 
 							<a class="btn btn-cancel ml-3" th:href="@{/addsanpham}">Reset</a>
 						</form>
@@ -88,7 +99,41 @@
 			</div>
 		</div>
 	</main>
+	<!-- Model đồ hãng cung cấp -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Thêm mới nhà cung cấp</h5>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/admin/addsanpham/themhang}" method="post" th:object="${hsx}"
+						enctype="multipart/form-data">
+						<div class="form-row">
+							<div class="col">
+								<label class="control-label">Mã hãng:</label> <input type="text" class="form-control"
+									placeholder="Mã hãng" disabled="disabled">
 
+								<label class="control-label">Hình ảnh logo:</label> <input type="file"
+									class="form-control" name="hinh_hang">
+								<i th:text="${image}" class="mgs_errors"></i><br>
+								<label class="control-label">Tên hãng:</label> <input type="text" class="form-control"
+									name="">
+								<i th:text="${brandName}" class="mgs_errors"></i><br>
+							</div>
+
+						</div>
+						<div class="form-group mt-3">
+							<button class="btn btn-save" type="submit">Lưu lại</button>
+							<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 
 

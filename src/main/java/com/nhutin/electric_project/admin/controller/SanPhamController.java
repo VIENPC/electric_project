@@ -74,11 +74,7 @@ public class SanPhamController {
 		List<Brand> listhsx = hsxdao.findAll();
 		model.addAttribute("listhsx", listhsx);
 		// In danh sách sản phẩm ra terminal
-		for (Brand product : listhsx) {
-			System.out.println("Product ID: " + product.getBrandName());
-			System.out.println("Product Name: " + product.getBrandID());
-			// Thêm các trường thông tin sản phẩm khác tương tự ở đây
-		}
+		System.out.println("Theenm sap");
 		return "admin/view/add_product";
 	}
 
@@ -96,25 +92,25 @@ public class SanPhamController {
 	public String add_sp(Model model, @Validated @ModelAttribute("sp") Product sp, Errors errors,
 			@RequestParam("image") MultipartFile img) {
 		try {
-			if (errors.hasErrors() || img.isEmpty()) {
-				if (img.isEmpty()) {
-					model.addAttribute("message_img", "Vui lòng chọn hình ảnh");
-				}
-				List<Brand> listhsx = hsxdao.findAll();
-				model.addAttribute("listhsx", listhsx);
-				return "admin/view/add_product";
-			} else {
-				LocalDateTime now = LocalDateTime.now();
-				String filename = img.getOriginalFilename();
-				File file = new File(app.getRealPath("/images/sanpham/" + filename));
-				img.transferTo(file);
-				sp.setImage(filename);
-				// sp.setNgaynhap(now);
-				// sp.setNgaynhap(now);
-				// System.out.println(formattedDateTime);
-				// System.out.println(sp.getMota());
-				spdao.save(sp);
-			}
+			// if (errors.hasErrors() || img.isEmpty()) {
+			// if (img.isEmpty()) {
+			// model.addAttribute("message_img", "Vui lòng chọn hình ảnh");
+			// }
+			// List<Brand> listhsx = hsxdao.findAll();
+			// model.addAttribute("listhsx", listhsx);
+			// return "admin/view/add_product";
+			// } else {
+			LocalDateTime now = LocalDateTime.now();
+			String filename = img.getOriginalFilename();
+			File file = new File(app.getRealPath("/images/sanpham/" + filename));
+			img.transferTo(file);
+			sp.setImage(filename);
+			// sp.setNgaynhap(now);
+			// sp.setNgaynhap(now);
+			// System.out.println(formattedDateTime);
+			// System.out.println(sp.getMota());
+			spdao.save(sp);
+			// s }
 
 			return "redirect:/admin/addsanpham?success=add";
 		} catch (Exception e) {
