@@ -532,6 +532,9 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         // Xóa sạch các mặt hàng trong giỏ
 
     }
+    var tongtien = 0;
+    tongtien = $scope.totalAmount();
+    console.log("tongtien", tongtien);
 
     $scope.loadLocalStorage();
 

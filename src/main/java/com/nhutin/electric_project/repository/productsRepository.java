@@ -45,7 +45,7 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
                         "INNER JOIN od.product p " +
                         "INNER JOIN p.brand b " +
                         "INNER JOIN od.order o " +
-                        "WHERE o.statushd = 4 " +
+                        "WHERE o.statushd =     4 " +
                         "AND o.statustt = true " +
                         "AND MONTH(o.orderDate) = :month " +
                         "GROUP BY p.productID, p.productName, p.price, b.brandName, o.orderDate, p.image " +

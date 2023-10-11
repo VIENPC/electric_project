@@ -27,7 +27,6 @@ public class HoaDonController {
 
     @RequestMapping("/qldonhang")
     public String qlhoadon(Model model) {
-
         model.addAttribute("listhd", hddao.findAll());
         System.out.println(hddao.findAll());
         return "admin/view/qloder";

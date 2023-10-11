@@ -57,4 +57,7 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
                         "AND o.statushd = 4")
         List<Object[]> thongKeDonHang(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+        @Query("SELECT o FROM Order o where o.user.userID= ?1")
+        List<Order> findHistory(Integer user);
+
 }
