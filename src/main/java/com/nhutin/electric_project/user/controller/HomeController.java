@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.Comment;
 import com.nhutin.electric_project.model.Product;
-import com.nhutin.electric_project.model.Promotion;
+
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.CommentsDao;
 import com.nhutin.electric_project.repository.UserRepository;
-import com.nhutin.electric_project.repository.prmotionRepositpry;
+
 import com.nhutin.electric_project.repository.productsRepository;
 
 @Controller
@@ -34,8 +34,7 @@ public class HomeController {
     @Autowired
     productsRepository prdao;
 
-    @Autowired
-    prmotionRepositpry prmoDao;
+   
 
     @Autowired
     CookieUtils cook;

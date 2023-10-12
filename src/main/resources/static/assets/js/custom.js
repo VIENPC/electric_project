@@ -37,10 +37,18 @@ $(document).ready(function () {
 	});
 });
 
+
 // xử lí phần thống kê theo hãng
 function submitForm() {
-	document.getElementById("formhang").submit();
+	document.getElementById("formhang").submit(); 
 }
+function submitFormdm() {
+
+	document.getElementById("formdm").submit();
+}
+
+
+
 function submitFormSPBC(selectElement) {
 	var selectedValue = selectElement.value;
 	// Kiểm tra giá trị đã chọn và thực hiện hành động tương ứng

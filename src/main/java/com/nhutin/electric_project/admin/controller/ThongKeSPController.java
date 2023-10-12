@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhutin.electric_project.repository.brandsRepository;
+import com.nhutin.electric_project.repository.categorysRepository;
 import com.nhutin.electric_project.repository.productsRepository;
 
 @Controller
@@ -26,19 +27,26 @@ public class ThongKeSPController {
     @Autowired
     brandsRepository hsxdao;
 
+    @Autowired
+    categorysRepository dmdao;
+
     @RequestMapping("/baocaosanpham")
     public String baocaosanpham(Model model) {
         int totalTongGiaHang = 0;
         model.addAttribute("tongtien", totalTongGiaHang);
         model.addAttribute("listhxs", hsxdao.findAll());
-        return "admin/view/baocaosp";
+        model.addAttribute("listdm", dmdao.findAll());
+        return "admin/view/baocaosp"; 
     }
 
     @PostMapping("/thongke")
     public String thongkehang(@RequestParam("mahang") Integer mahang, Model model) {
+
+        
         model.addAttribute("listhxs", hsxdao.findAll());
-        List<Object[]> listsp = spdao.thongkeSanPhamTheoBrand(mahang);
-        System.out.println(listsp);
+         model.addAttribute("listdm", dmdao.findAll());
+         List<Object[]> listsp = spdao.thongkeSanPhamTheoBrand(mahang);
+        System.out.println(mahang);
         int totalTongGiaHang = 0;
         for (Object[] itemsp : listsp) {
             totalTongGiaHang += Double.parseDouble(itemsp[3].toString()) *
@@ -47,6 +55,22 @@ public class ThongKeSPController {
         model.addAttribute("itemtksp", listsp);
         model.addAttribute("tongcong", totalTongGiaHang);
 
+        return "admin/view/baocaosp";
+    }
+     @PostMapping("/thongkedm")
+    public String thongkedm(@RequestParam("madm") Integer madm, Model model) {
+      
+         model.addAttribute("listhxs", hsxdao.findAll());
+         model.addAttribute("listdm", dmdao.findAll());
+        System.out.println(madm);
+            int totalTongGiaHang = 0;
+        List<Object[]> listtk = spdao.thongkeSanPhamTheoMuc(madm);
+        for (Object[] objects : listtk) {
+                System.out.println(objects[4]);
+                  
+        } 
+         model.addAttribute("itemtksp", listtk);
+        
         return "admin/view/baocaosp";
     }
 
