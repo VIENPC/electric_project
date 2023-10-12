@@ -26,11 +26,6 @@ public class BrandAdminRestController {
     @Autowired
     BrandsService brandService;
 
-    @GetMapping("/rest/brandAdmin")
-    public ResponseEntity<List<Brand>> findAll() {
-        return ResponseEntity.ok(dmdao.findAll());
-    }
-
     @PostMapping("/admin/createBrand")
     public ResponseEntity<Brand> Create(@RequestBody Brand brand) {
         try {

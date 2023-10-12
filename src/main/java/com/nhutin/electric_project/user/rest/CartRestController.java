@@ -3,9 +3,7 @@ package com.nhutin.electric_project.user.rest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhutin.electric_project.model.CartDetail;
-import com.nhutin.electric_project.model.Order;
 import com.nhutin.electric_project.model.Product;
 import com.nhutin.electric_project.model.detailcart;
 import com.nhutin.electric_project.repository.productsRepository;
@@ -26,14 +24,13 @@ public class CartRestController {
     productsRepository prDAO;
 
     @PostMapping("/rest/cartdetail")
-   public ResponseEntity<String> saveCartDetails(@RequestBody List<detailcart> cartDetails) {
+   public ResponseEntity<String> saveCartDetails(@RequestBody List<detailcart> req) {
         try {
-            
             // Lặp qua danh sách cartDetails và lưu dữ liệu vào cơ sở dữ liệu
-            for(detailcart dt: cartDetails){
+            for(detailcart dt: req){
                 System.out.println(dt.getQty());
                  System.out.println(dt.getProducutId());
-              
+             
             }
            
             return ResponseEntity.ok("Dữ liệu đã được lưu vào cơ sở dữ liệu.");

@@ -27,11 +27,6 @@ public class CategoryAdminRestController {
     @Autowired
     CategorysService categoryService;
 
-    @GetMapping("/rest/categoryAdmin")
-    public ResponseEntity<List<Category>> findAll() {
-        return ResponseEntity.ok(dmdao.findAll());
-    }
-
     @PostMapping("/admin/create")
     public ResponseEntity<Category> Create(@RequestBody Category cate) {
         try {

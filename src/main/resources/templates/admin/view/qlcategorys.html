@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<main class="app-content" ng-controller="categoryAdmin-controller">
+	<main class="app-content" ng-controller="category-controller">
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a><b>Danh
@@ -27,23 +27,24 @@
 										ng-click="updateCate(item)"><i class="fa fa-upload"></i> Cập nhật</a>
 								</div>
 								<div class="col-sm-2">
-									<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-											class="fa fa-upload"></i> Tải từ file</a>
+									<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+										onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
 								</div>
 
 								<div class="col-sm-2">
-									<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-											class="fa fa-print"></i> In dữ liệu</a>
+									<a class="btn btn-delete btn-sm print-file" type="button" title="In"
+										onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
 								</div>
 								<div class="col-sm-2">
-									<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
-											class="fa fa-copy"></i>
+									<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
+										title="Sao chép"><i class="fa fa-copy"></i>
 										Sao chép</a>
 								</div>
 
 								<div class="col-sm-2">
 
-									<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i class="fa fa-file-excel-o"></i>
+									<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+											class="fa fa-file-excel-o"></i>
 										Xuất Excel</a>
 								</div>
 								<div class="col-sm-2">
@@ -59,15 +60,16 @@
 							</div>
 						</form>
 						<form class="row" method="post" enctype="multipart/form-data" name="form">
-							<!-- <div class="form-group col-md-4">
+							<div class="form-group col-md-4">
 								<label class="control-label">Mã loại </label> <input class="form-control" type="text"
 									ng-model="newCate.categoryID" placeholder="Mã loại" readonly>
-							</div> -->
+							</div>
 							<div class="form-group col-md-4"
-								ng-class="{'has-error': form.categoryName.$invalid && form.categoryName.$dirty && !editingMode}">
+								ng-class="{'has-error': form.categoryName.$invalid && form.categoryName.$dirty}">
 								<label class="control-label">Tên loại</label> <input class="form-control" type="text"
-									ng-model="newCate.categoryName" placeholder="Tên loại" ng-required="true" name="categoryName">
-								<div ng-messages="form.categoryName.$error" ng-if="!form.categoryName.$dirty && !editingMode">
+									ng-model="newCate.categoryName" placeholder="Tên loại" ng-required="true"
+									name="categoryName">
+								<div ng-messages="form.categoryName.$error" ng-if="!form.categoryName.$dirty">
 									<div class="text-danger" ng-message="required">Vui lòng
 										nhập tên loại</div>
 								</div>
@@ -75,39 +77,37 @@
 							<div class="form-group col-md-4">
 								<label class="col-md-12 p-0">Status</label>
 								<div class="col-md-12 border-bottom p-0">
-									<input type="radio" id="active" name="active" ng-value="true" ng-model="newCate.active"
-										ng-required="true" /> <label for="admin">Còn sản
+									<input type="radio" id="active" name="active" ng-value="true"
+										ng-model="newCate.active" ng-required="true" /> <label for="admin">Còn sản
 										phẩm</label><br>
-									<input type="radio" id="active" name="active" ng-value="false" ng-model="newCate.active"
-										ng-required="true" /> <label for="user">Hết sản
+									<input type="radio" id="active" name="active" ng-value="false"
+										ng-model="newCate.active" ng-required="true" /> <label for="user">Hết sản
 										phẩm</label><br>
-									<div ng-messages="form.active.$error" ng-if="!form.active.$dirty && !editingMode">
+									<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
 										<div class="text-danger" ng-message="required">Vui lòng chọn
 											trạng thái!! </div>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-add btn-sm" ng-show="addingMode" ng-click="addCategory()" title="Thêm"
+								<button class="btn btn-add btn-sm" ng-click="addCategory()" title="Thêm"
 									ng-disabled="form.$invalid"><i class="fa fa-plus"></i> Thêm thương hiệu</button>
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-info btn-sm" ng-show="editingMode" ng-disabled="form.$invalid"
-									ng-click="updateCate(cate)" title="Thêm"><i class="fa fa-refresh"></i> Cập nhật </button>
-							</div>
-							<div class="col-sm-2">
-								<button class="btn btn-info btn-sm" ng-click="reset()" title="Thêm"><i class="fa fa-refresh"></i> Reset
-								</button>
+								<button class="btn btn-info btn-sm" ng-disabled="form.$invalid"
+									ng-click="updateCate(cate)" title="Thêm"><i class="fa fa-refresh"></i> Cập nhật
+									thương hiệu</button>
 							</div>
 						</form>
-						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
 								<div class="col-sm-12">
 									<table class="table table-hover table-bordered" id="sampleTable">
 										<thead>
 											<tr>
-
+												<th width="10"><input type="checkbox" id="checkboxall"></th>
 												<th><span>ID</span></th>
 												<th><span>Tên loại</span></th>
 												<th><span>Trạng thái</span> </th>
@@ -116,11 +116,12 @@
 										</thead>
 										<tbody>
 											<tr ng-repeat="item in categoris">
-
+												<td width="10"><input type="checkbox" name="check1" value="1"></td>
 												<td>CT{{item.categoryID}}</td>
 												<td>{{item.categoryName}}</td>
 												<td>{{item.active?'Còn':'Hết'}}</td>
-												<td><button class="btn btn-danger btn-sm " ng-click="deleteCategory(item)" type="button">
+												<td><button class="btn btn-danger btn-sm "
+														ng-click="deleteCategory(item)" type="button">
 														<i class="fa fa-trash"></i>
 
 													</button>
@@ -135,22 +136,9 @@
 											</tr>
 										</tbody>
 									</table>
-									<div class="container">
-										<div class="row">
-											<div class="col-md-8 col-sm-8">
-												<ul class="pagination pull-right">
-													<li class="page-item"><a class="page-link" href="javascript:;">&laquo;</a></li>
-													<li class="page-item" ng-repeat="pageNumber in pageNumbers">
-														<a class="page-link" href="javascript:;" ng-click="goToPage(pageNumber)">{{ pageNumber
-															}}</a>
-													</li>
-													<li class="page-item"><a class="page-link" href="javascript:;">&raquo;</a></li>
-												</ul>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>

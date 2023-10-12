@@ -43,7 +43,6 @@ public class RegistrationRequest {
     @Column(length = 20)
     private final String phonenumber;
     @NotEmpty(message = "Hãy nhập mật khẩu")
-    @Pattern(message = "Mật khẩu ít nhất 6 ký tự và bao gồm 1 ký tự đặc biệt", regexp = "^(?=.*[@#$%^&+=!]).{6,}$")
     @Column(length = 100)
     private final String password;
     @NotEmpty(message = "Hãy nhập mật khẩu xác nhận")

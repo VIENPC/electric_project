@@ -1,234 +1,244 @@
 <!DOCTYPE html>
-<html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+<html
+	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 </head>
 
 <body>
-  <main>
-    <div class="main" ng-controller="checkctrl">
-      <div class="container">
-        <ul class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="">Store</a></li>
-          <li class="active">Checkout</li>
-        </ul>
-        <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-          <!-- BEGIN CONTENT -->
-          <div class="col-md-12 col-sm-12">
-            <h1>Checkout</h1>
-            <!-- BEGIN CHECKOUT PAGE -->
-            <div class="panel-group checkout-page accordion " id="checkout-page">
+	<main>
+		<div class="main" ng-controller="checkctrl">
+			<div class="container">
+				<ul class="breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="">Store</a></li>
+					<li class="active">Checkout</li>
+				</ul>
+				<!-- BEGIN SIDEBAR & CONTENT -->
+				<div class="row margin-bottom-40">
+					<!-- BEGIN CONTENT -->
+					<div class="col-md-12 col-sm-12">
+						<h1>Checkout</h1>
+						<!-- BEGIN CHECKOUT PAGE -->
+						<div class="panel-group checkout-page accordion "
+							id="checkout-page">
 
-              <!-- BEGIN SHIPPING ADDRESS -->
-              <div id="shipping-address " class="panel panel-default">
-                <div class="panel-heading">
-                  <h2 class="panel-title">
-                    <a data-toggle="collapse" data-parent="" href="#shipping-address-content" class="accordion-toggle">
-                      Bước 1: Thông tin nhận hàng
-                    </a>
-                  </h2>
-                </div>
-                <div id="shipping-address-content" class="panel-collapse collapse in">
-                  <div class="panel-body row">
-                    <div class="col-md-6 col-sm-6">
-                      <div class="form-group">
-                        <label for="firstname-dd">Tên người nhận <span class="require">*</span></label>
-                        <input type="text" id="firstname-dd" class="form-control" ng-model="account.fullName">
-                      </div>
-                      <div class="form-group">
-                        <label for="lastname-dd">Số điện thoại<span class="require">*</span></label>
-                        <input type="text" id="lastname-dd" class="form-control" ng-model="account.phoneNumber">
-                      </div>
-                      <div class="form-group">
-                        <label for="email-dd">E-Mail <span class="require">*</span></label>
-                        <input type="text" id="email-dd" class="form-control" ng-model="account.email">
-                      </div>
+							<!-- BEGIN SHIPPING ADDRESS -->
+							<div id="shipping-address " class="panel panel-default">
+								<div class="panel-heading">
+									<h2 class="panel-title">
+										<a data-toggle="collapse" data-parent=""
+											href="#shipping-address-content" class="accordion-toggle">
+											Bước 1: Thông tin nhận hàng </a>
+									</h2>
+								</div>
+								<div id="shipping-address-content"
+									class="panel-collapse collapse in">
+									<div class="panel-body row">
+										<div class="col-md-6 col-sm-6">
+											<div class="form-group">
+												<label for="firstname-dd">Tên người nhận <span
+													class="require">*</span></label> <input type="text"
+													id="firstname-dd" class="form-control"
+													ng-model="account.fullName">
+											</div>
+											<div class="form-group">
+												<label for="lastname-dd">Số điện thoại<span
+													class="require">*</span></label> <input type="text"
+													id="lastname-dd" class="form-control"
+													ng-model="account.phoneNumber">
+											</div>
+											<div class="form-group">
+												<label for="email-dd">E-Mail <span class="require">*</span></label>
+												<input type="text" id="email-dd" class="form-control"
+													ng-model="account.email">
+											</div>
+											
+											<div class="header-navigation">
+												<ul>
+													<!-- BEGIN CUSTOM VOUCHER -->
+													<div class="custom-top-cart-block">
+														<div class="custom-top-cart-info">
+															<a th:href="@{/user/promotion}">Voucher của shop</a>
+														</div>
+													</div>
+													<!-- END CUSTOM VOUCHER -->
+												</ul>
+											</div>
 
+										</div>
+										<div class="col-md-6 col-sm-6">
 
+											<div class="form-group">
+												<label for="country-dd">Thành phố/Tỉnh <span
+													class="require">*</span></label> <select
+													class="form-control input-sm" id="province">
 
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-
-                      <div class="form-group">
-                        <label for="country-dd">Thành phố/Tỉnh <span class="require">*</span></label>
-                        <select class="form-control input-sm" id="province">
-
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="region-state-dd">Quận/Huyện<span class="require">*</span></label>
-                        <select name="" id="district" class="form-control">
-                          <option value="">Chọn quận huyện</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="region-state-dd">Phường/Xã<span class="require">*</span></label>
-                        <select name="" id="ward" class="form-control">
-                          <option value="">Chọn xã phường</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="">Địa chỉ cụ thể <span class="require">*</span></label>
-                        <input type="text" id="telephone-dd" class="form-control" placeholder="Ví dụ: số nhà, tên đường"
-                          ng-model="dnct">
-                      </div>
-
-
-                    </div>
-                    <div class="col-md-12">
-                      <textarea class="form-control" name="" cols="5" rows="5" ng-model="ghichu"></textarea>
-                    </div>
-                    <div class="col-md-12" style="margin-top: 10px;">
-                      <button class="btn btn-primary  pull-right" type="submit" id="button-shipping-address"
-                        data-toggle="collapse" data-parent="#checkout-page" data-target="#payment-method-content">Tiếp
-                        tục</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- END SHIPPING ADDRESS -->
-
-
-
-              <!-- BEGIN PAYMENT METHOD -->
-              <div id="payment-method" class="panel panel-default">
-                <div class="panel-heading">
-                  <h2 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#checkout-page" href="#payment-method-content"
-                      class="accordion-toggle">
-                      Bước 2: Phương thức thanh toán
-                    </a>
-                  </h2>
-                </div>
-                <div id="payment-method-content" class="panel-collapse collapse">
-                  <div class="panel-body row">
-                    <div class="col-md-12">
-                      <p>Vui lòng chọn phương thức thanh toán</p>
-                      <div class="radio-list">
-                        <label>
-                          <input type="radio" name="paymentMethod" ng-checked="true" value="cod"
-                            ng-model="selectedPaymentMethod"> Thanh toán khi nhận hàng
-                        </label>
-                        <label>
-                          <input type="radio" name="paymentMethod" value="VNPAY" ng-model="selectedPaymentMethod"> Thanh
-                          toán bằng VNPAY
-                        </label>
-
-                      </div>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="region-state-dd">Quận/Huyện<span
+													class="require">*</span></label> <select name="" id="district"
+													class="form-control">
+													<option value="">Chọn quận huyện</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="region-state-dd">Phường/Xã<span
+													class="require">*</span></label> <select name="" id="ward"
+													class="form-control">
+													<option value="">Chọn xã phường</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="">Địa chỉ cụ thể <span class="require">*</span></label>
+												<input type="text" id="telephone-dd" class="form-control"
+													placeholder="Ví dụ: số nhà, tên đường" ng-model="dnct">
+											</div>
 
 
-                      <button class="btn btn-primary  pull-right" type="submit" id="button-payment-method"
-                        data-toggle="collapse" data-parent="#checkout-page" data-target="#confirm-content">Tiếp
-                        tục</button>
-                      <div class="checkbox pull-right">
-                        <label>
-                          <a title="Terms & Conditions" href="javascript:;"> </a> &nbsp;&nbsp;&nbsp;
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- END PAYMENT METHOD -->
-
-              <!-- BEGIN CONFIRM -->
-              <div id="confirm" class="panel panel-default" ng-controller="product-controller">
-                <div class="panel-heading">
-                  <h2 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content"
-                      class="accordion-toggle">
-                      Bước 3: Xác nhận đơn hàng
-                    </a>
-                  </h2>
-                </div>
-                <div id="confirm-content" class="panel-collapse collapse">
-                  <div class="panel-body row">
-                    <div class="col-md-12 clearfix">
-                      <div class="table-wrapper-responsive">
-                        <table>
-                          <tr>
-                            <th class="checkout-image">Ảnh</th>
-                            <th class="checkout-description">Tên sản phẩm</th>
-
-                            <th class="checkout-quantity">Số lượng</th>
-                            <th class="checkout-price">Giá</th>
-                            <th class="checkout-total">Tổng tiền</th>
-                          </tr>
-                          <tr ng-repeat="item in cartItems">
-                            <td class="checkout-image">
-                              <a href="javascript:;"><img ng-src="/assets/images/product/{{item.image}}"
-                                  alt="Berry Lace Dress"></a>
-                            </td>
-                            <td class="checkout-description">
-                              <h3><a href="javascript:;">{{item.productName}}</a></h3>
-
-                            </td>
-
-                            <td class="checkout-quantity">
-                              <h5>{{item.qty}}</h5>
-                            </td>
-                            <td class="checkout-price"><strong>{{item.price |number :0}}đ</strong></td>
-                            <td class="checkout-total"><strong>{{(item.qty*item.price) |number:0}}đ</strong></td>
-                          </tr>
-
-                        </table>
-                      </div>
-                      <div class="checkout-total-block">
-                        <ul>
-                          <li>
-                            <em>Tổng tiền</em>
-                            <strong class="price">{{totalAmount() |number: 0}} đ</strong>
-
-                          </li>
-                          <li>
-                            <em>Tiền giảm</em>
-                            <strong class="price">{{tiengiam |number: 0}} đ</strong>
-                          </li>
-                          <li class="checkout-total-price">
-                            <em>Tổng cộng</em>
-                            <strong class="price">{{totalAmount() - tiengiam |number: 0}} đ</strong>
+										</div>
+										<div class="col-md-12">
+											<textarea class="form-control" name="" cols="5" rows="5"
+												ng-model="ghichu"></textarea>
+										</div>
+										<div class="col-md-12" style="margin-top: 10px;">
+											<button class="btn btn-primary  pull-right" type="submit"
+												id="button-shipping-address" data-toggle="collapse"
+												data-parent="#checkout-page"
+												data-target="#payment-method-content">Tiếp tục</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END SHIPPING ADDRESS -->
 
 
-                          </li>
-                        </ul>
-                        <table>
-                          <thead>
-                            <h3 style="color: #cf6125 ;">Voucher giảm giá</h3>
-                          </thead>
-                          <tr ng-repeat="item in vouchers" ng-if="item.status !== false">
-                            <td>{{item.name}}</td>
-                            <td>{{item.discountPercent}}%</td>
-                            <td>{{item.status ? 'Đang hoạt động' : 'Ngừng hoạt động'}}</td>
-                            <td><a class="btn btn-primary btn-sm" ng-click="loadId(item.id)">Apply</a></td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div class="clearfix"></div>
 
-                      <button class="btn btn-primary pull-right" type="submit" id="button-confirm"
-                        ng-click="order.purchase()">Hoàn thành đặt hàng
-                      </button>
+							<!-- BEGIN PAYMENT METHOD -->
+							<div id="payment-method" class="panel panel-default">
+								<div class="panel-heading">
+									<h2 class="panel-title">
+										<a data-toggle="collapse" data-parent="#checkout-page"
+											href="#payment-method-content" class="accordion-toggle">
+											Bước 2: Phương thức thanh toán </a>
+									</h2>
+								</div>
+								<div id="payment-method-content" class="panel-collapse collapse">
+									<div class="panel-body row">
+										<div class="col-md-12">
+											<p>Vui lòng chọn phương thức thanh toán</p>
+											<div class="radio-list">
+												<label> <input type="radio" name="paymentMethod"
+													ng-checked="true" value="cod"
+													ng-model="selectedPaymentMethod"> Thanh toán khi
+													nhận hàng
+												</label> <label> <input type="radio" name="paymentMethod"
+													value="VNPAY" ng-model="selectedPaymentMethod">
+													Thanh toán bằng VNPAY
+												</label>
 
-                      <a th:href="@{/cart}" class="btn btn-default pull-right margin-right-20">Trở lại</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- END CONFIRM -->
-            </div>
-            <!-- END CHECKOUT PAGE -->
-          </div>
-          <!-- END CONTENT -->
-        </div>
-        <!-- END SIDEBAR & CONTENT -->
-      </div>
-    </div>
-  </main>
+											</div>
+
+
+											<button class="btn btn-primary  pull-right" type="submit"
+												id="button-payment-method" data-toggle="collapse"
+												data-parent="#checkout-page" data-target="#confirm-content">Tiếp
+												tục</button>
+											<div class="checkbox pull-right">
+												<label> <a title="Terms & Conditions"
+													href="javascript:;"> </a> &nbsp;&nbsp;&nbsp;
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END PAYMENT METHOD -->
+
+							<!-- BEGIN CONFIRM -->
+							<div id="confirm" class="panel panel-default"
+								ng-controller="product-controller">
+								<div class="panel-heading">
+									<h2 class="panel-title">
+										<a data-toggle="collapse" data-parent="#checkout-page"
+											href="#confirm-content" class="accordion-toggle"> Bước 3:
+											Xác nhận đơn hàng </a>
+									</h2>
+								</div>
+								<div id="confirm-content" class="panel-collapse collapse">
+									<div class="panel-body row">
+										<div class="col-md-12 clearfix">
+											<div class="table-wrapper-responsive">
+												<table>
+													<tr>
+														<th class="checkout-image">Ảnh</th>
+														<th class="checkout-description">Tên sản phẩm</th>
+
+														<th class="checkout-quantity">Số lượng</th>
+														<th class="checkout-price">Giá</th>
+														<th class="checkout-total">Tổng tiền</th>
+													</tr>
+													<tr ng-repeat="item in cartItems">
+														<td class="checkout-image"><a href="javascript:;"><img
+																ng-src="/assets/images/product/{{item.image}}"
+																alt="Berry Lace Dress"></a></td>
+														<td class="checkout-description">
+															<h3>
+																<a href="javascript:;">{{item.productName}}</a>
+															</h3>
+
+														</td>
+
+														<td class="checkout-quantity">
+															<h5>{{item.qty}}</h5>
+														</td>
+														<td class="checkout-price"><strong>{{item.price
+																|number :0}}đ</strong></td>
+														<td class="checkout-total"><strong>{{(item.qty*item.price)
+																|number:0}}đ</strong></td>
+													</tr>
+
+												</table>
+											</div>
+											<div class="checkout-total-block">
+												<ul>
+													<li><em>Tổng tiền</em> <strong class="price">{{totalAmount()
+															|number: 0}}đ</strong></li>
+													<li><em>Phí giao hàng</em> <strong class="price">0đ</strong>
+													</li>
+
+
+													<li class="checkout-total-price"><em>Tổng cộng</em> <strong
+														class="price">{{totalAmount() |number: 0}}đ</strong></li>
+												</ul>
+											</div>
+											<div class="clearfix"></div>
+
+											<button class="btn btn-primary pull-right" type="submit"
+												id="button-confirm" ng-click="order.purchase()">Hoàn
+												thành đặt hàng</button>
+
+											<a th:href="@{/cart}"
+												class="btn btn-default pull-right margin-right-20">Trở
+												lại</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END CONFIRM -->
+						</div>
+						<!-- END CHECKOUT PAGE -->
+					</div>
+					<!-- END CONTENT -->
+				</div>
+				<!-- END SIDEBAR & CONTENT -->
+			</div>
+		</div>
+	</main>
 </body>
 
 </html>

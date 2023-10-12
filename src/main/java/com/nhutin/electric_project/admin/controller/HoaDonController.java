@@ -1,6 +1,7 @@
 package com.nhutin.electric_project.admin.controller;
 
 import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class HoaDonController {
 
     @RequestMapping("/qldonhang")
     public String qlhoadon(Model model) {
-
         model.addAttribute("listhd", hddao.findAll());
         System.out.println(hddao.findAll());
         return "admin/view/qloder";
@@ -42,7 +42,7 @@ public class HoaDonController {
 
     @RequestMapping("/qldonhang/suatthd/{mahd}")
     public String edittthd(@PathVariable("mahd") Integer mahd) {
-        System.out.println(mahd);
+
         Order hd = hddao.findById(mahd).get();
         hd.setStatushd(2);
         hddao.save(hd);

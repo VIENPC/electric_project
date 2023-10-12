@@ -1,5 +1,5 @@
-
-var app = angular.module("my-app", []);
+const host = "http://localhost:8080/rest";
+const app = angular.module("OrderApp", []);
 const table = document.getElementById("myTable");
 const button = document.getElementById("toggleButton");
 const form = document.getElementById("form");
@@ -16,16 +16,10 @@ app.controller("OrderCtrl", function($scope, $http,$window) {
 			$scope.pageNumber = 1;
 			$scope.limit = 8;
 			$scope.totalPage = getTotalPage($scope.listusers, $scope.limit);
+
+
 		})
 	}
-	
-//	$http.get("/api/account/login").then((result) => {
-//		$scope.user_login = result.data;
-//		console.log("thông tin đăng nhập",$scope.user_login)
-//	}).catch((err) => {
-//
-//	});
-	
 	$scope.edit = {};
 	var userID =""
 	$scope.showUserDetails = function(user) {

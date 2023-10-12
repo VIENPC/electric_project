@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.user.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.Comment;
@@ -52,19 +48,6 @@ public class HomeController {
         return "banhang/view/home";
     }
 
-    @GetMapping("/change-language")
-    public String changeLanguage(@RequestParam(name = "lang") String lang, HttpServletRequest request) {
-        Locale locale = new Locale(lang);
-        request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, locale);
-        return "redirect:/home";
-    }
-
-    @RequestMapping("/")
-    public String index1() {
-
-        return "banhang/view/home";
-    }
-
     @RequestMapping("/success")
     public String thongbao() {
 
@@ -77,6 +60,15 @@ public class HomeController {
         return "banhang/view/about";
     }
 
+    // @RequestMapping("/shop")
+    // public String product() {
+    // return "banhang/view/product_list";
+    // }
+
+    // @RequestMapping("/shop/{categoryID}")
+    // public String productCategory() {
+    // return "banhang/view/product_list";
+    // }
     @RequestMapping("/shop")
     public String productCategory(@RequestParam(name = "categoryID", required = false) Integer categoryID,
             @RequestParam(name = "brandID", required = false) Integer brandID,
@@ -93,6 +85,16 @@ public class HomeController {
             return "banhang/view/product_list"; // Trường hợp mặc định
         }
     }
+
+    // @RequestMapping("/shop/{brandID}")
+    // public String productBrand() {
+    // return "banhang/view/product_list";
+    // }
+
+    // @RequestMapping("/shop/{brandID}")
+    // public String productBrand() {
+    // return "banhang/view/product_list";
+    // }
 
     @RequestMapping("/detail/{productID}")
     public String detailid(@PathVariable("productID") int productID, Model model) {

@@ -95,7 +95,8 @@
                                             th:href="@{'/admin/xemhoadonct/'+${hd.orderId}}"><i class="fa fa-eye"
                                                 aria-hidden="true"></i></a>
 
-                                        <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}">
+                                        <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}"
+                                            th:if="${hd.statushd == 1}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="false"></i></a>
                                     </td>
                                 </tr>
@@ -109,27 +110,46 @@
         </div>
     </main>
 
-
-    <!-- Modal
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Modal hiển thị chi tiết sản phẩm -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="hdctModal"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
+
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead>
+                            <tr>
+
+                                <th width="10"><input type="checkbox" id="all"></th>
+                                <th><span>Tên sản phẩm</span></th>
+                                <th><span>Số lượng </span></th>
+                                <th><span>Giá sản phẩm </span></th>
+                                <th><span>Tổng tiền</span></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="hdct : ${listhdct}">
+                                <td width="10"><input type="checkbox" name="check1" value="1"></td>
+
+                                <td th:text="${hdct.product.productName}"></td>
+                                <td th:text="${hdct.quantity}"></td>
+                                <td th:text="${#numbers.formatDecimal(hdct.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
+                                <td
+                                    th:text="${#numbers.formatDecimal(hdct.quantity * hdct.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
+
 </body>
 
 </html>

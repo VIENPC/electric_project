@@ -25,16 +25,17 @@
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-										class="fa fa-upload"></i> Tải từ file</a>
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
+									onclick="myFunction(this)"><i class="fa fa-upload"></i> Tải từ file</a>
 							</div>
 
 							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-										class="fa fa-print"></i> In dữ liệu</a>
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
+									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-excel btn-sm export" title="Xuất file excel"><i class="fa fa-file-excel-o"></i> Xuất
+								<a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+										class="fa fa-file-excel-o"></i> Xuất
 									Excel</a>
 							</div>
 							<div class="col-sm-2">
@@ -48,7 +49,8 @@
 									Xóa tất cả </a>
 							</div>
 						</div>
-						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
 								<div onload="showTable()" class="col-sm-12">
@@ -67,7 +69,7 @@
 												<th><span>Permission</span></th>
 												<th><span>RegistrationDate</span></th>
 												<th><span>Role</span></th>
-												<th><span></span></th>
+												<th><span>Tính năng</span></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -83,8 +85,10 @@
 												<td th:text="${kh.loginPermission} ? 'Có' : 'Không'"></td>
 												<td th:text="${#dates.format(kh.registrationDate, 'dd-MM-yyyy')}"></td>
 												<td th:text="${kh.role}"></td>
-												<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
-															class="fa fa-pencil mr-2"></i></a><a class="btn btn-danger btn-sm"
+												<td><a class="btn btn-primary btn-sm"
+														th:href="@{'/admin/qlkhachhang/'+${kh.userID}}"><i
+															class="fa fa-pencil mr-2"></i></a><a
+														class="btn btn-danger btn-sm"
 														th:href="@{/admin/qlkhachhang/delete/{user}(user=${kh.userID})}">
 														<i class="fa fa-trash"></i>
 													</a></td>

@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.security.handler;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	HttpSession session;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository nguoiDungDAO;
 
 	@Autowired
 	private UserDetailsServiceImpl userService;
@@ -37,32 +38,52 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-		OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-		System.out.println("Customer's OAuth2User: " + oauth2User);
+		if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+			// Xử lý đăng nhập bằng Google
+			DefaultOidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
 
-		String email = oauth2User.getAttribute("email");
-		String name = oauth2User.getAttribute("name");
+			String email = oidcUser.getAttribute("email");
+			String name = oidcUser.getFullName();
+			String phone = oidcUser.getPhoneNumber();
 
-		// Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
-		Optional<User> existingUser = userRepository.findByEmail(email);
-		UserDetails userDetails;
-		if (existingUser.isPresent()) {
-			// Nếu tồn tại, cập nhật thông tin người dùng
-			userDetails = userService.updateUserAfterOAuthLogin(existingUser.get(), name);
-		} else {
-			// Nếu không tồn tại, tạo một tài khoản người dùng mới
-			userDetails = userService.createUserAfterOAuthLogin(email, name, null);
+			UserDetails userDetails;
+			if (nguoiDungDAO.findByEmail(email).isEmpty()) {
+				userDetails = userService.createUserAfterOAuthLogin(email, name, phone);
+			} else {
+				User user = nguoiDungDAO.findByEmail(email).get();
+				userDetails = userService.updateUserAfterOAuthLogin(user, name);
+			}
+			session.setAttribute("tenDangNhapLogin", oidcUser.getAttribute("email"));
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+					userDetails, null, userDetails.getAuthorities());
+
+			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+			System.out.println("Cumstomer's Email: " + email);
+		} else if (authentication.getPrincipal() instanceof DefaultOAuth2User) {
+			// Xử lý đăng nhập bằng Facebook
+			DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
+
+			String email = oAuth2User.getAttribute("email");
+			String name = oAuth2User.getAttribute("name");
+			// Facebook không trả về số điện thoại nên có thể cần xem lại xử lý này.
+
+			UserDetails userDetails;
+			if (nguoiDungDAO.findByEmail(email).isEmpty()) {
+				userDetails = userService.createUserAfterOAuthLogin(email, name, null);
+			} else {
+				User user = nguoiDungDAO.findByEmail(email).get();
+				userDetails = userService.updateUserAfterOAuthLogin(user, name);
+			}
+			session.setAttribute("tenDangNhapLogin", email);
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+					userDetails, null, userDetails.getAuthorities());
+
+			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+			System.out.println("Cumstomer's Email: " + email);
 		}
 
-		// Lưu thông tin đăng nhập vào session và cookie
-		session.setAttribute("tenDangNhapLogin", email);
-		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails, null,
-				userDetails.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-		CookieUtils.add("tenDangNhapCookie", email, 7 * 24, response);
-		System.out.println("Customer's Email: " + email);
-
-		// Đặt trang mặc định sau khi đăng nhập thành công
 		super.setDefaultTargetUrl("/home");
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
