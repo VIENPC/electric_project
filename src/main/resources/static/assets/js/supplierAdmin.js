@@ -4,7 +4,8 @@ app.controller('supplierAdmin-controller', function ($scope, $http, $window) {
   $scope.suppliers = [];
   $scope.newSup = {};
   $scope.form = {};
-
+  $scope.editingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
+  $scope.addingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
 
   $http.get('/rest/supplier')
     .then(function (response) {
@@ -70,6 +71,8 @@ app.controller('supplierAdmin-controller', function ($scope, $http, $window) {
   };
   $scope.editSupplier = function (suppliers) {
     $scope.newSup = angular.copy(suppliers);
+    $scope.editingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
+    $scope.addingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
     $scope.switchToTab1();
   }
   // Hàm xử lý sự kiện chuyển về Tab 2
@@ -81,4 +84,11 @@ app.controller('supplierAdmin-controller', function ($scope, $http, $window) {
     $('#myTabs a[href="#tab1"]').tab('show');
   };
 
+  $scope.updateStatus = function () {
+    if ($scope.newProduct.quantity <= 0) {
+      $scope.newProduct.active = false;
+    } else {
+      $scope.newProduct.active = true;
+    }
+  };
 });

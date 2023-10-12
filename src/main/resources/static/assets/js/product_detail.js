@@ -12,24 +12,17 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
                 $scope.product = response.data.product;
                 $scope.relatedProducts = response.data.relatedProducts;
 
-                
-                    $http.get('/rest/comment/' + productID)
+
+                $http.get('/rest/comment/' + productID)
                     .then(function (response) {
                         alert("vao day");
                         console.log('Giá trị comment:', response); // Add this line
-                    
-            
+
+
                     })
                     .catch(function (error) {
                         console.error('Error fetching item details:', error);
                     });
-                
-              
-
-
-
-
-
             })
             .catch(function (error) {
                 console.error('Error fetching item details:', error);
@@ -46,9 +39,11 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
     };
     $scope.comment = [];
 
-  
+    $scope.goToProduct_Detail = function (productID) {
+        window.location.href = `/detail/${productID}`;
+    };
 
 
-  
+
 
 });

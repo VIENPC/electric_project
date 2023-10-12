@@ -62,15 +62,16 @@
 		<div class="tab-content" id="myTabsContent">
 			<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
 				<form class="row" method="post" enctype="multipart/form-data" name="form">
-					<div class="form-group col-md-4">
+					<!-- <div class="form-group col-md-4">
 						<label class="control-label">Mã thương hiệu </label> <input class="form-control" type="text"
 							ng-model="newBrand.brandID" placeholder="Mã loại" readonly>
-					</div>
-					<div class="form-group col-md-4" ng-class="{'has-error': form.brandName.$invalid && form.brandName.$dirty}">
+					</div> -->
+					<div class="form-group col-md-4"
+						ng-class="{'has-error': form.brandName.$invalid && form.brandName.$dirty && !editingMode}">
 						<label class="control-label">Tên thương hiệu</label>
-						<input class="form-control" type="text" ng-model="newBrand.brandName" placeholder="Tên loại"
+						<input class="form-control" type="text" ng-model="newBrand.brandName" placeholder="Tên thương hiệu"
 							name="brandName">
-						<div ng-messages="form.brandName.$error" ng-if="!form.brandName.$dirty">
+						<div ng-messages="form.brandName.$error" ng-if="!form.brandName.$dirty && !editingMode">
 							<div class="text-danger" ng-message="required">Vui lòng
 								nhập tên thương hiệu</div>
 						</div>
@@ -84,13 +85,14 @@
 							<input type="radio" id="active" name="active" ng-value="false" ng-model="newBrand.active"
 								ng-required="true" /> <label for="user">Hết sản
 								phẩm</label><br>
-							<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+							<div ng-messages="form.active.$error" ng-if="!form.active.$dirty && !editingMode">
 								<div class="text-danger" ng-message="required">Vui lòng chọn
 									trạng thái!! </div>
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-md-6" ng-class="{'has-error': form.image.$invalid && form.image.$touched}">
+					<div class="form-group col-md-6"
+						ng-class="{'has-error': form.image.$invalid && form.image.$touched && !editingMode}">
 						<div class="form-group" style="border: 1px solid rgb(221, 218, 218); height: 200px; width: 300px;">
 							<div class="nk-int-st image-container">
 								<img class="object-fit" id="image" ng-src="../assets/images/carousel/{{newBrand.image}}"
@@ -103,7 +105,7 @@
 								<input style="object-fit: contain;" type="file" class="form-control" ng-model="newBrand.image"
 									onchange="angular.element(this).scope().imageChanged(this.files)" accept=".png, .jpg, .jpeg, .gif"
 									id="imageInput" name="image" ng-required="true">
-								<div ng-if="form.image.$touched && form.image.$error.required" class="text-danger">Vui
+								<div ng-if="form.image.$touched && form.image.$error.required && !editingMode" class="text-danger">Vui
 									lòng
 									chọn ảnh</div>
 							</div>
@@ -111,9 +113,9 @@
 						</div>
 					</div>
 					<div class=" form-group col-md-6">
-						<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addBrand()" ng-disabled="form.$invalid"><i
-								class="fa fa-plus"></i>Thêm mới</button>
-						<button class="btn btn-info btn-sm" id="switchToTab2" ng-click="updateBrand(brand)"
+						<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addBrand()" ng-show="addingMode"
+							ng-disabled="form.$invalid"><i class="fa fa-plus"></i>Thêm mới</button>
+						<button class="btn btn-info btn-sm" ng-show="editingMode" id="switchToTab2" ng-click="updateBrand(brand)"
 							ng-disabled="form.$invalid"><i class="fa fa-refresh"></i>Cập nhật</button>
 					</div>
 				</form>

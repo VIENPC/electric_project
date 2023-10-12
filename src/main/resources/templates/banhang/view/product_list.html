@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Product List</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         <ul class="breadcrumb">
           <li><a href="">Home</a></li>
           <li><a href="">Store</a></li>
-          <li class="active">Men category</li>
+          <li class="active">Product category</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -43,15 +43,6 @@
                   {{item.categoryName}}
                 </label>
               </div>
-
-
-
-              <!-- <h3>Price</h3>
-              <p>
-                <label for="amount">Range:</label>
-                <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
-              </p>
-              <div id="slider-range"></div> -->
 
             </div>
             <div class="sidebar-products">
@@ -105,7 +96,6 @@
                     <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
                       <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                     </div>
                   </div>
                   <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>

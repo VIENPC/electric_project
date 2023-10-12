@@ -20,9 +20,11 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.Comment;
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.CommentsDao;
 import com.nhutin.electric_project.repository.UserRepository;
+import com.nhutin.electric_project.repository.prmotionRepositpry;
 import com.nhutin.electric_project.repository.productsRepository;
 
 @Controller
@@ -35,6 +37,9 @@ public class HomeController {
 
     @Autowired
     productsRepository prdao;
+
+    @Autowired
+    prmotionRepositpry prmoDao;
 
     @Autowired
     CookieUtils cook;
@@ -131,10 +136,7 @@ public class HomeController {
 
     @RequestMapping("/checkout")
     public String checkout(HttpServletRequest req, Model model) {
-        String email = cook.get("tenDangNhapCookie", req);
 
-        User kh = userDAO.findByEmailLike(email);
-        model.addAttribute("account", kh);
         return "banhang/view/checkout";
     }
 

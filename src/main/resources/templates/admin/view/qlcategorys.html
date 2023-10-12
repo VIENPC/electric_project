@@ -59,15 +59,15 @@
 							</div>
 						</form>
 						<form class="row" method="post" enctype="multipart/form-data" name="form">
-							<div class="form-group col-md-4">
+							<!-- <div class="form-group col-md-4">
 								<label class="control-label">Mã loại </label> <input class="form-control" type="text"
 									ng-model="newCate.categoryID" placeholder="Mã loại" readonly>
-							</div>
+							</div> -->
 							<div class="form-group col-md-4"
-								ng-class="{'has-error': form.categoryName.$invalid && form.categoryName.$dirty}">
+								ng-class="{'has-error': form.categoryName.$invalid && form.categoryName.$dirty && !editingMode}">
 								<label class="control-label">Tên loại</label> <input class="form-control" type="text"
 									ng-model="newCate.categoryName" placeholder="Tên loại" ng-required="true" name="categoryName">
-								<div ng-messages="form.categoryName.$error" ng-if="!form.categoryName.$dirty">
+								<div ng-messages="form.categoryName.$error" ng-if="!form.categoryName.$dirty && !editingMode">
 									<div class="text-danger" ng-message="required">Vui lòng
 										nhập tên loại</div>
 								</div>
@@ -81,19 +81,23 @@
 									<input type="radio" id="active" name="active" ng-value="false" ng-model="newCate.active"
 										ng-required="true" /> <label for="user">Hết sản
 										phẩm</label><br>
-									<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+									<div ng-messages="form.active.$error" ng-if="!form.active.$dirty && !editingMode">
 										<div class="text-danger" ng-message="required">Vui lòng chọn
 											trạng thái!! </div>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-add btn-sm" ng-click="addCategory()" title="Thêm" ng-disabled="form.$invalid"><i
-										class="fa fa-plus"></i> Thêm thương hiệu</button>
+								<button class="btn btn-add btn-sm" ng-show="addingMode" ng-click="addCategory()" title="Thêm"
+									ng-disabled="form.$invalid"><i class="fa fa-plus"></i> Thêm thương hiệu</button>
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-info btn-sm" ng-disabled="form.$invalid" ng-click="updateCate(cate)"
-									title="Thêm"><i class="fa fa-refresh"></i> Cập nhật </button>
+								<button class="btn btn-info btn-sm" ng-show="editingMode" ng-disabled="form.$invalid"
+									ng-click="updateCate(cate)" title="Thêm"><i class="fa fa-refresh"></i> Cập nhật </button>
+							</div>
+							<div class="col-sm-2">
+								<button class="btn btn-info btn-sm" ng-click="reset()" title="Thêm"><i class="fa fa-refresh"></i> Reset
+								</button>
 							</div>
 						</form>
 						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">

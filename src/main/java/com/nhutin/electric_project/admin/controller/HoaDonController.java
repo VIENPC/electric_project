@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.admin.controller;
 
 import java.util.Date;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,10 @@ public class HoaDonController {
     }
 
     @RequestMapping("/qldonhang/suatthd/{mahd}")
-    public String edittthd(@PathVariable("mahd") Integer mahd) { 
+    public String edittthd(@PathVariable("mahd") Integer mahd) {
         System.out.println(mahd);
         Order hd = hddao.findById(mahd).get();
-        hd.setStatushd(mahd);
+        hd.setStatushd(2);
         hddao.save(hd);
         return "redirect:/admin/qldonhang?success=updatesp";
     }

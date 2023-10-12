@@ -8,7 +8,28 @@ app.controller('productAdmin-controller', function ($scope, $http, $window, $sce
   $scope.pageNumbers = []; // Các số trang
   $scope.currentPage = 1;  // Trang hiện tại
   $scope.pageSize = 6;
+  $scope.editingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
+  $scope.addingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
 
+  $scope.reset = function () {
+    $scope.newProduct = {
+      quantity: null,
+      productName: '',
+      configuration: '',
+      description: '',
+      image: null
+
+    };
+    $scope.form.$setPristine();
+    $scope.form.$setUntouched();
+  };
+  $scope.updateStatus = function () {
+    if ($scope.newProduct.quantity <= 0) {
+      $scope.newProduct.active = false;
+    } else {
+      $scope.newProduct.active = true;
+    }
+  };
   $http.get('/rest/productAdmin')
     .then(function (response) {
       $scope.products = response.data;
@@ -57,6 +78,8 @@ app.controller('productAdmin-controller', function ($scope, $http, $window, $sce
     $scope.newProduct = angular.copy(products);
     $scope.newProduct.configuration = products.configuration;
     $scope.newProduct.description = products.description;
+    $scope.editingMode = true;
+    $scope.addingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
     // Cập nhật giá trị CKEditor
     CKEDITOR.instances.configuration.setData($scope.newProduct.configuration);
     CKEDITOR.instances.description.setData($scope.newProduct.description);
@@ -121,7 +144,7 @@ app.controller('productAdmin-controller', function ($scope, $http, $window, $sce
           $scope.products[index] = response.data;
         }
         // Xóa thông tin sản phẩm trong biểu mẫu sau khi cập nhật thành công
-        $scope.newProduct = {};
+        $scope.reset();
         swal("Thành công", "Cập nhật sản phẩm thành công!", "success");
       })
       .catch(function (error) {

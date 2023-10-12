@@ -128,11 +128,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="itemspht :${listspht}">
+                                <!-- <tr th:each="itemspht :${listspht}">
                                     <td th:text="${itemspht.productID}"></td>
                                     <td th:text="${itemspht.productName}"></td>
-                                    <!-- <td><img th:src="@{'/images/sanpham/' + ${itemspht.hinhanh}}" alt="" width="100px;">
-                                    </td> -->
                                     <td th:text="${itemspht.quantity}"></td>
                                     <td><span class="badge bg-success" th:block th:if="${itemspht.active == true}">Còn
                                             hàng</span> <span class="badge bg-danger" th:block
@@ -142,7 +140,7 @@
                                         th:text="${#numbers.formatDecimal(itemspht.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
                                     </td>
                                     <td th:text="${itemspht.brand.brandName}    "></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

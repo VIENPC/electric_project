@@ -2,6 +2,7 @@ var app = angular.module('my-app');
 
 app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.products = [];
+
     $scope.brands = [];
     $scope.products = {};
     $scope.categoris = [];
@@ -9,6 +10,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.newProduct = {};
     $scope.form = {};
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
+   
 
     $http.get('/rest/product')
         .then(function (response) {
@@ -16,6 +18,10 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             $scope.allProducts = response.data;
         });
 
+    $scope.Id = function () {
+        alert("He lo")
+    };
+   
 
     $http.get('/rest/supplier')
         .then(function (response) {
@@ -266,6 +272,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
+
+
     $scope.loadLocalStorage();
     // Quan ly gio hang
     $scope.cartItems = [];
@@ -364,6 +372,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
 });
 app.controller("checkctrl", function ($scope, $http, $filter) {
+    $scope.vouchers = [];
+
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
         return axios.get(api)
@@ -440,6 +450,29 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         });
     };
     $scope.getAccount();
+    $http.get('/rest/promotion')
+        .then(function (response) {
+            $scope.vouchers = response.data;
+        });
+
+    $scope.tiengiam = 0;
+    $scope.tongtien = 0;
+    $scope.loadId = function (itemId) {
+        $http.get('/rest/' + itemId)
+            .then(function (response) {
+                $scope.tiengiam = $scope.totalAmount() - (($scope.totalAmount() * response.data.discountPercent) / 100);
+                console.log("coaihd", $scope.tiengiam);
+                $scope.tongtien = $scope.totalAmount() - $scope.tiengiam;
+
+            })
+            .catch(function (error) {
+                console.error('Error fetching products:', error);
+            });
+    };
+
+
+
+
     $scope.saveToLocalStorage = function () {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);
@@ -462,7 +495,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         phone: "",
         statushd: 1,
         statustt: 0,
-        totalAmount: $scope.totalAmount(),
+        totalAmount: 0,
         note: "Trống", // Thêm trường số điện thoại người nhận
         get orderDetails() {
             return $scope.cartItems.map(cart => {
@@ -486,7 +519,8 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             order.phone = $scope.account.phoneNumber;
             order.address = $scope.dnct + ',' + diachinn1;
             order.note = $scope.ghichu;
-            // console.log("thông tin",user);
+            order.totalAmount = $scope.tongtien;
+            // console.log("Tongtien",);
 
 
 
@@ -495,7 +529,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
                     var order_id = resp.data.orderId
                     if ($scope.selectedPaymentMethod == "VNPAY") {
                         datased = {
-                            amount: $scope.totalAmount(),
+                            amount: $scope.tongtien,
                             orderid: order_id,
                         }
 

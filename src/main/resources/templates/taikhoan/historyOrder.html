@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html
-	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+<html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lịch sử đơn hàng</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lịch sử đơn hàng</title>
 </head>
 <style>
 </style>
@@ -49,24 +48,31 @@
 															<td th:text="${order.name}"></td>
 															<td th:text="${order.phone}"></td>
 															<td th:text="${order.address}"></td>
-															<td th:text="${order.orderDate}"></td>
-															<td th:text="${order.totalAmount}"></td>
+															<td th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></td>
+
+															<td><span
+																	th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
+															</td>
 															<td><span th:if="${order.statushd == 1}">Chờ
 																	xác nhận</span> <span th:if="${order.statushd == 2}">Đã
 																	xác nhận</span> <span th:if="${order.statushd == 3}">Đang
 																	giao</span> <span th:if="${order.statushd == 4}">Hoàn
-																	thành</span> <span th:if="${order.statushd == 5}">Hủy</span></td>
-															<td th:text="${order.statustt}"></td>
-															<td th:text="${order.note}"></td>
-															<td><a class="btn btn-primary btn-sm "
-																th:href="@{'/user/xemhoadonct/'+${order.orderId}}"><i
-																	class="fa fa-eye" aria-hidden="true"></i></a> <a
-																class="btn btn-add btn-sm settt"
-																th:attr="data-mahd=${order.orderId}"
-																th:if="${order.statustt ==false}"> <i
-																	class="fa fa-pencil-square-o" aria-hidden="false"></i></a>
-
+																	thành</span> <span th:if="${order.statushd == 5}">Hủy</span>
 															</td>
+															<td>
+																<a class="btn btn-danger btn-sm" th:if="${not order.statustt}"
+																	th:href="@{'/user/huythanhtoan/' + ${order.orderId}}" onclick="cancelPayment()">
+																	<i class="fa fa-times" aria-hidden="true"></i> Hủy
+																	thanh toán
+																</a>
+																<span th:if="${order.statustt}" class="badge badge-warning">Đã thanh toán</span>
+															</td>
+															<td th:text="${order.note}"></td>
+															<td><a class="btn btn-primary btn-sm"
+																	th:href="@{'/user/xemhoadonct/' + ${order.orderId}}">
+																	<i class="fa fa-eye" aria-hidden="true"></i>
+																</a> <br></td>
+
 
 														</tr>
 													</tbody>
@@ -85,6 +91,13 @@
 			</div>
 		</div>
 	</main>
+	<script>
+		function cancelPayment() {
+			// Thực hiện hủy thanh toán ở đây, có thể sử dụng AJAX để gửi yêu cầu đến máy chủ
+			// Sau khi hoàn thành, hiển thị thông báo "Hủy thanh toán thành công"
+			alert("Hủy thanh toán thành công");
+		}
+	</script>
 </body>
 
 </html>

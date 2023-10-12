@@ -4,7 +4,8 @@ app.controller('brandAdmin-controller', function ($scope, $http, $window) {
   $scope.brands = [];
   $scope.newBrand = {};
   $scope.form = {};
-
+  $scope.editingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
+  $scope.addingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
 
 
   $http.get('/rest/brandAdmin')
@@ -97,6 +98,8 @@ app.controller('brandAdmin-controller', function ($scope, $http, $window) {
 
   $scope.editbrand = function (brands) {
     $scope.newBrand = angular.copy(brands);
+    $scope.editingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
+    $scope.addingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
     $scope.switchToTab1();
   }
 });

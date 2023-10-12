@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý sản phẩm</title>
+</head>
+
+<body>
+	<main class="app-content" ng-controller="product-controller">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a><b>Sản phẩm khách
+							hàng sử dụng nhiều nhất</b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
+										class="fa fa-upload"></i> Tải từ file</a>
+							</div>
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+										class="fa fa-print"></i> In dữ liệu</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
+										class="fa fa-copy"></i>
+									Sao chép</a>
+							</div>
+
+							<div class="col-sm-2">
+
+								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i class="fa fa-file-excel-o"></i> Xuất
+									Excel</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+										class="fa fa-file-pdf-o"></i> Xuất
+									PDF</a>
+							</div>
+						</div>
+
+						<!-- Tabs Navigation -->
+						<ul class="nav nav-tabs" id="myTabs" role="tablist">
+							<li class="nav-item"><a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+									aria-controls="tab1" aria-selected="true">Danh sách sản phẩm</a>
+							</li>
+						</ul>
+						<!-- Tabs Content -->
+						<div class="tab-content" id="myTabsContent">
+							<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+								<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table table-hover table-bordered" id="sampleTable">
+												<thead>
+													<tr>
+
+														<th><span>ID</span></th>
+														<th><span>Tên sản phẩm</span></th>
+														<th><span>Giá tiền</span></th>
+														<th><span>Hãng</span></th>
+														<th><span>Loại</span></th>
+														<th><span>Nhà cung cấp</span></th>
+														<th><span>Chức năng</span></th>
+														<th><span>Mô tả</span></th>
+														<th><span>Cấu hình</span></th>
+														<th><span>Ảnh</span></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="sp : ${items}">
+														<td th:text="${sp.productID}"></td>
+														<td th:text="${sp.productName}"></td>
+														<td th:text="${sp.price}"></td>
+														<td th:text="${sp.brand.brandName}"></td>
+														<td th:text="${sp.category.categoryName}"></td>
+														<td th:text="${sp.supplier.supplierName}"></td>
+														<td><span th:if="${#strings.length(sp.description) &gt; 10}"
+																th:text="${#strings.substring(sp.description, 0, 10) + '...'}" />
+															<span th:unless="${#strings.length(sp.description) &gt; 10}"
+																th:text="${sp.description}" />
+														</td>
+														<td><span th:if="${#strings.length(sp.configuration) &gt; 10}"
+																th:text="${#strings.substring(sp.configuration, 0, 10) + '...'}" />
+															<span th:unless="${#strings.length(sp.configuration) &gt; 10}"
+																th:text="${sp.configuration}" />
+														</td>
+														<td><span th:if="${#strings.length(sp.configuration) &gt; 10}"
+																th:text="${#strings.substring(sp.configuration, 0, 10) + '...'}" />
+															<span th:unless="${#strings.length(sp.configuration) &gt; 10}"
+																th:text="${sp.configuration}" />
+														</td>
+														<td><img th:src="@{'/assets/images/product/' + ${sp.image}}"
+																style="width: 50px; height: 50px" /></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+</body>
+
+</html>

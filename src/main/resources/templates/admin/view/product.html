@@ -150,21 +150,22 @@
 													type="number" name="" ng-model="newProduct.productID" readonly>
 											</div> -->
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.quantity.$invalid && form.quantity.$dirty}">
+												ng-class="{'has-error': (form.quantity.$invalid || newProduct.quantity < 0) && form.quantity.$dirty && !editingMode}">
 												<label class="control-label">Số lượng</label>
 												<input class="form-control" type="number" name="quantity" id="soluong"
-													ng-model="newProduct.quantity" required>
-												<div ng-messages="form.quantity.$error" ng-if="!form.quantity.$dirty">
-													<div class="text-danger" ng-message="required">Vui lòng
-														nhập số lượng sản phẩm</div>
+													ng-model="newProduct.quantity" required ng-change="updateStatus()">
+												<div ng-messages="form.quantity.$error" ng-if="!form.quantity.$dirty && !editingMode">
+													<div class="text-danger" ng-message="required">Vui lòng nhập số lượng sản phẩm</div>
 												</div>
+												<div ng-show="newProduct.quantity < 0" class="text-danger">Số lượng không được nhỏ hơn 0.</div>
 											</div>
+
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.productName.$invalid && form.productName.$dirty}">
+												ng-class="{'has-error': form.productName.$invalid && form.productName.$dirty && !editingMode}">
 												<label class="control-label">Tên sản phẩm</label>
 												<input class="form-control" type="text" id="tensp" name="productName"
-													ng-model="newProduct.productName" required>
-												<div ng-messages="form.productName.$error" ng-if="!form.productName.$dirty">
+													ng-model="newProduct.productName" required ng-change="updateStatus()">
+												<div ng-messages="form.productName.$error" ng-if="!form.productName.$dirty && !editingMode">
 													<div class="text-danger" ng-message="required">Vui lòng
 														nhập tên sản phẩm</div>
 												</div>
@@ -174,64 +175,63 @@
 												<label class="col-md-12 p-0">Status</label>
 												<div class="col-md-12 border-bottom p-0">
 													<input type="radio" id="active" name="active" ng-value="true" ng-model="newProduct.active"
-														ng-required="true" /> <label for="admin">Còn sản
-														phẩm</label><br>
+														ng-required="true" />
+													<label for="admin">Còn sản phẩm</label><br>
 													<input type="radio" id="active" name="active" ng-value="false" ng-model="newProduct.active"
-														ng-required="true" /> <label for="user">Hết sản
-														phẩm</label><br>
-													<div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
-														<div class="text-danger" ng-message="required">Vui lòng chọn
-															trạng thái!! </div>
+														ng-required="true" ng-disabled="newProduct.quantity <= 0" />
+													<label for="user">Hết sản phẩm</label><br>
+													<div ng-messages="form.active.$error" ng-if="!form.active.$dirty && !editingMode">
+														<div class="text-danger" ng-message="required">Vui lòng chọn trạng thái!! </div>
 													</div>
 												</div>
 											</div>
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.brand.$invalid && form.brand.$dirty}">
+												ng-class="{'has-error': form.brand.$invalid && form.brand.$dirty && !editingMode}">
 												<label class="col-md-12 p-0">Thương hiệu</label>
 												<div class="col-md-12 border-bottom p-0">
 													<select name="brand" class="form-control" id="brand" ng-model="newProduct.brand"
 														ng-options="brand as brand.brandName for brand in brands track by brand.brandID">
 														<option value="">Chon thương hiệu</option>
 													</select>
-													<div ng-messages="form.brand.$error" ng-if="!form.brand.$dirty">
+													<div ng-messages="form.brand.$error" ng-if="!form.brand.$dirty && !editingMode">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
 															thương hiệu sản phẩm</div>
 													</div>
 												</div>
 											</div>
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.category.$invalid && form.category.$dirty}">
+												ng-class="{'has-error': form.category.$invalid && form.category.$dirty && !editingMode}">
 												<label class="col-md-12 p-0">Loại</label>
 												<div class="col-md-12 border-bottom p-0">
 													<select name="category" class="form-control" id="category" ng-model="newProduct.category"
 														ng-options="cate as cate.categoryName for cate in categoris track by cate.categoryID">
 														<option value="">Chon loại</option>
 													</select>
-													<div ng-messages="form.category.$error" ng-if="!form.category.$dirty">
+													<div ng-messages="form.category.$error" ng-if="!form.category.$dirty && !editingMode">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
 															loại sản phẩm</div>
 													</div>
 												</div>
 											</div>
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.supplier.$invalid && form.supplier.$dirty}">
+												ng-class="{'has-error': form.supplier.$invalid && form.supplier.$dirty && !editingMode}">
 												<label class="col-md-12 p-0">Nhà sản xuất</label>
 												<div class="col-md-12 border-bottom p-0">
 													<select name="supplier" class="form-control" id="supplier" ng-model="newProduct.supplier"
 														ng-options="supplier as supplier.supplierName for supplier in suppliers track by supplier.supplierID">
 														<option value="">Chon nhà sản xuất</option>
 													</select>
-													<div ng-messages="form.supplier.$error" ng-if="!form.supplier.$dirty">
+													<div ng-messages="form.supplier.$error" ng-if="!form.supplier.$dirty && !editingMode">
 														<div class="text-danger" ng-message="required">Vui lòng chọn
 															nhà sản xuất sản phẩm</div>
 													</div>
 												</div>
 											</div>
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.price.$invalid && form.price.$dirty}">
+												ng-class="{'has-error': form.price.$invalid && form.price.$dirty && !editingMode}">
 												<label class="control-label">Giá bán</label> <input class="form-control" type="text"
 													name="price" ng-model="newProduct.price">
-												<div ng-messages="form.price.$error" ng-if="!form.price.$dirty">
+												<div ng-messages="form.price.$error" ng-if="!form.price.$dirty && !editingMode">
 													<div class="text-danger" ng-message="required">Vui lòng
 														nhập tên thương hiệu</div>
 												</div>
@@ -253,7 +253,7 @@
 												</script>
 											</div>
 											<div class="form-group col-md-6"
-												ng-class="{'has-error': form.image.$invalid && form.image.$touched}">
+												ng-class="{'has-error': form.image.$invalid && form.image.$touched && !editingMode}">
 												<div class="form-group"
 													style="border: 1px solid rgb(221, 218, 218); height: 200px; width: 300px;">
 													<div class="nk-int-st image-container">
@@ -269,7 +269,8 @@
 															ng-model="newProduct.image"
 															onchange="angular.element(this).scope().imageChanged2(this.files)"
 															accept=".png, .jpg, .jpeg, .gif" id="imageInput" name="image" ng-required="true">
-														<div ng-if="form.image.$touched && form.image.$error.required" class="text-danger">Vui
+														<div ng-if="form.image.$touched && form.image.$error.required && !editingMode"
+															class="text-danger">Vui
 															lòng
 															chọn ảnh</div>
 													</div>
@@ -277,12 +278,12 @@
 												</div>
 											</div>
 										</div>
-										<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addProduct()"
+										<button class="btn btn-add btn-sm" id="switchToTab2" ng-click="addProduct()" ng-show="addingMode"
 											ng-disabled="form.$invalid"><i class="fa fa-plus"></i>Thêm mới</button>
 										<button class="btn btn-info btn-sm" id="switchToTab2" ng-click="updateProduct(product)"
-											ng-disabled="form.$invalid"><i class="fa fa-refresh"></i>Cập
+											ng-show="editingMode" ng-disabled="form.$invalid"><i class="fa fa-refresh"></i>Cập
 											nhật</button>
-										<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
+										<a class="btn btn-cancel" ng-click="reset()">Hủy bỏ</a>
 										<BR>
 									</div>
 								</form>

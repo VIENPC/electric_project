@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html
-	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+<html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chi tiết đơn hàng</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chi tiết đơn hàng</title>
 </head>
 <style>
 </style>
@@ -29,26 +28,31 @@
 													Chi tiết đơn hàng</div>
 
 												<table class="table table-hover table-bordered" id="myTable">
-    <thead>
-        <tr>
-            <th><span>Mã Chi tiết Đơn Hàng</span></th>
-            <th><span>Tên Sản phẩm</span></th>
-            <th><span>Số lượng</span></th>
-            <th><span>Đơn giá</span></th>
-            <th><span>Tổng tiền sản phẩm</span></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="orderdetail : ${orderdetail}">
-            <td th:text="${orderdetail.order_detailId}"></td>
-            <td th:text="${orderdetail.product.productName}"></td>
-            <td th:text="${orderdetail.quantity}"></td>
-            <td th:text="${orderdetail.price}"></td>
-            <td th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
-        </tr>
-    </tbody>
-</table>
-
+													<thead>
+														<tr>
+															<th><span>Mã Chi tiết Đơn Hàng</span></th>
+															<th><span>Tên Sản phẩm</span></th>
+															<th><span>Số lượng</span></th>
+															<th><span>Đơn giá</span></th>
+															<th><span>Tổng tiền sản phẩm</span></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="orderdetail : ${orderdetail}">
+															<td th:text="${orderdetail.order_detailId}"></td>
+															<td th:text="${orderdetail.product.productName}"></td>
+															<td><span
+																	th:text="${#numbers.formatDecimal(orderdetail.quantity, 0, 'COMMA', 0 , 'POINT')} "></span>
+															</td>
+															<td><span
+																	th:text="${#numbers.formatDecimal(orderdetail.price, 0, 'COMMA', 0 , 'POINT')} + ' đ'"></span>
+															</td>
+															<td
+																th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+															</td>
+														</tr>
+													</tbody>
+												</table>
 											</div>
 										</div>
 									</div>

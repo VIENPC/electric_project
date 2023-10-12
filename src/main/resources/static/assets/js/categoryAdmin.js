@@ -7,7 +7,8 @@ app.controller('categoryAdmin-controller', function ($scope, $http, $window) {
   $scope.pageNumbers = []; // Các số trang
   $scope.currentPage = 1;  // Trang hiện tại
   $scope.pageSize = 8;
-
+  $scope.editingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
+  $scope.addingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
 
   $http.get('/rest/categoryAdmin')
     .then(function (response) {
@@ -23,6 +24,10 @@ app.controller('categoryAdmin-controller', function ($scope, $http, $window) {
     var endIndex = startIndex + $scope.pageSize;
     $scope.categoris = $scope.categoris.slice(startIndex, endIndex);
   };
+  $scope.reset = function () {
+    $scope.newCate = {};
+  };
+
   // Hàm để tính toán danh sách các số trang
   $scope.calculatePageNumbersCate = function () {
     var totalPages = Math.ceil($scope.categoris.length / $scope.pageSize);
@@ -108,5 +113,7 @@ app.controller('categoryAdmin-controller', function ($scope, $http, $window) {
 
   $scope.edit = function (categoris) {
     $scope.newCate = angular.copy(categoris);
+    $scope.editingMode = true; // Ban đầu, không ở chế độ chỉnh sửa
+    $scope.addingMode = false; // Ban đầu, không ở chế độ chỉnh sửa
   }
 });

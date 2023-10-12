@@ -74,71 +74,75 @@
                         <div class="tab-content" id="myTabsContent">
                             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                                 <form class="row" method="post" enctype="multipart/form-data" name="form">
-                                    <div class="form-group col-md-4">
+                                    <!-- <div class="form-group col-md-4">
                                         <label class="control-label">Mã nhà sản xuất </label> <input
                                             class="form-control" type="text" ng-model="newSup.supplierID"
                                             placeholder="Mã loại" readonly>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.supplierName.$invalid && form.supplierName.$dirty}">
+                                        ng-class="{'has-error': form.supplierName.$invalid && form.supplierName.$dirty && !editingMode}">
                                         <label class="control-label">Tên nhà sản xuất</label> <input
                                             class="form-control" type="text" ng-model="newSup.supplierName"
                                             placeholder="Tên loại" ng-required="true" name="supplierName">
-                                        <div ng-messages="form.supplierName.$error" ng-if="!form.supplierName.$dirty">
+                                        <div ng-messages="form.supplierName.$error"
+                                            ng-if="!form.supplierName.$dirty && !editingMode">
                                             <div class="text-danger" ng-message="required">Vui lòng
                                                 nhập tên nhà sản xuất</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.address.$invalid && form.address.$dirty}">
+                                        ng-class="{'has-error': form.address.$invalid && form.address.$dirty && !editingMode}">
                                         <label class="control-label">Địa chỉ</label> <input class="form-control"
                                             type="text" ng-model="newSup.address" placeholder="Tên loại"
                                             ng-required="true" name="address">
-                                        <div ng-messages="form.address.$error" ng-if="!form.address.$dirty">
+                                        <div ng-messages="form.address.$error"
+                                            ng-if="!form.address.$dirty && !editingMode">
                                             <div class="text-danger" ng-message="required">Vui lòng
                                                 nhập địa chỉ</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.phone.$invalid && form.phone.$dirty}">
-                                        <label class="control-label">Số diện thoại</label> <input class="form-control"
+                                        ng-class="{'has-error': form.phone.$invalid && form.phone.$dirty && !editingMode}">
+                                        <label class="control-label">Số điện thoại</label> <input class="form-control"
                                             type="text" ng-model="newSup.phone" placeholder="Tên loại"
                                             ng-required="true" name="phone">
-                                        <div ng-messages="form.phone.$error" ng-if="!form.phone.$dirty">
+                                        <div ng-messages="form.phone.$error" ng-if="!form.phone.$dirty && !editingMode">
                                             <div class="text-danger" ng-message="required">Vui lòng
                                                 nhập số điện thoại</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.email.$invalid && form.email.$dirty}">
+                                        ng-class="{'has-error': form.email.$invalid && form.email.$dirty && !editingMode}">
                                         <label class="control-label">Email</label> <input class="form-control"
                                             type="text" ng-model="newSup.email" placeholder="Tên loại"
                                             ng-required="true" name="email">
-                                        <div ng-messages="form.email.$error" ng-if="!form.email.$dirty">
+                                        <div ng-messages="form.email.$error" ng-if="!form.email.$dirty && !editingMode">
                                             <div class="text-danger" ng-message="required">Vui lòng
                                                 nhập Emai</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.website.$invalid && form.website.$dirty}">
+                                        ng-class="{'has-error': form.website.$invalid && form.website.$dirty && !editingMode}">
                                         <label class="control-label">Website</label> <input class="form-control"
                                             type="text" ng-model="newSup.website" placeholder="Tên loại"
                                             ng-required="true" name="website">
-                                        <div ng-messages="form.website.$error" ng-if="!form.website.$dirty">
+                                        <div ng-messages="form.website.$error"
+                                            ng-if="!form.website.$dirty && !editingMode">
                                             <div class="text-danger" ng-message="required">Vui lòng
                                                 Website</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"
-                                        ng-class="{'has-error': form.describe.$invalid && form.describe.$dirty}">
-                                        <label class="control-label">Ghi chú</label> <input class="form-control"
-                                            type="text" ng-model="newSup.describe" placeholder="Tên loại"
-                                            ng-required="true" name="describe">
-                                        <div ng-messages="form.describe.$error" ng-if="!form.describe.$dirty">
-                                            <div class="text-danger" ng-message="required">Vui lòng
-                                                ghi chú</div>
+                                        ng-class="{'has-error': form.describe.$invalid && form.describe.$dirty && !editingMode}">
+                                        <label class="control-label">Ghi chú</label>
+                                        <input class="form-control" type="text" ng-model="newSup.describe"
+                                            placeholder="Tên loại" ng-required="true" name="describe">
+                                        <div ng-messages="form.describe.$error"
+                                            ng-if="!form.describe.$dirty && !editingMode">
+                                            <div class="text-danger" ng-message="required">Vui lòng ghi chú</div>
                                         </div>
                                     </div>
+
                                     <div class="form-group col-md-4">
                                         <label class="col-md-12 p-0">Status</label>
                                         <div class="col-md-12 border-bottom p-0">
@@ -149,7 +153,7 @@
                                             <input type="radio" id="active" name="active" ng-value="false"
                                                 ng-model="newSup.active" ng-required="true" /> <label for="user">Hết sản
                                                 phẩm</label><br>
-                                            <div ng-messages="form.active.$error" ng-if="!form.active.$dirty">
+                                            <div ng-messages="form.active.$error" ng-if="!form.active.$dirty && !editingMode">
                                                 <div class="text-danger" ng-message="required">Vui lòng chọn
                                                     trạng thái!! </div>
                                             </div>
@@ -157,13 +161,14 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <button class="btn btn-add btn-sm" ng-click="addSupplier()" title="Thêm"
-                                            ng-disabled="form.$invalid" id="switchToTab2"><i class="fa fa-plus"></i>
+                                            ng-show="addingMode" ng-disabled="form.$invalid" id="switchToTab2"><i
+                                                class="fa fa-plus"></i>
                                             Thêm</button>
                                     </div>
                                     <div class="col-sm-2">
                                         <button class="btn btn-info btn-sm" ng-disabled="form.$invalid"
-                                            ng-click="updateSupplier(sup)" title="Thêm" id="switchToTab2"><i
-                                                class="fa fa-refresh"></i> Cập nhật </button>
+                                            ng-show="editingMode" ng-click="updateSupplier(sup)" title="Thêm"
+                                            id="switchToTab2"><i class="fa fa-refresh"></i> Cập nhật </button>
                                     </div>
                                 </form>
                             </div>

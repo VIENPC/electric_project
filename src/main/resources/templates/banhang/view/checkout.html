@@ -182,21 +182,31 @@
                         <ul>
                           <li>
                             <em>Tổng tiền</em>
-                            <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                            <strong class="price">{{totalAmount() |number: 0}} đ</strong>
 
                           </li>
                           <li>
-                            <em>Phí giao hàng</em>
-                            <strong class="price">0đ</strong>
+                            <em>Tiền giảm</em>
+                            <strong class="price">{{tiengiam |number: 0}} đ</strong>
                           </li>
-
-
                           <li class="checkout-total-price">
                             <em>Tổng cộng</em>
-                            <strong class="price">{{totalAmount() |number: 0}}đ</strong>
+                            <strong class="price">{{totalAmount() - tiengiam |number: 0}} đ</strong>
+
 
                           </li>
                         </ul>
+                        <table>
+                          <thead>
+                            <h3 style="color: #cf6125 ;">Voucher giảm giá</h3>
+                          </thead>
+                          <tr ng-repeat="item in vouchers" ng-if="item.status !== false">
+                            <td>{{item.name}}</td>
+                            <td>{{item.discountPercent}}%</td>
+                            <td>{{item.status ? 'Đang hoạt động' : 'Ngừng hoạt động'}}</td>
+                            <td><a class="btn btn-primary btn-sm" ng-click="loadId(item.id)">Apply</a></td>
+                          </tr>
+                        </table>
                       </div>
                       <div class="clearfix"></div>
 
