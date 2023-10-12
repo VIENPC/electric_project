@@ -104,7 +104,8 @@
 												<td th:text="${hd.orderId}"></td>
 												<td th:text="${hd.name}"></td>
 
-												<td th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+												<td
+													th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 												</td>
 												<td><span class="badge bg-info">Chờ xử lí</span></td>
 											</tr>
@@ -130,6 +131,15 @@
 							<button class="btn btn-excel" id="plain">Dọc</button>
 							<button class="btn btn-danger" id="inverted">Ngang</button>
 						</figure>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<figure class="highcharts-figure1">
+								<div id="container2"></div>
+								<p class="highcharts-description">
+								</p>
+							</figure>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -46,7 +46,6 @@ public class HoaDonController {
         Order hd = hddao.findById(mahd).get();
         hd.setStatushd(2);
         hddao.save(hd);
-        System.out.println("Sửa thành công");
         return "redirect:/admin/qldonhang?success=updatesp";
     }
 

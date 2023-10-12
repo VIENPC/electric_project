@@ -30,13 +30,22 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
         long countByActive(Boolean tt);
 
         // sản phẩm bán chạy nhất
-        @Query("SELECT p.productID, p.productName, p.price, od.quantity, p.brand.brandName, SUM(od.quantity) AS totalSold, p.image "
+        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
                         +
                         "FROM OrderDetail od " +
                         "INNER JOIN od.product p " +
-                        "GROUP BY p.productID, p.productName, p.price, od.quantity, p.brand.brandName, p.image " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
                         "ORDER BY totalSold DESC")
         List<Object[]> findBestSellingProducts();
+
+        // sản phẩm bán tệ nhất
+        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
+                        +
+                        "FROM OrderDetail od " +
+                        "INNER JOIN od.product p " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
+                        "ORDER BY totalSold ASC")
+        List<Object[]> findLostSellingProducts();
 
         // sản phẩm bán chạy theo tháng
         @Query("SELECT p.productID, p.productName, SUM(od.quantity) AS totalQuantity, p.price AS unitPrice, SUM(od.quantity * p.price) AS totalSales, b.brandName, o.orderDate, p.image "
@@ -45,7 +54,7 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
                         "INNER JOIN od.product p " +
                         "INNER JOIN p.brand b " +
                         "INNER JOIN od.order o " +
-                        "WHERE o.statushd =     4 " +
+                        "WHERE o.statushd = 4 " +
                         "AND o.statustt = true " +
                         "AND MONTH(o.orderDate) = :month " +
                         "GROUP BY p.productID, p.productName, p.price, b.brandName, o.orderDate, p.image " +
