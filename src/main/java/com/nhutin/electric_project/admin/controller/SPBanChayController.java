@@ -25,7 +25,6 @@ public class SPBanChayController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
         model.addAttribute("listspbc", spdao.findBestSellingProducts());
-        model.addAttribute("listsptc", spdao.findLostSellingProducts());
         System.out.println("Tháng 1 " + thang);
         if (ngay != null && !ngay.isEmpty()) {
             try {

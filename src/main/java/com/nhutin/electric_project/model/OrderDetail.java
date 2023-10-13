@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
 @Entity
 @Table(name = "order_details")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetail implements Serializable {

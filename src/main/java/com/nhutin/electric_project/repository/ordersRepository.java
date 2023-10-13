@@ -56,8 +56,10 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
                         "WHERE o.orderDate BETWEEN :startDate AND :endDate " +
                         "AND o.statushd = 4")
         List<Object[]> thongKeDonHang(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
-
-        @Query("SELECT o FROM Order o where o.user.userID= ?1")
-        List<Order> findHistory(Integer user);
+//     @Query("SELECT o FROM Order o where o.statushd= ?1")
+//     List<Order> findHdTt(Integer tthd);
+    
+    @Query("SELECT o FROM Order o where o.user.userID= ?1")
+    List<Order> findHistory(Integer user);
 
 }

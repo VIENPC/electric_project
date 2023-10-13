@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.nhutin.electric_project.model.OrderDetail;
 
 public interface orderDetailsRepository extends JpaRepository<OrderDetail, Integer> {
+
     @Query("SELECT od FROM OrderDetail od WHERE od.order.orderId = :orderId")
     List<OrderDetail> findOrderDetailsByOrderId(Integer orderId);
 
@@ -18,4 +19,5 @@ public interface orderDetailsRepository extends JpaRepository<OrderDetail, Integ
             "GROUP BY od.product.productID " +
             "ORDER BY totalQuantity DESC")
     List<Object[]> findMostOrderedProductByUserId(@Param("user") Integer user);
+
 }

@@ -41,14 +41,12 @@
           <!-- END TOP BAR LEFT PART -->
           <!-- BEGIN TOP BAR MENU -->
           <div class="col-md-6 col-sm-6 additional-nav">
-            <ul class="list-unstyled list-inline pull-right"> -->
-
-              <li><a href="shop-checkout.html">Đăng Kí</a></li>
-              <li><a href="page-login.html">Đăng Nhập</a></li>
+            <ul class="list-unstyled list-inline pull-right">
               <li>
                 <h3><a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
                     Xin chào [[${#request.remoteUser}]]
                   </a></h3>
+
               </li>
             </ul>
           </div>
@@ -110,7 +108,8 @@
                       </div>
                       <div class="col-md-12 nav-brands">
                         <ul class="brand-list">
-                          <li ng-repeat="item in brands" style="display: inline-block; margin-right: 20px;">
+                          <li ng-repeat="item in brands" ng-if="item.active !== false"
+                            style="display: inline-block; margin-right: 20px;">
                             <a>
                               <img title="esprit" alt="esprit" ng-src="../assets/images/carousel/{{item.image}}">
                             </a>
@@ -176,7 +175,7 @@
               </a>
 
               <ul class="dropdown-menu">
-                <li><a th:href="@{/admin/index}">Trang quản lý</a></li>
+                <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}">Trang quản lý</a></li>
                 <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
                 <li><a th:href="@{/khuyenmai}">Voucher khuyến mãi</a></li>
                 <li><a th:href="@{/user/history}">Lịch sử mua hàng</a></li>

@@ -1,27 +1,5 @@
 
 $(document).ready(function () {
-	$('#sampleTable').DataTable({
-		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
-	});
-});
-
-$(document).ready(function () {
-	$('#sampleTable1').DataTable({
-		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
-	});
-});
-
-$(document).ready(function () {
-	$('#sampleTable2').DataTable({
-		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
-	});
-});
-$(document).ready(function () {
-	$('#sampleTable3').DataTable({
-		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
-	});
-});
-$(document).ready(function () {
 	// Xử lý sự kiện khi nhấn vào button
 	$('#sidebarCollapse').click(function () {
 		// Thêm hoặc xóa lớp CSS 'active' của thẻ nav
@@ -35,20 +13,14 @@ $(document).ready(function () {
 			$('.chkboxId').prop('checked', false);
 		}
 	});
-});
 
+
+});
 
 // xử lí phần thống kê theo hãng
 function submitForm() {
-	document.getElementById("formhang").submit(); 
+	document.getElementById("formhang").submit();
 }
-function submitFormdm() {
-
-	document.getElementById("formdm").submit();
-}
-
-
-
 function submitFormSPBC(selectElement) {
 	var selectedValue = selectElement.value;
 	// Kiểm tra giá trị đã chọn và thực hiện hành động tương ứng
@@ -102,6 +74,9 @@ window.onload = function () {
 		removeSuccessParamFromURL();
 	}
 
+
+
+
 	//thất bại
 	if (failParam == 'delete') {
 		showFailMessage("Xoá sản phẩm thất bại");
@@ -142,8 +117,11 @@ $(document).on('click', '.settt', function () {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
+
+
 		}
 	})
+
 });
 
 $('.unclock').click(function () {
@@ -343,81 +321,11 @@ $(document).ready(function () {
 		$('#myTabs a[href="#tab1"]').tab('show');
 	});
 });
+function submitFormdm() {
 
+	document.getElementById("formdm").submit();
+}
 
-Highcharts.chart('container2', {
-	chart: {
-		zoomType: 'xy'
-	},
-	title: {
-		text: 'Thống kê số khách hàng đăng kí và đơn hàng theo tháng',
-		align: 'center'
-	},
-	xAxis: [{
-		categories: categories,
-		crosshair: true
-	}],
-	yAxis: [{ // Primary yAxis
-		labels: {
-			format: '{value}°						C',
-			style: {
-				color: Highcharts.getOptions().colors[1]
-			}
-		},
-		title: {
-			text: '',
-			style: {
-				color: Highcharts.getOptions().colors[1]
-			}
-		}
-	}, { // Secondary yAxis
-		title: {
-			text: '',
-			style: {
-				color: Highcharts.getOptions().colors[0]
-			}
-		},
-		labels: {
-			format: '{value} mm',
-			style: {
-				color: Highcharts.getOptions().colors[0]
-			}
-		},
-		opposite: true
-	}],
-	tooltip: {
-		shared: true
-	},
-	legend: {
-		align: 'left',
-		x: 80,
-		verticalAlign: 'top',
-		y: 60,
-		floating: true,
-		backgroundColor:
-			Highcharts.defaultOptions.legend.backgroundColor || // theme
-			'rgba(255,255,255,0.25)'
-	},
-	series: [{
-		name: 'Cột',
-		type: 'column',
-		yAxis: 1,
-		data: [27.6, 28.8, 21.7, 34.1, 29.0, 28.4, 45.6, 51.7, 39.0,
-			60.0, 28.6, 32.1],
-		tooltip: {
-			valueSuffix: ' cột'
-		}
-
-	}, {
-		name: 'Đường',
-		type: 'spline',
-		data: [-13.6, -14.9, -5.8, -0.7, 3.1, 13.0, 14.5, 10.8, 5.8,
-		-0.7, -11.0, -16.4],
-		tooltip: {
-			valueSuffix: 'đường'
-		}
-	}]
-});
 
 
 

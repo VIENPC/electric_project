@@ -20,6 +20,65 @@
 		</div>
 		<div class="row">
 			<!-- Trái -->
+			<div class="col-md-12">
+				<div class="row">
+					<!-- col-6 -->
+					<div class="col-md-6">
+						<div class="widget-small primary coloured-icon">
+							<!-- <i ><a href=""></a></i> -->
+							<img style="width: 20%;" th:src="@{'/assets/images/product/'+${listspbc[0][6]}}" alt="">
+							<!-- <p th:text=""></p> -->
+							<div class="info">
+								<h4>Sản phẩm bán chạy nhất</h4>
+								<b th:text="'ID sản phẩm: '+${listspbc[0][0]}"></b>
+								<p>
+									<b th:text="${listspbc[0][1]}"></b>
+								</p>
+								<p class="info-tong" style="font-size: 25px;"
+									th:text="'Tổng số sản phẩm được bán: '+ ${listspbc[0][3]}">
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- col-6 theo ngay -->
+					<div class="col-md-6">
+						<div class="widget-small warning coloured-icon">
+							<div class="info">
+								<h4 th:if="${ngay2 == null}" th:text="'sản phẩm bán chạy nhất ngày '+${ngay1}">
+								</h4>
+								<h4 th:if=" ${ngay1==null}" th:text="'sản phẩm bán chạy nhất ngày '+${ngay2}">
+								</h4>
+
+								<div th:each=" itemsp : ${listspbctheongay}">
+									<b th:text="'ID sản phẩm: '+${itemsp[0]}"></b>
+									<p>
+										<b th:text="${itemsp[1]}"></b>
+									</p>
+									<p class="info-tong" style="font-size: 25px;" th:text="'Tổng số sản phẩm được bán: '+ ${itemsp[2]}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- col-6 bán chạy theo tháng -->
+					<div class="col-md-6">
+						<div class="widget-small info coloured-icon">
+							<!-- <img style="width: 20%;" th:src="@{'/assets/images/carousel/'+${listspbctheomonth[0][7]}}"> -->
+
+							<div class="info">
+								<h4 th:if="${thang1 == null}">sản phẩm bán chạy nhất tháng [(${thangHomNay})]</h4>
+								<h4 th:if="${thang1 != null}">sản phẩm bán chạy nhất tháng [(${thang1})]</h4>
+								<div th:each=" itemsp : ${listspbctheomonth}">
+									<b th:text="'ID sản phẩm: '+${itemsp[0]}"></b>
+									<p>
+										<b th:text="${itemsp[1]}"></b>
+									</p>
+									<p class="info-tong" style="font-size: 25px;" th:text="'Tổng số sản phẩm được bán: '+ ${itemsp[2]}">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!--Right-->
 			<div class="col-md-12">
 				<div class="row">
@@ -29,70 +88,26 @@
 								<h3 class="tile-title">SẢN PHẨM BÁN CHẠY NHẤT</h3>
 							</div>
 							<div class="tile-body">
-								<table class="table table-hover table-bordered" id="sampleTable">
+								<table class="table table-bordered">
 									<thead>
 										<tr>
 											<th><span>Mã sản phẩm</span></th>
 											<th><span>Tên sản phẩm</span></th>
-
-
-											<th><span>Số lượng bán</span></th>
 											<th><span>Giá tiền</span></th>
-
+											<th><span>Số lượng bán</span></th>
 											<th><span>Hãng phân phối</span></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="itemsp, iterStat : ${listspbc}">
-											<td th:text="${itemsp[0]}"></td>
-											<td th:text="${itemsp[1]}"></td>
-
-
-											<td th:text="${itemsp[3]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-											</td>
-
-											<td th:text="${itemsp[4]}"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- SẢN PHẨM BÁN Ế  -->
-					<div class="col-md-12">
-						<div class="tile">
-							<div>
-								<h3 class="tile-title">SẢN PHẨM BÁN TỆ NHẤT</h3>
-							</div>
-							<div class="tile-body">
-								<table class="table table-hover table-bordered" id="sampleTable3">
-									<thead>
 										<tr>
-											<th><span>Mã sản phẩm</span></th>
-											<th><span>Tên sản phẩm</span></th>
-
-
-											<th><span>Số lượng bán</span></th>
-											<th><span>Giá tiền</span></th>
-
-											<th><span>Hãng phân phối</span></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="itemsp, iterStat : ${listsptc}">
-											<td th:text="${itemsp[0]}"></td>
-											<td th:text="${itemsp[1]}"></td>
-
-
-											<td th:text="${itemsp[3]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+											<td th:text="${listspbc[0][0]}"></td>
+											<td th:text="${listspbc[0][1]}"></td>
+											<td th:text="${#numbers.formatDecimal(listspbc[0][2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 											</td>
-
-											<td th:text="${itemsp[4]}"></td>
+											<td th:text="${listspbc[0][3]}"></td>
+											<td th:text="${listspbc[0][4]}"></td>
 										</tr>
+
 									</tbody>
 								</table>
 							</div>
@@ -107,10 +122,9 @@
 							<div class="col-sm-6">
 								<form th:action="@{/admin/spbanchay}" method="get" id="formthang">
 									<select class="form-control" name="thang" onchange="submitFormSPBC(this)">
-										<option value="" th:if="${thang1 != null}"
-											th:text="'Tháng đã chọn: ' + ${thang1}">
+										<option value="" th:if="${thang1 != null}" th:text="'Tháng đã chọn: ' + ${thang1}">
 										</option>
-
+										<option value="" th:else th:text="Tháng "> </option>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -128,7 +142,7 @@
 							</div>
 							<br>
 							<div class="tile-body">
-								<table class="table table-hover table-bordered" id="sampleTable1">
+								<table class="table table-bordered">
 									<thead>
 										<tr>
 											<th><span>Mã sản phẩm</span></th>
@@ -144,8 +158,7 @@
 											<td th:text="${itemsp[0]}"></td>
 											<td th:text="${itemsp[1]}"></td>
 											<td th:text="${itemsp[2]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+											<td th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 											</td>
 											<td th:text="${itemsp[5]}"></td>
 											<td th:text="${#dates.format(itemsp[6],'dd/MM/yyyy')}"></td>
@@ -182,7 +195,7 @@
 							</div>
 							<br>
 							<div class="tile-body">
-								<table class="table table-hover table-bordered" id="sampleTable2">
+								<table class="table table-bordered">
 									<thead>
 										<tr>
 											<th><span>Mã sản phẩm</span></th>
@@ -198,8 +211,7 @@
 											<td th:text="${itemsp[0]}"></td>
 											<td th:text="${itemsp[1]}"></td>
 											<td th:text="${itemsp[2]}"></td>
-											<td
-												th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+											<td th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 											</td>
 											<td th:text="${itemsp[6]}"></td>
 											<td th:text="${#dates.format(itemsp[5], 'dd/MM/yyyy')}"></td>
