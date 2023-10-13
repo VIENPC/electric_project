@@ -66,11 +66,12 @@ public class ThongKeSPController {
             int totalTongGiaHang = 0;
         List<Object[]> listtk = spdao.thongkeSanPhamTheoMuc(madm);
         for (Object[] objects : listtk) {
-                System.out.println(objects[4]);
+              totalTongGiaHang += Double.parseDouble(objects[4].toString());
+                   
                   
         } 
          model.addAttribute("itemtksp", listtk);
-        
+        model.addAttribute("tongcong", totalTongGiaHang);
         return "admin/view/baocaosp";
     }
 
