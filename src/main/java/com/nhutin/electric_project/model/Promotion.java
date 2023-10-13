@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,4 +44,6 @@ public class Promotion {
 	@Column(name = "status")
 	private boolean status;
 
+	@Column(name = "date_end") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
+	private LocalDateTime dateEnd;
 }

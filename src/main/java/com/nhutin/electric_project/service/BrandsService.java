@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.Brand;
 
 @Service
 public interface BrandsService {
-    // List<Product> getProductsByBrand(int brandID);
+   
 }
