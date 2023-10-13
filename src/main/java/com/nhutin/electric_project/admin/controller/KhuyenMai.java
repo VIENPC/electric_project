@@ -1,9 +1,6 @@
 package com.nhutin.electric_project.admin.controller;
 
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,10 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.Promotion_Historie;
-import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.prmotionHistoryRepositpry;
 import com.nhutin.electric_project.repository.prmotionRepositpry;
-import com.nhutin.electric_project.repository.productsRepository;
 
 @Controller
 @RequestMapping("admin")
@@ -152,6 +147,7 @@ public class KhuyenMai {
 
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		promotion.setUsedDates(currentDateTime);
+		promotion.setDateEnd(currentDateTime);
 		prmoDao.save(promotion);
 
 		return "redirect:/admin/qlkhuyenmai";

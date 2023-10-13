@@ -94,4 +94,7 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
         List<Object[]> thongkesptg(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
         List<Product> findByPriceLessThanEqual(Double price);
+
+        @Query("SELECT p.productID, p.productName, sum(o.quantity), p.price, (sum(o.quantity) * p.price), b.brandName FROM Product p JOIN Category c ON c.categoryID =p.category.categoryID JOIN OrderDetail o ON o.product.productID = p.productID JOIN Order od ON od.orderId = o.order.orderId JOIN Brand b ON b.brandID = p.brand.brandID Where od.statushd = 4 AND c.categoryID =?1 GROUP BY p.productID, p.productName, p.price, b.brandName")
+        List<Object[]> thongkeSanPhamTheoMuc(int muc);
 }

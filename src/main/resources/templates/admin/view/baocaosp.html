@@ -51,6 +51,17 @@
                                     </select>
                                 </form>
                             </div>
+                            <div class="col-sm-2">
+                                <form th:action="@{/admin/thongkedm}" method="post" id="formdm">
+                                    <select class="btn btn-delete btn-sm nhap-tu-file" id="madm" name="madm"
+                                        onchange="submitFormdm()">
+                                        <option value="">- Thống kê danh mục --</option>
+                                        <option th:each="dm : ${listdm}" th:text="${dm.categoryName}"
+                                            th:value="${dm.categoryID}"></option>
+                                    </select>
+
+                                </form>
+                            </div>
                         </div>
                         <div id="sampleTable_wrapper"
                             class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
