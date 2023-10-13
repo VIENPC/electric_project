@@ -14,7 +14,6 @@
         <div class="container-inner">
           <h1><span>Sản Phẩm</span></h1>
           <em>Over 4000 Items are available here</em>
-          <a href="javascript:location.reload(true);">Tải lại trang</a>
         </div>
       </div>
     </div>
@@ -31,11 +30,13 @@
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-5">
             <div class="sidebar-filter margin-bottom-25">
-              <h2>Filter</h2>
+              <h2>Danh mục sản phẩm</h2>
               <div class="checkbox-list">
                 <label>
-                  <input type="checkbox" ng-model="showAllProducts" ng-change="showAllProductsChanged()">
-                  Hiển thị tất cả sản phẩm
+                  <!-- <input type="checkbox" ng-model="showAllProducts" ng-change="showAllProductsChanged()"> -->
+                  <a href="javascript:location.reload(true);">
+                    <h3>Tất cả</h3>
+                  </a>
                 </label>
               </div>
               <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
