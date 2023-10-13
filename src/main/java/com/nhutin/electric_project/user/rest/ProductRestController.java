@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Product;
 import com.nhutin.electric_project.model.Supplier;
 import com.nhutin.electric_project.repository.productsRepository;
@@ -57,26 +57,40 @@ public class ProductRestController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/rest/products-by-brand")
-    public List<Product> getProductsByBrand(@RequestParam Integer brandID) {
-        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
-        List<Product> products = productService.getProductsByBrand(brandID);
-        return products;
-    }
+    // @GetMapping("/rest/products-by-brand")
+    // public List<Product> getProductsByBrand(@RequestParam Integer brandID) {
+    // // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
+    // List<Product> products = productService.getProductsByBrand(brandID);
+    // return products;
+    // }
 
-    @GetMapping("/rest/products-by-brand/{brandID}")
-    public ResponseEntity<List<Product>> getProductsByBrand(@PathVariable("brandID") int brandID) {
-        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
-        List<Product> products = productService.getProductsByBrand(brandID);
-        return ResponseEntity.ok(products);
-    }
+    // @GetMapping("/rest/products-by-brand/{brandID}")
+    // public ResponseEntity<List<Product>>
+    // getProductsByBrand(@PathVariable("brandID") int brandID) {
+    // // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
+    // List<Product> products = productService.getProductsByBrand(brandID);
+    // return ResponseEntity.ok(products);
+    // }
 
-    @GetMapping("/rest/products-by-category/{categoryID}")
+    @GetMapping("/products-by-category/{categoryID}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("categoryID") int categoryID) {
-        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
         List<Product> products = productService.getProductsByCategory(categoryID);
         return ResponseEntity.ok(products);
     }
+
+    @GetMapping("/brands-by-category/{categoryID}")
+    public ResponseEntity<List<Brand>> getBrandsByCategory(@PathVariable("categoryID") int categoryID) {
+        List<Brand> brands = productService.getBrandsByCategory(categoryID);
+        return ResponseEntity.ok(brands);
+    }
+
+    // @GetMapping("/rest/products-by-category/{categoryID}")
+    // public ResponseEntity<List<Product>>
+    // getProductsByCategory(@PathVariable("categoryID") int categoryID) {
+    // // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
+    // List<Product> products = productService.getProductsByCategory(categoryID);
+    // return ResponseEntity.ok(products);
+    // }
 
     @GetMapping("/rest/product-search")
     public ResponseEntity<List<Product>> searchProductsByName(@RequestParam(name = "productName") String productName) {

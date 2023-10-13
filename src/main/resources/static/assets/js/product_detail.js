@@ -41,7 +41,7 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
 
     $scope.goToProduct_Detail = function (productID) {
         window.location.href = `/detail/${productID}`;
-    };
+    };                                                                                                                                                                                              
 
 
 

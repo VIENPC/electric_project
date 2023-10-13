@@ -14,6 +14,7 @@
         <div class="container-inner">
           <h1><span>Sản Phẩm</span></h1>
           <em>Over 4000 Items are available here</em>
+          <a href="javascript:location.reload(true);">Tải lại trang</a>
         </div>
       </div>
     </div>
@@ -39,16 +40,18 @@
               </div>
               <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
                 <label ng-if="item.active !== false">
-                  <input type="checkbox" ng-model="item.selected" ng-change="filterProducts(item.categoryID, item)">
+                  <input type="checkbox" ng-model="item.selected" ng-change="filterData(item.categoryID)">
                   {{item.categoryName}}
                 </label>
               </div>
 
             </div>
+            <!-- Thêm liên kết để hiển thị tất cả loại và sản phẩm -->
+
             <div class="sidebar-products">
               <h2>Thương hiệu</h2>
-              <div class="col-md-6 col-sm-12 col-xs-12 " ng-repeat="item in brands" ng-if="item.active !== false">
-                <a class="card" ng-click="loadProductsByBrand(item.brandID)">
+              <div class="col-md-6 col-sm-12 col-xs-12" ng-repeat="item in brands" ng-if="item.active !== false">
+                <a class="card" ng-click="filterDataBrand(item.brandID)">
                   <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
                   <div class="card-body">
                     <h5 class="card-text">{{item.brandName}}</h5>
@@ -56,6 +59,7 @@
                 </a>
               </div>
             </div>
+
           </div>
           <!-- END SIDEBAR -->
           <!-- BEGIN CONTENT -->
@@ -108,20 +112,6 @@
           </div>
           <!-- END PRODUCT LIST -->
           <!-- BEGIN PAGINATOR -->
-          <div class="row">
-            <!-- <div class="col-md-4 col-sm-4 items-info">Items 1 to 9 of 10 total</div> -->
-            <!-- <div class="col-md-8 col-sm-8">
-              <ul class="pagination pull-right">
-                <li><a href="javascript:;">&laquo;</a></li>
-                <li><a href="javascript:;">1</a></li>
-                <li><span>2</span></li>
-                <li><a href="javascript:;">3</a></li>
-                <li><a href="javascript:;">4</a></li>
-                <li><a href="javascript:;">5</a></li>
-                <li><a href="javascript:;">&raquo;</a></li>
-              </ul>
-            </div> -->
-          </div>
           <!-- END PAGINATOR -->
         </div>
         <!-- END CONTENT -->
