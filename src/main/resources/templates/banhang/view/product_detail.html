@@ -45,23 +45,17 @@
                       <strong>{{product.price | number:0}} đ</strong>
                     </div>
                     <div class="availability">
-                      Availability: <strong>In Stock</strong>
+                      Loại sản phẩm: <strong>{{product.category.categoryName}}</strong>
                     </div>
                   </div>
                   <div class="product-page-cart">
                     <div class="product-quantity">
-                      <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
+                      <input id="product-quantity" type="number" value="1" ng-model="qty" class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
+                    <button class="btn btn-primary" type="button" ng-click="addToCartQty(product.productID)">Add to
+                      cart</button>
                   </div>
-                  <div class="review">
-                    <input type="range" value="4" step="0.25" id="backing4">
-                    <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"
-                      data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                    </div>
-                    <a href="javascript:;">7 reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;">Write a
-                      review</a>
-                  </div>
+
                   <ul class="social-icons">
                     <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
                     <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
@@ -73,18 +67,18 @@
 
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
-                    <li><a href="#Description" data-toggle="tab">Description</a></li>
+                    <li class="active"><a href="#Description" data-toggle="tab">Description</a></li>
                     <li><a href="#Information" data-toggle="tab">Information</a></li>
-                    <li class="active"><a href="#Reviews" data-toggle="tab">Reviews (2)</a></li>
+                    <li><a href="#Reviews" data-toggle="tab">Reviews (2)</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade" id="Description">
+                    <div class="tab-pane fade in active" id="Description">
                       <h4 ng-bind-html="product.description | unsafeHtml"></h4>
                     </div>
                     <div class="tab-pane fade" id="Information">
                       <h4 ng-bind-html="product.configuration | unsafeHtml"></h4>
                     </div>
-                    <div class="tab-pane fade in active" id="Reviews">
+                    <div class="tab-pane fade " id="Reviews">
                       <!--<p>There are no reviews for this product.</p>-->
                       <div class="review-item clearfix" th:each="cm :${listcomment}">
                         <div class="review-item-submitted">

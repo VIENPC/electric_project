@@ -62,7 +62,9 @@
 												<th><span>Chiết khấu cho khách (%)</span></th>
 												<th><span>Giá trị tối thiểu đơn hàng</span></th>
 												<th><span>Ngày tạo</span></th>
+												<th><span>Ngày kết thúc</span></th>
 												<th><span>Trạng thái</span></th>
+												<th><span>Người dùng lâu năm</span></th>
 												<th><span></span></th>
 											</tr>
 										</thead>
@@ -78,7 +80,9 @@
 
 
 												<td th:text="${#temporals.format(km.usedDates, 'HH:mm:ss dd-MM-yyyy')}"></td>
+												<td th:text="${#temporals.format(km.dateEnd, 'HH:mm:ss dd-MM-yyyy')}"></td>
 												<td th:text="${km.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></td>
+												<td th:text="${km.olduser} ? 'Có' : 'Không'"></td>
 												<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"
 														title="Hiển thị theo mã"> <i class="fa fa-search" aria-hidden="true"></i>
 													</a> <a class="btn btn-primary btn-sm " th:href="@{'/admin/qlkhuyenmai/edit/'+${km.id}}"

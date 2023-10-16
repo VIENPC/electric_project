@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,13 +39,16 @@ public class Promotion {
 
 	@OneToMany(mappedBy = "promotion")
 	private List<Promotion_Historie> promotionHistories;
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	@Column(name = "date") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
 	private LocalDateTime usedDates;
 
 	@Column(name = "status")
 	private boolean status;
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	@Column(name = "date_end") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
 	private LocalDateTime dateEnd;
+
+	@Column(name = "olduser")
+	private boolean olduser;
 }

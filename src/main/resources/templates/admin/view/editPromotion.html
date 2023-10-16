@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
 
 <head>
-<meta charset="UTF-8">
-<title>Quản lý khách hàng</title>
-<!-- AngularJS -->
+	<meta charset="UTF-8">
+	<title>Quản lý khách hàng</title>
+	<!-- AngularJS -->
 
 </head>
 
@@ -24,17 +23,15 @@
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-						<div id="sampleTable_wrapper"
-							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+						<div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
 							<div class="row">
 
 								<div class="col-sm-12">
 									<div class="row element-button">
 										<div class="col-sm-2">
-											<a id="toggleButton" class="btn btn-add btn-sm"
-												th:href="@{'/admin/qlkhuyenmai'}"> <i
-												class="fa fa-arrow-left" style="margin-right: 5px;"></i>Quay
+											<a id="toggleButton" class="btn btn-add btn-sm" th:href="@{'/admin/qlkhuyenmai'}"> <i
+													class="fa fa-arrow-left" style="margin-right: 5px;"></i>Quay
 												lại bảng
 											</a>
 										</div>
@@ -42,44 +39,53 @@
 										<div class="col-sm-2"></div>
 									</div>
 									<form action="/admin/qlkhuyenmai/updata" class="row"
-										th:action="@{'/admin/qlkhuyenmai/updata/'+${items.id}}"
-										th:object="${items}" method="post">
+										th:action="@{'/admin/qlkhuyenmai/updata/'+${items.id}}" th:object="${items}" method="post">
 
 
 										<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Tên khuyến mãi</label> 
-                <input name="name" type="text" class="form-control" th:field="*{name}">
-            </div>
-            <div class="form-group">
-                <label>Chiết khấu cho khách</label> 
-                <input name="discountPercent" type="text" class="form-control" th:field="*{discountPercent}" readonly="readonly">
-            </div>
-            <div class="form-group">
-                <label>Giá trị tối thiểu đơn hàng</label> 
-                <input name="minOrderAmount" type="text" class="form-control" th:field="*{minOrderAmount}" readonly="readonly">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label>Trạng thái</label>
-            <div class="form-group bg-light p-2">
-                <div class="radio-group">
-                    <input type="radio" id="true" name="status" value="True" th:checked="${items.status == true}"> 
-                    <label for="true">Đang hoạt động</label> 
-                    <input type="radio" id="false" name="status" value="False" th:checked="${items.status == false}"> 
-                    <label for="false">Ngừng hoạt động</label>
-                </div>
-            </div>
-            <div class="form-group p-2" style="position: absolute; bottom: 0; right: 0;">
-                <button type="submit" class="btn btn-success" style="font-size: 17px; background: #cf6125;">
-                    <i class="fa fa-floppy-o mr-2"></i> Lưu
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Tên khuyến mãi</label> <input name="name" type="text" class="form-control"
+															th:field="*{name}">
+													</div>
+													<div class="form-group">
+														<label>Chiết khấu cho khách</label> <input name="discountPercent" type="text"
+															class="form-control" th:field="*{discountPercent}" readonly="readonly">
+													</div>
+													<div class="form-group">
+														<label>Giá trị tối thiểu đơn hàng</label> <input name="minOrderAmount" type="text"
+															class="form-control" th:field="*{minOrderAmount}" readonly="readonly">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Ngày bắt đầu</label> <input name="usedDates" type="datetime-local"
+															class="form-control" th:value="${items.usedDates}">
+													</div>
+													<div class="form-group">
+														<label>Ngày kết thúc</label> <input name="dateEnd" type="datetime-local"
+															class="form-control" th:value="${items.dateEnd}">
+													</div>
+													<label>Người dùng lâu năm</label>
+													<div class="form-group bg-light p-2">
+														<div class="radio-group">
+															<input type="radio" id="true" name="olduser" value="True"
+																th:checked="${items.olduser == true}" readonly="readonly"> <label for="true">Bật</label>
+															<input type="radio" id="false" name="olduser" value="False"
+																th:checked="${items.olduser == false}" readonly="readonly"> <label
+																for="false">Tắt</label>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<button type="submit" class="btn btn-success" style="font-size: 17px; background: #cf6125;">
+															<i class="fa fa-floppy-o mr-2"></i> Lưu
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
 
 									</form>
 
@@ -93,8 +99,7 @@
 		</div>
 
 	</main>
-	<script
-		th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
 
 </body>
 

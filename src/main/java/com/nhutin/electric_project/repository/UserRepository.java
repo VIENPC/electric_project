@@ -1,7 +1,6 @@
 package com.nhutin.electric_project.repository;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,5 +57,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // List<User> findNewCustomers(Date fiveDaysAgo);
     @Query("SELECT COUNT(u) FROM User u WHERE u.lockStatus = true")
     long countLockedUsers();
+
+    @Query("SELECT CONCAT(DATEDIFF(DAY, o.registrationDate, CURRENT_TIMESTAMP), ' ') AS ThoiGianDaTao FROM User o WHERE o.userID = ?1")
+    Integer findThoiGianDaTao(Integer userID);
 
 }

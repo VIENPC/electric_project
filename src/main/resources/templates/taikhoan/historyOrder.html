@@ -60,11 +60,13 @@
 																	thành</span> <span th:if="${order.statushd == 5}">Hủy</span>
 															</td>
 															<td>
-																<a class="btn btn-danger btn-sm" th:if="${not order.statustt}"
+																<a class="btn btn-danger btn-sm" th:if="${not order.statustt && order.statushd == 1}"
 																	th:href="@{'/user/huythanhtoan/' + ${order.orderId}}" onclick="cancelPayment()">
 																	<i class="fa fa-times" aria-hidden="true"></i> Hủy
-																	thanh toán
+																	đơn hàng
 																</a>
+																<span th:if="${not order.statustt && order.statushd > 1}"
+																	class="badge badge-warning">Chờ thanh toán</span>
 																<span th:if="${order.statustt}" class="badge badge-warning">Đã thanh toán</span>
 															</td>
 															<td th:text="${order.note}"></td>

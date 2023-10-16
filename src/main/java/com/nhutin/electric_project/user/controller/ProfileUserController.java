@@ -60,16 +60,22 @@ public class ProfileUserController {
     @RequestMapping("/user/history")
     public String getHistoryOrder(Model model) {
         String email = (String) session.getAttribute("tenDangNhapLogin");
-        System.out.println("Khôi đã : " + email);
         if (email != null) {
 
             User user = userDAO.findByEmailLike(email);
             model.addAttribute("ThongTinTK", user);
-            System.out.println("Khôi đã : " + user.getUserID());
             List<Order> orders = orderDAO.findHistory(user.getUserID());
             model.addAttribute("orders", orders);
             for (Order order : orders) {
-                System.out.println("Order ID: " + order.getOrderId() + ", Total Amount: " + order.getTotalAmount());
+                if (order.getStatushd() == 1) {
+                    Integer tt = orderDAO.findThoiGianDaTao(order.getOrderId());
+                    System.out.println("Thời gian:" + tt);
+                    if (tt > 1) {
+                        order.setStatushd(2);
+                        orderDAO.save(order);
+                    }
+
+                }
             }
         }
         return "taikhoan/historyOrder";

@@ -39,6 +39,17 @@ public class KhuyenMai {
 		List<Promotion> kmlist = prmoDao.findAll();
 
 		model.addAttribute("items", kmlist);
+		LocalDateTime currentTime = LocalDateTime.now();
+
+		for (Promotion promo : kmlist) {
+			if (currentTime.isAfter(promo.getUsedDates()) && currentTime.isBefore(promo.getDateEnd())) {
+				promo.setStatus(true);
+			} else {
+				promo.setStatus(false);
+			}
+			prmoDao.save(promo);
+		}
+
 		return "admin/view/qlkhuyenmai";
 	}
 
@@ -131,6 +142,7 @@ public class KhuyenMai {
 
 		System.out.println("tên:" + kh.getUsedDates());
 		items.setUsedDates(kh.getUsedDates());
+		items.setDateEnd(kh.getDateEnd());
 		prmoDao.save(items);
 
 		return "redirect:/admin/qlkhuyenmai";
@@ -143,12 +155,22 @@ public class KhuyenMai {
 	}
 
 	@PostMapping("/qlkhuyenmai/addPromotion/add")
-	public String addPromotion(@ModelAttribute("promotion") Promotion promotion) {
+	public String addPromotion(@ModelAttribute("promotion") Promotion promotion, Model model) {
+		LocalDateTime currentTime = LocalDateTime.now();
 
-		LocalDateTime currentDateTime = LocalDateTime.now();
-		promotion.setUsedDates(currentDateTime);
-		promotion.setDateEnd(currentDateTime);
-		prmoDao.save(promotion);
+		// Kiểm tra ngày bắt đầu không được nhỏ hơn thời gian hiện tại
+		if (promotion.getUsedDates() != null && promotion.getUsedDates().isBefore(currentTime)) {
+			model.addAttribute("error", "Ngày bắt đầu phải lớn hơn hoặc bằng thời gian hiện tại.");
+			return "/admin/view/addPromotion";
+		} else
+
+		// Kiểm tra ngày kết thúc không được nhỏ hơn ngày bắt đầu
+		if (promotion.getDateEnd() != null && promotion.getDateEnd().isBefore(promotion.getUsedDates())) {
+			model.addAttribute("error", "Ngày kết thúc phải lớn hơn ngày bắt đầu.");
+			return "/admin/view/addPromotion";
+		} else {
+			prmoDao.save(promotion);
+		}
 
 		return "redirect:/admin/qlkhuyenmai";
 	}

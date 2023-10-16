@@ -23,6 +23,7 @@
     height: 100%;
 }
 
+
 /* Định dạng vùng nội dung card */
 .card-body {
     padding: 10px;
@@ -67,9 +68,7 @@
     /* Khoảng cách viền từ hình ảnh */
 }
 
-body {
-    padding-top: 50px;
-}
+
 
 /*#####################
 Additional Styles (required)

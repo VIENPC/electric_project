@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
 
 <head>
-<meta charset="UTF-8">
-<title>Quản lý khuyến mãi</title>
+	<meta charset="UTF-8">
+	<title>Quản lý khuyến mãi</title>
 </head>
 
 <body>
@@ -20,21 +19,24 @@
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-						<form th:action="@{/admin/qlkhuyenmai/addPromotion/add}"
-							th:object="${promotion}" method="post">
+						<form th:action="@{/admin/qlkhuyenmai/addPromotion/add}" th:object="${promotion}" method="post">
 							<div class="container">
+								<div class="row">
+									<div th:if="${error}" class="alert alert-danger" style="background: #fff;">
+										<p th:text="${error}" style="color: red;"></p>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>*Tên khuyến mãi</label> <input name="name" type="text"
-												class="form-control" th:field="*{name}">
+											<label>*Tên khuyến mãi</label> <input name="name" type="text" class="form-control"
+												th:field="*{name}">
 										</div>
 										<div class="form-group">
 											<label>*Chiết khấu cho khách (tính theo %)</label>
 											<div class="input-group">
-												<input name="discountPercent" type="number"
-													class="form-control" th:field="*{discountPercent}" min="0"
-													max="100">
+												<input name="discountPercent" type="number" class="form-control" th:field="*{discountPercent}"
+													min="0" max="100">
 												<div class="input-group-append">
 													<span class="input-group-text">%</span>
 												</div>
@@ -44,8 +46,8 @@
 										<div class="form-group">
 											<label>*Giá trị tối thiểu đơn hàng (tính theo VND)</label>
 											<div class="input-group">
-												<input name="minOrderAmount" type="number"
-													class="form-control" th:field="*{minOrderAmount}" min="1">
+												<input name="minOrderAmount" type="number" class="form-control" th:field="*{minOrderAmount}"
+													min="1">
 												<div class="input-group-append">
 													<span class="input-group-text">VND</span>
 												</div>
@@ -56,35 +58,52 @@
 									<div class="col-md-6">
 										<div class="form-group">
 
-											<label>Trạng thái</label>
-											<div class="form-group bg-light p-2">
-												<div class="radio-group">
-													<input type="radio" id="true" name="status" value="True"
-														th:checked="${promotion.status == 'True'}" required>
-													<label for="true">Đang hoạt động</label> <input
-														type="radio" id="false" name="status" value="False"
-														th:checked="${promotion.status == 'False'}" required>
-													<label for="false">Ngừng hoạt động</label>
-												</div>
-											</div>
+											<label>Ngày bắt đầu</label> <input name="usedDates" type="datetime-local" class="form-control"
+												th:field="*{usedDates}">
+										</div>
+										<div class="form-group">
+											<label>Ngày kết thúc</label> <input name="dateEnd" type="datetime-local" class="form-control"
+												th:field="*{dateEnd}">
+										</div>
 
 
-											<div class="form-group p-2"
-												style="position: absolute; bottom: 0; right: 0;">
-												<button type="submit" class="btn btn-success"
-													style="font-size: 17px; background: #cf6125;">
-													<i class="fa fa-floppy-o mr-2"></i> Lưu
-												</button>
+										<label>Người dùng lâu năm</label>
+										<div class="form-group bg-light p-2">
+											<div class="radio-group">
+												<input type="radio" id="true" name="olduser" value="True"
+													th:checked="${promotion.olduser == 'True'}" required>
+												<label for="true">Bật</label> <input type="radio" id="false" name="olduser" value="False"
+													th:checked="${promotion.olduser == 'False'}" required>
+												<label for="false">Tắt</label>
 											</div>
+										</div>
+
+
+										<div class="form-group">
+											<button type="submit" class="btn btn-success" style="font-size: 17px; background: #cf6125;">
+												<i class="fa fa-floppy-o mr-2"></i> Lưu
+											</button>
 										</div>
 									</div>
 								</div>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+	<script>
+		$(function () {
+			$("#datepicker-usedDates").datepicker({
+				dateFormat: 'yy-mm-dd'
+			});
+			$("#datepicker-dateEnd").datepicker({
+				dateFormat: 'yy-mm-dd'
+			});
+		});
+	</script>
+
 </body>
 
 </html>

@@ -7,12 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import com.nhutin.electric_project.config.CookieUtils;
 import com.nhutin.electric_project.model.Comment;
 import com.nhutin.electric_project.model.Product;
-import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.User;
 import com.nhutin.electric_project.repository.CommentsDao;
 import com.nhutin.electric_project.repository.UserRepository;
@@ -136,6 +133,16 @@ public class HomeController {
 
     @RequestMapping("/checkout")
     public String checkout(HttpServletRequest req, Model model) {
+        String email = (String) session.getAttribute("tenDangNhapLogin");
+
+        if (email != null) {
+
+            User user = userDAO.findByEmailLike(email);
+            model.addAttribute("ThongTinTK", user);
+            Integer tt = userDAO.findThoiGianDaTao(user.getUserID());
+            System.out.println("Số tuổi : " + tt);
+            model.addAttribute("soTuoi", tt);
+        }
 
         return "banhang/view/checkout";
     }

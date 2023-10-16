@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +30,10 @@ public class Inventory implements Serializable {
   private Integer inventoryID;
 
   @Column(name = "quantity")
-  private String quantity;
+  private Integer quantity;
 
   @ManyToOne
   @JoinColumn(name = "product_id")
-  private Product productID;
+  private Product product;
 
 }

@@ -41,9 +41,34 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
 
     $scope.goToProduct_Detail = function (productID) {
         window.location.href = `/detail/${productID}`;
-    };                                                                                                                                                                                              
+    };
+
+    $scope.cartItems = [];
+    $scope.qty = 1;
+    $scope.addToCartQty = function (masp) {
+
+        var cart = this.cartItems.find(cart => cart.productID == masp);
+        if (cart) {
+            cart.qty += $scope.qty;
+            $scope.saveToLocalStorage();
+        } else {
+            var url = `/rest/product/${masp}`;
+            $http.get(url).then(resp => {
+                resp.data.qty = $scope.qty;
+                $scope.cartItems.push(resp.data);
+                $scope.saveToLocalStorage();
+
+            })
+        }
+        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
 
 
+        //alert(qty);
+    }
+    $scope.saveToLocalStorage = function () {
+        var json = JSON.stringify(angular.copy($scope.cartItems));
+        localStorage.setItem("cart", json);
+    }
 
 
 });

@@ -13,8 +13,7 @@
       <div class="container">
         <div class="container-inner">
           <h1><span>Sản Phẩm</span></h1>
-          <em>Over 4000 Items are available here</em>
-
+          <em>NHUTIN STORE ĐỒNG HÀNH CÙNG SIÊU SALE 20-10</em>
         </div>
       </div>
     </div>
@@ -22,9 +21,8 @@
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-          <li><a href="">Home</a></li>
-          <li><a href="">Store</a></li>
-          <li class="active">Product category</li>
+          <li><a href="">Trang chủ</a></li>
+          <li class="active">Sản phẩm</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -40,7 +38,7 @@
                 </label>
               </div>
               <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
-                <label ng-if="item.active !== false">
+                <label>
                   <input type="checkbox" ng-model="item.selected" ng-change="filterData(item.categoryID)">
                   {{item.categoryName}}
                 </label>
@@ -95,7 +93,7 @@
                   <h3>Không có sản phẩm nào được tìm thấy.</h3>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products" ng-if="item.active !== false">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
                     <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
@@ -105,8 +103,9 @@
                   </div>
                   <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
                   <div class="pi-price">{{item.price |number : 0}} đ</div>
-                  <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add to
-                    cart</a>
+                  <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
+                    ng-if="item.active !== false">Add to cart</a>
+                  <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
                 </div>
               </div>
             </div>

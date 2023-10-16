@@ -21,9 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data
@@ -64,9 +62,14 @@ public class Product implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReviews;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Comment> comment;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	private List<Inventory> inventory;
 
 	@ManyToOne
 	@JoinColumn(name = "brand_id")

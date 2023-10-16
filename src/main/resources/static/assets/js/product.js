@@ -2,7 +2,6 @@ var app = angular.module('my-app');
 
 app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.products = [];
-
     $scope.brands = [];
     $scope.products = {};
     $scope.categoris = [];
@@ -10,18 +9,14 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.newProduct = {};
     $scope.form = {};
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
-
+    $scope.showAllProducts = false;
+    $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
 
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
             $scope.allProducts = response.data;
         });
-
-    $scope.Id = function () {
-        alert("He lo")
-    };
-
 
     $http.get('/rest/supplier')
         .then(function (response) {
@@ -37,7 +32,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             $scope.categoris = response.data;
         });
 
-    // Hàm xử lý sự kiện chuyển về Tab 2
     $scope.switchToTab2 = function () {
         $('#myTabs a[href="#tab2"]').tab('show');
     };
@@ -45,7 +39,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.trustedHtml = function (htmlCode) {
         return $sce.trustAsHtml(htmlCode);
     };
-
 
     $scope.goToSinglePage = function (productID) {
         window.location.href = `/detail/${productID}`; // Sử dụng chuỗi template (ES6)
@@ -70,9 +63,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             });
     };
 
-    $scope.showAllProducts = false;
-    $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
-
     $scope.showAllProductsChanged = function () {
         if ($scope.showAllProducts) {
             // Nếu checkbox "Hiển thị tất cả sản phẩm" được chọn, hiển thị tất cả sản phẩm
@@ -87,9 +77,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
     // Hàm để lọc và tải sản phẩm và brand theo categoryID đã chọn
     $scope.filterData = function (categoryID) {
-        $scope.products = [];
-        $scope.brands = [];
-
         // Tải sản phẩm dựa trên categoryID
         $http.get('/products-by-category/' + categoryID)
             .then(function (response) {
@@ -98,7 +85,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 } else {
                     $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
                 }
-
                 $scope.products = response.data;
             })
             .catch(function (error) {
@@ -387,27 +373,27 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     };
     $scope.loadLocalStorage();
 
-    $scope.saveToDatabase = function () {
-        var json = localStorage.getItem("cart");
-        var cartItems = json ? JSON.parse(json) : [];
+    // $scope.saveToDatabase = function () {
+    //     var json = localStorage.getItem("cart");
+    //     var cartItems = json ? JSON.parse(json) : [];
 
-        var productData = cartItems.map(function (item) {
-            return { productId: item.productID, quantity: item.qty };
-        });
-        console.log("thông tin dữ liệu", productData);
-        $http.post('/rest/cartdetail', productData)
-            .then(function (response) {
-                // Xử lý kết quả sau khi lưu vào cơ sở dữ liệu thành công
-                console.log('Mã sản phẩm đã được lưu vào cơ sở dữ liệu.');
-            })
-            .catch(function (error) {
-                // Xử lý lỗi nếu có
-                console.error('Lỗi khi lưu mã sản phẩm vào cơ sở dữ liệu:', error);
-            });
-    };
+    //     var productData = cartItems.map(function (item) {
+    //         return { productId: item.productID, quantity: item.qty };
+    //     });
+    //     console.log("thông tin dữ liệu", productData);
+    //     $http.post('/rest/cartdetail', productData)
+    //         .then(function (response) {
+    //             // Xử lý kết quả sau khi lưu vào cơ sở dữ liệu thành công
+    //             console.log('Mã sản phẩm đã được lưu vào cơ sở dữ liệu.');
+    //         })
+    //         .catch(function (error) {
+    //             // Xử lý lỗi nếu có
+    //             console.error('Lỗi khi lưu mã sản phẩm vào cơ sở dữ liệu:', error);
+    //         });
+    // };
 
 
-    $scope.saveToDatabase();
+    // $scope.saveToDatabase();
 
 
 

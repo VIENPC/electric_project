@@ -21,9 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -51,7 +49,7 @@ public class Order implements Serializable {
 	@Column(name = "statustt")
 	private boolean statustt;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "order_date")
 	private Date orderDate = new Date();
 
@@ -60,7 +58,7 @@ public class Order implements Serializable {
 
 	@Column(name = "note")
 	private String note;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;

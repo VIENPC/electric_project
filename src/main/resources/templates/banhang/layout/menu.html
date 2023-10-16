@@ -15,14 +15,15 @@
           <!-- BEGIN TOP BAR LEFT PART -->
           <div class="col-md-6 col-sm-6 additional-shop-info">
             <ul class=" list-inline">
-              <li style="height: 45px;"> <a class="site-logo" href="shop-index.html"><img
-                    src="../assets/corporate/img/logos/logo-shop-red.png" alt="Metronic Shop UI"></a></li>
-              <li><i class="fa fa-phone"></i><span>+nhutin.vn</span></li>
+              <li> <a th:href="@{/home}">
+                  <div class="title-box">
+                    <span class="first-letter">N</span>HUTIN <span class="second-letter">S</span>TORE
+                  </div>
+                </a></li>
+              <li><i class="fa fa-phone"></i><span>+0866065558</span></li>
               <!-- BEGIN CURRENCIES -->
               <li class="shop-currencies">
-                <a href="javascript:void(0);">đ</a>
-
-                <a href="javascript:void(0);" class="current">$</a>
+                <a><i class="fa fa-map-marker" aria-hidden="true"></i>Cần Thơ</a>
               </li>
               <!-- END CURRENCIES -->
               <!-- BEGIN LANGS -->
@@ -40,13 +41,12 @@
           </div>
           <!-- END TOP BAR LEFT PART -->
           <!-- BEGIN TOP BAR MENU -->
-          <div class="col-md-6 col-sm-6 additional-nav">
-            <ul class="list-unstyled list-inline pull-right">
+          <div class="col-md-6 col-sm-6 ">
+            <ul class="list-unstyled  pull-right">
               <li>
-                <h3><a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                    Xin chào [[${#request.remoteUser}]]
-                  </a></h3>
-
+                <div class="title-box">
+                  Xin chào <span class="first-letter">[[${#request.remoteUser}]] </span>
+                </div>
               </li>
             </ul>
           </div>
@@ -56,8 +56,6 @@
     </div>
     <div class="header" ng-controller="product-controller">
       <div class="container">
-
-
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
         <!-- BEGIN CART -->
@@ -94,7 +92,7 @@
           <ul>
             <li class="dropdown dropdown-megamenu">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                <strong>DANH MỤC</strong>
+                <i class="fa fa-bars" aria-hidden="true"></i> <strong>DANH MỤC</strong>
               </a>
               <ul class="dropdown-menu">
                 <li>
@@ -121,66 +119,67 @@
                 </li>
               </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown active">
               <a th:href="@{/home}">
-                Trang Chủ
+                <i class="fa fa-home"></i> Trang Chủ
               </a>
-
-
-              <!-- END DROPDOWN MENU -->
             </li>
-            <li class="dropdown">
+            <li>
               <a th:href="@{/shop}">
-                Sản phẩm
+                <i class="fa fa-laptop" aria-hidden="true"></i> Sản phẩm
               </a>
-
-
-              <!-- END DROPDOWN MENU -->
             </li>
-            <li class="dropdown dropdown-megamenu">
+            <li>
               <a th:href="@{/about}">
-                Giới thiệu
-
+                <i class="fa fa-users" aria-hidden="true"></i> Giới thiệu
               </a>
-
             </li>
-
-            <li class="dropdown dropdown100 nav-catalogue">
+            <li>
               <a th:href="@{/news}">
-                Tin công nghệ
-
+                <i class="fa fa-id-card" aria-hidden="true"></i> Tin công nghệ
               </a>
-
             </li>
-
-
-            <li><a href="">Liên hệ</a></li>
-
-            <li class="dropdown active" th:unless="${#request.remoteUser}">
+            <li>
+              <a href="">
+                <i class="fa fa-address-book" aria-hidden="true"></i> Liên hệ
+              </a>
+            </li>
+            <li th:unless="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Tài khoản
+                <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản
               </a>
 
               <ul class="dropdown-menu">
-                <li><a th:href="@{/login}">Đăng nhập</a></li>
-                <li><a th:href="@{/registration}">Đăng ký</a></li>
-                <li><a th:href="@{/reset-password}">Quên mật khẩu</a></li>
+                <li><a th:href="@{/login}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng nhập</a>
+                </li>
+                <li><a th:href="@{/registration}"><i class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a>
+                </li>
+                <li><a th:href="@{/reset-password}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
+                    mật
+                    khẩu</a></li>
               </ul>
             </li>
 
-            <li class="dropdown active" th:if="${#request.remoteUser}">
+            <li th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Tài Khoản
+                <i class="fa fa-user-circle" aria-hidden="true"></i> Tài Khoản
 
               </a>
 
               <ul class="dropdown-menu">
-                <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}">Trang quản lý</a></li>
-                <li><a th:href="@{/changepassword}">Đổi mật khẩu</a></li>
-                <li><a th:href="@{/khuyenmai}">Voucher khuyến mãi</a></li>
-                <li><a th:href="@{/user/history}">Lịch sử mua hàng</a></li>
-                <li><a th:href="@{/user/profile}">Trang cá nhân</a></li>
-                <li><a th:href="@{/logout}">Đăng xuất</a></li>
+                <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}"><i class="fa fa-user-secret"
+                      aria-hidden="true"></i> Trang quản lý</a></li>
+                <li><a th:href="@{/changepassword}"><i class="fa fa-wrench" aria-hidden="true"></i> Đổi mật khẩu</a>
+                </li>
+                <li><a th:href="@{/khuyenmai}"> <i class="fa fa-gift" aria-hidden="true"></i> Voucher</a>
+                </li>
+                <li><a th:href="@{/user/history}"><i class="fa fa-history" aria-hidden="true"></i> Lịch sử mua
+                    hàng</a>
+                </li>
+                <li><a th:href="@{/user/profile}"><i class="fa fa-user" aria-hidden="true"></i> Trang cá nhân</a>
+                </li>
+                <li><a th:href="@{/logout}"><i class="fa fa-sign-out" aria-hidden="true"></i><i
+                      class="fa fa-chevron-circle-right" aria-hidden="true"></i> Đăng xuất</a></li>
               </ul>
             </li>
 
@@ -190,8 +189,8 @@
               <i class="fa fa-search search-btn"></i>
               <div class="search-box">
                 <div class="input-group">
-                  <input type="search" placeholder="Search" class="form-control" id="productName" ng-model="searchText"
-                    name="productName">
+                  <input type="search" placeholder="Bạn tìm gì...." class="form-control" id="productName"
+                    ng-model="searchText" name="productName">
                   <span class="input-group-btn">
                     <button ng-click="searchProductsByName()" class="btn btn-primary">Search</button>
                   </span>

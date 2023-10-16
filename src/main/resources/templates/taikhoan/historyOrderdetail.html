@@ -45,10 +45,10 @@
 																	th:text="${#numbers.formatDecimal(orderdetail.quantity, 0, 'COMMA', 0 , 'POINT')} "></span>
 															</td>
 															<td><span
-																	th:text="${#numbers.formatDecimal(orderdetail.price, 0, 'COMMA', 0 , 'POINT')} + ' đ'"></span>
+																	th:text="${#numbers.formatDecimal(orderdetail.price, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
 															</td>
 															<td
-																th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+																th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.price, 1, 'POINT', 0, 'DEFAULT')+' VND'}">
 															</td>
 														</tr>
 													</tbody>
