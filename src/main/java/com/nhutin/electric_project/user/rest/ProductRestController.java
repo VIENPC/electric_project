@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Product;
+import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.model.Supplier;
 import com.nhutin.electric_project.repository.productsRepository;
 import com.nhutin.electric_project.repository.suppliersRepository;
@@ -35,7 +36,16 @@ public class ProductRestController {
 
     @GetMapping("rest/product")
     public List<Product> findAllProduct() {
-        return productdao.findAll();
+        // return productdao.findAll();
+        List<Product> products = productdao.findAll();
+        for (Product product : products) {
+            Promotion discount = product.getPromotion();
+            if (discount != null) {
+                double discountedPrice = product.getPrice() * (1 - discount.getDiscountPercent() / 100);
+                product.setPrice(discountedPrice);
+            }
+        }
+        return products;
     }
 
     @GetMapping("rest/supplier")

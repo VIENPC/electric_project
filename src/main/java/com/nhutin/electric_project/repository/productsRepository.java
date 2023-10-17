@@ -27,12 +27,11 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
         long countByActive(Boolean tt);
 
-        // sản phẩm bán chạy nhất
-        @Query("SELECT p.productID, p.productName, p.price, od.quantity, p.brand.brandName, SUM(od.quantity) AS totalSold, p.image "
+        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
                         +
                         "FROM OrderDetail od " +
                         "INNER JOIN od.product p " +
-                        "GROUP BY p.productID, p.productName, p.price, od.quantity, p.brand.brandName, p.image " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
                         "ORDER BY totalSold DESC")
         List<Object[]> findBestSellingProducts();
 
@@ -97,4 +96,13 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
         @Query("SELECT p.productID, p.productName, sum(o.quantity), p.price, (sum(o.quantity) * p.price), b.brandName FROM Product p JOIN Category c ON c.categoryID =p.category.categoryID JOIN OrderDetail o ON o.product.productID = p.productID JOIN Order od ON od.orderId = o.order.orderId JOIN Brand b ON b.brandID = p.brand.brandID Where od.statushd = 4 AND c.categoryID =?1 GROUP BY p.productID, p.productName, p.price, b.brandName")
         List<Object[]> thongkeSanPhamTheoMuc(int muc);
+
+        // sản phẩm bán tệ nhất
+        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
+                        +
+                        "FROM OrderDetail od " +
+                        "INNER JOIN od.product p " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
+                        "ORDER BY totalSold ASC")
+        List<Object[]> findLostSellingProducts();
 }

@@ -11,12 +11,20 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.noProductsFound = false; // Thêm biến để kiểm tra xem có sản phẩm nào được tìm thấy hay không
     $scope.showAllProducts = false;
     $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
-
+    $scope.calculateDiscountedPrice = 0;
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
             $scope.allProducts = response.data;
         });
+    $scope.calculateDiscountedPrice = function (product) {
+        if (product.promotion) {
+            return product.price * (1 - (product.promotion.discountPercent / 100));
+        }
+        return product.price;
+
+    };
+
 
     $http.get('/rest/supplier')
         .then(function (response) {
@@ -104,6 +112,12 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             .catch(function (error) {
                 console.error('Error fetching brands:', error);
             });
+    };
+    $scope.reloadPageIfUnselected = function (selected) {
+        if (!selected) {
+            // Nếu checkbox được bỏ chọn (selected = false), thực hiện tải lại trang
+            location.reload();
+        }
     };
 
 
@@ -294,7 +308,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
     }
     $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-        return cart.price * cart.qty;
+        return $scope.calculateDiscountedPrice(cart) * cart.qty;
     }
     $scope.totalAmount = function () {
         return $scope.cartItems
@@ -315,6 +329,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             var url = `/rest/product/${masp}`;
             $http.get(url).then(resp => {
                 resp.data.qty = 1;
+                // resp.data.giagiam = $scope.calculateDiscountedPrice();
                 $scope.cartItems.push(resp.data);
                 $scope.cartItemCount = $scope.getcount(); // Cập nhật biến trong $scope
                 $scope.saveToLocalStorage();
@@ -328,80 +343,13 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         // Bắt buộc AngularJS cập nhật giao diện
 
     }
-    $scope.$watch('cartItems', function () {
-        $scope.cartItemCount = $scope.getcount();
-    }, true);
-
-    $scope.saveToLocalStorage = function () {
-        var json = JSON.stringify(angular.copy($scope.cartItems));
-        localStorage.setItem("cart", json);
-    }
-    $scope.loadLocalStorage = function () {
-        var json = localStorage.getItem("cart");
-        $scope.cartItems = json ? JSON.parse(json) : [];
-    }
-    $scope.removesp = function (masp) {
-        swal({
-            title: "Cảnh báo",
-            text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
-            buttons: ["Hủy bỏ", "Đồng ý"],
-            icon: "warning"
-        }).then((willDelete) => {
-            if (willDelete) {
-                var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
-                $scope.cartItems.splice(index, 1);
-                $scope.saveToLocalStorage();
-                swal("Thành công", "Sản phẩm đã được xóa!", "success")
-
-                $scope.$apply();
-            }
-        })
-    }
-    $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
-        return $scope.cartItems
-            .map(cart => cart.qty)
-            .reduce((total, qty) => total += qty, 0);
-
-    }
-    $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-        return cart.price * cart.qty;
-    }
-    $scope.totalAmount = function () {
-        return $scope.cartItems
-            .map(cart => this.amt_of(cart))
-            .reduce((total, amt) => total += amt, 0);
-    };
     $scope.loadLocalStorage();
-
-    // $scope.saveToDatabase = function () {
-    //     var json = localStorage.getItem("cart");
-    //     var cartItems = json ? JSON.parse(json) : [];
-
-    //     var productData = cartItems.map(function (item) {
-    //         return { productId: item.productID, quantity: item.qty };
-    //     });
-    //     console.log("thông tin dữ liệu", productData);
-    //     $http.post('/rest/cartdetail', productData)
-    //         .then(function (response) {
-    //             // Xử lý kết quả sau khi lưu vào cơ sở dữ liệu thành công
-    //             console.log('Mã sản phẩm đã được lưu vào cơ sở dữ liệu.');
-    //         })
-    //         .catch(function (error) {
-    //             // Xử lý lỗi nếu có
-    //             console.error('Lỗi khi lưu mã sản phẩm vào cơ sở dữ liệu:', error);
-    //         });
-    // };
-
-
-    // $scope.saveToDatabase();
-
-
-
-
 
 });
 app.controller("checkctrl", function ($scope, $http, $filter) {
     $scope.vouchers = [];
+    $scope.noVouchersFound = false; // Mặc định không có thông báo khi không có voucher
+
 
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -458,14 +406,29 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
         var json = localStorage.getItem("cart");
         $scope.cartItems = json ? JSON.parse(json) : [];
     }
+    $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
+        return $scope.cartItems
+            .map(cart => cart.qty)
+            .reduce((total, qty) => total += qty, 0);
+
+    }
     $scope.amt_of = function (cart) { // tính thành tiền của 1 sản phẩm
-        return cart.price * cart.qty;
+        return $scope.calculateDiscountedPrice(cart) * cart.qty;
     }
     $scope.totalAmount = function () {
         return $scope.cartItems
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
+
+    $scope.calculateDiscountedPrice = function (product) {
+        if (product.promotion) {
+            return product.price * (1 - (product.promotion.discountPercent / 100));
+        }
+        return product.price;
+
+    };
+
     $scope.account = []
     $scope.getAccount = function () {
 
@@ -478,18 +441,39 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             console.log("Error", error)
         });
     };
+    $scope.noVouchersFound = true; // Ban đầu giả sử không có voucher phù hợp
     $scope.getAccount();
+
     $http.get('/rest/promotion')
-        .then(function (response) {
+        .then(function (response) {// Sau khi tải danh sách vouchers
             $scope.vouchers = response.data;
         });
+
+
+    $scope.checkVouchers = function () {
+        $scope.noVouchersFound = true; // Đặt giả định ban đầu là không có voucher
+
+        // Kiểm tra danh sách vouchers để xem có voucher nào phù hợp không
+        for (var i = 0; i < $scope.vouchers.length; i++) {
+            var item = $scope.vouchers[i];
+
+            if (item.minOrderAmount <= totalAmount() && item.status == true && item.olduser == false) {
+                $scope.noVouchersFound = false; // Tìm thấy ít nhất một voucher phù hợp
+                break; // Dừng kiểm tra khi tìm thấy một voucher
+            }
+        }
+    };
+
+    // Gọi hàm checkVouchers để kiểm tra khi trang được tải
+    $scope.checkVouchers();
+
 
     $scope.tiengiam = 0;
     $scope.tongtien = 0;
     $scope.loadId = function (itemId) {
         $http.get('/rest/' + itemId)
             .then(function (response) {
-                $scope.tiengiam = $scope.totalAmount() - (($scope.totalAmount() * response.data.discountPercent) / 100);
+                $scope.tiengiam = ($scope.totalAmount() * response.data.discountPercent / 100);
                 console.log("coaihd", $scope.tiengiam);
                 $scope.tongtien = $scope.totalAmount() - $scope.tiengiam;
 
@@ -498,7 +482,6 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
                 console.error('Error fetching products:', error);
             });
     };
-
 
 
 
@@ -581,6 +564,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
                         console.log("thanh công", resp);
 
                         swal("Thành Công", "Đặt hàng thành công", "success")
+                        window.location.href = `/shop`;
                     }
                     $scope.clear(); l
 

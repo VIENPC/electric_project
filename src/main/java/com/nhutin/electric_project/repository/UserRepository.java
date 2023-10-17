@@ -61,4 +61,24 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT CONCAT(DATEDIFF(DAY, o.registrationDate, CURRENT_TIMESTAMP), ' ') AS ThoiGianDaTao FROM User o WHERE o.userID = ?1")
     Integer findThoiGianDaTao(Integer userID);
 
+    // đếm sô user đằng kí
+    @Query(value = "SELECT t.thang, COALESCE(COUNT(u.user_id), 0) AS doanh_thu_thang "
+            + "FROM (SELECT 1 AS thang UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 "
+            + "UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 "
+            + "UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) t "
+            + "LEFT JOIN Users u ON MONTH(u.RegistrationDate) = t.thang "
+            + "AND u.RegistrationDate >= DATEADD(MONTH, -12, GETDATE()) "
+            + "GROUP BY t.thang ORDER BY t.thang", nativeQuery = true)
+    List<Object[]> calculateUserRegistrationByMonth();
+
+    // đếm số đơn hàng theo tháng
+    @Query(value = "SELECT t.thang, COALESCE(COUNT(o.order_id), 0) AS doanh_thu_thang "
+            + "FROM (SELECT 1 AS thang UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 "
+            + "UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 "
+            + "UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) t "
+            + "LEFT JOIN orders o ON MONTH(o.order_date) = t.thang "
+            + "AND o.order_date >= DATEADD(MONTH, -12, GETDATE()) "
+            + "AND o.statushd = 4 "
+            + "GROUP BY t.thang ORDER BY t.thang", nativeQuery = true)
+    List<Object[]> calculateOrdersByMonth();
 }

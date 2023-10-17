@@ -149,7 +149,6 @@
                           <tr>
                             <th class="checkout-image">Ảnh</th>
                             <th class="checkout-description">Tên sản phẩm</th>
-
                             <th class="checkout-quantity">Số lượng</th>
                             <th class="checkout-price">Giá</th>
                             <th class="checkout-total">Tổng tiền</th>
@@ -167,9 +166,9 @@
                             <td class="checkout-quantity">
                               <h5>{{item.qty}}</h5>
                             </td>
-                            <td class="checkout-price"><strong>{{item.price
-                                |number :0}}đ</strong></td>
-                            <td class="checkout-total"><strong>{{(item.qty*item.price)
+                            <td class="checkout-price"><strong>{{calculateDiscountedPrice(item) |number:0}}đ</strong>
+                            </td>
+                            <td class="checkout-total"><strong>{{(item.qty*calculateDiscountedPrice(item))
                                 |number:0}}đ</strong></td>
                           </tr>
 
@@ -196,6 +195,9 @@
                             <td><a class="btn btn-primary btn-sm" ng-click="loadId(item.id)">Apply</a></td>
                           </tr>
                         </table>
+                        <!-- <div ng-show="noVouchersFound">
+                          <p>Không có voucher nào phù hợp với điều kiện.</p>
+                        </div> -->
                         <table th:if=" ${soTuoi>= 365}">
                           <tr>
                             <thead>
@@ -215,7 +217,7 @@
                       </div>
                       <div class="clearfix"></div>
                       <button class="btn btn-primary pull-right" type="submit" id="button-confirm"
-                        ng-click="order.purchase()">Hoàn
+                        ng-click="order.purchase();gotoHome()">Hoàn
                         thành đặt hàng</button>
 
                       <a th:href="@{/cart}" class="btn btn-default pull-right margin-right-20">Trở
@@ -235,4 +237,5 @@
     </div>
   </main>
 </body>
+
 </html>

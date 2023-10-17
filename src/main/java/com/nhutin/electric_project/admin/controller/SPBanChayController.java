@@ -1,6 +1,5 @@
 package com.nhutin.electric_project.admin.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -71,7 +70,7 @@ public class SPBanChayController {
             model.addAttribute("listspbctheomonth", spdao.findBestSellingProductsMonth(thangHomNay));
             model.addAttribute("thangHomNay", thangHomNay);
             // Hiển thị trang ban đầu (chưa chọn tháng)
-            // model.addAttribute("listspbc", spdao.findBestSellingProducts()); // Hoặc gán
+            model.addAttribute("listspbc", spdao.findBestSellingProducts()); // Hoặc gán
             // giá trị mặc định khác
         }
         return "admin/view/spbanchay";
