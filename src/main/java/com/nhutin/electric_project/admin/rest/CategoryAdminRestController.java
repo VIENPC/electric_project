@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Category;
+import com.nhutin.electric_project.model.Promotion;
 import com.nhutin.electric_project.repository.categorysRepository;
+import com.nhutin.electric_project.repository.prmotionRepositpry;
 import com.nhutin.electric_project.service.CategorysService;
 
 @CrossOrigin("*")
@@ -25,11 +26,19 @@ public class CategoryAdminRestController {
     categorysRepository dmdao;
 
     @Autowired
+    prmotionRepositpry dao;
+
+    @Autowired
     CategorysService categoryService;
 
     @GetMapping("/rest/categoryAdmin")
     public ResponseEntity<List<Category>> findAll() {
         return ResponseEntity.ok(dmdao.findAll());
+    }
+
+    @GetMapping("/rest/promotionAdmin")
+    public ResponseEntity<List<Promotion>> findAllPro() {
+        return ResponseEntity.ok(dao.findAll());
     }
 
     @PostMapping("/admin/create")

@@ -3,6 +3,7 @@ var app = angular.module('my-app');
 app.controller('productAdmin-controller', function ($scope, $http, $window, $sce) {
   $scope.products = {};
   $scope.products = [];
+  $scope.promotions = [];
   $scope.newProduct = {};
   $scope.form = {};
   $scope.pageNumbers = []; // Các số trang
@@ -38,6 +39,10 @@ app.controller('productAdmin-controller', function ($scope, $http, $window, $sce
       $scope.updateDisplayedProducts();
     });
 
+  $http.get('/rest/promotionAdmin')
+    .then(function (response) {
+      $scope.promotions = response.data;
+    });
   // Hàm để cập nhật danh sách sản phẩm được hiển thị trên trang hiện tại
   $scope.updateDisplayedProducts = function () {
     var startIndex = ($scope.currentPage - 1) * $scope.pageSize;

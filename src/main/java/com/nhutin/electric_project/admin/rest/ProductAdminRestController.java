@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhutin.electric_project.model.Product;
-
 import com.nhutin.electric_project.repository.productsRepository;
 import com.nhutin.electric_project.service.ProductsService;
 
@@ -59,6 +58,7 @@ public class ProductAdminRestController {
             existing.setDescription(update.getDescription());
             existing.setQuantity(update.getQuantity());
             existing.setSupplier(update.getSupplier());
+            existing.setPromotion(update.getPromotion());
             existing.setImage(update.getImage());
             existing.setActive(update.isActive() == true);
 

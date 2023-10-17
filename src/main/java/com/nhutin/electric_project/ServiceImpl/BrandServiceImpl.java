@@ -16,4 +16,5 @@ public class BrandServiceImpl implements BrandsService {
     public List<Object[]> getRevenueByMonth(int brandId) {
         return brandsRepository.getRevenueByMonth(brandId);
     }
+
 }

@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
 	$('#sampleTable').DataTable({
 		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
@@ -40,8 +42,6 @@ $(document).ready(function () {
 			$('.chkboxId').prop('checked', false);
 		}
 	});
-
-
 });
 
 // xử lí phần thống kê theo hãng
@@ -101,9 +101,6 @@ window.onload = function () {
 		removeSuccessParamFromURL();
 	}
 
-
-
-
 	//thất bại
 	if (failParam == 'delete') {
 		showFailMessage("Xoá sản phẩm thất bại");
@@ -144,11 +141,8 @@ $(document).on('click', '.settt', function () {
 			if (mahd != null) {
 				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
 			}
-
-
 		}
 	})
-
 });
 
 $('.unclock').click(function () {
@@ -328,11 +322,87 @@ function editProduct(button) {
 	$("#ModalUP").modal("show");
 }
 
-
 var categories = [];
-var data = [];
+var categories1 = [];
+var data4 = [];
+var table4 = document.getElementById("bang4");
 // Lấy tất cả các hàng trong bảng
-var rows = document.querySelectorAll('table tr');
+var rows = table4.querySelectorAll('table tr');
+
+// Lặp qua từng hàng trong bảng
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories1.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data4.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+	for (var i = 0; i < data4.length; i++) {
+		data4[i].name = categories1[i]; // Thêm tên tháng
+		data4[i].symbol = 'Mmm'; // Thêm kí tự, thay 'A' bằng kí tự bạn muốn
+	}
+});
+
+//Đây là biểu đồ
+const chart1 = Highcharts.chart('container1', {
+	title: {
+		text: 'THỐNG KÊ DOANH THU THEO HÃNG',
+		align: 'center'
+	},
+	colors: [
+		'#4caefe',
+		'#3fbdf3',
+		'#35c3e8',
+		'#2bc9dc',
+		'#20cfe1',
+		'#16d4e6',
+		'#0dd9db',
+		'#03dfd0',
+		'#00e4c5',
+		'#00e9ba',
+		'#00eeaf',
+		'#23e274'
+	],
+	xAxis: [{
+		categories: categories1.map(function (category1) {
+			return 'Tháng ' + category1;
+		}),
+		// crosshair: true
+	}],
+	series: [{
+		type: 'column',
+		name: 'Doanh thu',
+		borderRadius: 5,
+		colorByPoint: true,
+		data: data4,
+		showInLegend: false
+	}]
+});
+
+document.getElementById('plain1').addEventListener('click', () => {
+	chart1.update({
+		chart: {
+			inverted: false,
+			polar: false
+		},
+
+	});
+});
+
+document.getElementById('inverted1').addEventListener('click', () => {
+	chart1.update({
+		chart: {
+			inverted: true,
+			polar: false
+		},
+	});
+});
+var data = [];
+var table1 = document.getElementById("bang1");
+// Lấy tất cả các hàng trong bảng
+var rows = table1.querySelectorAll('table tr');
 
 // Lặp qua từng hàng trong bảng
 rows.forEach(function (row) {
@@ -345,7 +415,6 @@ rows.forEach(function (row) {
 		data.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
 	}
 });
-//Đây là biểu đồ
 const chart = Highcharts.chart('container', {
 	title: {
 		text: 'THỐNG KÊ DOANH THU',
@@ -365,9 +434,12 @@ const chart = Highcharts.chart('container', {
 		'#00eeaf',
 		'#23e274'
 	],
-	xAxis: {
-		categories: categories
-	},
+	xAxis: [{
+		categories: categories.map(function (category) {
+			return 'Tháng ' + category;
+		}),
+		// crosshair: true
+	}],
 	series: [{
 		type: 'column',
 		name: 'Doanh thu',
@@ -396,6 +468,7 @@ document.getElementById('inverted').addEventListener('click', () => {
 		},
 	});
 });
+
 function editCategory(button) {
 
 	// Trích xuất thông tin sản phẩm từ hàng đã chọn

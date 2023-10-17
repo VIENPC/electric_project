@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.nhutin.electric_project.model.Brand;
 import com.nhutin.electric_project.model.Product;
 
 public interface productsRepository extends JpaRepository<Product, Integer> {
@@ -34,6 +36,15 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
                         "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
                         "ORDER BY totalSold DESC")
         List<Object[]> findBestSellingProducts();
+
+        // sản phẩm bán tệ nhất
+        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
+                        +
+                        "FROM OrderDetail od " +
+                        "INNER JOIN od.product p " +
+                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
+                        "ORDER BY totalSold ASC")
+        List<Object[]> findLostSellingProducts();
 
         // sản phẩm bán chạy theo tháng
         @Query("SELECT p.productID, p.productName, SUM(od.quantity) AS totalQuantity, p.price AS unitPrice, SUM(od.quantity * p.price) AS totalSales, b.brandName, o.orderDate, p.image "
@@ -96,13 +107,4 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
         @Query("SELECT p.productID, p.productName, sum(o.quantity), p.price, (sum(o.quantity) * p.price), b.brandName FROM Product p JOIN Category c ON c.categoryID =p.category.categoryID JOIN OrderDetail o ON o.product.productID = p.productID JOIN Order od ON od.orderId = o.order.orderId JOIN Brand b ON b.brandID = p.brand.brandID Where od.statushd = 4 AND c.categoryID =?1 GROUP BY p.productID, p.productName, p.price, b.brandName")
         List<Object[]> thongkeSanPhamTheoMuc(int muc);
-
-        // sản phẩm bán tệ nhất
-        @Query("SELECT p.productID, p.productName, p.price, SUM(od.quantity) AS totalSold, p.brand.brandName, p.image "
-                        +
-                        "FROM OrderDetail od " +
-                        "INNER JOIN od.product p " +
-                        "GROUP BY p.productID, p.productName, p.price, p.brand.brandName, p.image " +
-                        "ORDER BY totalSold ASC")
-        List<Object[]> findLostSellingProducts();
 }

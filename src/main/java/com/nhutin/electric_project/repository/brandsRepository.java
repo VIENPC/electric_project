@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.nhutin.electric_project.model.Brand;
-
 public interface brandsRepository extends JpaRepository<Brand, Integer> {
     Brand findById(int brandID);
 
@@ -31,4 +30,5 @@ public interface brandsRepository extends JpaRepository<Brand, Integer> {
             "GROUP BY t.thang " +
             "ORDER BY t.thang", nativeQuery = true)
     List<Object[]> getRevenueByMonth(@Param("brand_id") int brandId);
+
 }

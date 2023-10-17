@@ -228,6 +228,20 @@
 												</div>
 											</div>
 											<div class="form-group col-md-6"
+												ng-class="{'has-error': form.promotion.$invalid && form.promotion.$dirty && !editingMode}">
+												<label class="col-md-12 p-0">Giảm giá</label>
+												<div class="col-md-12 border-bottom p-0">
+													<select name="promotion" class="form-control" id="promotion" ng-model="newProduct.promotion"
+														ng-options="promotion as promotion.name for promotion in promotions track by promotion.id">
+														<option value="">Chon giảm giá</option>
+													</select>
+													<div ng-messages="form.promotion.$error" ng-if="!form.promotion.$dirty && !editingMode">
+														<div class="text-danger" ng-message="required">Vui lòng chọn
+															giảm giá</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-md-6"
 												ng-class="{'has-error': form.price.$invalid && form.price.$dirty && !editingMode}">
 												<label class="control-label">Giá bán</label> <input class="form-control" type="text"
 													name="price" ng-model="newProduct.price">
