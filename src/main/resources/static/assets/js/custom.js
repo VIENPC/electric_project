@@ -12,6 +12,12 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+	$('#sampleTablebaocaochung1').DataTable({
+		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
+	});
+});
+
+$(document).ready(function () {
 	$('#sampleTable2').DataTable({
 		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
 	});
@@ -239,11 +245,87 @@ function editProduct(button) {
 	$("#ModalUP").modal("show");
 }
 
-
 var categories = [];
-var data = [];
+var categories1 = [];
+var data4 = [];
+var table4 = document.getElementById("bang4");
 // Lấy tất cả các hàng trong bảng
-var rows = document.querySelectorAll('table tr');
+var rows = table4.querySelectorAll('table tr');
+
+// Lặp qua từng hàng trong bảng
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories1.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data4.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+	for (var i = 0; i < data4.length; i++) {
+		data4[i].name = categories1[i]; // Thêm tên tháng
+		data4[i].symbol = 'Mmm'; // Thêm kí tự, thay 'A' bằng kí tự bạn muốn
+	}
+});
+
+//Đây là biểu đồ
+const chart1 = Highcharts.chart('container1', {
+	title: {
+		text: 'THỐNG KÊ DOANH THU THEO HÃNG',
+		align: 'center'
+	},
+	colors: [
+		'#4caefe',
+		'#3fbdf3',
+		'#35c3e8',
+		'#2bc9dc',
+		'#20cfe1',
+		'#16d4e6',
+		'#0dd9db',
+		'#03dfd0',
+		'#00e4c5',
+		'#00e9ba',
+		'#00eeaf',
+		'#23e274'
+	],
+	xAxis: [{
+		categories: categories1.map(function (category1) {
+			return 'Tháng ' + category1;
+		}),
+		// crosshair: true
+	}],
+	series: [{
+		type: 'column',
+		name: 'Doanh thu',
+		borderRadius: 5,
+		colorByPoint: true,
+		data: data4,
+		showInLegend: false
+	}]
+});
+
+document.getElementById('plain1').addEventListener('click', () => {
+	chart1.update({
+		chart: {
+			inverted: false,
+			polar: false
+		},
+
+	});
+});
+
+document.getElementById('inverted1').addEventListener('click', () => {
+	chart1.update({
+		chart: {
+			inverted: true,
+			polar: false
+		},
+	});
+});
+var data = [];
+var table1 = document.getElementById("bang1");
+// Lấy tất cả các hàng trong bảng
+var rows = table1.querySelectorAll('table tr');
 
 // Lặp qua từng hàng trong bảng
 rows.forEach(function (row) {
@@ -256,7 +338,6 @@ rows.forEach(function (row) {
 		data.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
 	}
 });
-//Đây là biểu đồ
 const chart = Highcharts.chart('container', {
 	title: {
 		text: 'THỐNG KÊ DOANH THU',
@@ -276,9 +357,12 @@ const chart = Highcharts.chart('container', {
 		'#00eeaf',
 		'#23e274'
 	],
-	xAxis: {
-		categories: categories
-	},
+	xAxis: [{
+		categories: categories.map(function (category) {
+			return 'Tháng ' + category;
+		}),
+		// crosshair: true
+	}],
 	series: [{
 		type: 'column',
 		name: 'Doanh thu',
@@ -307,6 +391,7 @@ document.getElementById('inverted').addEventListener('click', () => {
 		},
 	});
 });
+
 function editCategory(button) {
 
 	// Trích xuất thông tin sản phẩm từ hàng đã chọn
@@ -336,7 +421,41 @@ $(document).ready(function () {
 	});
 });
 
+//Biểu đồ 2 
 
+var categories = [];
+var data2 = [];
+var table2 = document.getElementById("bang2");
+// Lấy tất cả các hàng trong bảng
+var rows = table2.querySelectorAll('table tr');
+// Lặp qua từng hàng trong bảng
+
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data2.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+});
+var data3 = [];
+var table3 = document.getElementById("bang3");
+// Lấy tất cả các hàng trong bảng
+var rows = table3.querySelectorAll('table tr');
+// Lặp qua từng hàng trong bảng
+
+rows.forEach(function (row) {
+	var columns = row.querySelectorAll('td');
+	if (columns.length === 2) {
+		// Lấy dữ liệu từ cột đầu tiên và thêm vào mảng categories
+		categories.push(columns[0].textContent);
+
+		// Lấy dữ liệu từ cột thứ hai và thêm vào mảng data
+		data3.push(parseFloat(columns[1].textContent)); // Chuyển đổi sang kiểu số nếu cần
+	}
+});
 Highcharts.chart('container2', {
 	chart: {
 		zoomType: 'xy'
@@ -346,12 +465,18 @@ Highcharts.chart('container2', {
 		align: 'center'
 	},
 	xAxis: [{
-		categories: categories,
+		categories: categories.map(function (category) {
+			return 'Tháng ' + category;
+		}),
 		crosshair: true
 	}],
 	yAxis: [{ // Primary yAxis
 		labels: {
-			format: '{value}°						C',
+			forma: function () {
+				// this.value chứa giá trị dữ liệu của bạn
+				// Thay thế {data} bằng giá trị dữ liệu của bạn
+				return this.value + 'người'; // Thay đổi '°C' bằng đơn vị hoặc chuỗi bạn muốn hiển thị
+			},
 			style: {
 				color: Highcharts.getOptions().colors[1]
 			}
@@ -369,8 +494,13 @@ Highcharts.chart('container2', {
 				color: Highcharts.getOptions().colors[0]
 			}
 		},
+
 		labels: {
-			format: '{value} mm',
+			formatter: function () {
+				// this.value chứa giá trị dữ liệu của bạn
+				// Thay thế {data} bằng giá trị dữ liệu của bạn
+				return Math.round(this.value); // Thay đổi '°C' bằng đơn vị hoặc chuỗi bạn muốn hiển thị
+			},
 			style: {
 				color: Highcharts.getOptions().colors[0]
 			}
@@ -391,22 +521,19 @@ Highcharts.chart('container2', {
 			'rgba(255,255,255,0.25)'
 	},
 	series: [{
-		name: 'Cột',
+		name: 'Số lượng đơn hàng',
 		type: 'column',
-		yAxis: 1,
-		data: [27.6, 28.8, 21.7, 34.1, 29.0, 28.4, 45.6, 51.7, 39.0,
-			60.0, 28.6, 32.1],
+		data: data3,
 		tooltip: {
-			valueSuffix: ' cột'
+			valueSuffix: ' đơn hàng'
 		}
 
 	}, {
-		name: 'Đường',
+		name: 'Số người đăng kí',
 		type: 'spline',
-		data: [-13.6, -14.9, -5.8, -0.7, 3.1, 13.0, 14.5, 10.8, 5.8,
-		-0.7, -11.0, -16.4],
+		data: data2,
 		tooltip: {
-			valueSuffix: 'đường'
+			valueSuffix: ' người đăng kí'
 		}
 	}]
 });

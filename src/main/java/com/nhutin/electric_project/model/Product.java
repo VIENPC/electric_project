@@ -77,6 +77,10 @@ public class Product implements Serializable {
 	private Category category;
 
 	@ManyToOne
+	@JoinColumn(name = "promotion_id")
+	private Promotion promotion;
+
+	@ManyToOne
 	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
 	@Lob

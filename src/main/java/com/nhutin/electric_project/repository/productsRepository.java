@@ -105,4 +105,5 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
         List<Object[]> thongkesptg(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
         List<Product> findByPriceLessThanEqual(Double price);
+
 }

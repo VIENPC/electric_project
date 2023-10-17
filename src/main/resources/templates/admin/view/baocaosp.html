@@ -42,14 +42,14 @@
                                     theo ngày</a>
                             </div>
                             <div class="col-sm-2">
-                                <form th:action="@{/admin/thongke}" method="post" id="formhang">
-                                    <select class="btn btn-delete btn-sm nhap-tu-file" id="hangSanXuatSelect"
-                                        name="mahang" onchange="submitForm()">
-                                        <option value="">- Thống kê theo hãng --</option>
-                                        <option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
-                                            th:value="${hsx.brandID}"></option>
-                                    </select>
-                                </form>
+                                <!-- <form th:action="@{/admin/thongke}" method="post" id="formhang"> -->
+                                <select class="btn btn-delete btn-sm nhap-tu-file" id="hangSanXuatSelect" name="mahang"
+                                    onchange="submitForm()">
+                                    <option value="">- Thống kê theo hãng --</option>
+                                    <option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+                                        th:value="${hsx.brandID}"></option>
+                                    <!-- </select> -->
+                                    </form>
                             </div>
                         </div>
                         <div id="sampleTable_wrapper"
