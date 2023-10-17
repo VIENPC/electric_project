@@ -75,6 +75,25 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="col-md-12">
+							<figure class="highcharts-figure">
+								<div class="">
+									<form th:action="@{/admin/revenue-by-month}" method="get" id="formhang">
+										<select class="btn btn-delete btn-sm nhap-tu-file" name="brandId" id="brandId"
+											onchange="submitForm()">
+											<option value="">- Thống kê theo hãng --</option>
+											<option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+												th:value="${hsx.brandID}"></option>
+										</select>
+									</form>
+								</div>
+								<div id="container1" class=""></div>
+								<button class="btn btn-excel" id="plain1">Dọc</button>
+								<button class="btn btn-danger" id="inverted1">Ngang</button>
+							</figure>
+						</div>
+					</div>
 					<!-- col-12 -->
 					<div class="col-md-12">
 						<div class="tile">
@@ -116,6 +135,7 @@
 							<!-- / div trống-->
 						</div>
 					</div>
+
 				</div>
 			</div>
 			<!--END left-->
@@ -133,10 +153,29 @@
 					</div>
 				</div>
 			</div>
-			<table hidden="true">
+			<table hidden="true" id="bang1">
 				<tr th:each="hd : ${revenueData}">
 					<td th:text="${hd[0]}"></td>
 					<td th:text="${hd[1]}"></td>
+				</tr>
+			</table>
+			<table hidden="true" id="bang2">
+				<tr th:each="us : ${souser}">
+					<td th:text="${us[0]}"></td>
+					<td th:text="${us[1]}"></td>
+				</tr>
+			</table>
+
+			<table hidden="true" id="bang3">
+				<tr th:each="os : ${soOrder}">
+					<td th:text="${os[0]}"></td>
+					<td th:text="${os[1]}"></td>
+				</tr>
+			</table>
+			<table hidden="true" id="bang4">
+				<tr th:each="os : ${revenueDatamonth}">
+					<td th:text="${os[0]}"></td>
+					<td th:text="${os[1]}"></td>
 				</tr>
 			</table>
 		</div>

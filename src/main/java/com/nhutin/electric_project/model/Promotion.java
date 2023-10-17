@@ -22,28 +22,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Promotion {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@Column(name = "discount_percent")
-	private Integer discountPercent;
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
 
-	@Column(name = "min_order_amount")
-	private Integer minOrderAmount;
+    @Column(name = "min_order_amount")
+    private Integer minOrderAmount;
 
-	@OneToMany(mappedBy = "promotion")
-	private List<Promotion_Historie> promotionHistories;
+    @OneToMany(mappedBy = "promotion")
+    private List<Promotion_Historie> promotionHistories;
 
-	@Column(name = "date") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
-	private LocalDateTime usedDates;
+    @Column(name = "date") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
+    private LocalDateTime usedDates;
 
-	@Column(name = "status")
-	private boolean status;
+    @Column(name = "status")
+    private boolean status;
 
-	@Column(name = "date_end") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
-	private LocalDateTime dateEnd;
+    @Column(name = "date_end") // Không sử dụng Temporal và chỉ cần sử dụng LocalDateTime
+    private LocalDateTime dateEnd;
 }

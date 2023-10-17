@@ -75,52 +75,15 @@
             <div class="col-md-12">
                 <div class="tile">
                     <div>
-                        <h3 class="tile-title">SẢN PHẨM BÁN CHẠY</h3>
-                    </div>
-                    <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                                <tr>
-                                    <th><span>Mã sản phẩm</span></th>
-                                    <th><span>Tên sản phẩm</span></th>
-                                    <th><span>Giá tiền</span></th>
-                                    <th><span>Số lượng bán</span></th>
-                                    <th><span>Hãng phân phối</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="itemsp : ${listspbc}">
-                                    <td th:text="${itemsp[0]}"></td>
-                                    <td th:text="${itemsp[1]}"></td>
-                                    <td th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                    </td>
-                                    <td th:text="${itemsp[3]}"></td>
-                                    <td th:text="${itemsp[4]}"></td>
-
-
-                                    <!-- //<td>Bàn ăn</td> -->
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tile">
-                    <div>
                         <h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
                     </div>
                     <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
+                        <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
                                     <th> <span>Mã sản phẩm</span></th>
                                     <th> <span>Tên sản phẩm</span></th>
-                                    <!-- <th> <span>Ảnh</span></th> -->
+
                                     <th> <span>Số lượng</span></th>
                                     <th> <span>Tình trạng</span></th>
                                     <th> <span>Giá tiền</span></th>
@@ -128,19 +91,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr th:each="itemspht :${listspht}">
-                                    <td th:text="${itemspht.productID}"></td>
-                                    <td th:text="${itemspht.productName}"></td>
-                                    <td th:text="${itemspht.quantity}"></td>
-                                    <td><span class="badge bg-success" th:block th:if="${itemspht.active == true}">Còn
-                                            hàng</span> <span class="badge bg-danger" th:block
-                                            th:unless="${itemspht.active == true}">Hết hàng</span></td>
-
-                                    <td
-                                        th:text="${#numbers.formatDecimal(itemspht.price, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
-                                    </td>
-                                    <td th:text="${itemspht.brand.brandName}    "></td>
-                                </tr> -->
+                                <tr>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
