@@ -59,6 +59,11 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
         var json = JSON.stringify(angular.copy($scope.cartItems));
         localStorage.setItem("cart", json);
     }
+    $scope.loadLocalStorage = function () {
+        var json = localStorage.getItem("cart");
+        $scope.cartItems = json ? JSON.parse(json) : [];
 
+    }
+    $scope.loadLocalStorage();
 
 });
