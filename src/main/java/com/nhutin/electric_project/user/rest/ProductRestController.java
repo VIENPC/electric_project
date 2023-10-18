@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,34 @@ public class ProductRestController {
             }
         }
         return products;
+    }
+
+    @GetMapping("rest/productSort")
+    public List<Product> findTop8DiscountedProducts() {
+        // Lấy danh sách tất cả sản phẩm
+        List<Product> products = productdao.findAll();
+
+        // Lọc ra sản phẩm có khuyến mãi và tính toán giá giảm
+        List<Product> discountedProducts = products.stream()
+                .filter(product -> product.getPromotion() != null)
+                .map(product -> {
+                    Promotion promotion = product.getPromotion();
+                    double discountPercent = promotion.getDiscountPercent();
+                    double discountedPrice = product.getPrice() * (1 - discountPercent / 100);
+                    product.setPrice(discountedPrice);
+                    return product;
+                })
+                .collect(Collectors.toList());
+
+        // Sắp xếp danh sách theo mức giảm giá từ cao đến thấp
+        discountedProducts.sort((p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()));
+
+        // Lấy ra 8 sản phẩm đầu tiên
+        List<Product> top8DiscountedProducts = discountedProducts.stream()
+                .limit(8)
+                .collect(Collectors.toList());
+
+        return top8DiscountedProducts;
     }
 
     @GetMapping("rest/supplier")

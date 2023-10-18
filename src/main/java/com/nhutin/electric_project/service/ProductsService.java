@@ -12,7 +12,7 @@ public interface ProductsService {
     Product findById(Integer productID);
 
     // Tìm các sản phẩm cùng loại với một productID cụ thể
-    List<Product> getRelateditemsExcludingCurrent(Integer categoryId, Integer currentItemId);
+    List<Product> getRelateditemsExcludingCurrent(Integer categoryID, Integer currentItemID);
 
     // List<Product> getProductsByBrand(Integer brandID);
 

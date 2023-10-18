@@ -11,22 +11,7 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
                 console.log('Response:', response); // Add this line
                 $scope.product = response.data.product;
                 $scope.relatedProducts = response.data.relatedProducts;
-
-
-                $http.get('/rest/comment/' + productID)
-                    .then(function (response) {
-                        alert("vao day");
-                        console.log('Giá trị comment:', response); // Add this line
-
-
-                    })
-                    .catch(function (error) {
-                        console.error('Error fetching item details:', error);
-                    });
             })
-            .catch(function (error) {
-                console.error('Error fetching item details:', error);
-            });
     };
     window.onload = function () {
         // Lấy đoạn cuối của URL (được kỳ vọng là itemId)
@@ -37,12 +22,17 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
             $scope.loadItemDetails(productID);
         }
     };
-    $scope.comment = [];
 
     $scope.goToProduct_Detail = function (productID) {
         window.location.href = `/detail/${productID}`;
     };
+    $scope.calculateDiscountedPrice = function (product) {
+        if (product.promotion) {
+            return product.price * (1 - (product.promotion.discountPercent / 100));
+        }
+        return product.price;
 
+    };
     $scope.cartItems = [];
     $scope.qty = 1;
     $scope.addToCartQty = function (masp) {

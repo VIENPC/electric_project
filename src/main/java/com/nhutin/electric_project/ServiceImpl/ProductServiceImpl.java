@@ -24,8 +24,8 @@ public class ProductServiceImpl implements ProductsService {
     }
 
     @Override
-    public List<Product> getRelateditemsExcludingCurrent(Integer categoryId, Integer currentItemId) {
-        return productsRepository.findByCategory_CategoryIDAndProductIDNot(categoryId, currentItemId);
+    public List<Product> getRelateditemsExcludingCurrent(Integer categoryID, Integer currentItemID) {
+        return productsRepository.findByCategory_CategoryIDAndProductIDNot(categoryID, currentItemID);
     }
 
     // @Override

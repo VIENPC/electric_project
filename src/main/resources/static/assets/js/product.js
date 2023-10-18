@@ -2,6 +2,7 @@ var app = angular.module('my-app');
 
 app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.products = [];
+    $scope.productSort = [];
     $scope.brands = [];
     $scope.products = {};
     $scope.categoris = [];
@@ -12,6 +13,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.showAllProducts = false;
     $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
     $scope.calculateDiscountedPrice = 0;
+
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
@@ -24,6 +26,27 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         return product.price;
 
     };
+
+    $http.get('/rest/productSort')
+        .then(function (response) {
+            // Xử lý dữ liệu trả về từ API
+            var productSort = response.data;
+
+            // Lọc và sắp xếp danh sách sản phẩm
+            var discountedProducts = productSort.filter(function (product) {
+                return product.promotion !== null;
+            });
+
+            discountedProducts.sort(function (a, b) {
+                return b.price - a.price;
+            });
+
+            // Lấy ra 8 sản phẩm đầu tiên
+            var top8DiscountedProducts = discountedProducts.slice(0, 8);
+
+            // Gán danh sách sản phẩm đã xử lý cho $scope
+            $scope.productSort = top8DiscountedProducts;
+        });
 
 
     $http.get('/rest/supplier')
