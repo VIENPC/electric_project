@@ -79,6 +79,16 @@
 						<div class="col-md-12">
 							<figure class="highcharts-figure">
 								<div class="">
+									<form th:action="@{/admin/category-by-month}" method="get" id="formloai">
+										<select class="btn btn-delete btn-sm nhap-tu-file" name="categoryid" id="categoryid"
+											onchange="submitFormLoai()">
+											<option value="">- Thống kê theo loại --</option>
+											<option th:each="hsx : ${listlsp}" th:text="${hsx.categoryName}" th:value="${hsx.categoryID}">
+											</option>
+										</select>
+									</form>
+								</div>
+								<div class="">
 									<form th:action="@{/admin/revenue-by-month}" method="get" id="formhang">
 										<select class="btn btn-delete btn-sm nhap-tu-file" name="brandId" id="brandId"
 											onchange="submitForm()">

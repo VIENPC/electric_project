@@ -106,6 +106,27 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         }
     };
 
+    $scope.selectedCategory = null;
+
+    $scope.toggleSelection = function (selectedItem) {
+        if (selectedItem.selected) {
+            // Nếu một checkbox được chọn, hủy chọn các checkbox khác
+            $scope.categoris.forEach(function (item) {
+                if (item !== selectedItem) {
+                    item.selected = false;
+                }
+            });
+            $scope.selectedCategory = selectedItem.categoryID;
+            $scope.filterData(selectedItem.categoryID);
+        } else if (selectedItem.categoryID === $scope.selectedCategory) {
+            // Nếu checkbox được bỏ chọn và là checkbox hiện đang được chọn, tải lại trang
+            location.reload();
+        }
+    };
+    
+  
+    
+    
     // Hàm để lọc và tải sản phẩm và brand theo categoryID đã chọn
     $scope.filterData = function (categoryID) {
         // Tải sản phẩm dựa trên categoryID

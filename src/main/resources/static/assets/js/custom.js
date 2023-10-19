@@ -44,6 +44,9 @@ $(document).ready(function () {
 	});
 });
 
+function submitFormLoai() {
+	document.getElementById("formloai").submit();
+}
 // xử lí phần thống kê theo hãng
 function submitForm() {
 	document.getElementById("formhang").submit();
@@ -348,7 +351,7 @@ rows.forEach(function (row) {
 //Đây là biểu đồ
 const chart1 = Highcharts.chart('container1', {
 	title: {
-		text: 'THỐNG KÊ DOANH THU THEO HÃNG',
+		text: 'THỐNG KÊ DOANH THU THEO HÃNG VÀ LOẠI',
 		align: 'center'
 	},
 	colors: [

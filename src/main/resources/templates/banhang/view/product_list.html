@@ -39,12 +39,10 @@
               </div>
               <div class="checkbox-list" ng-repeat="item in categoris" ng-if="item.active !== false">
                 <label>
-                  <input type="checkbox" ng-model="item.selected"
-                    ng-change="filterData(item.categoryID) ; reloadPageIfUnselected(item.selected)">
+                  <input type="checkbox" ng-model="item.selected" ng-change="toggleSelection(item)">
                   {{item.categoryName}}
                 </label>
               </div>
-
             </div>
             <!-- Thêm liên kết để hiển thị tất cả loại và sản phẩm -->
 

@@ -14,4 +14,7 @@ public class CategoryServiceImpl implements CategorysService {
     @Autowired
     categorysRepository categorysRepository;
     //
+    public List<Object[]> getRevenueByMonth(int categoryid) {
+        return categorysRepository.getRevenueByMonth(categoryid);
+    }
 }

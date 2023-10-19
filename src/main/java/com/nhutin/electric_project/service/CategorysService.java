@@ -10,4 +10,5 @@ import com.nhutin.electric_project.model.Product;
 @Service
 public interface CategorysService {
     // List<Product> getItemsByCategory(Integer categoryID);
+    
 }
