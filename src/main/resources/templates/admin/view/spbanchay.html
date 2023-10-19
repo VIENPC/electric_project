@@ -21,6 +21,17 @@
 		<div class="row">
 			<!-- Trái -->
 			<!--Right-->
+			<div class="">
+				<form th:action="@{/admin/spbanchay/category}" method="get" id="formloai">
+					<select class="btn btn-delete btn-sm nhap-tu-file" name="categoryid" id="categoryid"
+						onchange="submitFormLoai()">
+						<option value="">- Thống kê theo loại --</option>
+						<option th:each="hsx : ${listlsp}" th:text="${hsx.categoryName}" th:value="${hsx.categoryID}">
+						</option>
+
+					</select>
+				</form>
+			</div>
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-12">
