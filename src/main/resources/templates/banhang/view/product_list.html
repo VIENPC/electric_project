@@ -92,7 +92,7 @@
                   <h3>Không có sản phẩm nào được tìm thấy.</h3>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products  | limitTo: productsToShowList">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
                     <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}" class="img-responsive"
@@ -116,6 +116,14 @@
                   <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
                 </div>
               </div>
+            </div>
+            <div class="text-center">
+              <a class="btn btn-primary" ng-click="showMoreProductsList()"
+                ng-show="productsToShowList < products.length">Show
+                more</a>
+              <a class="btn btn-default" ng-click="showLessProductsList()"
+                ng-show="productsToShowList > productsListPerPage">Show
+                less</a>
             </div>
           </div>
           <!-- END PRODUCT LIST -->

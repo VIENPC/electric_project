@@ -123,13 +123,12 @@ public class ProductRestController {
         return ResponseEntity.ok(brands);
     }
 
-    // @GetMapping("/rest/products-by-category/{categoryID}")
-    // public ResponseEntity<List<Product>>
-    // getProductsByCategory(@PathVariable("categoryID") int categoryID) {
-    // // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
-    // List<Product> products = productService.getProductsByCategory(categoryID);
-    // return ResponseEntity.ok(products);
-    // }
+    @GetMapping("/rest/products-by-category/{categoryID}")
+    public ResponseEntity<List<Product>> getProductsByCategory1(@PathVariable("categoryID") int categoryID) {
+        // Gọi phương thức của Repository để lấy danh sách sản phẩm theo brandID
+        List<Product> products = productService.getProductsByCategory(categoryID);
+        return ResponseEntity.ok(products);
+    }
 
     @GetMapping("/rest/product-search")
     public ResponseEntity<List<Product>> searchProductsByName(@RequestParam(name = "productName") String productName) {

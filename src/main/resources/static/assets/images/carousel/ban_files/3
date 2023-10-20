@@ -1,0 +1,27 @@
+#lhc_status_container #status-icon {
+    background-color:#1784bf!important;
+    border-color:#e3e3e3!important;
+}
+
+
+
+#lhc_status_container #status-icon {
+    color:#ffffff!important;
+}
+
+
+    #lhc_status_container #status-icon:not(.close-status){
+        background-image: url(https://livehelp.tgdd.vn/var/storagetheme/2023y/01/06/3/f9ebb4e6f94bf213f8c2108574460e58.svg)!important;
+        background-repeat: no-repeat!important;
+        background-position: center center!important;
+    }
+    #lhc_status_container #status-icon:not(.close-status):before{
+        content:''!important;
+    }
+
+
+
+#lhc_status_container,
+#lhc_questionary_container,
+#lhc_faq_container,
+#lhc_chatbox_container{box-shadow: 1px -1px 5px rgba(233,127,2, 0.4);}

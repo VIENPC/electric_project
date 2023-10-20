@@ -24,6 +24,19 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         $scope.productsToShow = $scope.productsPerPage;
     };
 
+    $scope.productsListPerPage = 9; // Số lượng sản phẩm hiển thị ban đầu
+    $scope.productsToShowList = $scope.productsListPerPage;
+
+    $scope.showMoreProductsList = function () {
+        $scope.productsToShowList += $scope.productsListPerPage;
+    };
+
+    $scope.showLessProductsList = function () {
+        $scope.productsToShowList = $scope.productsListPerPage;
+    };
+
+
+
     $http.get('/rest/product')
         .then(function (response) {
             $scope.products = response.data;
@@ -134,9 +147,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         }
     };
 
-
-
-
     // Hàm để lọc và tải sản phẩm và brand theo categoryID đã chọn
     $scope.filterData = function (categoryID) {
         // Tải sản phẩm dựa trên categoryID
@@ -174,7 +184,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         }
     };
 
-
     $scope.filterDataBrand = function (brandID) {
 
         // Tải loại dựa trên brandID
@@ -205,7 +214,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 console.error('Error fetching products:', error);
             });
     };
-
 
     $scope.loadProductsByCategory = function (categoryID) {
         $http.get('/rest/products-by-category/' + categoryID)
@@ -244,7 +252,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
         return uniqueCategories;
     }
-
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
         // Lấy fragment từ URL
@@ -256,7 +263,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             });
         }
     };
-
     // Gọi $scope.loadProductsByCategory khi trang được nạp ban đầu
     window.onload = function () {
         var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
@@ -267,10 +273,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             });
         }
     };
-
     $scope.selectedPrice = '';
-
-
     $scope.loadProductsByPrice = function (price) {
         $http.get('/rest/products-by-price?price=' + price)
             .then(function (response) {
