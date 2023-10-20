@@ -28,11 +28,12 @@
                             <div class="carousel-position-four text-center">
                                 <h2 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase"
                                     data-animation="animated fadeInDown">
-                                    Tones of <br /><span class="color-red-v2">Shop UI Features</span><br /> designed
+                                    Tones of <br /><span class="color-red-v2">NHU TIN STORE</span><br />
+                                    WELLCOME
                                 </h2>
-                                <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">Lorem ipsum dolor sit
-                                    amet constectetuer diam <br />
-                                    adipiscing elit euismod ut laoreet dolore.</p>
+                                <h3 class="carousel-subtitle-v2" data-animation="animated fadeInUp"> SIÊU SALE NGÀY PHỤ
+                                    NỮ VIỆT NAM<br />
+                                    20 - 10</h3>
                             </div>
                         </div>
                     </div>
@@ -217,10 +218,12 @@
             <div class="panel">
                 <div class="panel-heading">
                     <h1>TIVI</h1>
+                    <!-- Nút để hiển thị thêm sản phẩm hoặc ẩn bớt sản phẩm -->
+
                 </div>
                 <div class="panel-body ">
                     <!-- Bắt đầu lặp qua sản phẩm -->
-                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products |limitTo: 8"
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products | limitTo: productsToShow"
                         ng-if="item.active !== false && item.category.categoryID === 3">
                         <div class="product-item">
                             <div class="pi-img-wrapper">
@@ -248,7 +251,12 @@
                     </div>
                     <!-- Kết thúc lặp qua sản phẩm -->
                 </div>
-
+                <div class="text-center">
+                    <a class="btn btn-primary" ng-click="showMoreProducts()"
+                        ng-show="productsToShow < products.length">Show more</a>
+                    <a class="btn btn-default" ng-click="showLessProducts()"
+                        ng-show="productsToShow > productsPerPage">Show less</a>
+                </div>
             </div>
         </div>
 

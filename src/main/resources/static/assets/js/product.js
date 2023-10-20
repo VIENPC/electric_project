@@ -13,6 +13,16 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.showAllProducts = false;
     $scope.selectedCategory = null; // Biến để theo dõi checkbox được chọn
     $scope.calculateDiscountedPrice = 0;
+    $scope.productsPerPage = 3; // Số lượng sản phẩm hiển thị ban đầu
+    $scope.productsToShow = $scope.productsPerPage;
+
+    $scope.showMoreProducts = function () {
+        $scope.productsToShow += $scope.productsPerPage;
+    };
+
+    $scope.showLessProducts = function () {
+        $scope.productsToShow = $scope.productsPerPage;
+    };
 
     $http.get('/rest/product')
         .then(function (response) {
@@ -123,10 +133,10 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             location.reload();
         }
     };
-    
-  
-    
-    
+
+
+
+
     // Hàm để lọc và tải sản phẩm và brand theo categoryID đã chọn
     $scope.filterData = function (categoryID) {
         // Tải sản phẩm dựa trên categoryID
