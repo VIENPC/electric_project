@@ -5,3 +5,4 @@ app.filter('unsafeHtml', ['$sce', function ($sce) {
         return $sce.trustAsHtml(val);
     };
 }]);
+

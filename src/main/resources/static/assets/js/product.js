@@ -255,7 +255,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
         // Lấy fragment từ URL
-        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
@@ -265,7 +265,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     };
     // Gọi $scope.loadProductsByCategory khi trang được nạp ban đầu
     window.onload = function () {
-        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
