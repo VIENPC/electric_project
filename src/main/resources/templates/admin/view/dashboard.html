@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Bảng điều khiển</title>
+<meta charset="UTF-8">
+<title>Bảng điều khiển</title>
 </head>
 
 <body>
@@ -79,21 +80,25 @@
 						<div class="col-md-12">
 							<figure class="highcharts-figure">
 								<div class="">
-									<form th:action="@{/admin/category-by-month}" method="get" id="formloai">
-										<select class="btn btn-delete btn-sm nhap-tu-file" name="categoryid" id="categoryid"
-											onchange="submitFormLoai()">
+									<form th:action="@{/admin/category-by-month}" method="get"
+										id="formloai">
+										<select class="btn btn-delete btn-sm nhap-tu-file"
+											name="categoryid" id="categoryid" onchange="submitFormLoai()">
 											<option value="">- Thống kê theo loại --</option>
-											<option th:each="hsx : ${listlsp}" th:text="${hsx.categoryName}" th:value="${hsx.categoryID}">
+											<option th:each="hsx : ${listlsp}"
+												th:text="${hsx.categoryName}" th:value="${hsx.categoryID}">
 											</option>
 										</select>
 									</form>
 								</div>
 								<div class="">
-									<form th:action="@{/admin/revenue-by-month}" method="get" id="formhang">
-										<select class="btn btn-delete btn-sm nhap-tu-file" name="brandId" id="brandId"
-											onchange="submitForm()">
+									<form th:action="@{/admin/revenue-by-month}" method="get"
+										id="formhang">
+										<select class="btn btn-delete btn-sm nhap-tu-file"
+											name="brandId" id="brandId" onchange="submitForm()">
 											<option value="">- Thống kê theo hãng --</option>
-											<option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}" th:value="${hsx.brandID}"></option>
+											<option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+												th:value="${hsx.brandID}"></option>
 										</select>
 									</form>
 								</div>
@@ -111,10 +116,10 @@
 								<table class="table table-bordered">
 									<thead>
 										<tr>
-											<th> <span>ID đơn hàng</span></th>
-											<th> <span>Tên khách hàng</span></th>
-											<th> <span>Tổng tiền</span></th>
-											<th> <span>Trạng thái</span></th>
+											<th><span>ID đơn hàng</span></th>
+											<th><span>Tên khách hàng</span></th>
+											<th><span>Tổng tiền</span></th>
+											<th><span>Trạng thái</span></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -132,7 +137,8 @@
 												<td th:text="${hd.orderId}"></td>
 												<td th:text="${hd.name}"></td>
 
-												<td th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+												<td
+													th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
 												</td>
 												<td><span class="badge bg-info">Chờ xử lí</span></td>
 											</tr>
@@ -144,7 +150,37 @@
 							<!-- / div trống-->
 						</div>
 					</div>
-
+					<!-- Thống kê doanh thu theo ngày -->
+					<div class="col-md-12">
+						<div class="tile">
+							<div>
+								<h3 class="tile-title">THỐNG KÊ DOANH THU THEO NGÀY</h3>
+							</div>
+							<div class="col-sm-12">
+								<form th:action="@{/admin/doanhthu}" method="get">
+									<label for="startDate">Ngày bắt đầu :</label> <input
+										type="date" id="startDate" name="startDate"> <label
+										for="endDate">Ngày kết thúc :</label> <input type="date"
+										id="endDate" name="endDate">
+									<button type="submit">Tìm kiếm</button>
+									<br> <br> <span>
+    <h4>Ngày bắt đầu:</h4> <span th:text="${#dates.format(startDate, 'dd/MM/yyyy')}"></span>
+    <h4>Ngày kết thúc:</h4> <span th:text="${#dates.format(endDate, 'dd/MM/yyyy')}"></span> <br><br>
+    <h4>Tổng doanh thu là: <span th:text="${#numbers.formatDecimal(doanhThu, 0, 'COMMA', 0 , 'POINT')} + ' VND'">></span></h4>
+</span>
+<span>
+    <h4>Ngày có doanh thu cao nhất: <span th:text="${#dates.format(ngayDoanhThuCaoNhat, 'dd/MM/yyyy')}"></span>
+    thu được <span th:text="${#numbers.formatDecimal(doanhThuCaoNhat, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span></h4>
+</span>
+<span>
+    <h4>Ngày có doanh thu thấp nhất: <span th:text="${#dates.format(ngayDoanhThuThapNhat, 'dd/MM/yyyy')}"></span>
+    thu được <span th:text="${#numbers.formatDecimal(doanhThuThapNhat, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span></h4>
+</span>
+								</form>
+							</div>
+							<br>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!--END left-->
@@ -164,12 +200,31 @@
 						<div class="col-md-12">
 							<figure class="highcharts-figure1">
 								<div id="container2"></div>
-								<p class="highcharts-description">
-								</p>
+								<p class="highcharts-description"></p>
 							</figure>
 						</div>
 					</div>
 				</div>
+									<!-- Thống kê doanh thu theo ngày -->
+					<div class="col-md-12">
+						<div class="tile">
+							<div>
+								<h3 class="tile-title">THỐNG KÊ DOANH THU THEO 1 NGÀY</h3>
+							</div>
+							<div class="col-sm-12">
+								<form th:action="@{/admin/ngay}" method="get">
+									<label for="targetDate">Ngày bắt đầu :</label> <input
+										type="date" id="targetDate" name="targetDate">
+									<button type="submit">Tìm kiếm</button>
+									<br> <br> <span>   
+    <h4>Doanh thu ngày:</h4> <span th:text="${#dates.format(ngay, 'dd/MM/yyyy')}"></span> <br><br>
+    <h4>Tổng doanh thu là: <span th:text="${#numbers.formatDecimal(doanhThuNgay, 0, 'COMMA', 0 , 'POINT')} + ' VND'">></span></h4>
+</span>
+								</form>
+							</div>
+							<br>
+						</div>
+					</div>
 			</div>
 			<table hidden="true" id="bang1">
 				<tr th:each="hd : ${revenueData}">

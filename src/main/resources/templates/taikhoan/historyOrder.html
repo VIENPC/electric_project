@@ -53,11 +53,11 @@
 															<td><span
 																	th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
 															</td>
-															<td><span th:if="${order.statushd == 1}">Chờ
-																	xác nhận</span> <span th:if="${order.statushd == 2}">Đã
-																	xác nhận</span> <span th:if="${order.statushd == 3}">Đang
-																	giao</span> <span th:if="${order.statushd == 4}">Hoàn
-																	thành</span> <span th:if="${order.statushd == 5}">Hủy</span>
+															<td><span class="badge badge-warning" th:if="${order.statushd == 1}">Chờ
+																	xác nhận</span> <span class="badge badge-warning" th:if="${order.statushd == 2}">Đã
+																	xác nhận</span> <span class="badge badge-warning" th:if="${order.statushd == 3}">Đang
+																	giao</span> <span class="badge badge-warning" th:if="${order.statushd == 4}">Hoàn
+																	thành</span> <span class="badge badge-warning" th:if="${order.statushd == 5}">Hủy</span>
 															</td>
 															<td>
 																<a class="btn btn-danger btn-sm" th:if="${not order.statustt && order.statushd == 1}"

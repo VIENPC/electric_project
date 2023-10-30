@@ -1,8 +1,10 @@
 package com.nhutin.electric_project.admin.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhutin.electric_project.ServiceImpl.BrandServiceImpl;
 import com.nhutin.electric_project.ServiceImpl.CategoryServiceImpl;
+import com.nhutin.electric_project.model.Order;
 import com.nhutin.electric_project.repository.UserRepository;
 import com.nhutin.electric_project.repository.brandsRepository;
 import com.nhutin.electric_project.repository.categorysRepository;
@@ -41,6 +44,77 @@ public class DieuKhienController {
     @Autowired
     BrandServiceImpl brandsservice;
 
+    @Autowired
+    ordersRepository orderDao;
+    
+    @GetMapping("/doanhthu")
+    public String getDoanhThuBetweenDates(
+        @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+        @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+        Model model) {
+
+        List<Order> orders = orderDao.findOrdersBetweenDates(startDate, endDate);
+
+        // Thực hiện tính tổng doanh thu
+        long totalDoanhThu = 0;
+        Date ngayDoanhThuCaoNhat = null;
+        double doanhThuCaoNhat = 0;
+        Date ngayDoanhThuThapNhat = null;
+        double doanhThuThapNhat = Double.MAX_VALUE;
+
+        for (Order order : orders) {
+            double doanhThuCuaOrder = order.getTotalAmount();
+            totalDoanhThu += doanhThuCuaOrder;
+
+            if (doanhThuCuaOrder > doanhThuCaoNhat) {
+                doanhThuCaoNhat = doanhThuCuaOrder;
+                ngayDoanhThuCaoNhat = order.getOrderDate();
+               
+            }
+            
+            if (doanhThuCuaOrder < doanhThuThapNhat) {
+                doanhThuThapNhat = doanhThuCuaOrder;
+                ngayDoanhThuThapNhat = order.getOrderDate();
+                System.out.println("doanh thu thấp nhất"+ doanhThuThapNhat);
+                System.out.println(" ngày " +ngayDoanhThuThapNhat);
+            }
+        }
+        model.addAttribute("ngayDoanhThuCaoNhat", ngayDoanhThuCaoNhat);
+        model.addAttribute("doanhThuCaoNhat", doanhThuCaoNhat);
+        model.addAttribute("ngayDoanhThuThapNhat", ngayDoanhThuThapNhat);
+        model.addAttribute("doanhThuThapNhat", doanhThuThapNhat);
+        // Lưu lại startDate và endDate trong model
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        
+        model.addAttribute("doanhThu", totalDoanhThu);
+        model.addAttribute("orders", orders); // Truyền danh sách các đối tượng Order về view
+
+        return "admin/view/dashboard";
+    }
+    @GetMapping("/ngay")
+    public String getDoanhThuDates(
+        @RequestParam("targetDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date targetDate,
+        Model model) {
+
+        List<Order> orders = orderDao.findOrdersByDate(targetDate);
+
+        // Thực hiện tính tổng doanh thu
+        long totalDoanhThu = 0;
+        for (Order order : orders) {
+            double doanhThuCuaOrder = order.getTotalAmount();
+            totalDoanhThu += doanhThuCuaOrder;
+        }  
+
+        model.addAttribute("ngay", targetDate);
+        model.addAttribute("doanhThuNgay", totalDoanhThu);
+
+        return "admin/view/dashboard";
+    }
+
+
+
+    
     @RequestMapping("/index")
     public String index(Model model) {
         model.addAttribute("slkh", khdao.count());

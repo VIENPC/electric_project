@@ -46,7 +46,7 @@ public class PromotionScheduler {
 		
 	}
 	
-	@Scheduled(fixedRate = 100000) // sau 10p tự chạy 1 lần
+	@Scheduled(fixedRate = 100000) // sau 1p tự chạy 1 lần
 	public void updateOrder() {
             List<Order> orders = orderDAO.findAll();
             for(Order order: orders) {       
