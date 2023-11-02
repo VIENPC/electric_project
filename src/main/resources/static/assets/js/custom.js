@@ -130,23 +130,16 @@ function showSuccessMessage(message) {
 // 		window.location.href = `/qlsanpham/delnhieusp`;
 // 	})
 // });  
+function edithd(button){
 
-$(document).on('click', '.settt', function () {
-	const mahd = $(this).data("mahd");
+	var row = button.closest("tr");
+	var mahd = row.querySelector("td:nth-child(2)").innerText;
+	var tinhtrang = row.querySelector("td:nth-child(10)").innerText;
+	document.getElementById("mahd").value = mahd;
+	document.getElementById("tinhtrang").value = tinhtrang;
+	$("#edittt").modal("show");
+}
 
-	swal({
-		title: "Cảnh báo",
-		text: "Bạn có chắc chắn muốn chỉnh sửa trạng thái này?",
-		buttons: ["Hủy bỏ", "Đồng ý"],
-		icon: "warning"
-	}).then((willEdit) => {
-		if (willEdit) {
-			if (mahd != null) {
-				window.location.href = `/admin/qldonhang/suatthd/${mahd}`;
-			}
-		}
-	})
-});
 
 $('.unclock').click(function () {
 	const user = $(this).data("user");

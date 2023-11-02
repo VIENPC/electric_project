@@ -81,7 +81,7 @@ public class VnpayPaymentController {
 		String orderType = "other";
 		long amount = (request.getAmount()) * 100;
 		Integer mahd = request.getOrderid();
-		System.out.println(amount);
+		System.out.println("tongtieng"+amount);
 		System.out.println(mahd);
 		// String bankCode = req.getParameter("bankCode");
 
@@ -119,7 +119,7 @@ public class VnpayPaymentController {
 
 		List fieldNames = new ArrayList(vnp_Params.keySet());
 		Collections.sort(fieldNames);
-		StringBuilder hashData = new StringBuilder();
+		StringBuilder hashData = new StringBuilder(); 
 		StringBuilder query = new StringBuilder();
 		Iterator itr = fieldNames.iterator();
 		while (itr.hasNext()) {
