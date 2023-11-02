@@ -26,6 +26,12 @@ public interface ordersRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.statustt = 1")
     Double sumTotalAmountOfApprovedOrders();
 
+    @Query("SELECT o FROM Order o WHERE o.orderDate >= :startDate AND o.orderDate <= :endDate")
+    List<Order> findOrdersBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    
+    @Query("SELECT o FROM Order o WHERE CAST(o.orderDate AS date) = :targetDate")
+    List<Order> findOrdersByDate(@Param("targetDate") Date targetDate);
+
     // Thống kê biểu đồ
     @Query(nativeQuery = true, value = "SELECT t.thang, COALESCE(SUM(o.total_amount), 0) AS doanh_thu_thang " +
             "FROM (SELECT 1 AS thang " +

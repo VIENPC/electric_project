@@ -3,14 +3,20 @@ package com.nhutin.electric_project.admin.controller;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nhutin.electric_project.model.Order;
 import com.nhutin.electric_project.repository.categorysRepository;
+import com.nhutin.electric_project.repository.ordersRepository;
 import com.nhutin.electric_project.repository.productsRepository;
 
 @Controller
@@ -21,7 +27,7 @@ public class SPBanChayController {
 
     @Autowired
     categorysRepository cdao;
-
+    
     @RequestMapping("/spbanchay")
     public String spbc(Model model, @RequestParam(name = "thang", required = false) Integer thang,
 
