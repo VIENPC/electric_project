@@ -9,14 +9,14 @@
 
 <body>
   <main ng-controller="product-controller">
-    <div class="title-wrapper">
+    <!-- <div class="title-wrapper">
       <div class="container">
         <div class="container-inner">
           <h1><span>Sản Phẩm</span></h1>
           <em>NHUTIN STORE ĐỒNG HÀNH CÙNG SIÊU SALE 20-10</em>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="main">
       <div class="container">
@@ -68,7 +68,7 @@
                 <a href="javascript:;"><i class="fa fa-th-list"></i></a>
               </div>
               <div class="pull-right">
-                <label class="control-label">Sort&nbsp;By Price:</label>
+                <label class="control-label">Sắp xếp&nbsp;theo giá:</label>
 
                 <select id="priceSelect" class="form-control input-sm" ng-model="selectedPrice"
                   ng-change="loadProductsByPrice(selectedPrice)">
@@ -101,22 +101,21 @@
                       <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
                     </div>
                   </div>
-                  <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
+                  <h3 style="height: 30px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
                   <div class="pi-price" style="margin: 15px;">
-                    <strike ng-if="item.promotion">{{ item.price | number: 0 }} đ</strike>
+                    <p><strike ng-if="item.promotion">{{ item.price | number: 0 }} đ</strike></p>
                     <span ng-show="!item.promotion">{{ item.price | number: 0 }} đ</span>
                   </div><br>
                   <div ng-if="item.promotion" class="pi-price">
                     {{ calculateDiscountedPrice(item) | number: 0 }} đ
                   </div>
-
-
                   <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
                     ng-if="item.active !== false">Add to cart</a>
                   <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
                 </div>
               </div>
             </div>
+
             <div class="text-center">
               <a class="btn btn-primary" ng-click="showMoreProductsList()"
                 ng-show="productsToShowList < products.length">Show
