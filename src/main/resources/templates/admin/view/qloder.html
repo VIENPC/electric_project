@@ -95,7 +95,7 @@
                                             th:href="@{'/admin/xemhoadonct/'+${hd.orderId}}"><i class="fa fa-eye"
                                                 aria-hidden="true"></i></a>
 
-                                        <a class="btn btn-add btn-sm settt" th:attr="data-mahd=${hd.orderId}">
+                                        <a class="btn btn-add btn-sm "  	onclick="edithd(this)">
                                             <i class="fa fa-pencil-square-o" aria-hidden="false"></i></a>
                                     </td>
                                 </tr>
@@ -110,26 +110,39 @@
     </main>
 
 
-    <!-- Modal
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="edittt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật trạng thái đơn hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <form th:action="@{/admin/updatetthd}" method="post">
+                        <input type="hidden" class="form-control" name="mahd"   id="mahd">
+                        <select class="form-control" name="tinhtrang" id="tinhtrang">
+                            <option >Chờ xác nhận</option>
+                            <option >Đã xác nhận</option>
+                            <option >Đang giao</option>
+                            <option >Hoàn thành</option>
+                            <option >Đã hủy</option>
+
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary"  >Xác nhận</button>
+                        </div>
+                    </form>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                
             </div>
         </div>
-    </div> -->
+    </div>
+
 </body>
 
 </html>

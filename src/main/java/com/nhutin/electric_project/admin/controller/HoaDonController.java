@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,6 +32,27 @@ public class HoaDonController {
         model.addAttribute("listhd", hddao.findAll());
         System.out.println(hddao.findAll());
         return "admin/view/qloder";
+    }
+
+    @PostMapping("/updatetthd")
+    public String settthd(HttpServletRequest request) {
+        String tt = request.getParameter("tinhtrang");
+        System.out.println(request.getParameter("tinhtrang"));
+
+        Order ord = hddao.findById(Integer.parseInt(request.getParameter("mahd"))).get();
+        if (tt.equalsIgnoreCase("Chờ xác nhận")) {
+            ord.setStatushd(1);
+        } else if (tt.equalsIgnoreCase("Đã xác nhận")) {
+            ord.setStatushd(2);
+        } else if (tt.equalsIgnoreCase("Đang giao")) {
+            ord.setStatushd(3);
+        } else if (tt.equalsIgnoreCase("Hoàn thành")) {
+            ord.setStatushd(4);
+        } else if (tt.equalsIgnoreCase("Đã hủy")) {
+            ord.setStatushd(5);
+        }
+        hddao.save(ord);
+        return "redirect:/admin/qldonhang?success=updatesp";
     }
 
     @RequestMapping("/xemhoadonct/{mahd}")

@@ -328,7 +328,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         })
     }
 
-
+  
 
     // }
     $scope.saveToLocalStorage = function () {
@@ -348,7 +348,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             icon: "warning"
         }).then((willDelete) => {
             if (willDelete) {
-                var index = $scope.cartItems.findIndex(cart => cart.masp == masp);
+                var index = $scope.cartItems.findIndex(cart => cart.productID == masp);
                 $scope.cartItems.splice(index, 1);
                 $scope.saveToLocalStorage();
                 swal("Thành công", "Sản phẩm đã được xóa!", "success")
@@ -374,7 +374,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     };
 
 
-    $scope.loadLocalStorage();
+   
     // Quan ly gio hang
     $scope.cartItems = [];
     $scope.addToCart = function (masp) {
@@ -382,30 +382,33 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         if (cart) {
             cart.qty++;
             $scope.saveToLocalStorage();
+            
         } else {
             var url = `/rest/product/${masp}`;
             $http.get(url).then(resp => {
                 resp.data.qty = 1;
                 // resp.data.giagiam = $scope.calculateDiscountedPrice();
                 $scope.cartItems.push(resp.data);
-                $scope.cartItemCount = $scope.getcount(); // Cập nhật biến trong $scope
+                // Cập nhật biến trong $scope
                 $scope.saveToLocalStorage();
-                // Sử dụng $timeout để đảm bảo cập nhật $scope sẽ xảy ra sau khi hoàn tất tác vụ bất đồng bộ
-                $timeout(function () {
-                    $scope.$apply();
-                });
+                // $scope.cartItemCount = $scope.getcount();
+      
             })
         }
-        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
-        // Bắt buộc AngularJS cập nhật giao diện
+        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success").then(function(){
 
+            location.reload();
+        })
+        // Bắt buộc AngularJS cập nhật giao diện
     }
     $scope.loadLocalStorage();
+    $scope.getcount();
 
 });
 app.controller("checkctrl", function ($scope, $http, $filter) {
     $scope.vouchers = [];
     $scope.noVouchersFound = false; // Mặc định không có thông báo khi không có voucher
+    $scope.cartItems = [];
 
 
     const host = "https://provinces.open-api.vn/api/";
@@ -458,11 +461,6 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             diachinn1 = result;
         }
     }
-
-    $scope.loadLocalStorage = function () {
-        var json = localStorage.getItem("cart");
-        $scope.cartItems = json ? JSON.parse(json) : [];
-    }
     $scope.getcount = function () { // tính tổng số lượng các mặt hàng trong giỏ
         return $scope.cartItems
             .map(cart => cart.qty)
@@ -477,7 +475,18 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             .map(cart => this.amt_of(cart))
             .reduce((total, amt) => total += amt, 0);
     };
+    $scope.tiengiam = 0;
+    $scope.tongtien = 0;
 
+    $scope.loadLocalStorage = function () {
+        var json = localStorage.getItem("cart");
+        $scope.cartItems = json ? JSON.parse(json) : [];
+        $scope.getcount();
+        $scope.tongtien = $scope.totalAmount();
+        console.log("tong tien hoa don",$scope.tongtien);
+    }
+  
+   
     $scope.calculateDiscountedPrice = function (product) {
         if (product.promotion) {
             return product.price * (1 - (product.promotion.discountPercent / 100));
@@ -523,13 +532,11 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
     // Gọi hàm checkVouchers để kiểm tra khi trang được tải
     $scope.checkVouchers();
-
-
-    $scope.tiengiam = 0;
-    $scope.tongtien = 0;
+    
     $scope.loadId = function (itemId) {
         $http.get('/rest/' + itemId)
             .then(function (response) {
+                $scope.tongtien = 0;
                 $scope.tiengiam = ($scope.totalAmount() * response.data.discountPercent / 100);
                 console.log("coaihd", $scope.tiengiam);
                 $scope.tongtien = $scope.totalAmount() - $scope.tiengiam;
@@ -540,6 +547,8 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             });
     };
 
+
+    
 
 
     $scope.saveToLocalStorage = function () {
@@ -558,7 +567,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
 
     $scope.order = {
         orderDate: new Date(),
-        user: {},
+        user: {}, 
         name: "", // Thêm trường tên người nhận
         address: "",
         phone: "",
@@ -596,6 +605,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
             $http.post(url, order).then(
                 (resp) => {
                     var order_id = resp.data.orderId
+                    console.log("tong tien hoa don",$scope.totalAmount())
                     if ($scope.selectedPaymentMethod == "VNPAY") {
                         datased = {
                             amount: $scope.tongtien,
@@ -605,7 +615,7 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
                         $http.post('/pay/vnpayajax', datased)
                             .then(function (response) {
                                 var paymentUrl = response.data.paymentUrl;
-
+ 
                                 //Thực hiện chuyển hướng đến paymentUrl
                                 window.location.href = paymentUrl;
                                 //console.error("tthong tin resposte", response);
@@ -621,9 +631,9 @@ app.controller("checkctrl", function ($scope, $http, $filter) {
                         console.log("thanh công", resp);
 
                         swal("Thành Công", "Đặt hàng thành công", "success")
-                        window.location.href = `/shop`;
+                        // window.location.href = `/shop`;
                     }
-                    $scope.clear(); l
+                    $scope.clear(); 
 
                 },
                 (error) => {
