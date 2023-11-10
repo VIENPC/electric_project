@@ -3,9 +3,10 @@ package com.nhutin.electric_project.admin.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,6 +76,11 @@ public class HoaDonController {
     @RequestMapping("/baocaohoadon")
     public String baocaohoadon() {
         return "admin/view/baocaohd";
+    }
+
+    @RequestMapping("/reportTable")
+    public String report() {
+        return "admin/view/report";
     }
 
     @RequestMapping("/thongkehdtg")

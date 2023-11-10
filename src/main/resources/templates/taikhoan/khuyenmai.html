@@ -49,9 +49,7 @@
 															</td>
 															<td th:text="${#temporals.format(km.usedDates, ' dd-MM-yyyy HH:mm:ss')}"></td>
 															<td th:text="${km.status ? 'Đang hoạt động' : 'Ngừng hoạt động'}"></td>
-															<td><a class="btn btn-primary btn-sm" th:href="@{'/admin/qlkhuyenmai/'+${km.id}}"
-																	title="Hiển thị theo mã"> Chọn mã khuyến mãi
-																</a> </td>
+
 														</tr>
 													</tbody>
 												</table>

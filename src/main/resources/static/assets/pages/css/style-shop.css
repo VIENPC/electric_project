@@ -8,7 +8,7 @@ body.ecommerce {
 .ecommerce h4,
 .ecommerce h5,
 .ecommerce h6 {
-	font-family: "PT Sans Narrow", sans-serif;
+	font-family: "Arial", sans-serif;
 	margin: 0 0 10px;
 	text-transform: uppercase;
 }
@@ -41,7 +41,7 @@ body.ecommerce {
 
 .ecommerce .content-page h5,
 .ecommerce .content-page h6 {
-	font: 700 15px "Open Sans", Arial, sans-serif;
+	font: 700 15px "Arial", Arial, sans-serif;
 	margin-bottom: 2px;
 }
 
@@ -59,7 +59,7 @@ Header and header elements
 
 .ecommerce .reduce-header .site-logo {
 	padding-top: 16px;
-	padding-bottom: 18px;
+	padding-bottom: 16px;
 }
 
 .ecommerce .header-navigation li.menu-search {
@@ -72,7 +72,7 @@ Header and header elements
 
 /* Navigation */
 .ecommerce .header-navigation {
-	font: 19px "PT Sans Narrow", sans-serif;
+	font: 19px "Arial", sans-serif;
 	letter-spacing: 1px;
 	margin: 0;
 }
@@ -159,7 +159,7 @@ Header and header elements
 	float: right;
 	margin-top: 30px;
 	position: relative;
-	font: 400 13px 'Open Sans', Arial, sans-serif;
+	font: 400 13px 'Arial', Arial, sans-serif;
 }
 
 .ecommerce .header .mobi-toggler {
@@ -374,7 +374,7 @@ Header and header elements
 /* breadcrumb */
 .ecommerce .breadcrumb {
 	text-transform: uppercase;
-	font: 13px "PT Sans Narrow", sans-serif;
+	font: 13px "Arial", sans-serif;
 }
 
 /* Catalogue styles */
@@ -464,7 +464,7 @@ Header and header elements
 }
 
 .product-item h3 {
-	font: 300 14px 'Open Sans', sans-serif;
+	font: 300 16px 'Arial', sans-serif;
 	padding-top: 10px;
 	padding-bottom: 4px;
 }
@@ -479,7 +479,7 @@ Header and header elements
 
 .pi-price {
 	color: #e84d1c;
-	font: 18px 'PT Sans Narrow', sans-serif;
+	font: 16px 'Arial', sans-serif;
 	float: left;
 	padding-top: 1px;
 }
@@ -513,12 +513,12 @@ Header and header elements
 .goods-data table,
 .checkout-page table {
 	width: 100%;
-	font: 300 13px 'Open Sans', sans-serif;
+	font: 300 16px 'Arial', sans-serif;
 }
 
 .goods-data th,
 .checkout-page th {
-	font: 16px "PT Sans Narrow", sans-serif;
+	font: 16px "Arial", sans-serif;
 	text-transform: uppercase;
 	border-bottom: solid 1px #ecebeb;
 	padding-bottom: 8px;
@@ -545,7 +545,7 @@ Header and header elements
 .goods-page-total,
 .checkout-price,
 .checkout-total {
-	font-family: 'PT Sans Narrow', sans-serif;
+	font-family: 'Arial', sans-serif;
 }
 
 .goods-page-price strong,
@@ -566,7 +566,7 @@ Header and header elements
 
 .goods-data h3,
 .checkout-page .checkout-description h3 {
-	font: 300 14px 'Open Sans', sans-serif;
+	font: 300 16px 'Arial', sans-serif;
 	text-transform: inherit;
 	padding: 0;
 	margin: 0 0 5px;
@@ -612,7 +612,7 @@ Header and header elements
 
 .shopping-total,
 .checkout-total-block {
-	width: 230px;
+	width: 300px;
 	float: right;
 	padding-top: 9px;
 	color: #3e4d5c;
@@ -621,6 +621,16 @@ Header and header elements
 .checkout-total-block {
 	margin-bottom: 20px;
 }
+
+.row1 {
+	padding: 3px;
+	display: block;
+	width: 1240px;
+	height: 300px;
+	overflow: scroll;
+	background-color: #dc795e;
+}
+
 
 .shopping-total ul,
 .checkout-total-block ul {
@@ -644,7 +654,7 @@ Header and header elements
 
 .shopping-total em,
 .checkout-total-block em {
-	font: 18px 'PT Sans Narrow', sans-serif;
+	font: 16px 'Arial', sans-serif;
 	float: left;
 	text-transform: uppercase;
 	position: relative;
@@ -654,7 +664,7 @@ Header and header elements
 .shopping-total strong,
 .checkout-total-block strong {
 	color: #e84d1c;
-	font: 21px 'PT Sans Narrow', sans-serif;
+	font: 21px 'Arial', sans-serif;
 	font-weight: normal;
 	float: right;
 }
@@ -678,7 +688,7 @@ Header and header elements
 .checkout-page h2 {
 	background: #a7b0b8;
 	color: #fff;
-	font: 17px 'PT Sans Narrow', sans-serif;
+	font: 17px 'Arial', sans-serif;
 	margin: 0 0 15px;
 }
 
@@ -711,7 +721,7 @@ Header and header elements
 }
 
 .checkout-page h3 {
-	font: 23px 'PT Sans Narrow', sans-serif;
+	font: 23px 'Arial', sans-serif;
 	color: #3e4d5c;
 	padding-top: 10px;
 }
@@ -782,8 +792,8 @@ div.radio {
 div.radio,
 div.radio span,
 div.radio input {
-	width: 18px;
-	height: 18px;
+	width: 16px;
+	height: 16px;
 }
 
 div.radio span {
@@ -813,7 +823,7 @@ div.radio input {
 }
 
 div.radio.active span {
-	background-position: -18px -18px -279px;
+	background-position: -16px -16px -279px;
 }
 
 div.radio.active span.checked {
@@ -927,7 +937,7 @@ div.radio.disabled.active span.checked {
 }
 
 .ecommerce .sidebar {
-	font: 15px 'PT Sans Narrow', sans-serif;
+	font: 15px 'Arial', sans-serif;
 	color: #3E4D5C;
 	text-transform: uppercase;
 }
@@ -944,19 +954,19 @@ div.radio.disabled.active span.checked {
 }
 
 .sidebar-filter h2 {
-	font-size: 18px;
+	font-size: 16px;
 	margin: 0;
 }
 
 .sidebar-filter h3 {
-	font: 600 14px 'Open Sans', sans-serif;
+	font: 600 16px 'Arial', sans-serif;
 	/*text-transform: none;*/
 	padding-top: 10px;
 }
 
 .sidebar-filter label {
 	text-transform: none;
-	font: 400 13px 'Open Sans', sans-serif;
+	font: 400 13px 'Arial', sans-serif;
 }
 
 .sidebar-filter #amount {
@@ -1011,7 +1021,7 @@ div.radio.disabled.active span.checked {
 }
 
 .sidebar-products h2 {
-	font-size: 18px;
+	font-size: 16px;
 	margin-bottom: 14px;
 }
 
@@ -1022,7 +1032,7 @@ div.radio.disabled.active span.checked {
 }
 
 .sidebar-products h3 {
-	font: 300 13px 'Open Sans', sans-serif;
+	font: 300 13px 'Arial', sans-serif;
 	/*text-transform: none;*/
 	margin-left: 80px;
 	margin-bottom: 2px;
@@ -1031,7 +1041,7 @@ div.radio.disabled.active span.checked {
 .sidebar-products .price {
 	margin-left: 80px;
 	color: #E84D1C;
-	font: 16px 'PT Sans Narrow', sans-serif;
+	font: 16px 'Arial', sans-serif;
 }
 
 /* BEGIN product page */
@@ -1078,7 +1088,7 @@ div.radio.disabled.active span.checked {
 
 .price-availability-block .price {
 	float: left;
-	font-family: 'PT Sans Narrow', sans-serif;
+	font-family: 'Arial', sans-serif;
 }
 
 .price-availability-block .price strong {
@@ -1137,7 +1147,7 @@ div.radio.disabled.active span.checked {
 	font-weight: normal;
 	text-transform: uppercase;
 	color: #8e9ca8;
-	font-family: "PT Sans Narrow", sans-serif;
+	font-family: "Arial", sans-serif;
 	float: left;
 	margin-right: 10px;
 	padding-top: 2px;
@@ -1152,7 +1162,7 @@ div.radio.disabled.active span.checked {
 .product-page-cart {
 	border-bottom: 1px solid #f4f4f4;
 	padding-bottom: 20px;
-	margin-bottom: 18px;
+	margin-bottom: 16px;
 }
 
 .product-quantity,
@@ -1177,7 +1187,7 @@ table .product-quantity .input-group {
 .product-quantity input.form-control {
 	border: none;
 	background: #edeff1 !important;
-	font: 300 23px 'Open Sans', sans-serif;
+	font: 300 23px 'Arial', sans-serif;
 	;
 	color: #647484;
 	height: 38px;
@@ -1196,13 +1206,13 @@ table .product-quantity .input-group {
 
 .product-quantity .btn {
 	text-align: center;
-	height: 18px !important;
-	width: 18px;
+	height: 16px !important;
+	width: 16px;
 	padding: 0 2px 0 1px !important;
 	text-align: center;
 	background: #edeff1;
 	border-radius: 0 !important;
-	font-size: 18px !important;
+	font-size: 16px !important;
 	line-height: 1 !important;
 	color: #616b76;
 	margin: 0 !important;
@@ -1226,9 +1236,9 @@ table .product-quantity .input-group {
 
 .product-page .review {
 	color: #6e7a85;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Arial', sans-serif;
 	border-bottom: 1px solid #f4f4f4;
-	padding-bottom: 18px;
+	padding-bottom: 16px;
 	margin-bottom: 20px;
 	font-weight: 300;
 }
@@ -1281,7 +1291,7 @@ table .product-quantity .input-group {
 
 .ecommerce .nav-tabs {
 	text-transform: uppercase;
-	font: 16px/1 "PT Sans Narrow", sans-serif;
+	font: 16px/1 "Arial", sans-serif;
 }
 
 .ecommerce .nav-tabs>li>a,
@@ -1391,7 +1401,7 @@ table .product-quantity .input-group {
 	text-transform: uppercase;
 	font-size: 14px;
 	color: #8e9ca8;
-	font-family: "PT Sans Narrow", sans-serif;
+	font-family: "Arial", sans-serif;
 	float: left;
 	margin-right: 10px;
 	position: relative;
@@ -1414,7 +1424,7 @@ table .product-quantity .input-group {
 }
 
 .content-form-page legend {
-	font: 18px 'PT Sans Narrow', sans-serif;
+	font: 16px 'Arial', sans-serif;
 	text-transform: uppercase;
 	margin-bottom: 14px;
 }

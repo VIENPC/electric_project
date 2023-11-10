@@ -204,12 +204,11 @@
         <!-- END NAVIGATION -->
       </div>
       <div ng-show="showSearchResults">
-
-        <button ng-click="closeSearchResults()">&#10006;</button>
+        <button class="btn" ng-click="closeSearchResults()">&#10006;</button>
         <!-- Đoạn mã để hiển thị kết quả tìm kiếm -->
-        <div class="row product-list">
+        <div class="row1  product-list">
           <!-- PRODUCT ITEM START -->
-          <div class="col-md-2 col-sm-6 col-xs-12" ng-repeat="item in products track by item.productID">
+          <div class="col-md-3" ng-repeat="item in products track by item.productID">
             <div class="product-item">
               <div class="pi-img-wrapper">
                 <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
@@ -218,14 +217,13 @@
                   <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
                 </div>
               </div>
-              <h3 style="height: 40px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
+              <h3 style="height: 60px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
               </h3>
               <div class="pi-price">{{item.price |number : 0}} đ</div>
               <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
                 to
                 cart</a>
             </div>
-
           </div>
         </div>
       </div>
