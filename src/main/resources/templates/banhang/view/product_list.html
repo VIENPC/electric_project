@@ -92,13 +92,14 @@
                   <h3>Không có sản phẩm nào được tìm thấy.</h3>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products  | limitTo: productsToShowList">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products | limitTo: productsToShowList">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
                     <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}" class="img-responsive"
                       alt="Berry Lace Dress">
                     <div>
                       <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                      <a class="btn btn-default fancybox-button" ng-click="selectProduct(item)">So sánh</a>
                     </div>
                   </div>
                   <h3 style="height: 30px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
@@ -109,9 +110,12 @@
                   <div ng-if="item.promotion" class="pi-price">
                     {{ calculateDiscountedPrice(item) | number: 0 }} đ
                   </div>
-                  <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
-                    ng-if="item.active !== false">Add to cart</a>
-                  <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
+                  <div class="pi-price">
+                    <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
+                      ng-if="item.active !== false">Add to cart</a>
+                    <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -124,6 +128,94 @@
                 ng-show="productsToShowList > productsListPerPage">Show
                 less</a>
             </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">So sánh sản phẩm</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="item in selectedProducts">
+                      <div class="product-item">
+                        <div class="pi-img-wrapper">
+                          <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}"
+                            class="img-responsive" alt="Berry Lace Dress">
+                          <div>
+                            <a href="../assets/images/product/{{item.image}}"
+                              class="btn btn-default fancybox-button">Zoom</a>
+                          </div>
+                        </div>
+                        <h3 style="height: 30px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
+                        </h3>
+                        <div class="pi-price" style="margin: 15px;">
+                          <p><strike ng-if="item.promotion">{{ item.price | number: 0 }} đ</strike></p>
+                          <span ng-show="!item.promotion">{{ item.price | number: 0 }} đ</span>
+                        </div><br>
+                        <div ng-if="item.promotion" class="pi-price">
+                          {{ calculateDiscountedPrice(item) | number: 0 }} đ
+                        </div>
+                        <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
+                          ng-if="item.active !== false">Add to cart</a>
+                        <a class="btn btn-default add2cart" ng-if="item.active === false">Hết hàng</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button class="btn btn-primary" ng-click=" compareProducts()"
+                      ng-show="selectedProducts.length === 2">So sánh</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal -->
+
+
+            <div class="modal fade  modal-fullscreen bd-example-modal-lg" id="exampleModal1" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">So sánh nhanh</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table table-striped">
+                      <thead class="thead-light">
+                        <tr>
+                          <th></th>
+                          <th>{{ selectedProducts[0].productName }}</th>
+                          <th>{{ selectedProducts[1].productName }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="result in comparisonResult">
+                          <td><b>{{ firstColumnValues[$index] }}</b></td>
+                          <td ng-bind-html="result.product1Value"> {{ result.product1Value }} </td>
+                          <td ng-bind-html="result.product2Value"> {{ result.product2Value }} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
           <!-- END PRODUCT LIST -->
           <!-- BEGIN PAGINATOR -->

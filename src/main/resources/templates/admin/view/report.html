@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Bảng điều khiển</title>
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="app-title">
+					<ul class="app-breadcrumb breadcrumb">
+						<li class="breadcrumb-item"><a href="#"><b>Bảng điều
+									khiển</b></a></li>
+					</ul>
+					<div id="clock"></div>
+				</div>
+			</div>
+
+			<div class="col-md-12 row">
+				<!-- col-6 -->
+				<div class="col-md-3">
+					<div class="widget-small primary coloured-icon">
+						<i class='icon bx bxs-user-account fa-3x'></i>
+						<div class="info">
+							<h4>Tổng khách hàng</h4>
+							<p>
+								<b>[(${slkh})] khách hàng</b>
+							</p>
+							<p class="info-tong">Tổng số khách hàng được quản lý.</p>
+						</div>
+					</div>
+				</div>
+				<!-- col-6 -->
+				<div class="col-md-3">
+					<div class="widget-small info coloured-icon">
+						<i class='icon bx bxs-data fa-3x'></i>
+						<div class="info">
+							<h4>Tổng sản phẩm</h4>
+							<p>
+								<b>[(${slsp})] sản phẩm</b>
+							</p>
+							<p class="info-tong">Tổng số sản phẩm được quản lý.</p>
+						</div>
+					</div>
+				</div>
+				<!-- col-6 -->
+				<div class="col-md-3">
+					<div class="widget-small warning coloured-icon">
+						<i class='icon bx bxs-shopping-bags fa-3x'></i>
+						<div class="info">
+							<h4>Tổng đơn hàng</h4>
+							<p>
+								<b>[(${slhd})] đơn hàng</b>
+							</p>
+							<p class="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
+						</div>
+					</div>
+				</div>
+				<!-- col-6 -->
+				<div class="col-md-3">
+					<div class="widget-small danger coloured-icon">
+						<i class='icon bx bxs-error-alt fa-3x'></i>
+						<div class="info">
+							<h4>Hết hàng</h4>
+							<p>
+								<b>[(${slspht})] sản phẩm</b>
+							</p>
+							<p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="col-md-12">
+
+					<div class="tile">
+						<h3 class="tile-title">Đơn hàng chờ xác nhận</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th><span>ID đơn hàng</span></th>
+									<th><span>Tên khách hàng</span></th>
+									<th><span>Tổng tiền</span></th>
+									<th><span>Trạng thái</span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Kiểm tra nếu danh sách listhdtt không có dữ liệu -->
+								<th:block th:if="${#lists.isEmpty(listhdtt)}">
+									<!-- Hiển thị thông báo hoặc giá trị rỗng -->
+									<tr>
+										<td colspan="4" class="text-center">Không có dữ liệu</td>
+									</tr>
+								</th:block>
+								<!-- Nếu danh sách có dữ liệu -->
+								<th:block th:if="${not #lists.isEmpty(listhdtt)}">
+									<tr th:each="hd : ${listhdtt}">
+										<td th:text="${hd.orderId}"></td>
+										<td th:text="${hd.name}"></td>
+
+										<td th:text="${#numbers.formatDecimal(hd.totalAmount, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+										</td>
+										<td><span class="badge bg-info">Chờ xử lí</span></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="tile">
+						<div>
+							<h3 class="tile-title">THỐNG KÊ DOANH THU THEO NGÀY</h3>
+						</div>
+
+						<form th:action="@{/admin/doanhthu}" method="get">
+
+							<label for="startDate">Ngày bắt đầu :</label>
+							<input class="form-control form-control-sm" type="date" id="startDate" name="startDate">
+							<label for="endDate">Ngày kết thúc :</label>
+							<input class="form-control form-control-sm " type="date" id="endDate" name="endDate">
+							<br>
+							<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+							<br>
+
+							<!-- mmm -->
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th><span>Ngày bắt đầu</span></th>
+										<th><span>Ngày kết thúc</span></th>
+										<th><span>Tổng doanh thu</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- Kiểm tra nếu danh sách listhdtt không có dữ liệu -->
+									<th:block th:if="${#lists.isEmpty(doanhThu)}">
+										<!-- Hiển thị thông báo hoặc giá trị rỗng -->
+										<tr>
+											<td colspan="4" class="text-center">Không có dữ liệu</td>
+										</tr>
+									</th:block>
+									<!-- Nếu danh sách có dữ liệu -->
+									<th:block>
+										<tr>
+											<td th:text="${#dates.format(startDate, 'dd/MM/yyyy')}"></td>
+											<td th:text="${#dates.format(endDate, 'dd/MM/yyyy')}"></td>
+											<td th:text="${#numbers.formatDecimal(doanhThu, 0, 'COMMA', 0 , 'POINT')} + ' VND'">
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+							<!-- mmm -->
+
+							<h5>Ngày có doanh thu cao nhất: <span
+									th:text="${#dates.format(ngayDoanhThuCaoNhat, 'dd/MM/yyyy')}"></span>
+								thu được <span
+									th:text="${#numbers.formatDecimal(doanhThuCaoNhat, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
+							</h5>
+
+
+							<h4>Ngày có doanh thu thấp nhất: <span
+									th:text="${#dates.format(ngayDoanhThuThapNhat, 'dd/MM/yyyy')}"></span>
+								thu được <span
+									th:text="${#numbers.formatDecimal(doanhThuThapNhat, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
+							</h4>
+						</form>
+						<br>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="tile">
+						<div>
+							<h3 class="tile-title">THỐNG KÊ DOANH THU THEO 1 NGÀY</h3>
+						</div>
+						<div class="col-sm-12">
+							<form th:action="@{/admin/ngay}" method="get">
+								<label for="targetDate">Ngày bắt đầu :</label> <input type="date" id="targetDate" name="targetDate">
+								<button type="submit">Tìm kiếm</button>
+								<br> <br> <span>
+									<h4>Doanh thu ngày:</h4> <span th:text="${#dates.format(ngay, 'dd/MM/yyyy')}"></span> <br><br>
+									<h4>Tổng doanh thu là: <span
+											th:text="${#numbers.formatDecimal(doanhThuNgay, 0, 'COMMA', 0 , 'POINT')} + ' VND'">></span>
+									</h4>
+								</span>
+							</form>
+						</div>
+						<br>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-12">
+						<figure class="highcharts-figure">
+							<div class="">
+								<form th:action="@{/admin/category-by-month}" method="get" id="formloai">
+									<select class="btn btn-delete btn-sm nhap-tu-file" name="categoryid" id="categoryid"
+										onchange="submitFormLoai()">
+										<option value="">- Thống kê theo loại --</option>
+										<option th:each="hsx : ${listlsp}" th:text="${hsx.categoryName}" th:value="${hsx.categoryID}">
+										</option>
+									</select>
+								</form>
+							</div>
+							<div class="">
+								<form th:action="@{/admin/revenue-by-month}" method="get" id="formhang">
+									<select class="btn btn-delete btn-sm nhap-tu-file" name="brandId" id="brandId"
+										onchange="submitForm()">
+										<option value="">- Thống kê theo hãng --</option>
+										<option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}" th:value="${hsx.brandID}">
+										</option>
+									</select>
+								</form>
+							</div>
+							<div id="container1" class=""></div>
+							<button class="btn btn-excel" id="plain1">Dọc</button>
+							<button class="btn btn-danger" id="inverted1">Ngang</button>
+						</figure>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
