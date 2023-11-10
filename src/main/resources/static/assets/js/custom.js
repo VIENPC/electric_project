@@ -1,33 +1,35 @@
-document.getElementById('loai1').addEventListener('change', function() {
-	var selectedValue = this.value;
-	var loai2Select = document.getElementById('loai2');
-	loai2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
-	var options = Array.from(document.querySelectorAll('#loai1 option'));
-	options.forEach(function(option) {
-		if (option.value !== selectedValue) {
-			var clonedOption = option.cloneNode(true);
-			loai2Select.appendChild(clonedOption);
-		}
-	});
-});
-document.getElementById('hang1').addEventListener('change', function() {
-	var selectedValue = this.value;
-	var hang2Select = document.getElementById('hang2');
-	hang2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
-	var options = Array.from(document.querySelectorAll('#hang1 option'));
-	options.forEach(function(option) {
-		if (option.value !== selectedValue) {
-			var clonedOption = option.cloneNode(true);
-			hang2Select.appendChild(clonedOption);
-		}
-	});
-});
+
 
 
 $(document).ready(function () {
 	$('#sampleTable').DataTable({
 		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
 	});
+	document.getElementById('loai1').addEventListener('change', function() {
+		var selectedValue = this.value;
+		var loai2Select = document.getElementById('loai2');
+		loai2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
+		var options = Array.from(document.querySelectorAll('#loai1 option'));
+		options.forEach(function(option) {
+			if (option.value !== selectedValue) {
+				var clonedOption = option.cloneNode(true);
+				loai2Select.appendChild(clonedOption);
+			}
+		});
+	});
+	document.getElementById('hang1').addEventListener('change', function() {
+		var selectedValue = this.value;
+		var hang2Select = document.getElementById('hang2');
+		hang2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
+		var options = Array.from(document.querySelectorAll('#hang1 option'));
+		options.forEach(function(option) {
+			if (option.value !== selectedValue) {
+				var clonedOption = option.cloneNode(true);
+				hang2Select.appendChild(clonedOption);
+			}
+		});
+	});
+	
 });
 
 $(document).ready(function () {
