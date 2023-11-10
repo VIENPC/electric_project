@@ -8,6 +8,17 @@ import org.springframework.data.repository.query.Param;
 
 import com.nhutin.electric_project.model.Brand;
 public interface brandsRepository extends JpaRepository<Brand, Integer> {
+    
+        @Query("SELECT sum(od.quantity),  sum(o.totalAmount) FROM Brand b join Product p on b.brandID = p.brand.brandID join OrderDetail od on od.product.productID = p.productID join Order o on o.orderId = od.order.orderId where o.statushd = 4 and b.brandID = ?1 AND MONTH(o.orderDate) = ?2 ")
+   Object[] sosanhaang(Integer mahang, Integer thang);
+    @Query("SELECT sum(p.quantity) FROM Brand b join Product p on b.brandID = p.brand.brandID where b.brandID = ?1 ")
+    Object[] sptkth(Integer mahang);
+    
+    
+    
+    
+    
+    
     Brand findById(int brandID);
 
     List<Brand> findByProducts_Category_CategoryID(int categoryID);

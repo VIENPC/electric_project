@@ -41,7 +41,7 @@
                           <input type="number" pattern="[0-9]*" class="form-control" id="spinner" name="value" value="1"
                             min="1" max="200" step="1" ng-change="saveToLocalStorage()" ng-model="item.qty">
                         </div>
-                        <div ng-if="item.qty > item.quantity" style="color: red;">
+                        <div  style="color: red;">
                           Số lượng sản phẩm trong kho không đủ!!!
                         </div>
                       </td>

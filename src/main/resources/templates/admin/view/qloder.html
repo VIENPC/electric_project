@@ -77,12 +77,12 @@
 
                                     <td th:text="${hd.statustt ?'Đã thanh toán':'Chưa thanh toán'}"></td>
 
-
+ 
                                     <td>
-                                        <span th:if="${hd.statushd == 1}" class="badge bg-info">Chờ xác nhận</span>
+                                        <span th:if="${hd.statushd == 1}" class="badge bg-secondary">Chờ xác nhận</span>
                                         <span th:if="${hd.statushd == 2}" class="badge bg-warning">Đã xác nhận
                                         </span>
-                                        <span th:if="${hd.statushd == 3}" class="badge bg-warning">Đang giao
+                                        <span th:if="${hd.statushd == 3}" class="badge bg-info">Đang giao
                                         </span>
                                         <span th:if="${hd.statushd == 4}" class="badge bg-success">Hoàn thành</span>
                                         <span th:if="${hd.statushd == 5}" class="badge bg-danger">Đã hủy</span>

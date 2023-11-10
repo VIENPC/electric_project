@@ -124,4 +124,21 @@ public interface productsRepository extends JpaRepository<Product, Integer> {
 
         @Query("SELECT p.productID, p.productName, sum(o.quantity), p.price, (sum(o.quantity) * p.price), b.brandName FROM Product p JOIN Category c ON c.categoryID =p.category.categoryID JOIN OrderDetail o ON o.product.productID = p.productID JOIN Order od ON od.orderId = o.order.orderId JOIN Brand b ON b.brandID = p.brand.brandID Where od.statushd = 4 AND c.categoryID =?1 GROUP BY p.productID, p.productName, p.price, b.brandName")
         List<Object[]> thongkeSanPhamTheoMuc(int muc);
+
+@Query("SELECT SUM(p.quantity) " +
+                        "FROM Product p " +
+                        "JOIN p.category c " +
+                        "WHERE MONTH(p.createDate) = :month " +
+                        "AND YEAR(p.createDate) = YEAR(GETDATE()) " +
+                        "AND c.categoryID = :categoryId")
+        Object[] getcoutproducTonkho(int categoryId, int month);
+
+        @Query("SELECT SUM(p.quantity) " +
+                        "FROM Product p " +
+                        "JOIN p.brand b " +
+                        "WHERE MONTH(p.createDate) = :month " +
+                        "AND YEAR(p.createDate) = YEAR(GETDATE()) " +
+                        "AND b.brandID = :mahang")
+        Object[] getcoutproducTonkho2(int mahang, int month);
+
 }

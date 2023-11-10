@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>So sánh</title>
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a th:href="@{/admin/qldonhang}"><b>Danh sách đơn hàng</b></a></li>
+                <li class="breadcrumb-item"><a>So sánh
+                    </a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="so sánh theo loại"
+                                    data-toggle="modal" data-target="#modalloai"></i> So sánh
+                                    theo loại</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
+                                    title="So sánh theo hãng" data-toggle="modal" data-target="#modalhang"><i
+                                        class="fa fa-copy"></i>
+                                    So sánh theo hãng</a>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In"
+                                    onclick="myFunction(this)"><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
+                                        class="fa fa-trash-o"></i>
+                                    Xóa tất cả </a>
+                            </div>
+                        </div>
+
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+
+                                    <th width="100px"> 
+                                        <span th:if="${thangchon == null}" th:text="'
+                                        Tháng'"></span>
+                                        <!-- Trường hợp loai1 không null, hiển thị nội dung từ loai1 -->
+                                        <span th:if="${thangchon != null}">Tháng [[${thangchon}]]</span></span>
+                                    </th>
+                                    <th width="400px">
+                                        <span th:if="${loai1 == null}" th:text="'Tên 1'"></span>
+                                        <!-- Trường hợp loai1 không null, hiển thị nội dung từ loai1 -->
+                                        <span th:if="${loai1 != null}" th:text="${loai1}"></span>
+                                    </th>
+
+                                    <th width="400px">
+                                        <span th:if="${loai2 == null}" th:text="'Tên 2'"></span>
+                                        <!-- Trường hợp loai1 không null, hiển thị nội dung từ loai1 -->
+                                        <span th:if="${loai2 != null}" th:text="${loai2}"></span>
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>Số lượng bán ra</td>
+                                    <td th:if="${#lists.isEmpty(objectloai1)}">Trống </td>
+                                    <td th:unless="${#lists.isEmpty(objectloai1)}" th:each="item : ${objectloai1}">
+                                        <span th:if="${item[0] == null}">Chưa bán được sản phẩm nào</span>
+                                        <span th:unless="${item[0] == null}" th:text="${item[0]}"></span>
+                                    </td>
+
+                                    <td th:if="${#lists.isEmpty(objectloai2)}">Trống</td>
+                                    <td th:unless="${#lists.isEmpty(objectloai2)}" th:each="item2 : ${objectloai2}">
+                                        <span th:if="${item2[0] == null}">Chưa bán được sản phẩm nào</span>
+                                        <span th:unless="${item2[0] == null}" th:text="${item2[0]}"></span>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Số lượng tồn kho</td>
+                                    <td th:if="${#lists.isEmpty(ht1)}">Trống</td>
+                                    <td th:unless="${#lists.isEmpty(ht1)}" th:each="item3 : ${ht1}">
+
+                                        <span th:text="${item3}"></span>
+
+                                    </td>
+                                    <td th:if="${#lists.isEmpty(ht2)}">Trống</td>
+                                    <td th:unless="${#lists.isEmpty(ht2)}" th:each="item4 : ${ht2}">
+
+                                        <span th:text="${item4}"></span>
+
+                                    </td>
+
+                                    <!-- <td th:if="${#lists.isEmpty(objectht2)}">Trống</td>
+                                    <td th:unless="${#lists.isEmpty(objectht2)}" th:each="ht2 : ${objectht2}">
+                                        <span th:text="${ht2[0]}"></span>
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td>Doanh thu</td>
+                                    <td th:if="${#lists.isEmpty(objectloai1)}">Trống</td>
+                                    <td th:each="item : ${objectloai1}">
+                                        <span th:if="${item[1] == null}">0đ</span>
+
+                                        <span th:unless="${item[1] == null}"
+                                            th:text="${#numbers.formatDecimal(item[1], 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+                                    </td>
+
+                                    <td th:if="${#lists.isEmpty(objectloai2)}">Trống</td>
+                                    <td th:unless="${#lists.isEmpty(objectloai2)}" th:each="item2 : ${objectloai2}">
+                                        <span th:if="${item2[1] == null}">0đ</span>
+                                        <span th:unless="${item2[1] == null}"
+                                            th:text="${#numbers.formatDecimal(item2[1], 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal fade" id="modalloai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form th:action="@{/admin/sosanhloai}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Chọn loại sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <select class="form-control" name="thang">
+                                    <option value="">Chọn tháng </option>
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <select class="form-control" id="loai1" name="loai1">
+                                    <option value="">-- Chọn loại: --</option>
+                                    <option th:each="dm : ${listdm}" th:text="${dm.categoryName}"
+                                        th:value="${dm.categoryID}" th:if="${dm.active}"></option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+
+                                <select class="form-control" id="loai2" name="loai2">
+                                    <option value="">-- Chọn loại: --</option>
+                                    <option th:each="dm : ${listdm}" th:text="${dm.categoryName}"
+                                        th:value="${dm.categoryID}" th:if="${dm.active}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">So sánh</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalhang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form th:action="@{/admin/sosanhhang}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Chọn hãng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <select class="form-control" name="thang">
+                                    <option value="">Chọn tháng </option>
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-6">
+
+                                <select class="form-control" id="hang1" name="hang1">
+                                    <option value="">- Thống kê theo hãng --</option>
+                                    <option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+                                        th:value="${hsx.brandID}"></option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+
+                                <select class="form-control" id="hang2" name="hang2">
+                                    <option value="">- Thống kê theo hãng --</option>
+                                    <option th:each="hsx : ${listhxs}" th:text="${hsx.brandName}"
+                                        th:value="${hsx.brandID}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">So sánh</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -10,6 +10,23 @@ import com.nhutin.electric_project.model.Category;
 
 public interface categorysRepository extends JpaRepository<Category, Integer> {
     // List<Product> findByCategoryID(Integer categoryID);
+
+
+
+
+
+
+   @Query("SELECT sum(od.quantity),  sum(o.totalAmount) FROM Category c join Product p on c.categoryID = p.category.categoryID join OrderDetail od on od.product.productID = p.productID join Order o on o.orderId = od.order.orderId where o.statushd = 4 and c.categoryID = ?1 AND MONTH(o.orderDate) = ?2 ")
+   Object[] loadtkthdang(Integer maloai, Integer month);
+    @Query("SELECT sum(p.quantity) FROM Category c join Product p on c.categoryID = p.category.categoryID where c.categoryID = ?1 ")
+    Object[] loadtkthdanght(Integer maloai);
+    
+
+
+
+
+
+
     Category findById(int categoryID);
 
     List<Category> findByProducts_Brand_BrandID(int brandID);
