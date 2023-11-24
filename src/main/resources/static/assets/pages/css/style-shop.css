@@ -817,7 +817,7 @@ div.radio input {
 	background: none;
 	display: -moz-inline-box;
 	display: inline-block;
-	*display: inline;
+	display: inline;
 	zoom: 1;
 	text-align: center;
 }

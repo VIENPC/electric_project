@@ -12,7 +12,7 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
                 $scope.product = response.data.product;
                 $scope.relatedProducts = response.data.relatedProducts;
             })
-    }; 
+    };
     window.onload = function () {
         // Lấy đoạn cuối của URL (được kỳ vọng là itemId)
         var productID = window.location.pathname.split('/').pop();
@@ -50,7 +50,10 @@ app.controller('product_detail-controller', function ($scope, $http, $window) {
 
             })
         }
-        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success")
+        swal("Thành công", "Thêm sản phẩm vào giỏ hàng thành công!", "success").then(function () {
+
+            location.reload();
+        })
 
 
         //alert(qty);
