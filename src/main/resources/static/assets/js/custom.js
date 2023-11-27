@@ -5,31 +5,31 @@ $(document).ready(function () {
 	$('#sampleTable').DataTable({
 		"order": []  // Đặt thứ tự sắp xếp ban đầu là mảng rỗng
 	});
-	document.getElementById('loai1').addEventListener('change', function() {
+	document.getElementById('loai1').addEventListener('change', function () {
 		var selectedValue = this.value;
 		var loai2Select = document.getElementById('loai2');
 		loai2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
 		var options = Array.from(document.querySelectorAll('#loai1 option'));
-		options.forEach(function(option) {
+		options.forEach(function (option) {
 			if (option.value !== selectedValue) {
 				var clonedOption = option.cloneNode(true);
 				loai2Select.appendChild(clonedOption);
 			}
 		});
 	});
-	document.getElementById('hang1').addEventListener('change', function() {
+	document.getElementById('hang1').addEventListener('change', function () {
 		var selectedValue = this.value;
 		var hang2Select = document.getElementById('hang2');
 		hang2Select.innerHTML = ''; // Xóa tất cả các tùy chọn cũ trong Select 2
 		var options = Array.from(document.querySelectorAll('#hang1 option'));
-		options.forEach(function(option) {
+		options.forEach(function (option) {
 			if (option.value !== selectedValue) {
 				var clonedOption = option.cloneNode(true);
 				hang2Select.appendChild(clonedOption);
 			}
 		});
 	});
-	
+
 });
 
 $(document).ready(function () {
@@ -156,7 +156,7 @@ function showSuccessMessage(message) {
 // 		window.location.href = `/qlsanpham/delnhieusp`;
 // 	})
 // });  
-function edithd(button){
+function edithd(button) {
 
 	var row = button.closest("tr");
 	var mahd = row.querySelector("td:nth-child(2)").innerText;
@@ -641,6 +641,25 @@ Highcharts.chart('container2', {
 });
 
 
+
+// nav 
+// When the user scrolls the page, execute myFunction
+window.onscroll = function () { myFunction() };
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+	if (window.pageYOffset >= sticky) {
+		navbar.classList.add("sticky")
+	} else {
+		navbar.classList.remove("sticky");
+	}
+}
 
 
 
