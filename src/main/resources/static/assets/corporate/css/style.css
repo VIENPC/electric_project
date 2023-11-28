@@ -375,13 +375,13 @@ Custom Scrollbars
 Pre-Header and pre-header elements
 ***/
 .pre-header {
-	color: #eeeff0;
-	border-bottom: 1px solid #eee;
+	color: rgb(19, 1, 1);
+	/* border-bottom: 1px solid #eee; */
 	padding-top: 10px;
 	line-height: 1.2;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
-	background: rgb(89, 76, 68);
+	background: rgb(255, 255, 254);
 }
 
 .sidebar-products {
@@ -500,9 +500,14 @@ Header and header elements
 ***/
 .header {
 	border-radius: 0;
-	margin-bottom: 20px;
+	margin-bottom: 1px;
 	z-index: 999;
 	position: relative;
+}
+
+
+.header .container ul li {
+	margin: 5px;
 }
 
 /* FIX styles BEGIN */
@@ -584,7 +589,7 @@ body.page-header-fixed {
 .header-navigation>ul>li>a {
 	color: #333;
 	display: block;
-	padding: 29px 12px 30px;
+	padding: 30px;
 }
 
 .header-navigation ul>li.active>a,
@@ -4650,4 +4655,4 @@ button[data-controls="next"] {
 }
 
 
-/* btn user  */
+/* banner  */
