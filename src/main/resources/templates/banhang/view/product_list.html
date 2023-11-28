@@ -44,16 +44,15 @@
                 </label>
               </div>
             </div>
-            <!-- Thêm liên kết để hiển thị tất cả loại và sản phẩm -->
 
             <div class="sidebar-products">
               <h2>Thương hiệu</h2>
               <div class="col-md-6 col-sm-12 col-xs-12" ng-repeat="item in brands" ng-if="item.active !== false">
                 <a class="card" ng-click="filterDataBrand(item.brandID)">
-                  <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
-                  <div class="card-body">
-                    <h5 class="card-text">{{item.brandName}}</h5>
+                  <div class="card-details">
+                    <img ng-src="./assets/images/carousel/{{item.image}}" alt="Berry Lace Dress">
                   </div>
+                  <button class="card-button">{{item.brandName}}</button>
                 </a>
               </div>
             </div>
