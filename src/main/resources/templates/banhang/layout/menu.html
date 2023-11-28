@@ -16,9 +16,12 @@
             <li class="text-center"><a th:href="@{/home}"><img width="100" height="50"
                   src="https://dienmaytindung.com/wp-content/uploads/2023/08/logo-1.png" class="header_logo header-logo"
                   alt="Điện Máy Tín Dũng"></li></a>
-            <li><i class="fa fa-phone"></i><span>+0866065558</span></li>
+            <li>
+              <p> <i class="fa fa-phone"></i> +0866065558</p>
+            </li>
             <li class="shop-currencies">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>Cần Thơ
+
+              <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Cần Thơ</p>
             </li>
             <li> Xin chào <span class="first-letter">[[${#request.remoteUser}]] </span></li>
           </ul>
@@ -36,7 +39,7 @@
       </div>
     </div>
   </div>
-  <header ng-controller="category-controller">
+  <header ng-controller="category-controller" style="background-color:#d70018;">
     <div id="navbar">
       <div class="container">
       </div>
@@ -65,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="header-navigation">
+        <div class="header-navigation" style="color: white;">
           <ul>
             <li class="dropdown dropdown-megamenu">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
@@ -76,7 +79,7 @@
                   <div class="header-navigation-content">
                     <div class="row">
                       <div class="col-md-12 header-navigation-col">
-                        <h4>Điện máy</h4>
+                        <h4 style="color: black;">Điện máy</h4>
                         <ul ng-repeat="item in categoris" ng-if="item.active !== false">
                           <li><a ng-click="goToCategory(item.categoryID)">{{item.categoryName}}</a></li>
                         </ul>
@@ -96,29 +99,28 @@
                 </li>
               </ul>
             </li>
-            <li class="dropdown active">
+            <li class="dropdown">
               <a th:href="@{/home}">
-                <i class="fa fa-home"></i> Trang Chủ
+                <strong> <i class="fa fa-home"></i> Trang Chủ</strong>
               </a>
             </li>
             <li>
-              <a th:href="@{/shop}">
-                <i class="fa fa-laptop" aria-hidden="true"></i> Sản phẩm
+              <a th:href="@{/shop}"> <strong> <i class="fa fa-laptop" aria-hidden="true"></i> Sản phẩm</strong>
               </a>
             </li>
             <li>
               <a th:href="@{/about}">
-                <i class="fa fa-users" aria-hidden="true"></i> Giới thiệu
+                <strong> <i class="fa fa-users" aria-hidden="true"></i> Giới thiệu</strong>
               </a>
             </li>
             <li>
               <a href="">
-                <i class="fa fa-address-book" aria-hidden="true"></i> Liên hệ
+                <strong> <i class="fa fa-address-book" aria-hidden="true"></i> Liên hệ</strong>
               </a>
             </li>
             <li th:unless="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản
+                <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản</strong>
               </a>
 
               <ul class="dropdown-menu">
@@ -134,7 +136,7 @@
 
             <li th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                <i class="fa fa-user-circle" aria-hidden="true"></i> Tài Khoản
+                <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài Khoản</strong>
               </a>
               <ul class="dropdown-menu">
                 <li th:if="${#request.isUserInRole('ADMIN')}"><a th:href="@{/admin/index}"><i class="fa fa-user-secret"
