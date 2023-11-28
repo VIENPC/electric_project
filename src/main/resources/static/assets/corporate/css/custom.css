@@ -326,7 +326,7 @@ div[ng-show="showSearchResults"] {
     position: relative;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #6e463c;
+    /* border: 1px solid #6e463c; */
     transition: 0.5s ease-out;
     overflow: visible;
 }
