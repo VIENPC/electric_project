@@ -15,7 +15,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.calculateDiscountedPrice = 0;
     $scope.productsPerPage = 3; // Số lượng sản phẩm hiển thị ban đầu
     $scope.productsToShow = $scope.productsPerPage;
-
     $scope.selectedProducts = [];
     $scope.isProductDialogVisible = false;
 
