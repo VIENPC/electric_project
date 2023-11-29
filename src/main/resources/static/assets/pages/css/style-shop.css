@@ -2,6 +2,10 @@ body.ecommerce {
 	background: #f9f9f9;
 }
 
+* {
+	font-family: unset;
+}
+
 .ecommerce h1,
 .ecommerce h2,
 .ecommerce h3,
