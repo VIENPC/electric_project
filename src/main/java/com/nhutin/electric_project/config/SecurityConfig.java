@@ -86,10 +86,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests(requests -> requests
-                        .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop",
+                        .antMatchers("/assets/**", "/", "logout", "/login**", "/home", "/shop/**",
                                 "/error**", "/api/**", "/reset-password", "/codeVerification", "/resendOtp",
                                 "/new-password", "/rest/productdetails", "/rest/products", "/rest/productsbycate/**",
-                                "/rest/products/**", "/rest/**", "/product", "/registration/**", "/oauth2/**")
+                                "/rest/products/**", "/rest/**", "/product", "/registration/**", "/oauth2/**", "/news","/about","/detail/**","/cart")
                         .permitAll()
                         .antMatchers("/admin/**", "/rest/orders/**")
                         .hasRole("ADMIN")
