@@ -20,22 +20,11 @@
               <p> <i class="fa fa-phone"></i> +0866065558</p>
             </li>
             <li class="shop-currencies">
-
               <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Cần Thơ</p>
             </li>
             <li> Xin chào <span class="first-letter">[[${#request.remoteUser}]] </span></li>
           </ul>
         </div>
-
-        <!-- <div class="col-md-6 col-sm-6 ">
-          <ul class="list-unstyled  pull-right">
-            <li class="text-center">
-
-              Xin chào <span class="first-letter">[[${#request.remoteUser}]] </span>
-
-            </li>
-          </ul>
-        </div> -->
       </div>
     </div>
   </div>
@@ -56,7 +45,7 @@
                   <a href=""><img ng-src="../assets/images/product/{{gh.image}}" alt="{{gh.image}}" width="37"
                       height="34"></a>
                   <span class="cart-content-count">X {{gh.qty}}</span>
-                  <strong><a href="">{{gh.productName}}</a></strong>
+                  <strong style="color: black;"><b href="">{{gh.productName}}</b></strong>
                   <em>{{gh.price|number : 0}} đ</em>
                   <a href="javascript:void(0);" class="del-goods" ng-click="removesp(item.productID)">&nbsp;</a>
                 </li>
