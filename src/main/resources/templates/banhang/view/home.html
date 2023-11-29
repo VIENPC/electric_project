@@ -226,7 +226,7 @@
                                         đ</strike>
                                     <span ng-show="!item.promotion">{{ item.price | number: 0 }}
                                         đ</span>
-                                </p> <br>
+                                </p>
                                 <div ng-if="item.promotion" class="pi-price">
                                     {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                 </div>
@@ -269,7 +269,7 @@
                                         đ</strike>
                                     <span ng-show="!item.promotion">{{ item.price | number: 0 }}
                                         đ</span>
-                                </p> <br>
+                                </p>
                                 <div ng-if="item.promotion" class="pi-price">
                                     {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                 </div>
@@ -298,10 +298,6 @@
                             <div class="card__image">
                                 <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}"
                                     class="img-responsive" alt="Berry Lace Dress">
-                                <!-- <div>
-                                    <a href="../assets/images/product/{{item.image}}"
-                                        class="btn btn-default fancybox-button">Zoom</a>
-                                </div> -->
                             </div>
                             <div class="card__content" style="margin-top: 60px;">
                                 <span class="title">{{item.productName}}</span>
@@ -310,12 +306,11 @@
                                         đ</strike>
                                     <span ng-show="!item.promotion">{{ item.price | number: 0 }}
                                         đ</span>
-                                </p> <br>
+                                </p>
                                 <div ng-if="item.promotion" class="pi-price">
                                     {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                 </div>
-                                <a class="btn btnaddtocart add2cart" ng-click="addToCart(item.productID)">Add
-                                    to
+                                <a class="btn btnaddtocart add2cart" ng-click="addToCart(item.productID)">Add to
                                     cart</a>
                             </div>
                         </div>
