@@ -341,7 +341,7 @@ div[ng-show="showSearchResults"] {
 
 .card-button {
     transform: translate(-50%, 125%);
-    width: 60%;
+    width: 70%;
     border-radius: 1rem;
     border: none;
     background-color: #f83600;

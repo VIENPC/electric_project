@@ -799,7 +799,7 @@ div.radio input {
 div.radio span {
 	display: -moz-inline-box;
 	display: inline-block;
-	*display: inline;
+	display: inline;
 	zoom: 1;
 	text-align: center;
 	background-position: 0 -279px;
