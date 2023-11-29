@@ -13,9 +13,7 @@
 	<main>
 		<div class="main">
 			<div class="container">
-				<!-- BEGIN SIDEBAR & CONTENT -->
 				<div class="row margin-bottom-40">
-					<!-- BEGIN CONTENT -->
 					<div class="">
 						<section>
 							<div class="py-5">
@@ -26,11 +24,9 @@
 												<div class="card-header text-center"
 													style="background-color: #cf6125; color: white; font-size: 18px; font-weight: 700; height: 45px; padding: 10px 0px; margin-bottom: 22px">
 													Lịch sử đơn hàng</div>
-
 												<table class="table table-hover table-bordered" id="myTable">
 													<thead>
 														<tr>
-															<th><span>Mã Đơn Hàng</span></th>
 															<th><span>Tên Người Nhận</span></th>
 															<th><span>SĐT Người Nhận</span></th>
 															<th><span>Địa Chỉ Nhận Hàng</span></th>
@@ -44,12 +40,10 @@
 													</thead>
 													<tbody>
 														<tr th:each="order : ${orders}">
-															<td th:text="${order.orderId}"></td>
 															<td th:text="${order.name}"></td>
 															<td th:text="${order.phone}"></td>
 															<td th:text="${order.address}"></td>
 															<td th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></td>
-
 															<td><span
 																	th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0 , 'POINT')} + ' VND'"></span>
 															</td>
@@ -57,7 +51,8 @@
 																	xác nhận</span> <span class="badge badge-warning" th:if="${order.statushd == 2}">Đã
 																	xác nhận</span> <span class="badge badge-warning" th:if="${order.statushd == 3}">Đang
 																	giao</span> <span class="badge badge-warning" th:if="${order.statushd == 4}">Hoàn
-																	thành</span> <span class="badge badge-warning" th:if="${order.statushd == 5}">Hủy</span>
+																	thành</span> <span class="badge badge-warning"
+																	th:if="${order.statushd == 5}">Hủy</span>
 															</td>
 															<td>
 																<a class="btn btn-danger btn-sm" th:if="${not order.statustt && order.statushd == 1}"
@@ -74,8 +69,6 @@
 																	th:href="@{'/user/xemhoadonct/' + ${order.orderId}}">
 																	<i class="fa fa-eye" aria-hidden="true"></i>
 																</a> <br></td>
-
-
 														</tr>
 													</tbody>
 												</table>
@@ -85,18 +78,13 @@
 								</div>
 							</div>
 						</section>
-
 					</div>
-					<!-- END CONTENT -->
 				</div>
-				<!-- END SIDEBAR & CONTENT -->
 			</div>
 		</div>
 	</main>
 	<script>
 		function cancelPayment() {
-			// Thực hiện hủy thanh toán ở đây, có thể sử dụng AJAX để gửi yêu cầu đến máy chủ
-			// Sau khi hoàn thành, hiển thị thông báo "Hủy thanh toán thành công"
 			alert("Hủy thanh toán thành công");
 		}
 	</script>

@@ -9,12 +9,9 @@
 
 <body>
     <main ng-controller="product-controller">
-        <!-- BEGIN SLIDER -->
-        <!-- END SLIDER -->
         <div class="container">
-            <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
-            <img src="../assets/images/carousel/banner12.png" class="img-responsive" alt="">
-            <!-- <img src="../assets/images/carousel/bannerxanh.png" class="img-responsive" alt=""> -->
+
+            <!-- <img src="../assets/images/carousel/banner12.png" class="img-responsive" alt=""> -->
 
             <div id="carousel-example" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -25,19 +22,19 @@
 
                 <div class="carousel-inner">
                     <div class="item active">
-                        <a href="#"><img src="../assets/images/carousel/bannerxanh.png" /></a>
+                        <a href="#"><img src="../assets/images/carousel/banner-1.png" /></a>
                         <div class="carousel-caption">
 
                         </div>
                     </div>
                     <div class="item">
-                        <a href="#"><img src="../assets/images/carousel/b4.png" /></a>
+                        <a href="#"><img src="../assets/images/carousel/banner-2.png" /></a>
                         <div class="carousel-caption">
 
                         </div>
                     </div>
                     <div class="item">
-                        <a href="#"><img src="../assets/images/carousel/banner_1.png" /></a>
+                        <a href="#"><img src="../assets/images/carousel/banner-3.png" /></a>
                         <div class="carousel-caption">
 
                         </div>
@@ -51,6 +48,8 @@
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
+
+            <img style="padding-top: 5px;" src="../assets/images/carousel/banner12.png" class="img-responsive" alt="">
 
             <div class="row m-5 border" style="padding-top: 50px;">
                 <!-- BEGIN SALE PRODUCT -->
@@ -68,33 +67,62 @@
                                         <div class="row">
                                             <div class="col-md-3" ng-repeat="item in productSort |limitTo: 4"
                                                 ng-if="item.active !== false">
-                                                <div class="product-item">
-                                                    <div class="pi-img-wrapper">
+                                                <!-- <div class="card">
+                                                    <div class="card__content">
+                                                        <div class="pi-img-wrapper">
+                                                            <img style="height: 170px;"
+                                                                ng-src="../assets/images/product/{{item.image}}"
+                                                                class="img-responsive" alt="Berry Lace Dress">
+                                                            <div>
+                                                                <a href="../assets/images/product/{{item.image}}"
+                                                                    class="btn btn-default fancybox-button">Zoom</a>
+                                                            </div>
+                                                        </div>
+                                                        <h3 style="height: 40px;"><a
+                                                                ng-click="goToProduct_Detail(item.productID)">{{item.productName}}</a>
+                                                        </h3>
+                                                        <div class="pi-price" style="margin: 15px;">
+                                                            <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                                                đ</strike>
+                                                            <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                                                đ</span>
+                                                        </div><br>
+                                                        <div ng-if="item.promotion" class="pi-price">
+                                                            {{ calculateDiscountedPrice(item) | number: 0 }} đ
+                                                        </div>
+                                                        <a class="btn btn-default add2cart"
+                                                            ng-click="addToCart(item.productID)">Add
+                                                            to
+                                                            cart</a>
+                                                    </div>
+
+                                                </div> -->
+                                                <div class="card" style="width: auto; height: auto;">
+                                                    <div class="card__image">
                                                         <img style="height: 170px;"
                                                             ng-src="../assets/images/product/{{item.image}}"
                                                             class="img-responsive" alt="Berry Lace Dress">
-                                                        <div>
+                                                        <!-- <div>
                                                             <a href="../assets/images/product/{{item.image}}"
                                                                 class="btn btn-default fancybox-button">Zoom</a>
-
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="card__content" style="margin-top: 60px;">
+                                                        <span class="title">{{item.productName}}</span>
+                                                        <p class="pi-price" style="margin: 5px;">
+                                                            <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                                                đ</strike>
+                                                            <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                                                đ</span>
+                                                        </p>
+                                                        <div ng-if="item.promotion" class="pi-price">
+                                                            {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                                         </div>
+                                                        <a class="btn btnaddtocart add2cart"
+                                                            ng-click="addToCart(item.productID)">Add
+                                                            to
+                                                            cart</a>
                                                     </div>
-                                                    <h3 style="height: 40px;"><a
-                                                            ng-click="goToProduct_Detail(item.productID)">{{item.productName}}</a>
-                                                    </h3>
-                                                    <div class="pi-price" style="margin: 15px;">
-                                                        <strike ng-if="item.promotion">{{ item.price | number: 0 }}
-                                                            đ</strike>
-                                                        <span ng-show="!item.promotion">{{ item.price | number: 0 }}
-                                                            đ</span>
-                                                    </div><br>
-                                                    <div ng-if="item.promotion" class="pi-price">
-                                                        {{ calculateDiscountedPrice(item) | number: 0 }} đ
-                                                    </div>
-                                                    <a class="btn btn-default add2cart"
-                                                        ng-click="addToCart(item.productID)">Add
-                                                        to
-                                                        cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,32 +131,32 @@
                                         <div class="row">
                                             <div class="col-md-3" ng-repeat="item in productSort"
                                                 ng-if="$index >=4 && item.active !== false && $index < 9">
-                                                <div class="product-item">
-                                                    <div class="pi-img-wrapper">
+                                                <div class="card" style="width: auto; height: auto;">
+                                                    <div class="card__image">
                                                         <img style="height: 170px;"
                                                             ng-src="../assets/images/product/{{item.image}}"
                                                             class="img-responsive" alt="Berry Lace Dress">
-                                                        <div>
+                                                        <!-- <div>
                                                             <a href="../assets/images/product/{{item.image}}"
                                                                 class="btn btn-default fancybox-button">Zoom</a>
-
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="card__content" style="margin-top: 60px;">
+                                                        <span class="title">{{item.productName}}</span>
+                                                        <p class="pi-price" style="margin: 5px;">
+                                                            <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                                                đ</strike>
+                                                            <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                                                đ</span>
+                                                        </p>
+                                                        <div ng-if="item.promotion" class="pi-price">
+                                                            {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                                         </div>
+                                                        <a class="btn btnaddtocart add2cart"
+                                                            ng-click="addToCart(item.productID)">Add
+                                                            to
+                                                            cart</a>
                                                     </div>
-                                                    <h3 style="height: 40px;"><a
-                                                            ng-click="goToProduct_Detail(item.productID)">{{item.productName}}</a>
-                                                    </h3>
-                                                    <div class="pi-price" style="margin: 15px;">
-                                                        <strike ng-if="item.promotion">{{ item.price | number: 0 }}
-                                                            đ</strike>
-                                                        <span ng-show="!item.promotion">{{ item.price | number: 0 }}
-                                                            đ</span>
-                                                    </div><br>
-                                                    <div ng-if="item.promotion" class="pi-price">
-                                                        {{ calculateDiscountedPrice(item) | number: 0 }} đ
-                                                    </div>
-                                                    <a class="btn btn-default add2cart"
-                                                        ng-click="addToCart(item.productID)">Add to
-                                                        cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,13 +182,12 @@
                 <div class="panel-heading">
                     <h1>TIVI</h1>
                     <!-- Nút để hiển thị thêm sản phẩm hoặc ẩn bớt sản phẩm -->
-
                 </div>
                 <div class="panel-body ">
                     <!-- Bắt đầu lặp qua sản phẩm -->
                     <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products | limitTo: productsToShow"
                         ng-if="item.active !== false && item.category.categoryID === 3">
-                        <div class="product-item">
+                        <!-- <div class="product-item">
                             <div class="pi-img-wrapper">
                                 <img style="height: 193.46px;" ng-src="../assets/images/product/{{item.image}}"
                                     class="img-responsive" alt="Berry Lace Dress">
@@ -182,6 +209,31 @@
                             <a href="javascript:;" class="btn btn-default add2cart"
                                 ng-click="addToCart(item.productID)">Add
                                 to cart</a>
+                        </div> -->
+                        <div class="card" style="width: auto; height: auto;">
+                            <div class="card__image">
+                                <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}"
+                                    class="img-responsive" alt="Berry Lace Dress">
+                                <!-- <div>
+                                    <a href="../assets/images/product/{{item.image}}"
+                                        class="btn btn-default fancybox-button">Zoom</a>
+                                </div> -->
+                            </div>
+                            <div class="card__content" style="margin-top: 60px;">
+                                <span class="title">{{item.productName}}</span>
+                                <p class="pi-price" style="margin: 5px;">
+                                    <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                        đ</strike>
+                                    <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                        đ</span>
+                                </p>
+                                <div ng-if="item.promotion" class="pi-price">
+                                    {{ calculateDiscountedPrice(item) | number: 0 }} đ
+                                </div>
+                                <a class="btn btnaddtocart add2cart" ng-click="addToCart(item.productID)">Add
+                                    to
+                                    cart</a>
+                            </div>
                         </div>
                     </div>
                     <!-- Kết thúc lặp qua sản phẩm -->
@@ -201,28 +253,30 @@
                     <!-- Bắt đầu lặp qua sản phẩm -->
                     <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products |limitTo: 8"
                         ng-if="item.active !== false && item.category.categoryID === 1">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img style="height: 193.46px;" ng-src="../assets/images/product/{{item.image}}"
+                        <div class="card" style="width: auto; height: auto;">
+                            <div class="card__image">
+                                <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}"
                                     class="img-responsive" alt="Berry Lace Dress">
-                                <div>
+                                <!-- <div>
                                     <a href="../assets/images/product/{{item.image}}"
                                         class="btn btn-default fancybox-button">Zoom</a>
-
+                                </div> -->
+                            </div>
+                            <div class="card__content" style="margin-top: 60px;">
+                                <span class="title">{{item.productName}}</span>
+                                <p class="pi-price" style="margin: 5px;">
+                                    <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                        đ</strike>
+                                    <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                        đ</span>
+                                </p>
+                                <div ng-if="item.promotion" class="pi-price">
+                                    {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                 </div>
+                                <a class="btn btnaddtocart add2cart" ng-click="addToCart(item.productID)">Add
+                                    to
+                                    cart</a>
                             </div>
-                            <h3 style="height: 40px;"><a
-                                    ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
-                            <div class="pi-price" style="margin: 15px;">
-                                <strike ng-if="item.promotion">{{ item.price | number: 0 }} đ</strike>
-                                <span ng-show="!item.promotion">{{ item.price | number: 0 }} đ</span>
-                            </div><br>
-                            <div ng-if="item.promotion" class="pi-price">
-                                {{ calculateDiscountedPrice(item) | number: 0 }} đ
-                            </div>
-                            <a href="javascript:;" class="btn btn-default add2cart"
-                                ng-click="addToCart(item.productID)">Add
-                                to cart</a>
                         </div>
                     </div>
                     <!-- Kết thúc lặp qua sản phẩm -->
@@ -240,28 +294,25 @@
                     <!-- Bắt đầu lặp qua sản phẩm -->
                     <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products"
                         ng-if="item.active !== false && item.category.categoryID == 21">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img style="height: 193.46px;" ng-src="../assets/images/product/{{item.image}}"
+                        <div class="card" style="width: auto; height: auto;">
+                            <div class="card__image">
+                                <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}"
                                     class="img-responsive" alt="Berry Lace Dress">
-                                <div>
-                                    <a href="../assets/images/product/{{item.image}}"
-                                        class="btn btn-default fancybox-button">Zoom</a>
-
+                            </div>
+                            <div class="card__content" style="margin-top: 60px;">
+                                <span class="title">{{item.productName}}</span>
+                                <p class="pi-price" style="margin: 5px;">
+                                    <strike ng-if="item.promotion">{{ item.price | number: 0 }}
+                                        đ</strike>
+                                    <span ng-show="!item.promotion">{{ item.price | number: 0 }}
+                                        đ</span>
+                                </p>
+                                <div ng-if="item.promotion" class="pi-price">
+                                    {{ calculateDiscountedPrice(item) | number: 0 }} đ
                                 </div>
+                                <a class="btn btnaddtocart add2cart" ng-click="addToCart(item.productID)">Add to
+                                    cart</a>
                             </div>
-                            <h3 style="height: 40px;"><a
-                                    ng-click="goToSinglePage(item.productID)">{{item.productName}}</a></h3>
-                            <div class="pi-price" style="margin: 15px;">
-                                <strike ng-if="item.promotion">{{ item.price | number: 0 }} đ</strike>
-                                <span ng-show="!item.promotion">{{ item.price | number: 0 }} đ</span>
-                            </div><br>
-                            <div ng-if="item.promotion" class="pi-price">
-                                {{ calculateDiscountedPrice(item) | number: 0 }} đ
-                            </div>
-                            <a href="javascript:;" class="btn btn-default add2cart"
-                                ng-click="addToCart(item.productID)">Add
-                                to cart</a>
                         </div>
                     </div>
                     <!-- Kết thúc lặp qua sản phẩm -->

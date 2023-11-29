@@ -370,21 +370,33 @@ Custom Scrollbars
 	min-height: 500px;
 }
 
+
 /***
 Pre-Header and pre-header elements
 ***/
 .pre-header {
-	color: #616b76;
-	border-bottom: 1px solid #eee;
+	color: rgb(19, 1, 1);
+	/* border-bottom: 1px solid #eee; */
 	padding-top: 10px;
 	line-height: 1.2;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
-	background: #fff;
+	background: rgb(255, 255, 254);
 }
 
+.sidebar-products {
+	background-color: #efe8e8;
+	/* Màu nền của div */
+	border: 1px solid #ccc;
+	/* Border với độ rộng 1px và màu xám nhạt */
+	padding: 20px;
+	/* Khoảng cách giữa nội dung và border */
+	height: 620px;
+}
+
+
 .pre-header a {
-	color: #616b76;
+	color: #edeff0;
 }
 
 .pre-header a:hover {
@@ -487,12 +499,15 @@ Pre-Header and pre-header elements
 Header and header elements
 ***/
 .header {
-	box-shadow: 0 1px 3px #ddd;
-	background: #fff;
 	border-radius: 0;
-	margin-bottom: 23px;
+	margin-bottom: 1px;
 	z-index: 999;
 	position: relative;
+}
+
+
+.header .container ul li {
+	margin: 5px;
 }
 
 /* FIX styles BEGIN */
@@ -574,7 +589,7 @@ body.page-header-fixed {
 .header-navigation>ul>li>a {
 	color: #333;
 	display: block;
-	padding: 29px 12px 30px;
+	padding: 30px;
 }
 
 .header-navigation ul>li.active>a,
@@ -4638,3 +4653,6 @@ button[data-controls="next"] {
 .modal.in .Non-mainland-buttons {
 	display: block
 }
+
+
+/* banner  */

@@ -15,7 +15,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.calculateDiscountedPrice = 0;
     $scope.productsPerPage = 3; // Số lượng sản phẩm hiển thị ban đầu
     $scope.productsToShow = $scope.productsPerPage;
-
     $scope.selectedProducts = [];
     $scope.isProductDialogVisible = false;
 
@@ -31,9 +30,9 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             $('#exampleModal').on('hidden.bs.modal', function () {
                 $('body').removeClass('modal-open');
             });
-
         } else {
-            alert('Chỉ được chọn hai sản phẩm để so sánh.');
+            swal("Lỗi rồi!", "Chỉ được chọn hai sản phẩm để so sánh!", "info");
+            $scope.selectedProducts = [];
         }
     };
 
@@ -99,17 +98,19 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 // Định dạng giá thành tiền Việt (VND)
                 const price1VND = product1Value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                 const price2VND = product2Value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                const price1VNDHtml = $sce.trustAsHtml(`<b>${price1VND}</b>`);
+                const price2VNDHtml = $sce.trustAsHtml(`<b>${price2VND}</b>`);
                 const result = {
                     attribute: 'price',
-                    product1Value: price1VND,
-                    product2Value: price2VND,
+                    product1Value: price1VNDHtml,
+                    product2Value: price2VNDHtml,
                 };
                 comparisonResult.push(result);
             } else if (attribute === 'configuration') {
                 // Hiển thị mô tả dưới dạng mã HTML
                 const result = {
                     attribute: attribute,
-                    product1Value: $sce.trustAsHtml(product1Value),
+                    product1Value: $sce.trustAsHtml('<b>${product1Value}</b>'),
                     product2Value: $sce.trustAsHtml(product2Value),
                 };
                 comparisonResult.push(result);
@@ -396,9 +397,9 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         $http.get('/rest/products-by-price?price=' + price)
             .then(function (response) {
                 if (response.data.length === 0) {
-                    $scope.noProductsFound = true; // Hiển thị thông báo nếu không có sản phẩm nào được tìm thấy
+                    $scope.noProductsFound = true;
                 } else {
-                    $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
+                    $scope.noProductsFound = false;
                 }
 
                 $scope.products = response.data;
