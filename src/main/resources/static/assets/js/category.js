@@ -60,7 +60,7 @@ app.controller('category-controller', function ($scope, $http, $window) {
     
      // Hàm lấy thông tin người dùng từ API
     $scope.getUserInfo = function () {
-        $http.get('/api/account/login')  // Thay thế bằng endpoint API thích hợp của bạn
+        $http.get('/api/account/login')  
             .then(function (response) {
                 // Xử lý kết quả trả về từ API
                 var userInfo = response.data;
