@@ -28,7 +28,7 @@
       </div>
     </div>
   </div>
-  <header ng-controller="category-controller" style="background-color:#d70018;">
+  <header style="background-color:#d70018;">
     <div id="navbar">
       <div class="container">
       </div>
@@ -65,7 +65,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <div class="header-navigation-content">
+                  <div class="header-navigation-content" ng-controller="category-controller">
                     <div class="row">
                       <div class="col-md-12 header-navigation-col">
                         <h4 style="color: black;">Điện máy</h4>
@@ -111,18 +111,15 @@
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
                 <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản</strong>
               </a>
-
               <ul class="dropdown-menu">
                 <li><a th:href="@{/login}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng nhập</a>
                 </li>
                 <li><a th:href="@{/registration}"><i class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a>
                 </li>
-                <li><a th:href="@{/reset-password}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
-                    mật
+                <li><a th:href="@{/reset-password}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên mật
                     khẩu</a></li>
               </ul>
             </li>
-
             <li th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
                 <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài Khoản</strong>
@@ -186,3 +183,41 @@
 </body>
 
 </html>
+
+<div class="modal fade  modal-fullscreen bd-example-modal-lg" id="exampleModal1" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">So sánh nhanh</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row1  product-list">
+          <div class="col-md-3" ng-repeat="item in products track by item.productID">
+            <div class="product-item">
+              <div class="pi-img-wrapper">
+                <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                <div>
+                  <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                  <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                </div>
+              </div>
+              <h3 style="height: 60px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
+              </h3>
+              <div class="pi-price">{{item.price |number : 0}} đ</div>
+              <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
+                to
+                cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
