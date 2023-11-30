@@ -49,5 +49,7 @@ public class RegistrationRequest {
     @NotEmpty(message = "Hãy nhập mật khẩu xác nhận")
     @Column(length = 100)
     private final String confirmPassword;
+    @Column(length = 100)
+    private final String address;
 
 }

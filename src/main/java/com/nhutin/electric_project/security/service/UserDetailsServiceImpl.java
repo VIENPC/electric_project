@@ -39,7 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			String role = user.getRole().toString();
 			session.setAttribute("tenDangNhapLogin", user.getEmail());
 			
-
 			// Sử dụng User.builder() để tạo một đối tượng UserDetails
 			return User.builder().username(username).password(user.getPassword()).roles(role)
 					.disabled(!user.isEnabled()).accountLocked(!user.isAccountNonLocked()).build();
@@ -47,10 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("Database error", e);
 		}
 	}
-
-//
-//	@Autowired
-//	CartDAO cartDAO;
 
 	public String signUpUser(com.nhutin.electric_project.model.User user) {
 		boolean userExist = userDAO.findByEmail(user.getEmail()).isPresent();
@@ -68,10 +63,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		user.setLoginPermission(false);
 		user.setLockStatus(false);
 		userDAO.save(user);
-		// Tạo cart
-//		Cart cart = new Cart();
-//		cart.setUser(user);
-//		cartDAO.save(cart);
 
 		String token = UUID.randomUUID().toString();
 		// Lấy ngày giờ hiện tại
@@ -95,9 +86,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails createUserAfterOAuthLogin(String email, String name, String phone) {
 		com.nhutin.electric_project.model.User newUser = new com.nhutin.electric_project.model.User();
 
-		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		// String userName = auth.getName();
-
 		// Lấy ngày giờ hiện tại
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
@@ -113,10 +101,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		newUser.setRole(Role.USER);
 
 		userDAO.save(newUser);
-		// Tạo cart
-//		Cart cart = new Cart();
-//		cart.setUser(newUser);
-//		cartDAO.save(cart);
 
 		// Tạo một đối tượng UserDetails thích hợp
 		UserDetails userDetails = new org.springframework.security.core.userdetails.User(newUser.getUsername(),
@@ -127,14 +111,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	public UserDetails updateUserAfterOAuthLogin(com.nhutin.electric_project.model.User user, String name) {
-
-		// Tạo cart
-//		if (cartDAO.findByUser(user).isEmpty()) {
-//			Cart cart = new Cart();
-//			cart.setUser(user);
-//			cartDAO.save(cart);
-//		}
-
 		// Lấy ngày giờ hiện tại
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		if (user.getRegistrationDate() == null) {

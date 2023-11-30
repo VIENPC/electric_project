@@ -2,27 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+	rel="stylesheet">
 
-	<link rel="stylesheet" th:href="@{/assets/fonts/icomoon/style.css}">
+<link rel="stylesheet" th:href="@{/assets/fonts/icomoon/style.css}">
 
-	<link rel="stylesheet" th:href="@{/assets/pages/css/owl.carousel.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/pages/css/owl.carousel.min.css}">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" th:href="@{/assets/pages/css/bootstrap.min.css}">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/assets/pages/css/bootstrap.min.css}">
 
-	<!-- Style -->
-	<link rel="stylesheet" th:href="@{/assets/pages/css/style.css}">
-
-	<title>Login</title>
+<!-- Style -->
+<link rel="stylesheet" th:href="@{/assets/pages/css/style.css}">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<title>Login</title>
 </head>
 
-<body>
+<body ng-app="my-app" ng-controller="address-ctrl">
 	<div class="d-md-flex half">
-		<div class="bg" style="background-image: url('/assets/pages/img/bg_1.jpg');"></div>
+		<div class="bg"
+			style="background-image: url('/assets/pages/img/bg_1.jpg');"></div>
 		<div class="contents">
 
 			<div class="container">
@@ -45,13 +51,16 @@
 							</div>
 							<!-- Hiển thị thông báo thành công -->
 							<!--RegisterController-->
-							<form name="signin" th:action="@{/registration}" th:object="${request}" method="post">
+							<form name="signin" th:action="@{/registration}"
+								th:object="${request}" method="post">
 								<div th:if="${!#fields.hasErrors}" style="margin-bottom: 25px;">
-									<p th:utext="${successMessage}" style="color: #7fad39; margin-bottom: 0px;"></p>
+									<p th:utext="${successMessage}"
+										style="color: #7fad39; margin-bottom: 0px;"></p>
 								</div>
 								<div class="form-group first">
-									<label for="username">NickName</label> <input type="text" class="form-control"
-										name="username" placeholder="Hãy nhập NickName" th:field="*{username}"
+									<label for="username">NickName</label> <input type="text"
+										class="form-control" name="username"
+										placeholder="Hãy nhập NickName" th:field="*{username}"
 										id="username">
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('username')}">
@@ -59,7 +68,8 @@
 										<span th:errors="*{username}">Có lỗi xảy ra đại vương
 											ơi.</span>
 									</div>
-									<div class="error-message" style="color: red" th:if="${duplicateUsername}">
+									<div class="error-message" style="color: red"
+										th:if="${duplicateUsername}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
 										<span th:txt="${duplicateUsername}">Tên đăng nhập đã
 											được sử dụng.</span>
@@ -67,8 +77,9 @@
 								</div>
 
 								<div class="form-group last mb-3">
-									<label for="fullname">Họ và tên</label> <input type="text" class="form-control"
-										name="fullname" placeholder="Hãy nhập họ và tên" id="fullname"
+									<label for="fullname">Họ và tên</label> <input type="text"
+										class="form-control" name="fullname"
+										placeholder="Hãy nhập họ và tên" id="fullname"
 										th:field="*{fullname}">
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('fullname')}">
@@ -78,18 +89,21 @@
 									</div>
 								</div>
 
-								<div class="form-group last mb-3" style="display: block !important;">
-								<label for="fullname">Giới tính: </label>
+								<div class="form-group last mb-3"
+									style="display: block !important;">
+									<label for="fullname">Giới tính: </label>
 									<div class="custom-control custom-radio custom-control-inline"
 										style="margin-left: 23px;">
-										<input type="radio" id="male" name="gender" class="custom-control-input"
-											value="true" th:field="*{gender}">
-										<label class="custom-control-label" for="male">Nam</label>
+										<input type="radio" id="male" name="gender"
+											class="custom-control-input" value="true"
+											th:field="*{gender}"> <label
+											class="custom-control-label" for="male">Nam</label>
 									</div>
 									<div class="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="female" name="gender" class="custom-control-input"
-											value="false" th:field="*{gender}">
-										<label class="custom-control-label" for="female">Nữ</label>
+										<input type="radio" id="female" name="gender"
+											class="custom-control-input" value="false"
+											th:field="*{gender}"> <label
+											class="custom-control-label" for="female">Nữ</label>
 									</div>
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('gender')}">
@@ -99,82 +113,116 @@
 								</div>
 
 								<div class="form-group last mb-3">
-									<label for="birthday">Ngày sinh</label>
-									<input type="date" name="birthday" id="birthday" class="form-control"
+									<label for="birthday">Ngày sinh</label> <input type="date"
+										name="birthday" id="birthday" class="form-control"
 										placeholder="Ngày sinh" format th:field="*{birthday}">
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('birthday')}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:errors="*{birthday}">Có lỗi xảy ra đại vương ơi.</span>
+										<span th:errors="*{birthday}">Có lỗi xảy ra đại vương
+											ơi.</span>
 									</div>
 								</div>
 
 								<div class="form-group last mb-3">
-									<label for="email">Email</label>
-									<input type="email" name="email" id="email" class="form-control"
+									<label for="email">Email</label> <input type="email"
+										name="email" id="email" class="form-control"
 										placeholder="Hãy nhập địa chỉ email" th:field="*{email}">
-									<div class="error-message" style="color: red" th:if="${#fields.hasErrors('email')}">
+									<div class="error-message" style="color: red"
+										th:if="${#fields.hasErrors('email')}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
 										<span th:errors="*{email}">Có lỗi xảy ra đại vương ơi.</span>
 									</div>
-									<div class="error-message" style="color: red" th:if="${duplicateEmail}">
+									<div class="error-message" style="color: red"
+										th:if="${duplicateEmail}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:txt="${duplicateEmail}">Địa chỉ email đã được sử dụng.</span>
+										<span th:txt="${duplicateEmail}">Địa chỉ email đã được
+											sử dụng.</span>
 									</div>
 								</div>
 
 								<div class="form-group last mb-3">
-									<label for="phonenumber">Số điện thoại</label>
-									<input type="text" name="phonenumber" id="phonenumber" class="form-control"
-										placeholder="Hãy nhập số điện thoại" th:field="*{phonenumber}">
+									<label for="phonenumber">Số điện thoại</label> <input
+										type="text" name="phonenumber" id="phonenumber"
+										class="form-control" placeholder="Hãy nhập số điện thoại"
+										th:field="*{phonenumber}">
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('phonenumber')}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:errors="*{phonenumber}">Có lỗi xảy ra đại vương ơi.</span>
+										<span th:errors="*{phonenumber}">Có lỗi xảy ra đại
+											vương ơi.</span>
 									</div>
-									<div class="error-message" style="color: red" th:if="${duplicatePhonenumber}">
+									<div class="error-message" style="color: red"
+										th:if="${duplicatePhonenumber}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:txt="${duplicatePhonenumber}">Số điện thoại đã được sử dụng.</span>
+										<span th:txt="${duplicatePhonenumber}">Số điện thoại đã
+											được sử dụng.</span>
 									</div>
 								</div>
 
+								<!-- 								<div class="form-group last mb-3" -->
+								<!-- 									ng-controller="category-controller"> -->
+								<!-- 									<label for="address">address</label> <input type="text" -->
+								<!-- 										name="address" id="address" class="form-control" -->
+								<!-- 										placeholder="Hãy nhập address" th:field="*{address}"> -->
+								<!-- 								</div> -->
+
 								<div class="form-group last mb-3">
-									<label for="password">Mật khẩu</label>
-									<input type="password" name="password" id="password" class="form-control"
+									<label for="province">Địa chỉ</label> <select name="address"
+										id="address" class="form-control">
+										<option value="" disabled selected>Chọn tỉnh/thành
+											phố</option>
+										<option ng-repeat="p in province" value="{{p.ProvinceName}}">{{getDisplayValue(p.ProvinceName)}}</option>
+									</select>
+								</div>
+
+
+
+
+								<div class="form-group last mb-3">
+									<label for="password">Mật khẩu</label> <input type="password"
+										name="password" id="password" class="form-control"
 										placeholder="Hãy nhập mật khẩu" th:field="*{password}">
 									<!-- Con mở -->
-									<svg id="showPasswordIcon" xmlns="http://www.w3.org/2000/svg" height="16" width="18"
-										viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+									<svg id="showPasswordIcon" xmlns="http://www.w3.org/2000/svg"
+										height="16" width="18" viewBox="0 0 576 512">
+										<!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
 										<path
 											d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z" />
 									</svg>
 									<!-- Con mắt nhắm -->
-									<svg id="hidePasswordIcon" xmlns="http://www.w3.org/2000/svg" height="16" width="20"
-										viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+									<svg id="hidePasswordIcon" xmlns="http://www.w3.org/2000/svg"
+										height="16" width="20" viewBox="0 0 640 512">
+										<!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
 										<path
 											d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm51.3 163.3l-41.9-33C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5zm-88-69.3L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8z" />
 									</svg>
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('password')}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:errors="*{password}">Có lỗi xảy ra đại vương ơi.</span>
+										<span th:errors="*{password}">Có lỗi xảy ra đại vương
+											ơi.</span>
 									</div>
 								</div>
 
 								<div class="form-group last mb-3">
-									<label for="confirmPassword">Mật khẩu xác nhận</label>
-									<input type="password" name="confirmPassword" id="confirmPassword"
+									<label for="confirmPassword">Mật khẩu xác nhận</label> <input
+										type="password" name="confirmPassword" id="confirmPassword"
 										class="form-control" placeholder="Hãy nhập mật khẩu xác nhận"
 										th:field="*{confirmPassword}">
 									<!-- Con mở -->
-									<svg id="showPasswordIconConfirm" xmlns="http://www.w3.org/2000/svg" height="16" width="18"
-										viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+									<svg id="showPasswordIconConfirm"
+										xmlns="http://www.w3.org/2000/svg" height="16" width="18"
+										viewBox="0 0 576 512">
+										<!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
 										<path
 											d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z" />
 									</svg>
 									<!-- Con mắt nhắm -->
-									<svg id="hidePasswordIconConfirm" xmlns="http://www.w3.org/2000/svg" height="16" width="20"
-										viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+									<svg id="hidePasswordIconConfirm"
+										xmlns="http://www.w3.org/2000/svg" height="16" width="20"
+										viewBox="0 0 640 512">
+										<!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
 										<path
 											d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7c0-70.7-57.3-128-128-128c-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zM394.9 284.2l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3c0-5.5-.7-10.9-2-16c.7 0 1.3 0 2 0c44.2 0 80 35.8 80 80c0 9.9-1.8 19.4-5.1 28.2zm51.3 163.3l-41.9-33C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5zm-88-69.3L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5c0 70.7 57.3 128 128 128c13.3 0 26.1-2 38.2-5.8z" />
 									</svg>
@@ -182,42 +230,51 @@
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('confirmPassword')}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:errors="*{confirmPassword}">Có lỗi xảy ra đại vương ơi.</span>
+										<span th:errors="*{confirmPassword}">Có lỗi xảy ra đại
+											vương ơi.</span>
 									</div>
-									<div class="error-message" style="color: red" th:if="${doesntMatchPassword}">
+									<div class="error-message" style="color: red"
+										th:if="${doesntMatchPassword}">
 										<ion-icon class="ion-logo-error" name="alert-circle-outline"></ion-icon>
-										<span th:txt="${doesntMatchPassword}">Mật khẩu xác nhập không khớp.</span>
+										<span th:txt="${doesntMatchPassword}">Mật khẩu xác nhập
+											không khớp.</span>
 									</div>
 								</div>
 
-								<input type="submit" value="Đăng ký" class="btn btn-block py-2 btn-primary"> <span
+								<input type="submit" value="Đăng ký"
+									class="btn btn-block py-2 btn-primary"> <span
 									class="text-center my-3 d-block">Hoặc</span>
 
 
 								<div class="">
 									<a href="#" class="btn btn-block py-2 btn-facebook"> <span
-											class="icon-facebook mr-3"></span> Đăng nhập với facebook
+										class="icon-facebook mr-3"></span> Đăng nhập với facebook
 									</a> <a th:href="@{/oauth2/authorization/google}"
-										class="btn btn-block py-2 btn-google"><span class="icon-google mr-3"></span>
-										Đăng nhập với Google</a>
+										class="btn btn-block py-2 btn-google"><span
+										class="icon-google mr-3"></span> Đăng nhập với Google</a>
 								</div>
 
-								<span class="text-center my-3 d-block">Bạn đã có tài khoản? <a href="/login">Đăng
-										nhập</a> </span>
-								<input type="hidden" name="loginPermission" value="false" />
+								<span class="text-center my-3 d-block">Bạn đã có tài
+									khoản? <a href="/login">Đăng nhập</a>
+								</span> <input type="hidden" name="loginPermission" value="false" />
 
 
 							</form>
 
 							<script>
 								// Custom input type date - Allow users over 18 years old
-								window.onload = function () {
+								window.onload = function() {
 									var today = new Date();
-									var maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+									var maxDate = new Date(
+											today.getFullYear() - 18, today
+													.getMonth(), today
+													.getDate());
 
-									var maxDateString = maxDate.toISOString().split('T')[0];
+									var maxDateString = maxDate.toISOString()
+											.split('T')[0];
 
-									var birthdayInput = document.getElementById('birthday');
+									var birthdayInput = document
+											.getElementById('birthday');
 									birthdayInput.max = maxDateString;
 								}
 							</script>
@@ -227,53 +284,57 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script>
-	    document.addEventListener('DOMContentLoaded', function () {
-	    	// Mật khẩu
-	        var passwordInput = document.getElementById('password');
-	        var showPasswordIcon = document.getElementById('showPasswordIcon');
-	        var hidePasswordIcon = document.getElementById('hidePasswordIcon');
+		document.addEventListener('DOMContentLoaded', function() {
+			// Mật khẩu
+			var passwordInput = document.getElementById('password');
+			var showPasswordIcon = document.getElementById('showPasswordIcon');
+			var hidePasswordIcon = document.getElementById('hidePasswordIcon');
 
-	        hidePasswordIcon.style.display = 'none';
+			hidePasswordIcon.style.display = 'none';
 
-	        showPasswordIcon.addEventListener('click', function () {
-	            passwordInput.type = 'text';
-	            showPasswordIcon.style.display = 'none';
-	            hidePasswordIcon.style.display = 'inline-block';
-	        });
+			showPasswordIcon.addEventListener('click', function() {
+				passwordInput.type = 'text';
+				showPasswordIcon.style.display = 'none';
+				hidePasswordIcon.style.display = 'inline-block';
+			});
 
-	        hidePasswordIcon.addEventListener('click', function () {
-	            passwordInput.type = 'password';
-	            hidePasswordIcon.style.display = 'none';
-	            showPasswordIcon.style.display = 'inline-block';
-	        });
+			hidePasswordIcon.addEventListener('click', function() {
+				passwordInput.type = 'password';
+				hidePasswordIcon.style.display = 'none';
+				showPasswordIcon.style.display = 'inline-block';
+			});
 
-	        // Xác nhận mật khẩu
-	        var passwordInputConfirm = document.getElementById('confirmPassword');
-	        var showPasswordIconConfirm = document.getElementById('showPasswordIconConfirm');
-	        var hidePasswordIconConfirm = document.getElementById('hidePasswordIconConfirm');
-	
-	        hidePasswordIconConfirm.style.display = 'none';
-	
-	        showPasswordIconConfirm.addEventListener('click', function () {
-	            passwordInputConfirm.type = 'text';
-	            showPasswordIconConfirm.style.display = 'none';
-	            hidePasswordIconConfirm.style.display = 'inline-block';
-	        });
-	
-	        hidePasswordIconConfirm.addEventListener('click', function () {
-	            passwordInputConfirm.type = 'password';
-	            hidePasswordIconConfirm.style.display = 'none';
-	            showPasswordIconConfirm.style.display = 'inline-block';
-	        });
-	    });
+			// Xác nhận mật khẩu
+			var passwordInputConfirm = document
+					.getElementById('confirmPassword');
+			var showPasswordIconConfirm = document
+					.getElementById('showPasswordIconConfirm');
+			var hidePasswordIconConfirm = document
+					.getElementById('hidePasswordIconConfirm');
+
+			hidePasswordIconConfirm.style.display = 'none';
+
+			showPasswordIconConfirm.addEventListener('click', function() {
+				passwordInputConfirm.type = 'text';
+				showPasswordIconConfirm.style.display = 'none';
+				hidePasswordIconConfirm.style.display = 'inline-block';
+			});
+
+			hidePasswordIconConfirm.addEventListener('click', function() {
+				passwordInputConfirm.type = 'password';
+				hidePasswordIconConfirm.style.display = 'none';
+				showPasswordIconConfirm.style.display = 'inline-block';
+			});
+		});
 	</script>
 
 	<script src="pages/scripts/jquery-3.3.1.min.js"></script>
 	<script src="pages/scripts/popper.min.js"></script>
 	<script src="pages/cripts/bootstrap.min.js"></script>
 	<script src="pages/scripts/main.js"></script>
+	<script th:src="@{/assets/js/address-ctrl.js}"></script>
 </body>
 
 </html>

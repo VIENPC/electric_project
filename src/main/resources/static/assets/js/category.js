@@ -1,4 +1,4 @@
-var app = angular.module('my-app');
+var app = angular.module('my-app', []);
 
 app.controller('category-controller', function($scope, $http, $window) {
 	$scope.categoris = [];
@@ -8,6 +8,7 @@ app.controller('category-controller', function($scope, $http, $window) {
 	$scope.newBrand = {};
 	$scope.form = {};
 	$scope.userRole = "";
+	$scope.provinces = [];
 
 	$http.get('/rest/category')
 		.then(function(response) {
@@ -89,6 +90,8 @@ app.controller('category-controller', function($scope, $http, $window) {
 
 	// Gọi hàm để lấy thông tin người dùng khi trang được tải
 	$scope.getUserInfo();
+
+	
 	//quangminh end
 
 });
