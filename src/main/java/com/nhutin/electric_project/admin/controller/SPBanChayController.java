@@ -27,7 +27,7 @@ public class SPBanChayController {
 
     @Autowired
     categorysRepository cdao;
-    
+
     @RequestMapping("/spbanchay")
     public String spbc(Model model, @RequestParam(name = "thang", required = false) Integer thang,
 
@@ -35,6 +35,14 @@ public class SPBanChayController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
         model.addAttribute("listspbc", spdao.findBestSellingProducts());
+        List<Object[]> listspbc = spdao.findBestSellingProducts();
+        Double tongtien = 0.0;
+        for (Object[] item : listspbc) {
+            tongtien += Double.parseDouble(item[2].toString()) *
+                    Double.parseDouble(item[3].toString());
+        }
+        model.addAttribute("tongcong", tongtien);
+        model.addAttribute("listsptc", spdao.findLostSellingProducts());
         model.addAttribute("listlsp", cdao.findAll());
         System.out.println("Tháng 1 " + thang);
         if (ngay != null && !ngay.isEmpty()) {
@@ -42,6 +50,13 @@ public class SPBanChayController {
                 Date selectedDate = sdf.parse(ngay);
                 // Gọi phương thức findProductsSoldOnDate với ngày thích hợp
                 model.addAttribute("listspbctheongay", spdao.findProductsSoldOnDate(selectedDate));
+                List<Object[]> listspbctn = spdao.findProductsSoldOnDate(selectedDate);
+                Double tongtientn = 0.0;
+                for (Object[] item : listspbctn) {
+                    tongtientn += Double.parseDouble(item[3].toString()) *
+                            Double.parseDouble(item[2].toString());
+                }
+                model.addAttribute("tongcongtn", tongtientn);
                 String formattedDate1 = sdf2.format(selectedDate);
                 model.addAttribute("ngay1", formattedDate1);
                 System.out.println("Ngày1 : " + ngay);
@@ -70,17 +85,29 @@ public class SPBanChayController {
             System.out.println("Tháng: " + thang);
             // Gọi phương thức findBestSellingProducts với tháng thích hợp
             model.addAttribute("listspbctheomonth", spdao.findBestSellingProductsMonth(thang));
+            List<Object[]> listspbctt = spdao.findBestSellingProductsMonth(thang);
+            Double tongtientt = 0.0;
+            for (Object[] item : listspbctt) {
+                tongtientt += Double.parseDouble(item[3].toString()) *
+                        Double.parseDouble(item[2].toString());
+            }
+            model.addAttribute("tongcongtt", tongtientt);
             model.addAttribute("thang1", thang);
         } else {
             // Lấy ngày hôm nay
             LocalDate ngayHomNay = LocalDate.now();
-
             // Lấy tháng của ngày hôm nay
             int thangHomNay = ngayHomNay.getMonthValue();
-
             System.out.println("Tháng hôm nay: " + thangHomNay);
             model.addAttribute("listspbctheomonth", spdao.findBestSellingProductsMonth(thangHomNay));
             model.addAttribute("thangHomNay", thangHomNay);
+            List<Object[]> listspbctt = spdao.findBestSellingProductsMonth(thang);
+            Double tongtientt = 0.0;
+            for (Object[] item : listspbctt) {
+                tongtientt += Double.parseDouble(item[3].toString()) *
+                        Double.parseDouble(item[2].toString());
+            }
+            model.addAttribute("tongcongtt", tongtientt);
             // Hiển thị trang ban đầu (chưa chọn tháng)
             model.addAttribute("listspbc", spdao.findBestSellingProducts()); // Hoặc gán
             // giá trị mặc định khác
@@ -96,6 +123,13 @@ public class SPBanChayController {
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
         model.addAttribute("listlsp", cdao.findAll());
         model.addAttribute("listspbc", spdao.findBestSellingProductsByCategory(categoryid));
+        List<Object[]> listspbc = spdao.findBestSellingProducts();
+        Double tongtien = 0.0;
+        for (Object[] item : listspbc) {
+            tongtien += Double.parseDouble(item[2].toString()) *
+                    Double.parseDouble(item[3].toString());
+        }
+        model.addAttribute("tongcong", tongtien);
         model.addAttribute("listsptc", spdao.findLostSellingProductsByCategory(categoryid));
         if (ngay != null && !ngay.isEmpty()) {
             try {
@@ -130,14 +164,11 @@ public class SPBanChayController {
         } else {
             // Lấy ngày hôm nay
             LocalDate ngayHomNay = LocalDate.now();
-
             // Lấy tháng của ngày hôm nay
             int thangHomNay = ngayHomNay.getMonthValue();
-
             System.out.println("Tháng hôm nay: " + thangHomNay);
             model.addAttribute("listspbctheomonth", spdao.findBestSellingProductsMonth(thangHomNay));
             model.addAttribute("thangHomNay", thangHomNay);
-
         }
         return "admin/view/spbanchay";
     }
