@@ -110,8 +110,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 // Hiển thị mô tả dưới dạng mã HTML
                 const result = {
                     attribute: attribute,
-                    product1Value: $sce.trustAsHtml(`<b>${product1Value}</b>`),
-                    product2Value: $sce.trustAsHtml(`<b>${product2Value}</b>`),
+                    product1Value: $sce.trustAsHtml('<b>${product1Value}</b>'),
+                    product2Value: $sce.trustAsHtml(product2Value),
                 };
                 comparisonResult.push(result);
             } else {
@@ -128,13 +128,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     };
 
 
-    $scope.select = function () {
-        $('#exampleModal1').modal('show');
-        $('#exampleModal1').on('shown.bs.modal', function () {
-            $('body').addClass('modal-open');
-        });
-    };
-
     $scope.resetSelectedProducts = function () {
         $scope.selectedProducts = [];
     };
@@ -147,6 +140,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         $scope.productsToShow = $scope.productsPerPage;
     };
 
+
     $scope.productsListPerPage = 9; // Số lượng sản phẩm hiển thị ban đầu
     $scope.productsToShowList = $scope.productsListPerPage;
 
@@ -157,6 +151,8 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.showLessProductsList = function () {
         $scope.productsToShowList = $scope.productsListPerPage;
     };
+
+
 
     $http.get('/rest/product')
         .then(function (response) {
@@ -218,7 +214,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     };
 
     $scope.goToSinglePage = function (productID) {
-        window.location.href = `/detail/${productID}`;
+        window.location.href = `/detail/${productID}`; // Sử dụng chuỗi template (ES6)
     };
     $scope.goToProduct_Detail = function (productID) {
         window.location.href = `/detail/${productID}`;
@@ -229,9 +225,9 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             .then(function (response) {
                 console.log(brandID)
                 if (response.data.length === 0) {
-                    $scope.noProductsFound = true;
+                    $scope.noProductsFound = true; // Hiển thị thông báo nếu không có sản phẩm nào được tìm thấy
                 } else {
-                    $scope.noProductsFound = false;
+                    $scope.noProductsFound = false; // Ẩn thông báo nếu có sản phẩm được tìm thấy
                 }
                 $scope.products = response.data;
             })
@@ -242,6 +238,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
 
     $scope.showAllProductsChanged = function () {
         if ($scope.showAllProducts) {
+            // Nếu checkbox "Hiển thị tất cả sản phẩm" được chọn, hiển thị tất cả sản phẩm
             $scope.products = $scope.allProducts;
             $scope.selectedCategory = null; // Hủy chọn checkbox khác nếu có
         } else {
@@ -341,18 +338,6 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
         $http.get('/rest/products-by-category/' + categoryID)
             .then(function (response) {
                 $scope.products = filterUniqueCategories(response.data);
-
-            })
-            .catch(function (error) {
-                console.error('Error fetching products:', error);
-            });
-    };
-
-    $scope.loadProductsByCategoryNav = function (categoryID) {
-        $http.get('/rest/products-by-category/' + categoryID)
-            .then(function (response) {
-                $scope.products = response.data;
-
             })
             .catch(function (error) {
                 console.error('Error fetching products:', error);
@@ -389,23 +374,21 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
         // Lấy fragment từ URL
-        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
-                $scope.loadProductsByCategoryNav(fragment);
-
+                $scope.loadProductsByCategory(fragment);
             });
         }
     };
     // Gọi $scope.loadProductsByCategory khi trang được nạp ban đầu
     window.onload = function () {
-        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
-                $scope.loadProductsByCategoryNav(fragment);
-
+                $scope.loadProductsByCategory(fragment);
             });
         }
     };

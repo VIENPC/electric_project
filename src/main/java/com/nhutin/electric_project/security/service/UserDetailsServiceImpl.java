@@ -48,6 +48,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 	}
 
+//
+//	@Autowired
+//	CartDAO cartDAO;
 
 	public String signUpUser(com.nhutin.electric_project.model.User user) {
 		boolean userExist = userDAO.findByEmail(user.getEmail()).isPresent();
@@ -65,7 +68,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		user.setLoginPermission(false);
 		user.setLockStatus(false);
 		userDAO.save(user);
-
+		// Tạo cart
+//		Cart cart = new Cart();
+//		cart.setUser(user);
+//		cartDAO.save(cart);
 
 		String token = UUID.randomUUID().toString();
 		// Lấy ngày giờ hiện tại
@@ -88,6 +94,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	public UserDetails createUserAfterOAuthLogin(String email, String name, String phone) {
 		com.nhutin.electric_project.model.User newUser = new com.nhutin.electric_project.model.User();
+
+		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		// String userName = auth.getName();
 
 		// Lấy ngày giờ hiện tại
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
