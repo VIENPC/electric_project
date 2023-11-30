@@ -99,7 +99,7 @@ public class ProfileUserController {
             System.out.println("update: " + email);
 
             User user2 = userDAO.findByEmailLike(email);
-            System.out.println("sữa: " + user2.getFullName());
+            System.out.println("sữa username: " + user2.getUsername());
             user.setUserID(user2.getUserID());
             user.setUsername(user2.getUsername());
             user.setPassword(user2.getPassword());

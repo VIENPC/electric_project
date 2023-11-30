@@ -50,8 +50,8 @@
 									<p th:utext="${successMessage}" style="color: #7fad39; margin-bottom: 0px;"></p>
 								</div>
 								<div class="form-group first">
-									<label for="username">Tên đăng nhập</label> <input type="text" class="form-control"
-										name="username" placeholder="Hãy nhập tên đăng nhập" th:field="*{username}"
+									<label for="username">NickName</label> <input type="text" class="form-control"
+										name="username" placeholder="Hãy nhập NickName" th:field="*{username}"
 										id="username">
 									<div class="error-message" style="color: red"
 										th:if="${#fields.hasErrors('username')}">
@@ -79,6 +79,7 @@
 								</div>
 
 								<div class="form-group last mb-3" style="display: block !important;">
+								<label for="fullname">Giới tính: </label>
 									<div class="custom-control custom-radio custom-control-inline"
 										style="margin-left: 23px;">
 										<input type="radio" id="male" name="gender" class="custom-control-input"
@@ -227,8 +228,6 @@
 		</div>
 	</div>
 	
-	
-
 	<script>
 	    document.addEventListener('DOMContentLoaded', function () {
 	    	// Mật khẩu
@@ -255,17 +254,14 @@
 	        var showPasswordIconConfirm = document.getElementById('showPasswordIconConfirm');
 	        var hidePasswordIconConfirm = document.getElementById('hidePasswordIconConfirm');
 	
-	        // Ẩn biểu tượng đóng khi trang vừa load
 	        hidePasswordIconConfirm.style.display = 'none';
 	
-	        // Thêm sự kiện click cho biểu tượng con mở
 	        showPasswordIconConfirm.addEventListener('click', function () {
 	            passwordInputConfirm.type = 'text';
 	            showPasswordIconConfirm.style.display = 'none';
 	            hidePasswordIconConfirm.style.display = 'inline-block';
 	        });
 	
-	        // Thêm sự kiện click cho biểu tượng con đóng
 	        hidePasswordIconConfirm.addEventListener('click', function () {
 	            passwordInputConfirm.type = 'password';
 	            hidePasswordIconConfirm.style.display = 'none';
