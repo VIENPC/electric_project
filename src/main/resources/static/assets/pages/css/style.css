@@ -230,3 +230,34 @@ h2 {
 
 
 /* nav  */
+/* con mắt */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-right: 30px;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input {
+  padding-right: 30px;
+}
+
+.form-group svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(50%);
+}
+/* con mắt */

@@ -57,6 +57,27 @@ app.controller('category-controller', function ($scope, $http, $window) {
         $scope.newBrand = angular.copy(brands);
         $scope.switchToTab1();
     }
+    
+     // Hàm lấy thông tin người dùng từ API
+    $scope.getUserInfo = function () {
+        $http.get('/api/account/login')  
+            .then(function (response) {
+                // Xử lý kết quả trả về từ API
+                var userInfo = response.data;
+
+                // Lưu thông tin người dùng vào biến $scope
+                $scope.loggedInUser = userInfo;
+
+                // Hiển thị thông báo hoặc thực hiện các công việc khác dựa trên thông tin người dùng
+                console.log('User Info:', userInfo);
+            })
+            .catch(function (error) {
+                console.error('Error fetching user info:', error);
+            });
+    };
+
+    // Gọi hàm để lấy thông tin người dùng khi trang được tải
+    $scope.getUserInfo();
 
 
 });

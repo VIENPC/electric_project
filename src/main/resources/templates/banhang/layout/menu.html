@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 </head>
 
-<body>
+<body ng-controller="category-controller">
   <div class="pre-header">
     <div class="container">
       <div class="row">
@@ -22,13 +22,14 @@
             <li class="shop-currencies">
               <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Cần Thơ</p>
             </li>
-            <li> Xin chào <span class="first-letter">[[${#request.remoteUser}]] </span></li>
+            <li ng-if="loggedInUser"> Xin chào <span class="first-letter" ng-bind="loggedInUser.fullName"></span></li>
+			</div>
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <header ng-controller="category-controller" style="background-color:#d70018;">
+  <header style="background-color:#d70018;">
     <div id="navbar">
       <div class="container">
       </div>
@@ -112,16 +113,16 @@
                 <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản</strong>
               </a>
 
-              <ul class="dropdown-menu">
-                <li><a th:href="@{/login}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng nhập</a>
-                </li>
-                <li><a th:href="@{/registration}"><i class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a>
-                </li>
-                <li><a th:href="@{/reset-password}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
-                    mật
-                    khẩu</a></li>
-              </ul>
-            </li>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/login}"><i
+										class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng
+										nhập</a></li>
+								<li><a th:href="@{/registration}"><i
+										class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a></li>
+								<li><a th:href="@{/reset-password}"><i
+										class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
+										mật khẩu</a></li>
+							</ul></li>
 
             <li th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
