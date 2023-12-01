@@ -23,17 +23,11 @@ app.controller('address-ctrl', function($scope, $http) {
 	};
 
 	$scope.saveSelectedValue = function(selectedValue) {
-		// Kiểm tra xem selectedValue có tồn tại và là chuỗi không
 		if (selectedValue && typeof selectedValue === 'string') {
 			// Xử lý giá trị trước khi lưu
 			var processedValue = selectedValue.replace('string:', '');
-
-			// Lưu giá trị đã xử lý vào cơ sở dữ liệu hoặc thực hiện các bước khác cần thiết
-			// processedValue sẽ là giá trị đã xử lý, không chứa "string:"
+			
 			console.log('Giá trị đã xử lý:', processedValue);
-
-			// Tiếp tục thực hiện các bước lưu giá trị vào cơ sở dữ liệu
-			// ...
 		} else {
 			console.error('Giá trị không hợp lệ:', selectedValue);
 		}

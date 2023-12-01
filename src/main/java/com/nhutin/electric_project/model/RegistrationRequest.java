@@ -51,5 +51,4 @@ public class RegistrationRequest {
     private final String confirmPassword;
     @Column(length = 100)
     private final String address;
-
 }

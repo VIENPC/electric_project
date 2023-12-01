@@ -23,79 +23,70 @@ import lombok.AllArgsConstructor;
 // @RequestMapping(path = "registration")
 public class RegisterController {
 
-    private RegistrationService registrationService;
-    private UserRepository userDAO;
+	private RegistrationService registrationService;
+	private UserRepository userDAO;
 
-    @GetMapping(path = "registration")
-    public String form(Model model, @ModelAttribute("request") RegistrationRequest request) {
-        return "register";
-    }
+	@GetMapping(path = "registration")
+	public String form(Model model, @ModelAttribute("request") RegistrationRequest request) {
+		return "register";
+	}
 
-    @PostMapping(path = "registration")
-    public String register(Model model,
-            @Valid @ModelAttribute("request") RegistrationRequest request,
-            BindingResult result) {
-        Boolean checked = true;
-        if (userDAO.findByEmail(request.getEmail())
-                .isPresent()) {
-            model.addAttribute("duplicateEmail", "Địa chỉ email đã được sử dụng.");
-            checked = false;
-        }
-        if (userDAO.findByUsername(request.getUsername())
-                .isPresent()) {
-            model.addAttribute("duplicateUsername", "Tên người dùng đã được sử dụng.");
-            checked = false;
-        }
-        if (userDAO.findByPhoneNumber(request.getPhonenumber())
-                .isPresent()) {
-            model.addAttribute("duplicatePhonenumber", "Số điện thoại đã được sử dụng.");
-            checked = false;
-        }
-        // Kiểm tra xem password và confirmPassword có giá trị null hay không
-        if (request.getPassword() == null || request.getConfirmPassword() == null) {
-            model.addAttribute("passwordNullError", "Mật khẩu hoặc mật khẩu xác nhận là null.");
-            checked = false;
-        } else if (!request.getPassword().equalsIgnoreCase(request.getConfirmPassword())) {
-            model.addAttribute("doesntMatchPassword", "Mật khẩu xác nhận không khớp.");
-            checked = false;
-        }
-        if (result.hasErrors()) {
-            checked = false;
-        }
-        if (checked) { // Tạo người dùng
-            registrationService.register(request);
-            System.out.println("Create user successfully.");
-            model.addAttribute("successMessage",
-                    "Mã xác nhận đã được gửi vào email của bạn.</br>Hãy kiểm tra email và xác nhận kích hoạt tài khoản.");
-        }
-        return "register";
-    }
+	@PostMapping(path = "registration")
+	public String register(Model model, @Valid @ModelAttribute("request") RegistrationRequest request,
+			BindingResult result) {
+		Boolean checked = true;
+		if (userDAO.findByEmail(request.getEmail()).isPresent()) {
+			model.addAttribute("duplicateEmail", "Địa chỉ email đã được sử dụng.");
+			checked = false;
+		}
+		if (userDAO.findByUsername(request.getUsername()).isPresent()) {
+			model.addAttribute("duplicateUsername", "Tên người dùng đã được sử dụng.");
+			checked = false;
+		}
+		if (userDAO.findByPhoneNumber(request.getPhonenumber()).isPresent()) {
+			model.addAttribute("duplicatePhonenumber", "Số điện thoại đã được sử dụng.");
+			checked = false;
+		}
+		// Kiểm tra xem password và confirmPassword có giá trị null hay không
+		if (request.getPassword() == null || request.getConfirmPassword() == null) {
+			model.addAttribute("passwordNullError", "Mật khẩu hoặc mật khẩu xác nhận là null.");
+			checked = false;
+		} else if (!request.getPassword().equalsIgnoreCase(request.getConfirmPassword())) {
+			model.addAttribute("doesntMatchPassword", "Mật khẩu xác nhận không khớp.");
+			checked = false;
+		}
+		if (result.hasErrors()) {
+			checked = false;
+		}
+		if (checked) { // Tạo người dùng
+			registrationService.register(request);
+			System.out.println("Create user successfully.");
+			model.addAttribute("successMessage",
+					"Mã xác nhận đã được gửi vào email của bạn.</br>Hãy kiểm tra email và xác nhận kích hoạt tài khoản.");
+		}
+		return "register";
+	}
 
-    @Autowired
-    ConfirmationCodeDAO confirmationCodeDAO;
+	@Autowired
+	ConfirmationCodeDAO confirmationCodeDAO;
 
-    @GetMapping(path = "/registration/confirm")
-    public String confirm(@RequestParam("token") String token, Model model,
-            @ModelAttribute("request") RegistrationRequest request) {
-        try {
-            registrationService.confirmToken(token);
-            model.addAttribute("successMessage", "Xác nhận tài khoản thành công.");
-            return "register";
-        } catch (IllegalStateException ex) {
-            // Hiển thị lỗi ra màn hình
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "redirect:/login";
-        }
-    }
+	@GetMapping(path = "/registration/confirm")
+	public String confirm(@RequestParam("token") String token, Model model,
+			@ModelAttribute("request") RegistrationRequest request) {
+		try {
+			registrationService.confirmToken(token);
+			model.addAttribute("successMessage", "Xác nhận tài khoản thành công.");
+			return "register";
+		} catch (IllegalStateException ex) {
+			// Hiển thị lỗi ra màn hình
+			model.addAttribute("errorMessage", ex.getMessage());
+			return "redirect:/login";
+		}
+	}
 
-    @GetMapping("/resend-confirmation")
-    public String resendConfirmation(@RequestParam("email") String email) {
-        // Gọi service để gửi lại email xác nhận
-        // Hãy chắc chắn kiểm tra trạng thái của email trước khi gửi lại
-        // Ví dụ, kiểm tra xem email đã được xác nhận chưa
-        // Nếu đã xác nhận, có thể không cần gửi lại
-        // Nếu chưa xác nhận, gửi lại email xác nhận
-        return "redirect:/confirmation-sent"; // Trang thông báo gửi lại email
-    }
+	@GetMapping("/resend-confirmation")
+	public String resendConfirmation(@RequestParam("email") String email) {
+		return "redirect:/confirmation-sent";
+	}
 
 }
