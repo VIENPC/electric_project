@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 
 <body ng-controller="category-controller">
@@ -23,17 +23,17 @@
               <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Cần Thơ</p>
             </li>
             <li ng-if="loggedInUser"> Xin chào <span class="first-letter" ng-bind="loggedInUser.fullName"></span></li>
-			</div>
-          </ul>
         </div>
+        </ul>
       </div>
     </div>
   </div>
+
   <header style="background-color:#d70018;">
-    <div id="navbar">
+    <!-- <div id="navbar">
       <div class="container">
       </div>
-    </div>
+    </div> -->
     <div class="header" ng-controller="product-controller">
       <div class="container">
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
@@ -113,16 +113,14 @@
                 <strong> <i class="fa fa-user-circle" aria-hidden="true"></i> Tài khoản</strong>
               </a>
 
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/login}"><i
-										class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng
-										nhập</a></li>
-								<li><a th:href="@{/registration}"><i
-										class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a></li>
-								<li><a th:href="@{/reset-password}"><i
-										class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
-										mật khẩu</a></li>
-							</ul></li>
+              <ul class="dropdown-menu">
+                <li><a th:href="@{/login}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Đăng
+                    nhập</a></li>
+                <li><a th:href="@{/registration}"><i class="fa fa-info-circle" aria-hidden="true"></i> Đăng ký</a></li>
+                <li><a th:href="@{/reset-password}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Quên
+                    mật khẩu</a></li>
+              </ul>
+            </li>
 
             <li th:if="${#request.remoteUser}">
               <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
@@ -161,28 +159,63 @@
           </ul>
         </div>
       </div>
-      <div ng-show="showSearchResults">
-        <button class="btn" ng-click="closeSearchResults()">&#10006;</button>
-        <div class="row1  product-list">
-          <div class="col-md-3" ng-repeat="item in products track by item.productID">
-            <div class="product-item">
-              <div class="pi-img-wrapper">
-                <img ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
-                <div>
-                  <a href="../assets/images/product/{{item.image}}" class="btn btn-default fancybox-button">Zoom</a>
-                  <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+      <!-- Modal -->
+      <div class="modal fade modal-fullscreen bd-example-modal-lg" id="exampleModal2" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" id="exampleModalLabel">Tìm kiếm sản phẩm</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-3 col-12" ng-repeat="item in products track by item.productID">
+                <div class="card" style="width: 280px; height: 350px; padding: 10px;">
+                  <div class="card__image">
+                    <img style="height: 170px; cursor: pointer;" ng-click="goToSinglePage(item.productID)"
+                      ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                  </div>
+                  <div class="card__content" style="margin-top: 30px;">
+                    <span class="title" ng-click="goToSinglePage(item.productID)"
+                      style="font-size: small; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;"
+                      title="{{item.productName}}">
+                      {{item.productName}}
+                    </span>
+                    <p class="pi-price">
+                      <strike ng-if="item.promotion" style="font-size: small;">{{ item.price | number: 0 }}
+                        đ</strike>
+
+                    </p>
+                    <span ng-show="!item.promotion" style="font-weight: bold;">{{ item.price | number: 0 }}
+                      đ</span>
+                    <div style="display: flex; align-items: center; justify-content: end;">
+                      <div style="font-weight: bold;" ng-if="item.promotion" class="pi-price">
+                        {{ calculateDiscountedPrice(item) | number: 0 }} đ
+                      </div>
+                      <!-- <a style="width: 80px; margin-left: auto; cursor: pointer; display: flex; align-items: center; justify-content: end; margin-top: 15px;"
+                        ng-click="selectProduct(item)">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" style="margin-bottom: 8px;"
+                          viewBox="0 0 448 512">
+                          <path fill="#8f8c8c"
+                            d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                        </svg>
+                        <p style="margin-left: 6px; color: rgb(143, 140, 140) ;">So sánh</p>
+                      </a> -->
+                    </div>
+                    <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
+                      ng-if="item.active !== false">Thêm vào giỏ hàng</a>
+                    <a class="btn btn-default add2cart" ng-if="item.active === false">Hết
+                      hàng</a>
+                  </div>
                 </div>
               </div>
-              <h3 style="height: 60px;"><a ng-click="goToSinglePage(item.productID)">{{item.productName}}</a>
-              </h3>
-              <div class="pi-price">{{item.price |number : 0}} đ</div>
-              <a href="javascript:;" class="btn btn-default add2cart" ng-click="addToCart(item.productID)">Add
-                to
-                cart</a>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </header>
 </body>
 

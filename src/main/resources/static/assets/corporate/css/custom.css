@@ -375,3 +375,10 @@ div[ng-show="showSearchResults"] {
     transform: translate(-50%, 50%);
     opacity: 1;
 }
+
+.modal-body {
+    max-height: 80vh;
+    /* Giới hạn chiều cao tối đa của nội dung */
+    overflow-y: auto;
+    /* Tạo thanh cuộn khi nội dung vượt quá kích thước */
+}

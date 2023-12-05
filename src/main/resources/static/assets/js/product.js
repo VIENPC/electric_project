@@ -21,7 +21,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     $scope.selectProduct = function (product) {
         if ($scope.selectedProducts.length < 2) {
             $scope.selectedProducts.push(product);
-            $scope.showSearchResults = true; // Hiển thị kết quả nếu tìm thấy sản phẩm
+            $scope.showSearchResults = true;
             $('#exampleModal').modal('show');
             $('#exampleModal').on('shown.bs.modal', function () {
                 $('body').addClass('modal-open');
@@ -34,6 +34,17 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
             swal("Lỗi rồi!", "Chỉ được chọn hai sản phẩm để so sánh!", "info");
             $scope.selectedProducts = [];
         }
+    };
+
+    $scope.OpenModal = function () {
+        $('#exampleModal').modal('show');
+        $('#exampleModal').on('shown.bs.modal', function () {
+            $('body').addClass('modal-open');
+        });
+
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            $('body').removeClass('modal-open');
+        });
     };
 
     $scope.closeProductDialog = function () {
@@ -50,7 +61,7 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     ];
 
     $scope.compareProducts = function () {
-        $scope.showSearchResults = true; // Hiển thị kết quả nếu tìm thấy sản phẩm
+        // $scope.showSearchResults = true; // Hiển thị kết quả nếu tìm thấy sản phẩm
         $('#exampleModal1').modal('show');
         $('#exampleModal1').on('shown.bs.modal', function () {
             $('body').addClass('modal-open');
@@ -343,6 +354,16 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 console.error('Error fetching products:', error);
             });
     };
+
+    $scope.loadProductsByCategoryNav = function (categoryID) {
+        $http.get('/rest/products-by-category/' + categoryID)
+            .then(function (response) {
+                $scope.products = response.data;
+            })
+            .catch(function (error) {
+                console.error('Error fetching products:', error);
+            });
+    };
     // Hàm lọc danh sách brand để chỉ hiển thị một brand duy nhất nếu có
     function filterUniqueBrands(brands) {
         const uniqueBrands = [];
@@ -374,21 +395,21 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
     // Sử dụng sự kiện window.onhashchange để theo dõi thay đổi fragment
     window.onhashchange = function () {
         // Lấy fragment từ URL
-        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
-                $scope.loadProductsByCategory(fragment);
+                $scope.loadProductsByCategoryNav(fragment);
             });
         }
     };
     // Gọi $scope.loadProductsByCategory khi trang được nạp ban đầu
     window.onload = function () {
-        var fragment = window.location.hash.substr(2); // Loại bỏ dấu "#"
+        var fragment = window.location.hash.substr(1); // Loại bỏ dấu "#"
         console.log('Fragment:', fragment);
         if (fragment) {
             $scope.$apply(function () {
-                $scope.loadProductsByCategory(fragment);
+                $scope.loadProductsByCategoryNav(fragment);
             });
         }
     };
@@ -418,9 +439,17 @@ app.controller('product-controller', function ($scope, $http, $window, $sce) {
                 $scope.products = response.data;
                 if ($scope.products.length === 0) {
                     swal("Thất bại", "Không tìm thấy sản phẩm!", "error");
-                    $scope.showSearchResults = false; // Ẩn kết quả nếu không tìm thấy sản phẩm
+                    // $scope.showSearchResults = false;
                 } else {
-                    $scope.showSearchResults = true; // Hiển thị kết quả nếu tìm thấy sản phẩm
+                    // $scope.showSearchResults = true; 
+                    $('#exampleModal2').modal('show');
+                    $('#exampleModal2').on('shown.bs.modal', function () {
+                        $('body').addClass('modal-open');
+                    });
+
+                    $('#exampleModal2').on('hidden.bs.modal', function () {
+                        $('body').removeClass('modal-open');
+                    });
                 }
             })
             .catch(function (error) {
