@@ -423,7 +423,20 @@ Header and header elements
 }
 
 .sticker-sale {
-	background: url(../../pages/img/sale.png) no-repeat;
+	width: 100px;
+	height: 50px;
+	background: url(../../pages/img/s-removebg-preview.png) no-repeat;
+}
+
+.text-overlay {
+	position: absolute;
+	top: 15%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: red;
+	/* Màu văn bản */
+	font-size: 60px;
+	/* Kích thước văn bản */
 }
 
 .sticker-new {
@@ -1746,4 +1759,23 @@ h2 {
 	background-color: yellow;
 	color: #ec3236;
 	border-radius: 10px;
+}
+
+.btnADDd {
+	text-align: center;
+	background-color: #d70018;
+	color: white;
+	height: 35px;
+	width: 160px;
+	transition: all 0.3s ease;
+}
+
+
+.btnADDd:hover {
+	background-color: #d70018;
+	border-color: #f83600;
+	box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.25);
+	transform: translate(1%, -4%);
+
+	color: white;
 }

@@ -91,8 +91,11 @@
               <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="item in products | limitTo: productsToShowList">
                 <div class="card" style="width: 280px; height: 350px; padding: 10px;">
                   <div class="card__image">
-                    <img style="height: 170px; cursor: pointer;" ng-click="goToSinglePage(item.productID)"
-                      ng-src="../assets/images/product/{{item.image}}" class="img-responsive" alt="Berry Lace Dress">
+                    <img class="headband-image">
+                    <div class="text-overlay">50%</div>
+                    <img style="height: 170px;" ng-src="../assets/images/product/{{item.image}}" class="img-responsive"
+                      alt="Berry Lace Dress" ng-click="goToSinglePage(item.productID)">
+                    <!-- Các phần còn lại của mã HTML -->
                   </div>
                   <div class="card__content" style="margin-top: 30px;">
                     <span class="title" ng-click="goToSinglePage(item.productID)"
@@ -107,6 +110,7 @@
                         đ</span>
                     </p>
                     <div style="display: flex; align-items: center; justify-content: end;">
+
                       <div style="font-weight: bold;" ng-if="item.promotion" class="pi-price">
                         {{ calculateDiscountedPrice(item) | number: 0 }} đ
                       </div>
@@ -120,10 +124,12 @@
                         <p style="margin-left: 6px; color: rgb(143, 140, 140) ;">So sánh</p>
                       </a>
                     </div>
-                    <a class="btn btn-default add2cart" ng-click="addToCart(item.productID)"
-                      ng-if="item.active !== false">Thêm vào giỏ hàng</a>
-                    <a class="btn btn-default add2cart" ng-if="item.active === false">Hết
-                      hàng</a>
+                    <a class="btnADD btn-default add2cart" ng-click="addToCart(item.productID)"
+                      ng-if="item.active !== false"><label for="" style="padding-top: 8px;">Thêm vào giỏ hàng</label>
+                    </a>
+                    <p class="btnHetHaNG default add2cart" ng-if="item.active === false"
+                      style="text-align: center; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif; color: slategray;">
+                      Hết hàng</p>
                   </div>
                 </div>
               </div>
