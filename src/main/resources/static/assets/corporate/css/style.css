@@ -4656,3 +4656,12 @@ button[data-controls="next"] {
 
 
 /* banner  */
+ul.list-inline li:last-child {
+	margin-left: auto;
+  }
+
+  .my-select {
+	background-color: #f2f2f2;
+	font-size: 16px;
+	font-weight: bold;
+  }
