@@ -1,87 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="admin(title,view)">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="admin(title,view)">
 
 <head>
-	<meta charset="utf-8">
-	<title>Trang Quản Lý</title>
-	<!-- site icon -->
-	<link rel="shortcut icon" th:href="@{/assets/images/fevicon.png}" type="image/x-icon">
+<meta charset="utf-8">
+<title>Trang Quản Lý</title>
+<!-- site icon -->
+<link rel="shortcut icon" th:href="@{/assets/images/fevicon.png}"
+	type="image/x-icon">
 
 
-	<!-- bootstrap css -->
-	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<!-- bootstrap css -->
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 
-	<!-- site css -->
-	<link rel="stylesheet" th:href="@{/assets/css/style2.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/custom.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/assets/css/main.css}">
-	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css}">
-	<!-- or -->
-	<link rel="stylesheet" th:href="@{https://unpkg.com/boxicons@latest/css/boxicons.min.css}">
+<!-- site css -->
+<link rel="stylesheet" th:href="@{/assets/css/style2.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css}">
+<!-- or -->
+<link rel="stylesheet"
+	th:href="@{https://unpkg.com/boxicons@latest/css/boxicons.min.css}">
 
-	<!-- responsive css -->
-	<link rel="stylesheet" th:href="@{/assets/css/responsive.css}" />
-	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
+<!-- responsive css -->
+<link rel="stylesheet" th:href="@{/assets/css/responsive.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
 
-	<link th:href="@{/assets/css/font-awesome.min.css}" rel="stylesheet" />
-	<!-- select bootstrap -->
-	<link rel="stylesheet" th:href="@{/assets/css/bootstrap-select.css}" />
+<link th:href="@{/assets/css/font-awesome.min.css}" rel="stylesheet" />
+<!-- select bootstrap -->
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-select.css}" />
 
-	<!--  fomat tiền trong html-->
-	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js}"></script>
+<!--  fomat tiền trong html-->
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js}"></script>
 
-	<!-- scrollbar css -->
-	<link rel="stylesheet" th:href="@{/assets/css/perfect-scrollbar.css}" />
+<!-- scrollbar css -->
+<link rel="stylesheet" th:href="@{/assets/css/perfect-scrollbar.css}" />
 
-	<!-- Font-icon css-->
-	<link rel="stylesheet"
-		th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css}">
-	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js}"></script>
-	<!-- CKEDITOR -->
-	<script type="text/javascript" th:src="@{/assets/ckeditor/ckeditor.js}"></script>
+<!-- Font-icon css-->
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css}">
+<script
+	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js}"></script>
+<!-- CKEDITOR -->
+<script type="text/javascript" th:src="@{/assets/ckeditor/ckeditor.js}"></script>
 
-	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-	<script th:src="@{/assets/js/app.js}"></script>
-	<script th:src="@{/assets/js/categoryAdmin.js}"></script>
-	<script th:src="@{/assets/js/brandAdmin.js}"></script>
-	<script th:src="@{/assets/js/productAdmin.js}"></script>
-	<script th:src="@{/assets/js/supplierAdmin.js}"></script>
-	<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
-	<!-- <link href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.13.6/sl-1.7.0/datatables.min.css" rel="stylesheet">
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/assets/js/app.js}"></script>
+<script th:src="@{/assets/js/categoryAdmin.js}"></script>
+<script th:src="@{/assets/js/brandAdmin.js}"></script>
+<script th:src="@{/assets/js/productAdmin.js}"></script>
+<script th:src="@{/assets/js/supplierAdmin.js}"></script>
+<script th:src="@{/assets/js/category.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<!-- <link href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.13.6/sl-1.7.0/datatables.min.css" rel="stylesheet">
 
 	<script src="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.13.6/sl-1.7.0/datatables.min.js"></script> -->
 
-	<link th:src="@{/assets/datatables.min.css}" rel="stylesheet">
-	<link rel="stylesheet" th:href="@{/assets/datatables.css}">
-	<script th:src="@{/assets/datatables.min.js}"></script>
-	<style>
-		.mgs_errors {
-			color: red;
-			font-style: italic;
-		}
-	</style>
+<link th:src="@{/assets/datatables.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/assets/datatables.css}">
+<script th:src="@{/assets/datatables.min.js}"></script>
+<style>
+.mgs_errors {
+	color: red;
+	font-style: italic;
+}
+</style>
 </head>
 
-<body class="dashboard dashboard_1" onload="myCustomFunction()" ng-app="my-app">
-	<div class="full_container">
+<body class="dashboard dashboard_1" onload="myCustomFunction()"
+	ng-app="my-app">
+	<div class="full_container" ng-controller="category-controller">
 		<div class="inner_container">
 			<!-- Sidebar  -->
 			<nav id="sidebar" class="ps">
 				<div class="sidebar_blog_1">
 					<div class="sidebar-header">
 						<div class="logo_section">
-							<a th:href="@{/admin/home}"><img class="logo_icon img-responsive"
-									th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /></a>
+							<a th:href="@{/admin/home}"><img
+								class="logo_icon img-responsive"
+								th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /></a>
 						</div>
 					</div>
 					<div class="sidebar_user_info">
 						<div class="icon_setting"></div>
 						<div class="user_profle_side">
 							<div class="user_img">
-								<img class="img-responsive" th:src="@{/assets/images/logo/logoadm.png}" alt="#" />
+								<img class="img-responsive"
+									th:src="@{/assets/images/logo/logoadm.png}" alt="#" />
 							</div>
-							<div class="user_info" th:object="${#request.userPrincipal}">
-								<h6></h6>
+							<div class="user_info">
+								<h6 ng-if="loggedInUser" ng-bind="loggedInUser.fullName"></h6>
 								<p>
 									<span class="online_animation"></span> Online
 								</p>
@@ -90,40 +101,47 @@
 					</div>
 				</div>
 				<div class="sidebar_blog_2">
-					<h4>ADMINISTRATOR</h4>
+					<h4 style="text-align: center;"><span ng-bind="userTitle"></span></h4>
 					<ul class="list-unstyled components">
-						<li class="active"><a th:href="@{/admin/index}" aria-expanded="false">
-
-								<i class="fa fa-dashboard yellow_color"></i>
-								<span>Bảng điều khiển</span></a>
-						<li class="active"><a th:href="@{/admin/spbanchay}" aria-expanded="false">
-								<i class="fa fa-line-chart "></i>
-								<span>Sản phẩm bán chạy</span></a>
-						<li><a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-									class="fa fa-table purple_color2"></i> <span>Quản lý</span></a>
+						<li class="active"><a th:href="@{/admin/index}"
+							aria-expanded="false"> <i
+								class="fa fa-dashboard yellow_color"></i> <span>Bảng điều
+									khiển</span></a>
+						<li class="active"><a th:href="@{/admin/spbanchay}"
+							aria-expanded="false"> <i class="fa fa-line-chart "></i> <span>Sản
+									phẩm bán chạy</span></a>
+						<li><a href="#element" data-toggle="collapse"
+							aria-expanded="false" class="dropdown-toggle"><i
+								class="fa fa-table purple_color2"></i> <span>Quản lý</span></a>
 							<ul class="collapse list-unstyled" id="element">
-								<li><a th:href="@{/admin/qlsanpham}">> <span>Sản phẩm
-										</span></a></li>
-								<li><a th:href="@{/admin/qldonhang}">> <span>Đơn hàng</span></a></li>
+								<li><a th:href="@{/admin/qlsanpham}">> <span>Sản
+											phẩm </span></a></li>
+								<li><a th:href="@{/admin/qldonhang}">> <span>Đơn
+											hàng</span></a></li>
 								<li><a th:href="@{/admin/qlkhachhang}">> <span>Khách
 											hàng</span></a></li>
-								<li><a th:href="@{/admin/brands}">> <span>Thương hiệu</span></a></li>
+								<li><a th:href="@{/admin/brands}">> <span>Thương
+											hiệu</span></a></li>
 								<li><a th:href="@{/admin/categorys}">> <span>Loại</span></a></li>
-								<li><a th:href="@{/admin/suppliers}">> <span>Nhà sản xuất</span></a></li>
-								<li><a th:href="@{/admin/qlkhuyenmai}">> <span>Khuyến mãi</span></a></li>
-								<li><a th:href="@{/admin/qlsosanh}">> <span>So sánh</span></a></li>
-							</ul>
-						</li>
+								<li><a th:href="@{/admin/suppliers}">> <span>Nhà
+											sản xuất</span></a></li>
+								<li ng-if="userRole !== 'STAFF'"><a
+									th:href="@{/admin/qlkhuyenmai}">> <span>Khuyến mãi</span></a></li>
+
+								<li><a th:href="@{/admin/qlsosanh}">> <span>So
+											sánh</span></a></li>
+							</ul></li>
 						<!-- <li><a th:href="@{/admin/qlnoibo}"><i class="fa fa-users blue2_color"
 									aria-hidden="true"></i><span>Quản
 									lý nội bộ</span></a></li> -->
 
-						<li><a th:href="@{/admin/lienhe}"> <i class="fa fa-paper-plane red_color"></i> <span>Liên
-									hệ</span></a></li>
+						<li><a th:href="@{/admin/lienhe}"> <i
+								class="fa fa-paper-plane red_color"></i> <span>Liên hệ</span></a></li>
 
 
-						<li><a href="#baocao" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-									class="fa fa-bar-chart-o green_color"></i> <span>Báo cáo
+						<li><a href="#baocao" data-toggle="collapse"
+							aria-expanded="false" class="dropdown-toggle"><i
+								class="fa fa-bar-chart-o green_color"></i> <span>Báo cáo
 									danh thu</span></a>
 							<ul class="collapse list-unstyled" id="baocao">
 								<li><a th:href="@{/admin/baocaochung}"> > <span>Chung</span></a></li>
@@ -131,18 +149,17 @@
 											phẩm</span></a></li>
 								<li><a th:href="@{/admin/baocaohoadon}">> <span>Hóa
 											đơn </span></a></li>
-							</ul>
-						</li>
+							</ul></li>
 
-						<li><a href="#caidat" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-									class="fa fa-cog blue2_color"></i> <span>Cài đặt</span></a>
+						<li><a href="#caidat" data-toggle="collapse"
+							aria-expanded="false" class="dropdown-toggle"><i
+								class="fa fa-cog blue2_color"></i> <span>Cài đặt</span></a>
 
 							<ul class="collapse list-unstyled" id="caidat">
 
 
 								<li><a th:href="@{/logout}"> <span>Đăng xuất </span></a></li>
-							</ul>
-						</li>
+							</ul></li>
 
 
 					</ul>
@@ -165,22 +182,24 @@
 							<div class="right_topbar">
 								<div class="icon_info">
 									<ul>
-										<li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a>
-										</li>
+										<li><a href="#"><i class="fa fa-bell-o"></i><span
+												class="badge">2</span></a></li>
 										<li><a href="#"><i class="fa fa-question-circle"></i></a></li>
-										<li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a>
-										</li>
+										<li><a href="#"><i class="fa fa-envelope-o"></i><span
+												class="badge">3</span></a></li>
 									</ul>
 
-									<ul class="user_profile_dd" th:object="${#request.userPrincipal}">
+									<ul class="user_profile_dd"
+										th:object="${#request.userPrincipal}">
 
-										<li><a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle"
-													th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /><span class="name_user"></span></a>
+										<li><a class="dropdown-toggle" data-toggle="dropdown"><img
+												class="img-responsive rounded-circle"
+												th:src="@{/assets/images/logo/logo_icon.png}" alt="#" /><span
+												class="name_user"></span></a>
 											<div class="dropdown-menu">
-												<a class="dropdown-item" th:href="@{/logout}"><span>Đăng xuất</span>
-													<i class="fa fa-sign-out"></i></a>
-											</div>
-										</li>
+												<a class="dropdown-item" th:href="@{/logout}"><span>Đăng
+														xuất</span> <i class="fa fa-sign-out"></i></a>
+											</div></li>
 									</ul>
 
 								</div>
@@ -195,8 +214,8 @@
 				<!-- footer -->
 				<div class="container-fluid">
 					<div class="footer">
-						<p>Copyright © 2023 Designed by Team IT TTS NHƯ TÍN GROUP. All rights
-							reserved.</p>
+						<p>Copyright © 2023 Designed by Team IT TTS NHƯ TÍN GROUP. All
+							rights reserved.</p>
 					</div>
 				</div>
 			</div>
@@ -237,8 +256,7 @@
 				mm = '0' + mm
 			}
 			today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-			tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-				'</span>';
+			tmp = '<span class="date"> ' + today + ' - ' + nowTime + '</span>';
 			document.getElementById("clock").innerHTML = tmp;
 			clocktime = setTimeout("myCustomFunction()", 1000);
 
@@ -249,7 +267,7 @@
 				return i;
 			}
 		}
-		document.addEventListener("DOMContentLoaded", function () {
+		document.addEventListener("DOMContentLoaded", function() {
 			myCustomFunction();
 		});
 	</script>
@@ -282,10 +300,12 @@
 	<!-- nice scrollbar -->
 	<script th:src="@{/assets/js/perfect-scrollbar.min.js}"></script>
 
-	<script type="text/javascript" th:src="@{/assets/plugins/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/plugins/jquery.dataTables.min.js}"></script>
 
 
-	<script type="text/javascript" th:src="@{/assets/plugins/dataTables.bootstrap.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/plugins/dataTables.bootstrap.min.js}"></script>
 
 	<!-- custom js -->
 	<script th:src="@{/assets/js/custom.js}"></script>
